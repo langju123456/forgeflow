@@ -1,0 +1,1033 @@
+{
+  "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+  "technical_gate": {
+    "status": "BLOCKED",
+    "rule_id": "aurora-synthetic-evt-v1",
+    "rule_hash": "18c790986886cdf0fe3a6498e427f62bdd4ba74493e704aaad6bf800bd1530c6",
+    "rule_source": "ForgeFlow synthetic engineering example, not hardware certification",
+    "checks": [
+      {
+        "rule": "boot_cycles",
+        "status": "SATISFIED",
+        "reason": "Synthetic rule satisfied"
+      },
+      {
+        "rule": "boot_failures",
+        "status": "SATISFIED",
+        "reason": "Synthetic rule satisfied"
+      },
+      {
+        "rule": "bom_revision",
+        "status": "SATISFIED",
+        "reason": "Synthetic rule satisfied"
+      },
+      {
+        "rule": "ci_smoke",
+        "status": "SATISFIED",
+        "reason": "Synthetic rule satisfied"
+      },
+      {
+        "rule": "thermal_peak_c",
+        "status": "VIOLATED",
+        "reason": "Synthetic rule violated or value has the wrong type"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "boot_cycles",
+        "source_ref": "fixture:aurora-evt-synthetic-v1",
+        "source_version": "v1",
+        "content_hash": "976c0f6d21e808197239d0463c06ff6315b7000777d8d968809cd47465c75c84",
+        "observed_at": "2026-10-04T00:00:00Z",
+        "valid_until": "2026-11-05T00:00:00Z",
+        "status": "SATISFIED",
+        "value": 100
+      },
+      {
+        "id": "boot_failures",
+        "source_ref": "fixture:aurora-evt-synthetic-v1",
+        "source_version": "v1",
+        "content_hash": "ef89f9656ba13f7638456c681d69a34d74f6558ea67356e30f22b562d963361e",
+        "observed_at": "2026-10-04T00:00:00Z",
+        "valid_until": "2026-11-05T00:00:00Z",
+        "status": "SATISFIED",
+        "value": 0
+      },
+      {
+        "id": "bom_revision",
+        "source_ref": "fixture:aurora-evt-synthetic-v1",
+        "source_version": "v1",
+        "content_hash": "05dfdb98163b713b8164e078f904318a7b3fee51c33002df7c0e42fbe6230590",
+        "observed_at": "2026-10-04T00:00:00Z",
+        "valid_until": "2026-11-05T00:00:00Z",
+        "status": "SATISFIED",
+        "value": "A3"
+      },
+      {
+        "id": "ci_smoke",
+        "source_ref": "fixture:aurora-evt-synthetic-v1",
+        "source_version": "v1",
+        "content_hash": "8930b25f81ef03fb5f2c1445388580af9f1317ab6cde521ab82997defddbfe97",
+        "observed_at": "2026-10-04T00:00:00Z",
+        "valid_until": "2026-11-05T00:00:00Z",
+        "status": "SATISFIED",
+        "value": true
+      },
+      {
+        "id": "thermal_peak_c",
+        "source_ref": "fixture:aurora-evt-synthetic-v1",
+        "source_version": "v1",
+        "content_hash": "57af9450ff2670b96614604005bb5d6ca5789b7a43626836de8d3200b47be0d6",
+        "observed_at": "2026-10-04T00:00:00Z",
+        "valid_until": "2026-11-05T00:00:00Z",
+        "status": "VIOLATED",
+        "value": 89
+      }
+    ],
+    "stage_transition": "NOT_EXECUTED",
+    "checker_status": "SUCCEEDED"
+  },
+  "parent_state": "WAITING_APPROVAL",
+  "project": {
+    "current_stage": "PROTOTYPE",
+    "stage_revision": 0,
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "analysis": {
+    "id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+    "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+    "created_by": "local-owner",
+    "idempotency_key": "s2-analysis:s2a-live-blocked-20261006-03",
+    "material_hash": "e429e73365c68c09585aa173e3708de9f9c4e91a5dc7c255071c26166555efe5",
+    "material_json": {
+      "analysis_revision": "s2a-four-call-v2",
+      "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+      "profile_id": "S2_SYNTHETIC_LOCAL",
+      "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+      "source_snapshot": {
+        "caller": {
+          "subject_id": "local-owner",
+          "kind": "user",
+          "roles": [
+            "admin",
+            "hardware",
+            "pm",
+            "reviewer",
+            "submitter"
+          ],
+          "scopes": [
+            {
+              "tenant_id": "synthetic-lab",
+              "workspace_id": "engineering",
+              "project_id": "aurora"
+            }
+          ],
+          "clearance": 0
+        },
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora"
+        },
+        "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+        "role": "supervisor",
+        "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+        "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+        "context_revision": "analysis-context-v2-mcp-witness",
+        "sources": [
+          {
+            "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+            "kind": "run",
+            "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+            "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+            "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+            "status": "CHECK_COMPLETED",
+            "classification": 0,
+            "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+          },
+          {
+            "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+            "kind": "document",
+            "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+            "version": "v1",
+            "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+            "status": "CURRENT",
+            "classification": 0,
+            "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+          }
+        ]
+      },
+      "skill_bindings": [
+        {
+          "name": "supervisor-analysis",
+          "role": "supervisor",
+          "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+        },
+        {
+          "name": "pm-analysis",
+          "role": "pm",
+          "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+        }
+      ],
+      "classification": 0,
+      "max_calls": 4,
+      "max_input_tokens": 3500,
+      "max_output_tokens": 800,
+      "timeout_seconds": 180,
+      "provider_billing": "LOCAL_NO_BILLING"
+    },
+    "parent_request_hash": "7669853cf987dd5bd8b0d3a6fed7a6fb825859acca91f1b8a7f39339e533fba5",
+    "parent_snapshot_hash": "5167f4526fe26a52a7c1b2c42c3074cac70657919a1c67908fc8aac2dc7b30c1",
+    "classification": 0,
+    "profile_id": "S2_SYNTHETIC_LOCAL",
+    "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "state": "INCOMPLETE",
+    "revision": 12,
+    "created_at": "2026-10-06T05:08:12.877129+00:00",
+    "deadline": "2026-10-06T05:11:12.877129+00:00",
+    "cancel_requested_at": null,
+    "lease_owner": null,
+    "lease_token": null,
+    "lease_epoch": 1,
+    "lease_expires_at": null,
+    "calls_reserved": 4,
+    "tokens_reserved": 17200,
+    "summary_json": {
+      "status": "INCOMPLETE",
+      "summary": "Thermal peak_c 89 is reported as VIOLATED, with a requirement for thermal_peak_c <=70. Synthetic EVT assessment is BLOCKED. Investigation into the thermal peak_c violation is recommended. Thermal violation is unresolved, and its resolution is unknown.",
+      "source_refs": [
+        "src_b5b6345ce3935b5624017b767ecc6284",
+        "src_1d55831023f0f6f898c7c1f743b4459e",
+        "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49"
+      ],
+      "report_refs": [
+        "report_pm"
+      ]
+    },
+    "summary_hash": "a2e14e23d95f757b66c9fdd4977e26363e669a5d6974d294ef16843a6b40e632",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora",
+    "calls": [
+      {
+        "id": "32c95bd9-da04-42e8-bb0f-44095c2541cc",
+        "analysis_id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+        "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+        "step_key": "supervisor-plan",
+        "role": "supervisor",
+        "phase": "PLAN",
+        "profile_id": "S2_SYNTHETIC_LOCAL",
+        "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "input_hash": "d6f0c02b415fb9d6dd7a00fc3e701c6ffec871d4f8a9b8f4174621c0306d2741",
+        "context_hash": "f36cf05a59ef4f2e73ecb0d2f5c94edc357b566c7d3dfc1ece9cc156055afbac",
+        "material_hash": "648783d8436b811a9abfcb8691d8f5435466cd2e61b1d35e2734b718491c8e15",
+        "material_json": {
+          "analysis_revision": "s2a-four-call-v2",
+          "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+          "profile_id": "S2_SYNTHETIC_LOCAL",
+          "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+          "source_snapshot": {
+            "caller": {
+              "subject_id": "local-owner",
+              "kind": "user",
+              "roles": [
+                "admin",
+                "hardware",
+                "pm",
+                "reviewer",
+                "submitter"
+              ],
+              "scopes": [
+                {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                }
+              ],
+              "clearance": 0
+            },
+            "scope": {
+              "tenant_id": "synthetic-lab",
+              "workspace_id": "engineering",
+              "project_id": "aurora"
+            },
+            "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+            "role": "supervisor",
+            "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+            "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+            "context_revision": "analysis-context-v2-mcp-witness",
+            "sources": [
+              {
+                "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                "kind": "run",
+                "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "status": "CHECK_COMPLETED",
+                "classification": 0,
+                "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+              },
+              {
+                "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                "kind": "document",
+                "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                "version": "v1",
+                "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                "status": "CURRENT",
+                "classification": 0,
+                "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+              }
+            ]
+          },
+          "skill_bindings": [
+            {
+              "name": "supervisor-analysis",
+              "role": "supervisor",
+              "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+            },
+            {
+              "name": "pm-analysis",
+              "role": "pm",
+              "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+            }
+          ],
+          "classification": 0,
+          "max_calls": 4,
+          "max_input_tokens": 3500,
+          "max_output_tokens": 800,
+          "timeout_seconds": 180,
+          "provider_billing": "LOCAL_NO_BILLING"
+        },
+        "intent_hash": "a111f62c35e2fa21355a81c184ad8637cd9fb8368e5b16d299a1bcf1b14fd870",
+        "state": "VALIDATED",
+        "delivery_status": "DELIVERED",
+        "usage_state": "CONFIRMED",
+        "usage_json": {
+          "state": "CONFIRMED",
+          "input_tokens": 400,
+          "output_tokens": 87,
+          "cost_microusd": null
+        },
+        "provider_metadata_json": {
+          "actual_model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "provider_request_id": null,
+          "finish_reason": "stop",
+          "transport": "OLLAMA_LOCAL_HTTP",
+          "timing_ms": 20552
+        },
+        "input_token_limit": 3500,
+        "output_token_limit": 800,
+        "tokens_reserved": 4300,
+        "lease_epoch": 1,
+        "created_at": "2026-10-06T05:08:13.016309+00:00",
+        "deadline": "2026-10-06T05:09:13.016309+00:00",
+        "finished_at": "2026-10-06T05:08:33.676355+00:00",
+        "output_json": {
+          "assignment": "pm",
+          "task_question": "Thermal peak violation: review and resolve",
+          "source_refs": [
+            "src_b5b6345ce3935b5624017b767ecc6284",
+            "src_1d55831023f0f6f898c7c1f743b4459e"
+          ]
+        },
+        "output_hash": "c0245cb7fcd3d066c868f1c8a1ae5350a0886182a7f23096dc518595f0aeb625",
+        "error_code": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora"
+      },
+      {
+        "id": "0c9a1d05-93e5-437a-9344-9009d56c4282",
+        "analysis_id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+        "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+        "step_key": "pm-context",
+        "role": "pm",
+        "phase": "CONTEXT_PROPOSAL",
+        "profile_id": "S2_SYNTHETIC_LOCAL",
+        "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "input_hash": "23158df17dd752235dc92d376ce09ddd05df2469372ef135e5812626b4b28fcf",
+        "context_hash": "6d8192e57d65ecfffb570ee9ee755b5e0599c84fcd16f6d246d57c878ea274ae",
+        "material_hash": "a6a113db6c5f05581ad630a4cfbda5c67896412e3a67322a380116581ca3963b",
+        "material_json": {
+          "analysis_revision": "s2a-four-call-v2",
+          "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+          "profile_id": "S2_SYNTHETIC_LOCAL",
+          "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+          "source_snapshot": {
+            "bundles": [
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "supervisor",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  }
+                ]
+              },
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "pm",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  }
+                ]
+              }
+            ]
+          },
+          "skill_bindings": [
+            {
+              "name": "supervisor-analysis",
+              "role": "supervisor",
+              "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+            },
+            {
+              "name": "pm-analysis",
+              "role": "pm",
+              "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+            }
+          ],
+          "classification": 0,
+          "max_calls": 4,
+          "max_input_tokens": 3500,
+          "max_output_tokens": 800,
+          "timeout_seconds": 180,
+          "provider_billing": "LOCAL_NO_BILLING"
+        },
+        "intent_hash": "21b8300a8829fbfd74478a8c36fe30f3ee4fe2acd2bc87350f8ca8488271f473",
+        "state": "VALIDATED",
+        "delivery_status": "DELIVERED",
+        "usage_state": "CONFIRMED",
+        "usage_json": {
+          "state": "CONFIRMED",
+          "input_tokens": 486,
+          "output_tokens": 82,
+          "cost_microusd": null
+        },
+        "provider_metadata_json": {
+          "actual_model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "provider_request_id": null,
+          "finish_reason": "stop",
+          "transport": "OLLAMA_LOCAL_HTTP",
+          "timing_ms": 16666
+        },
+        "input_token_limit": 3500,
+        "output_token_limit": 800,
+        "tokens_reserved": 4300,
+        "lease_epoch": 1,
+        "created_at": "2026-10-06T05:08:34.574645+00:00",
+        "deadline": "2026-10-06T05:09:34.574645+00:00",
+        "finished_at": "2026-10-06T05:08:51.383570+00:00",
+        "output_json": {
+          "requests": [
+            {
+              "tool": "knowledge.search",
+              "query": "Thermal peak violation in Aurora EVT readiness synthetic SOP",
+              "top_k": 1
+            },
+            {
+              "tool": "memory.search",
+              "query": "Thermal peak_c violation resolution for Aurora EVT readiness",
+              "top_k": 1
+            }
+          ]
+        },
+        "output_hash": "d4fcaffb494f0e4266f206db2fce5923b09d5e3b340d41eeb822b4ffae270d87",
+        "error_code": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora"
+      },
+      {
+        "id": "e24c0f24-d5ea-42ce-b04c-a8f5e40d011e",
+        "analysis_id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+        "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+        "step_key": "pm-report",
+        "role": "pm",
+        "phase": "FINAL_REPORT",
+        "profile_id": "S2_SYNTHETIC_LOCAL",
+        "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "input_hash": "ec2b3ade046bcef3c9e00bf49682edd5b94e9998d771828ac2ffe78bb9234b74",
+        "context_hash": "fe983fe9c148939e95cc7ec1a853df5de044d4c499116badcecdc1590f66b68c",
+        "material_hash": "8f7009d38af67f93df427acbfea458ea18dcd6a47d9283b8b79c3c2980d8b93d",
+        "material_json": {
+          "analysis_revision": "s2a-four-call-v2",
+          "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+          "profile_id": "S2_SYNTHETIC_LOCAL",
+          "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+          "source_snapshot": {
+            "bundles": [
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "supervisor",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  }
+                ]
+              },
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "pm",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  },
+                  {
+                    "ref": "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49",
+                    "kind": "memory",
+                    "id": "e7e073ca-a197-4287-b9f1-27128dadadaa",
+                    "version": "1",
+                    "source_hash": "0b18a3807dd3e0f3bfe613f11e47845233e710debc05acde56e674ed31534176",
+                    "status": "CANDIDATE",
+                    "classification": 0,
+                    "witness_hash": "e0fd2d42dede6f27dec8b803340b33461960317e894d5e332fa5435dbf1f9bd9"
+                  }
+                ]
+              }
+            ]
+          },
+          "skill_bindings": [
+            {
+              "name": "supervisor-analysis",
+              "role": "supervisor",
+              "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+            },
+            {
+              "name": "pm-analysis",
+              "role": "pm",
+              "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+            }
+          ],
+          "classification": 0,
+          "max_calls": 4,
+          "max_input_tokens": 3500,
+          "max_output_tokens": 800,
+          "timeout_seconds": 180,
+          "provider_billing": "LOCAL_NO_BILLING"
+        },
+        "intent_hash": "0f59e704be9c78ef83e6ee944533b9f515b92ba215b773e751d69aa022fdf65d",
+        "state": "VALIDATED",
+        "delivery_status": "DELIVERED",
+        "usage_state": "CONFIRMED",
+        "usage_json": {
+          "state": "CONFIRMED",
+          "input_tokens": 584,
+          "output_tokens": 350,
+          "cost_microusd": null
+        },
+        "provider_metadata_json": {
+          "actual_model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "provider_request_id": null,
+          "finish_reason": "stop",
+          "transport": "OLLAMA_LOCAL_HTTP",
+          "timing_ms": 53532
+        },
+        "input_token_limit": 3500,
+        "output_token_limit": 800,
+        "tokens_reserved": 4300,
+        "lease_epoch": 1,
+        "created_at": "2026-10-06T05:08:52.769753+00:00",
+        "deadline": "2026-10-06T05:09:52.769753+00:00",
+        "finished_at": "2026-10-06T05:09:46.595469+00:00",
+        "output_json": {
+          "status": "INCOMPLETE",
+          "facts": [
+            {
+              "text": "Thermal peak_c 89 VIOLATED",
+              "source_refs": [
+                "src_b5b6345ce3935b5624017b767ecc6284"
+              ]
+            },
+            {
+              "text": "Synthetic EVT assessment BLOCKED",
+              "source_refs": [
+                "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49"
+              ]
+            },
+            {
+              "text": "Thermal_peak_c <=70 required",
+              "source_refs": [
+                "src_1d55831023f0f6f898c7c1f743b4459e"
+              ]
+            }
+          ],
+          "risks": [
+            {
+              "text": "Thermal violation unresolved",
+              "source_refs": [
+                "src_b5b6345ce3935b5624017b767ecc6284"
+              ]
+            }
+          ],
+          "unknowns": [
+            {
+              "text": "Thermal peak_c resolution unknown",
+              "source_refs": [
+                "src_b5b6345ce3935b5624017b767ecc6284"
+              ]
+            }
+          ],
+          "recommendations": [
+            {
+              "text": "Investigate thermal peak_c 89 violation",
+              "source_refs": [
+                "src_b5b6345ce3935b5624017b767ecc6284"
+              ]
+            }
+          ]
+        },
+        "output_hash": "c358ca746c1e526c98df71bf8253e3053d1e092b0e7dd418b6bb7d45a57eb6d5",
+        "error_code": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora"
+      },
+      {
+        "id": "42865d84-5692-490b-ba5b-987ce3580a3b",
+        "analysis_id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+        "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+        "step_key": "supervisor-summary",
+        "role": "supervisor",
+        "phase": "SUMMARY",
+        "profile_id": "S2_SYNTHETIC_LOCAL",
+        "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "input_hash": "53a0f1500fbcc8ffa52d6125938a7a77fe7f8ba7e3450e209e09e19ef6d0b185",
+        "context_hash": "71f8c615ed89c75f99ce4d0936ef0e94443f7f7fead670126b44e99fa2ffbedd",
+        "material_hash": "8faaa8d03f0497ea3b97ed6ddaf98d971da728888a24ec875279775849509b00",
+        "material_json": {
+          "analysis_revision": "s2a-four-call-v2",
+          "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+          "profile_id": "S2_SYNTHETIC_LOCAL",
+          "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+          "source_snapshot": {
+            "bundles": [
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "supervisor",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  }
+                ]
+              },
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "pm",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  },
+                  {
+                    "ref": "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49",
+                    "kind": "memory",
+                    "id": "e7e073ca-a197-4287-b9f1-27128dadadaa",
+                    "version": "1",
+                    "source_hash": "0b18a3807dd3e0f3bfe613f11e47845233e710debc05acde56e674ed31534176",
+                    "status": "CANDIDATE",
+                    "classification": 0,
+                    "witness_hash": "e0fd2d42dede6f27dec8b803340b33461960317e894d5e332fa5435dbf1f9bd9"
+                  }
+                ]
+              },
+              {
+                "caller": {
+                  "subject_id": "local-owner",
+                  "kind": "user",
+                  "roles": [
+                    "admin",
+                    "hardware",
+                    "pm",
+                    "reviewer",
+                    "submitter"
+                  ],
+                  "scopes": [
+                    {
+                      "tenant_id": "synthetic-lab",
+                      "workspace_id": "engineering",
+                      "project_id": "aurora"
+                    }
+                  ],
+                  "clearance": 0
+                },
+                "scope": {
+                  "tenant_id": "synthetic-lab",
+                  "workspace_id": "engineering",
+                  "project_id": "aurora"
+                },
+                "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                "role": "supervisor",
+                "material_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+                "context_revision": "analysis-context-v2-mcp-witness",
+                "sources": [
+                  {
+                    "ref": "src_b5b6345ce3935b5624017b767ecc6284",
+                    "kind": "run",
+                    "id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+                    "version": "204a7ac5-9551-4376-9a33-e90f86429da8",
+                    "source_hash": "466ad79a455186529628668ebd03f418b323950658a729d0a81be4edaa2f5a64",
+                    "status": "CHECK_COMPLETED",
+                    "classification": 0,
+                    "witness_hash": "7906197323d379705a4f3d33a67efa373251c57dfbcef013ded9ec29fdac2115"
+                  },
+                  {
+                    "ref": "src_1d55831023f0f6f898c7c1f743b4459e",
+                    "kind": "document",
+                    "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+                    "version": "v1",
+                    "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                    "status": "CURRENT",
+                    "classification": 0,
+                    "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+                  },
+                  {
+                    "ref": "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49",
+                    "kind": "memory",
+                    "id": "e7e073ca-a197-4287-b9f1-27128dadadaa",
+                    "version": "1",
+                    "source_hash": "0b18a3807dd3e0f3bfe613f11e47845233e710debc05acde56e674ed31534176",
+                    "status": "CANDIDATE",
+                    "classification": 0,
+                    "witness_hash": "e0fd2d42dede6f27dec8b803340b33461960317e894d5e332fa5435dbf1f9bd9"
+                  }
+                ]
+              }
+            ]
+          },
+          "skill_bindings": [
+            {
+              "name": "supervisor-analysis",
+              "role": "supervisor",
+              "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+            },
+            {
+              "name": "pm-analysis",
+              "role": "pm",
+              "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+            }
+          ],
+          "classification": 0,
+          "max_calls": 4,
+          "max_input_tokens": 3500,
+          "max_output_tokens": 800,
+          "timeout_seconds": 180,
+          "provider_billing": "LOCAL_NO_BILLING"
+        },
+        "intent_hash": "801ff79093a686c1b9608900ab9294f4044b61cd2198f90aa2ded41b79113aae",
+        "state": "VALIDATED",
+        "delivery_status": "DELIVERED",
+        "usage_state": "CONFIRMED",
+        "usage_json": {
+          "state": "CONFIRMED",
+          "input_tokens": 720,
+          "output_tokens": 184,
+          "cost_microusd": null
+        },
+        "provider_metadata_json": {
+          "actual_model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "provider_request_id": null,
+          "finish_reason": "stop",
+          "transport": "OLLAMA_LOCAL_HTTP",
+          "timing_ms": 36280
+        },
+        "input_token_limit": 3500,
+        "output_token_limit": 800,
+        "tokens_reserved": 4300,
+        "lease_epoch": 1,
+        "created_at": "2026-10-06T05:09:48.358720+00:00",
+        "deadline": "2026-10-06T05:10:48.358720+00:00",
+        "finished_at": "2026-10-06T05:10:24.977970+00:00",
+        "output_json": {
+          "status": "INCOMPLETE",
+          "summary": "Thermal peak_c 89 is reported as VIOLATED, with a requirement for thermal_peak_c <=70. Synthetic EVT assessment is BLOCKED. Investigation into the thermal peak_c violation is recommended. Thermal violation is unresolved, and its resolution is unknown.",
+          "source_refs": [
+            "src_b5b6345ce3935b5624017b767ecc6284",
+            "src_1d55831023f0f6f898c7c1f743b4459e",
+            "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49"
+          ],
+          "report_refs": [
+            "report_pm"
+          ]
+        },
+        "output_hash": "a2e14e23d95f757b66c9fdd4977e26363e669a5d6974d294ef16843a6b40e632",
+        "error_code": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora"
+      }
+    ]
+  },
+  "business_actions": "NOT_APPROVED_OR_DISPATCHED_BY_ANALYSIS"
+}

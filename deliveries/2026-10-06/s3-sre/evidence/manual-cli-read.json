@@ -1,0 +1,8 @@
+{
+  "status": "ACTUAL_CLI_READ_PASS",
+  "command": "PYTHONPATH=src .venv/bin/python -m forgeflow.sre_cli show f62d4aa3-2439-433f-a124-310ac8ea6fc9",
+  "review_id": "f62d4aa3-2439-433f-a124-310ac8ea6fc9",
+  "operational_readiness": "READY",
+  "technical_gate": "UNKNOWN",
+  "model_calls_added": 0
+}

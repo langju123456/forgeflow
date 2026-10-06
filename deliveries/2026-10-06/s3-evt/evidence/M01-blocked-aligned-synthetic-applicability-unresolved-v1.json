@@ -1,0 +1,118 @@
+{
+  "id": "6fa46cf6-fdb7-4f7a-b0c5-d1313ecdc8e1",
+  "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+  "domain_review_id": "732011ee-07a5-4999-8515-58bcce424c54",
+  "sre_review_id": "c125c447-1155-412e-86c5-bac06319d16f",
+  "policy_id": "synthetic-applicability-unresolved-v1",
+  "created_by": "local-owner",
+  "idempotency_key": "s3-evt:M01-blocked:aligned:synthetic-applicability-unresolved-v1:01",
+  "request_hash": "391c0ed025b0fb73130c6a6befe35dcccaca4ef97192e2c955b5db337e171dac",
+  "technical_source_hash": "ca5983236b545979da88e9bfa6f03359ae0b8c304dc77920cd094a9cd0352c6a",
+  "report_json": {
+    "revision": "synthetic-evt-composition-v1",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+    "synthetic": true,
+    "authority": "DETERMINISTIC_CONTRACT",
+    "model_authority": "DETERMINISTIC_CONTRACT",
+    "policy_id": "synthetic-applicability-unresolved-v1",
+    "policy_hash": "e11a0e59662d53149aad23c35b05d71a2500bc779eb0c5749685f97613f39595",
+    "registry_hash": "b19e10ff8c17e1715c8b6199e9773c218d2b3eedb6e4c5c6690bf9f1bcd77543",
+    "purpose": "EVT_READINESS_REVIEW",
+    "review_scope": "APPLICABILITY_UNRESOLVED",
+    "checks": [
+      {
+        "id": "hardware",
+        "applicability": "APPLICABLE",
+        "status": "FAIL",
+        "reason": "RECORDED_CHECK_FAILED",
+        "source_pointer": "/parent/assessment_json/status",
+        "observed_status": "FAIL"
+      },
+      {
+        "id": "architect",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "reason": "RECORDED_CHECK_SATISFIED",
+        "source_pointer": "/domain_report/architect/static_status",
+        "observed_status": "PASS"
+      },
+      {
+        "id": "android_source",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "reason": "RECORDED_CHECK_SATISFIED",
+        "source_pointer": "/domain_report/android/static_status",
+        "observed_status": "PASS"
+      },
+      {
+        "id": "android_apk",
+        "applicability": "UNKNOWN",
+        "status": "UNKNOWN",
+        "reason": "APPLICABILITY_UNRESOLVED",
+        "source_pointer": "/domain_report/android/build_status",
+        "observed_status": "UNKNOWN",
+        "build_status": "NOT_RUN_NO_ANDROID_TOOLCHAIN"
+      },
+      {
+        "id": "android_device",
+        "applicability": "UNKNOWN",
+        "status": "UNKNOWN",
+        "reason": "APPLICABILITY_UNRESOLVED",
+        "source_pointer": "/domain_report/android/build_status",
+        "observed_status": "UNKNOWN",
+        "build_status": "NOT_RUN_NO_ANDROID_TOOLCHAIN"
+      },
+      {
+        "id": "sre",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "reason": "RECORDED_CHECK_SATISFIED",
+        "source_pointer": "/sre_report/operational_readiness",
+        "observed_status": "PASS"
+      }
+    ],
+    "status": "BLOCKED",
+    "stage_transition_allowed": false,
+    "full_evt_eligibility": false,
+    "human_approval_required": true,
+    "automatic_business_actions": false,
+    "stage_transition": "NOT_EXECUTED",
+    "control_plane_revision": "evt-bound-review-v1",
+    "technical_source_hash": "ca5983236b545979da88e9bfa6f03359ae0b8c304dc77920cd094a9cd0352c6a",
+    "role_refs": {
+      "domain": {
+        "id": "732011ee-07a5-4999-8515-58bcce424c54",
+        "report_hash": "6ef788dbe1fe551d8f3c5b4d1382a4d73b33f0698f3cdc7a5fd9e08a4f7ab8fe"
+      },
+      "sre": {
+        "id": "c125c447-1155-412e-86c5-bac06319d16f",
+        "report_hash": "cccbcbe9bc15d8cf9c8e7e18b92745dc6d1c7698e9b06ce00b4ed94afaa9a080"
+      }
+    }
+  },
+  "report_hash": "391c0ed025b0fb73130c6a6befe35dcccaca4ef97192e2c955b5db337e171dac",
+  "audit_json": {
+    "kind": "EVT_REVIEW_COMPLETED",
+    "actor": "local-owner",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+    "observed_event_head": "58893fd66fedb1515fc829a09c38528218e0ec77ae0daec21df88bf5567e3441",
+    "report_hash": "391c0ed025b0fb73130c6a6befe35dcccaca4ef97192e2c955b5db337e171dac",
+    "transport": "IN_PROCESS",
+    "model_calls": 0
+  },
+  "payload_hash": "eae8d44ab2648db9f1b3d050c998506dcbc45372eae50e98a805d54ff5cb5862",
+  "created_at": "2026-10-06T08:37:42.446462+00:00",
+  "tenant_id": "synthetic-lab",
+  "workspace_id": "engineering",
+  "project_id": "aurora"
+}

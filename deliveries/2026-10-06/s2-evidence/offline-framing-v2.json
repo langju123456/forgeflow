@@ -1,0 +1,48 @@
+{
+  "provenance": "OFFLINE_TEST_DRIVER_FRAMING_NOT_MODEL_INFERENCE",
+  "source_attempt_sha256": "f19c5d1d28d89c084f92ba91f6dc653fc568eda4daa3ab3f8d2646fb8339fd02",
+  "workflow_revision": "s2a-four-call-v2",
+  "workflow_sha256": "3ee7bec191de44611050b006fd649d1c6ac824bec2e47e42ad3e6b15a1ae8daf",
+  "contracts_sha256": "3ec279921bac44b17503bfaac1ddfa90fdd3f68489e584773b61ba8faef65ec4",
+  "note": "V1 genuine plan question/proposal reused without text edits; refs rebound to same-shape TEST_DRIVER fixtures. That older long question is a conservative framing stress input, not an accepted V2 output. Summary stress report has maximal allowed ASCII cardinality and 80-character statements, not a real model report. UTF8 inputs still undergo actual hard bound; arbitrary Unicode/retrieval volumes are not guaranteed to fit. No provider invoked. All typed gate/unknown/stage/transition facts and source validity descriptors retained; summary excludes only already-PM-analyzed excerpts, full source bindings remain authorized.",
+  "frames": [
+    {
+      "phase": "plan",
+      "bound": 2233,
+      "context_bytes": 989,
+      "system_bytes": 316,
+      "schema_bytes": 339,
+      "input_hash": "d99a1a8c62959db2c2d54672c9a7cc781a39b8d01213e3ac51510786c9922260"
+    },
+    {
+      "phase": "context",
+      "bound": 2627,
+      "context_bytes": 989,
+      "system_bytes": 301,
+      "schema_bytes": 467,
+      "input_hash": "78ebdad1e271563ea522e99fba64017764b1f3d7f35b3c8b1215d84224774b21"
+    },
+    {
+      "phase": "report",
+      "bound": 3381,
+      "context_bytes": 1195,
+      "system_bytes": 484,
+      "schema_bytes": 812,
+      "input_hash": "c7f0bafb502d911ed214934030f51fd7f6ca941dae2a972d9b3e2fdaf663011c"
+    },
+    {
+      "phase": "summary",
+      "bound": 3453,
+      "context_bytes": 1879,
+      "system_bytes": 467,
+      "schema_bytes": 436,
+      "input_hash": "0187b8f4490748641696024f4f6d5146a7bb40846a42ffbc811ebc848ddb5d69"
+    }
+  ],
+  "caps": {
+    "input_conservative_bound": 3500,
+    "output_tokens": 800
+  },
+  "new_model_requests": 0,
+  "prior_offline_failure_evidence": "offline-framing-v2-before-summary-compact.json"
+}

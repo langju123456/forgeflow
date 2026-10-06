@@ -1,0 +1,611 @@
+{
+  "schema": "forgeflow-s2c-incremental-delivery-manifest-v1",
+  "date": "2026-10-06",
+  "created_at_utc": "2026-10-06T07:32:02.020972+00:00",
+  "unique_development_original": "/path/to/forgeflow",
+  "status": "LOCAL_SYNTHETIC_PROTOTYPE_CHAIN_ACCEPTED_FULL_ENTERPRISE_PROJECT_IN_PROGRESS",
+  "application_revision": "s2c-server-derived-state-v1",
+  "historical_seals": [
+    {
+      "path": "deliveries/2026-10-05/manifest.json",
+      "sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+      "files_verified": 95
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-manifest.json",
+      "sha256": "bad4bb190ce2916d61ed2c0d86f4df735d782b9e6da3cba524fd009699fc3031",
+      "files_verified": 38
+    },
+    {
+      "path": "deliveries/2026-10-06/manifest.json",
+      "sha256": "b2378605f10b1160910df6d02d3f3745e6559a1ff9561f45b9445421d4d8bdab",
+      "files_verified": 66
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/manifest.json",
+      "sha256": "78cf92a949c1ee99060148a8a31a2d7a86c547ea30d2b17af83fd42121bc04b5",
+      "files_verified": 134
+    }
+  ],
+  "case_count": 12,
+  "scenario_count": 13,
+  "real_model_scenarios": 5,
+  "test_driver_fault_scenarios": 8,
+  "confirmed_model_calls": 20,
+  "regrade_model_calls_added": 0,
+  "automatic_retries": 0,
+  "original_frozen_grader_result": {
+    "PASS": 8,
+    "FAIL": 5
+  },
+  "corrected_frozen_acceptance": {
+    "PASS": 13,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "quality_scope": "EVIDENCE_SELECTION_ONLY_AND_SERVER_STATE_DERIVATION",
+  "model_predicts_completion_status": false,
+  "tests": {
+    "prior_full_default_passed": 653,
+    "prior_full_default_skipped": 13,
+    "current_s2c_phase_passed": 243,
+    "frozen_integrity_passed": 62,
+    "independent_regrader_passed": 26,
+    "fresh_zip_tests": "NOT_RUN_USER_REQUEST"
+  },
+  "prototype_continuation_approved": true,
+  "external_business_writes": false,
+  "new_zip_created": false,
+  "files": [
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/ARCHITECTURE.md",
+      "bytes": 6234,
+      "sha256": "b272ab98f0faf8ca9bc8f63a963422d50d487ba16e8a9ce2246f01dd5a209adf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/REVIEW_ENTRY.md",
+      "bytes": 2163,
+      "sha256": "1f2d856880d7af83b5165af7570b533de1d0d76d40e7819c0a011035475fafb6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/DELIVERY.md",
+      "bytes": 6932,
+      "sha256": "dd1161084203204510050ac3b6732199774bc09fa08f81db4e55e21d341d7db4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/0064c4f2-ec86-4079-9c61-76aed1449021.json",
+      "bytes": 2355,
+      "sha256": "4c78301038f84b9a34c62ee58f5aa38bdaa1c3dd5ec22c5c2dd811f721c6151c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/072ea30d-77e1-44a8-a344-a019eb5d66cc.json",
+      "bytes": 2775,
+      "sha256": "c84a6f583aaaf2501c33ef1003849a3e8738d55f6eccef347ec084b2e3550a0a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/182ccb04-e784-41ed-9f2b-95fbf041cfea.json",
+      "bytes": 3575,
+      "sha256": "682a1d3caa67dd4e725d624dbd8e0b1a2a34ab7e68aefe8eec8c28665712db17"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/1b9a70a2-eaf5-4ff7-b3ab-8ef2b0a2079b.json",
+      "bytes": 2682,
+      "sha256": "3013ad28d07720c2299900a96140f1b12b6f0524fdfcc4643e4480d033d55471"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/1cabd9a3-c3d2-4a40-93dc-0989d1ce9ae1.json",
+      "bytes": 2406,
+      "sha256": "1681e59905d9fbbe6afca09077a2f9543b5081830c764d0d29fa40c5a8009bb6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/47436859-1c0f-434d-9faa-fe21ad38f165.json",
+      "bytes": 3152,
+      "sha256": "de2eb9e7d39110e9ad0fa8b36b3cda941f7f9a0bc3b8267e772f87a19dd44d52"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/7224920f-d017-457b-a361-136b71b8df40.json",
+      "bytes": 3068,
+      "sha256": "1783e0e274d072259aaacd644ff599d4deeb9d29670f3b9db4ad220b5eef4021"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/753827b8-fdb0-4ead-a810-6487e1fe0cf3.json",
+      "bytes": 2733,
+      "sha256": "305a0643baa0a133526e0d1af2d297502b735c9ca4605244b50b74ab6291f402"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/75806101-5c35-4ef8-a167-a9d34874e16d.json",
+      "bytes": 2448,
+      "sha256": "5d42c7fb6e42375937798ebc3e059e433a4efcd8fddb18de7b9b4cf7daef4902"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/7e13313a-0db8-4041-8ed8-645043d5b19c.json",
+      "bytes": 3584,
+      "sha256": "ed4056b28271b7b054701a32aac15ff62e2580b9a95bc26834c9ea0e3c6db4bd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/85207f02-1ada-44c8-a10e-cb388689d1fc.json",
+      "bytes": 3077,
+      "sha256": "e8248cdf99dbc39f6abf9a4baaa6840e026986cfd977dd323703325677741652"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/85aa65e4-b874-4628-bcbf-bcd791f55c19.json",
+      "bytes": 2724,
+      "sha256": "1609778ef099f0727dd06241c0fbb62c18058d4620fe30467c520459cd9b3096"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/87f7c3a7-5295-452d-9793-b2410e17cdfb.json",
+      "bytes": 2825,
+      "sha256": "eb31a2eb24ef6dc1769cf2e20060d55e72b58ac32bbf323149d062cee5537049"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/a375cf72-e279-4e5a-9be5-9c2c45332abe.json",
+      "bytes": 3496,
+      "sha256": "64ea8c415b78d69c6bcefc01c30eb2b0598414121a1da0dca08de7372e911d74"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/c8215903-7d33-43a2-b0a0-fedac4a517e2.json",
+      "bytes": 3155,
+      "sha256": "bbfc4a87dccb17649760991e9336404fd69a618147b0fbc2d7c36fa9f85dee72"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/c84bab20-6c99-4946-b64b-a757e663eefd.json",
+      "bytes": 3685,
+      "sha256": "30fd9008bde834fec50236571abc3d0a4f282e644a91be84548812a21b58c325"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/cbb8796d-ef5f-4029-9405-e67fba71db32.json",
+      "bytes": 3439,
+      "sha256": "2b94681b8a42f44ecee35be49e875dac3f9a40a7b8ff22ba3026701129deb034"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/d3476276-851f-4add-8e9c-fb38e1acfbd3.json",
+      "bytes": 3715,
+      "sha256": "9920e512014c4bd41847a535c383023dc5c7a0900912b2fc77c5deb3eb1000b7"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/d95133ec-4b84-4d24-8951-7f5f9cc66a67.json",
+      "bytes": 2954,
+      "sha256": "10f7420ea785d65b0cf2e59ced32beb7996b99d36aee693dff8cdea1d8a8dd5c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/call-freezes/e4f65087-54b8-4e86-bb77-68868d87425e.json",
+      "bytes": 2397,
+      "sha256": "2c6a1d7b3efbd41fe84bc5f4d991cfd5180bd8ded7139e98290bd207f4b24e94"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/completion.json",
+      "bytes": 387,
+      "sha256": "a71fe4f941fc1b293d5028e325c4db7947350052fea84dce41f040e922d8a4df"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/context-freezes/M01-blocked.json",
+      "bytes": 7131,
+      "sha256": "009598342d2c764af3ad430a76c442b45626fb693f1320163bdef89ea63f77ab"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/context-freezes/M01.json",
+      "bytes": 6943,
+      "sha256": "d1f9fe640c0d48e2f996548e0d2e22b48a37bba0e8096caedef6b32461ecde68"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/context-freezes/M02.json",
+      "bytes": 6919,
+      "sha256": "0c8d595febd0cc3bd17e22310288f775533910fff288bd8ccd95ce689b45ef29"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/context-freezes/M03.json",
+      "bytes": 10403,
+      "sha256": "0a05980a89f97a7f313a2ff58201b30c72a654558ca1eddcad130ceb4285c9cf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/context-freezes/M04.json",
+      "bytes": 8128,
+      "sha256": "da170e1e4053920ea78ad2e29c3d180c2a4f76a1590a50176a4517a77b674ac2"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/experiment-freeze.json",
+      "bytes": 41597,
+      "sha256": "73c71cc8ca5297c1d2cecae875edc82a2ae5b705ba4418e78ca4eaf75d81f921"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M05.json",
+      "bytes": 5182,
+      "sha256": "78d2b7146088f02729244fbe06540ab4cede23a4844491e8f2f5df4a05b9d936"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M06.json",
+      "bytes": 932,
+      "sha256": "30d4eee244760239d6f3e53fdf526a58819135a1866fa146b2cdf396865babe3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M07.json",
+      "bytes": 10727,
+      "sha256": "393c8f51afa8b367966bdd46c2618297b6e8890c861a7e6fda3cfac08bdd7f03"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M08.json",
+      "bytes": 10695,
+      "sha256": "84a5b4f28c7ac131a5040e1f3fa4a155bdadb763d185a74e5a684f97fcd1b05a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M09.json",
+      "bytes": 10758,
+      "sha256": "b657451c3ffa688ce4b82add6502fbdb2463010534defbffcd3176e84ad7277f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M10.json",
+      "bytes": 10241,
+      "sha256": "2246e56f2ec04b6893ea56235dd49020e9bfe9d52e42b15ea85e1336579622e6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M11.json",
+      "bytes": 25291,
+      "sha256": "e4cf333a31dc2179aa5055eaaddc30c0e6f4c9bd3441aabe1df4f68a29ae92fc"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/M12.json",
+      "bytes": 10168,
+      "sha256": "2e40d890e897be6d5e7a39c86bf746edd937f7eb0cb4cb3c2d510e8c7ba61301"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/faults/summary.json",
+      "bytes": 93290,
+      "sha256": "1ec52978bf5d8f2d46fb70a67db8f414c28fb7c16eb0ecba5398be9e39273e04"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/frozen-acceptance-summary.json",
+      "bytes": 158691,
+      "sha256": "60b741751a821265439819778d87c0323f422cb612547e9710b5587afbf855e1"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/M01-blocked.json",
+      "bytes": 10954,
+      "sha256": "6364a483cdba11c4a770d1c323336500cd8cfa3d735ad8f9327abe94e977aecb"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/M01.json",
+      "bytes": 10735,
+      "sha256": "9b205a9b78e7bc552459b9a8bc7576d7a9f01aa2f6ce0336f3b479a8a7cff540"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/M02.json",
+      "bytes": 10722,
+      "sha256": "97ed980869ee871dae68dc2af05ac097092afa45a234ac207ce09d25f69bce0c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/M03.json",
+      "bytes": 14386,
+      "sha256": "5d453bd9e00b7ad063453e8f0bf2b82402740a20125832a1b96ad61253bd945f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/M04.json",
+      "bytes": 11982,
+      "sha256": "b9cb2733c67abb933cece82bb19dbb9155bbe7aaef84f1c69bd2d3faa31bbcb8"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/plan.json",
+      "bytes": 29361,
+      "sha256": "c778f83b7a9d3497fa1f82e576421f84ca2ab607815ad2e16323cf6fd5f082ca"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/live/summary.json",
+      "bytes": 66570,
+      "sha256": "aa69e80c44f9a6c0e9e65d1b2e886b075a1dca502408a4c835152721cedab00d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/preflight.json",
+      "bytes": 325,
+      "sha256": "fd637220a39dc11dda7482eeb876f2f630edef38a5229cc2d08b65d9b7bd5c4b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/raw-chains/M01-blocked.json",
+      "bytes": 241792,
+      "sha256": "b3bb8094282cad29cd154115c940ec340cc3a59b3c44e959d0efd3a171722a25"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/raw-chains/M01.json",
+      "bytes": 244691,
+      "sha256": "0d487569d3e217794d95b91b71eda077711139963cba3b2ea65109d7c40b3cf4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/raw-chains/M02.json",
+      "bytes": 237140,
+      "sha256": "7236e45dda1808b8809eb0c46e34f9d8ef13ef5f5d50f7e020f75f8bae981d44"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/raw-chains/M03.json",
+      "bytes": 284938,
+      "sha256": "d9c98bd40163adedb52b5d093e915332b3390a9a12bbcabec1fdada7680167ac"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/raw-chains/M04.json",
+      "bytes": 264414,
+      "sha256": "d9f05617aa4b62dc7fb5ebf2f30e11a5eb19c664e00ada469dc84765b7935cc8"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/frozen-grader-binding-investigation.json",
+      "bytes": 6526,
+      "sha256": "48df7873efe40b504a2acc963dd68bf211b65fe9909aac414cc5b6b0e4510021"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/frozen-integrity.xml",
+      "bytes": 10213,
+      "sha256": "becc0c974e036440fa8abb614a6454312eb48ef4d2eec37456c51f671879c523"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/full-default-final.xml",
+      "bytes": 95433,
+      "sha256": "5a4cd615a84f82a20fd08db792630f0093f69bac18b84728f291e26c546eda4d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/historical-seals-after.json",
+      "bytes": 783,
+      "sha256": "a0775e99ab3558b097c690569ba0ac5fe9993643e2a7b0bda7f9c1a3dad74b7c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/historical-seals-before.json",
+      "bytes": 811,
+      "sha256": "7de9079a8043357cd7fecaabd2d560b70e888846c6a9757352925cd0d422a275"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-historical-seals-independent-review.json",
+      "bytes": 852,
+      "sha256": "3c20645549b3cc29db5d60cdbc4a644ab4d72b9e79b9be94ddb0a716465bb2cc"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-closure-review.xml",
+      "bytes": 1041,
+      "sha256": "d87baa5a52fcd4ad3bc0cbafe1a451b1f671ecf1001ce6a6a0a0a9093af4f03d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-core-review.xml",
+      "bytes": 10194,
+      "sha256": "251233e0811970076f77d79cd079edab0334248f18c619f47967b31d977c1215"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-evaluator-closure.xml",
+      "bytes": 2084,
+      "sha256": "aebe776b1314c60f62915dadc6493b77d1df86e4b5d56ba113608c1046e38134"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-evaluator-positive.xml",
+      "bytes": 871,
+      "sha256": "74ff9c1e548eb41ddb90f2a9a02d3ba0548bee9d18dfbe0e076ed25287abb8ad"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-integration-review.xml",
+      "bytes": 14580,
+      "sha256": "dc13623a5a9e6b0ed622fd75f93d196e7da92306f25019c4404244d07532a8af"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/forgeflow-s2c-independent-review-final.json",
+      "bytes": 5311,
+      "sha256": "0ab3a58fee6f64b7884c81fae084f1e9d418173eac161d9578c62974c54876cf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/independent-real-binding-proof.json",
+      "bytes": 4480,
+      "sha256": "e1f7706ec16e486aa89dbcfa807911792147d2850c0a24c7aebc440cd8f0f7ac"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/regrade-independent-proof.json",
+      "bytes": 666,
+      "sha256": "9d9432277f000a42b692a13022775b09a8ecabc9587c2570c5f6a1a5a43122aa"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/regrade-independent-tests.xml",
+      "bytes": 3799,
+      "sha256": "5df313378c952b6dd8d65d740a562a2f456a38e01d8dfcc7602401d482f40b33"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/typed-review-v1-final.json",
+      "bytes": 2063,
+      "sha256": "3bf0ad7c58f38a12bfda9e499cf807b7a3d47e70a422ef39260ef1fd20ddfc14"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/typed-review-v1-race-before.json",
+      "bytes": 443,
+      "sha256": "ecdc595b3939c8f4545d870bea402d455a0adb72c4cae2d6ccd819463d0fa556"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/typed-review-v1-race-closure.json",
+      "bytes": 180,
+      "sha256": "369c1b955d50c828b8ddec4276690b65b882e1effbf33ce84f073fa26a22018b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/independent-review/typed-review-v1-tests.xml",
+      "bytes": 5141,
+      "sha256": "ccecb386d81835417b9fade7ffb6aaa0bfc04a5de66253fd8f0f6399de739eb6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/live-persisted-replay-validation.json",
+      "bytes": 8074,
+      "sha256": "eaa852e51f2d144286cfbbbd1246bde016952778468e848da6539c6cf512775c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/manual-read-demo.json",
+      "bytes": 1341,
+      "sha256": "e1acd7a61ebbd904c72f4886e22781536c1a7e7aed7910150b488ed64623ea48"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/M01-blocked.json",
+      "bytes": 14134,
+      "sha256": "237638fb66046c84ac62c31d141628c9d181c66a98fadabe62332b23bf68dc8d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/M01.json",
+      "bytes": 13915,
+      "sha256": "5d32772673d5773516bd2515ffbfa641cacab473e80473f2fbbf22078a2c0d72"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/M02.json",
+      "bytes": 13902,
+      "sha256": "d1aaed27d933443b287cbdf82f0d0063ebe3eaf36dadc62ed65c54805bf11c08"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/M03.json",
+      "bytes": 17566,
+      "sha256": "a0b4147c1603dea973b4f246e7632c73f9fdd2227c1377e05c690248d299a865"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/M04.json",
+      "bytes": 15162,
+      "sha256": "b037bcf6553d3d840896a6edaa28717df5144c338e4b137d0707637cb67d9ca5"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/frozen-acceptance-summary.json",
+      "bytes": 176312,
+      "sha256": "5e33dd4b866136e84c8fbf4652675c94444106c4a46915cc18e0c01cb67bea13"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/review-freeze.json",
+      "bytes": 11132,
+      "sha256": "466e6e148c61e4b3d5d9927714bef02068e38d07fe70f9de6b2b149992558339"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/summary.json",
+      "bytes": 280735,
+      "sha256": "9c418e367db7ed578b200847aafa0d2d18f3f60e11871a5c71497922c2dbe48e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/s2c-current-all.xml",
+      "bytes": 33991,
+      "sha256": "59a3645cfd178abe339e21d0f9bdf3c8da044ab39743b199b80f41671e132322"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/workflow-final.xml",
+      "bytes": 1835,
+      "sha256": "7024c4d7c376c8c57f6691e4008f96e687f3073effc09061189d511539f3db9b"
+    },
+    {
+      "path": "docs/13-s2c-state-and-derived-check.md",
+      "bytes": 6234,
+      "sha256": "b272ab98f0faf8ca9bc8f63a963422d50d487ba16e8a9ce2246f01dd5a209adf"
+    },
+    {
+      "path": "scripts/s2c_evaluate.py",
+      "bytes": 36514,
+      "sha256": "5e07044d7815c8c8f73a00544af26a38380d675cd98c5558f8870c6417d443c6"
+    },
+    {
+      "path": "scripts/s2c_live_evaluate.py",
+      "bytes": 9654,
+      "sha256": "21a87f87ccd240fae113660d658c209c58a78a7a00cac3740dbf220ff28afacc"
+    },
+    {
+      "path": "scripts/s2c_regrade.py",
+      "bytes": 23447,
+      "sha256": "bdc5d01679d731b530608ad4024b98c51a50beadadfb7526a2d0ce8a1414dea4"
+    },
+    {
+      "path": "scripts/s2c_typed_validate.py",
+      "bytes": 16588,
+      "sha256": "c29fef6fc4cb06757e9f4eff1d192899f63312b9f836dbd597fbf46b56eb6014"
+    },
+    {
+      "path": "scripts/s2c_validate_evidence.py",
+      "bytes": 8099,
+      "sha256": "259ba12e130fb8cdd1f1e8f166948a831948c1c27bf4ebd0b99c730b2b30ffee"
+    },
+    {
+      "path": "scripts/start_s2c_api.py",
+      "bytes": 4324,
+      "sha256": "c8da1628214ce2fec228bc7609345b2f101b0f40fb310b2477765cf6372c2d8a"
+    },
+    {
+      "path": "skills/pm-evidence/SKILL.md",
+      "bytes": 508,
+      "sha256": "ff307e6ad8c7a196aa57c714737178875e00ce22c8ac57edb73b5f62bad79bc1"
+    },
+    {
+      "path": "skills/supervisor-evidence/SKILL.md",
+      "bytes": 532,
+      "sha256": "099b0b3afe1a528e8c715099f4ee370889abee642d9532108d7ed5a682a4b3cc"
+    },
+    {
+      "path": "src/forgeflow/s2c_api.py",
+      "bytes": 2739,
+      "sha256": "e78bc6e6aa6078f00152b1f26c76c5e2beae4990e96fdb2fc7d8b04e656bc642"
+    },
+    {
+      "path": "src/forgeflow/s2c_checks.py",
+      "bytes": 27742,
+      "sha256": "fac9802338af67475704d85600270cb290fe8834614703273a902892192596f7"
+    },
+    {
+      "path": "src/forgeflow/s2c_cli.py",
+      "bytes": 3272,
+      "sha256": "a7f5fe3013c800fdbb8392edf08165b75ac14a2849d8aea9274fa831894164a6"
+    },
+    {
+      "path": "src/forgeflow/s2c_context.py",
+      "bytes": 10662,
+      "sha256": "7aed59ac1f95dabd958c1c3e0d5e042b144aca94def92bb086122203ddffc4be"
+    },
+    {
+      "path": "src/forgeflow/s2c_contracts.py",
+      "bytes": 7864,
+      "sha256": "79ff4cefd59da846480cf416a2b1716b2c2a5ebc0ea713ee130b7a20a7f62f30"
+    },
+    {
+      "path": "src/forgeflow/s2c_runtime.py",
+      "bytes": 4353,
+      "sha256": "ea983314bc9ea11340b05e4f05b3b1e3bbc6c1cb119ade387f603ae47f36af2e"
+    },
+    {
+      "path": "src/forgeflow/s2c_store.py",
+      "bytes": 9485,
+      "sha256": "16d24b7af16f5409b96852b33a66f13fa04beb4245ce4d5f0c123a7ae488e643"
+    },
+    {
+      "path": "src/forgeflow/s2c_workflow.py",
+      "bytes": 9949,
+      "sha256": "bdef86a3e4f031c8a00a4b8137fefb312f95eca90f7b294536cb1ab233032eb5"
+    },
+    {
+      "path": "tests/test_s2c_checks.py",
+      "bytes": 19110,
+      "sha256": "4483ad2ebeaca5041fccaecc73f8c49267409bc7b5832446788fbf90937b0fe9"
+    },
+    {
+      "path": "tests/test_s2c_context.py",
+      "bytes": 18972,
+      "sha256": "4d1017fc5fceaed74bc25f4665ec965297868a720257c7c0050da16d81747280"
+    },
+    {
+      "path": "tests/test_s2c_contracts.py",
+      "bytes": 5596,
+      "sha256": "8f93dbcbf888ec320237532adec3e8879edb11a89174417e1f544eca3a4f4601"
+    },
+    {
+      "path": "tests/test_s2c_evaluate.py",
+      "bytes": 29028,
+      "sha256": "807c557e8a247b5dfe5d270e5dd68fb00ac4bcda5822a8e94472348011a2f239"
+    },
+    {
+      "path": "tests/test_s2c_live_evaluate.py",
+      "bytes": 5421,
+      "sha256": "f50291e9418c9acf75a0ef3883db1f4fdb5ea1bc3bb8ef64c0947f101808ca5c"
+    },
+    {
+      "path": "tests/test_s2c_regrade.py",
+      "bytes": 12151,
+      "sha256": "63f7cccb4d22664007e6348ceccba538dd625d5165a641c2f79edf67751b451d"
+    },
+    {
+      "path": "tests/test_s2c_store.py",
+      "bytes": 12771,
+      "sha256": "6d5903e3e6b99777963a15d2f4aa777d2aafcf165ebcf8cedf10a08151365739"
+    },
+    {
+      "path": "tests/test_s2c_typed_validate.py",
+      "bytes": 10714,
+      "sha256": "1188a6d8f25ec02a2f78ba9b18a866936ca360b47f47debcb208aabc7f14ec32"
+    },
+    {
+      "path": "tests/test_s2c_workflow.py",
+      "bytes": 9211,
+      "sha256": "eda1525a361035396f3301a74be073e6af3fa2ab7ff794ef68f7098dcdb773c2"
+    }
+  ]
+}

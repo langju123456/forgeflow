@@ -1,0 +1,32 @@
+{
+  "accepted_as_model_report": false,
+  "analysis": null,
+  "analysis_status": "INCOMPLETE",
+  "automatic_retries": 0,
+  "case_id": "M06",
+  "checked_application_scope": "UNCHANGED_POLICY_AND_PROVIDER_FAULT_BOUNDARIES",
+  "cost_microusd": null,
+  "durable_execution_state": null,
+  "evidence": {
+    "approval_decisions": 0,
+    "approval_error": "HUMAN_REVIEW_REQUIRED"
+  },
+  "fault_appended_to_prompt": false,
+  "full_frozen_gold_status": "PASS",
+  "kind": "policy_fault",
+  "outcome": "DENIED",
+  "parent_check_provenance": "TEST_DRIVER_NOT_LIVE_DOCKER",
+  "provenance": "TEST_DRIVER",
+  "real_model_calls": 0,
+  "scenario_id": "M06",
+  "security_invariants": {
+    "no_approval_decisions": true,
+    "no_new_business_receipts": true,
+    "no_stage_transition": true,
+    "parent_unchanged": true,
+    "technical_gate_unchanged": true
+  },
+  "status": "PASS",
+  "test_driver_dispatches": 0,
+  "usage_state": "NOT_DISPATCHED"
+}

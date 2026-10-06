@@ -1,0 +1,38 @@
+{
+  "schema": "FORGEFLOW_LOCAL_PROVIDER_CONFORMANCE_V1",
+  "checked_at_utc": "2026-10-06T04:14:24.270290+00:00",
+  "execution": "REAL_OLLAMA_LOCAL_SYNTHETIC_GENERATION",
+  "authorization": "User continuation request; existing pinned local model, synthetic data only",
+  "input_hash": "e8996f0a66518ca1191408d2ced5296375c00f6830ac59993f713324f5073457",
+  "schema_valid": true,
+  "reply": {
+    "status": "SUCCEEDED",
+    "content": {
+      "value": 1
+    },
+    "content_utf8": "{\n  \"value\": 1\n}",
+    "model": "qwen3:8b",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "actual_model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 52,
+      "output_tokens": 10,
+      "cost_microusd": null,
+      "state": "CONFIRMED"
+    },
+    "elapsed_seconds": 6.341317,
+    "error_code": null,
+    "dispatched": true,
+    "completion_confirmed": true,
+    "input_count_method": "CONSERVATIVE_UTF8_BYTE_UPPER_BOUND",
+    "input_token_bound": 733,
+    "transport": "OLLAMA_LOCAL_HTTP"
+  },
+  "unresolved_call_id": null,
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "global_daemon_changes": 0,
+  "automatic_retries": 0,
+  "scope_limitation": "One tiny synthetic structured-output conformance, not LLM analysis quality, throughput, cloud configuration attestation or production readiness."
+}

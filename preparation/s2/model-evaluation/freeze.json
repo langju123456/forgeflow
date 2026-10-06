@@ -1,0 +1,36 @@
+{
+  "schema_version": "forgeflow-eval-freeze-v1",
+  "freeze_state": "FROZEN_BEFORE_ANY_MODEL_OR_ADAPTER_RUN",
+  "pre_run_review_revision": 2,
+  "pre_run_review_corrections": [
+    "M03 model-visible derived context",
+    "Explicit S2A role/citation/fault invariants",
+    "BLOCKED variant with complete scenario validation",
+    "Independent phase identities"
+  ],
+  "superseded_pre_run_dataset_semantic_hashes": [
+    "b93f7a13efdbd2d81f32dbc1015408a893044232cff22e9e82bece19794cf3af",
+    "3c851665c96df2f8d305b47d79fef54f10a7c5322dfae3d220e9ac8597d848e0"
+  ],
+  "dataset_files_sha256": {
+    "cases.json": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+    "README.md": "52fb786ca6426b7b77600b3f769709cc69b33acb0527b45ad2edfc60b01c4851",
+    "checkfixtures.py": "89c803a3ad039c265cbdfefac620916389859d4b8965e0ea0217ccfee37e8350",
+    "test_checkfixtures.py": "eb8fc8ed9f31ca09dcd173c4e99a2bf2ad137e9853a4267cc3d536b915649817"
+  },
+  "source_bindings": {
+    "files_sha256": {
+      "fixtures/aurora-pass.json": "a5740e5b48c8740ea5afb06e0955f9a4f2cf2eea453f8f5a8c756d8b5fc43a4a",
+      "fixtures/aurora-blocked.json": "7e340e059f3b976dbeba890b5340ef0e49677f3ecb2b373614f5df461d6a859f",
+      "fixtures/aurora-unknown.json": "fc42f712b70bd1a7bc93ba1dbc915e541e886f22e8b6bbc88b51de822b44bc2f",
+      "fixtures/aurora-timeout.json": "a5740e5b48c8740ea5afb06e0955f9a4f2cf2eea453f8f5a8c756d8b5fc43a4a",
+      "src/forgeflow/policy.py": "94044987a4f48afe5e86e9d0576f3ba5d71471743d9ef3134d263c7c399fe636",
+      "src/forgeflow/gate.py": "c5bac00ed05780bd9fd11c52102357909c88b080e0c7500d88b79f43a67a145d",
+      "src/forgeflow/templates.py": "3bf79d80fc27238705fa9053caf252bcf07da38762f12621c3cd2c66ca2c8a6e"
+    },
+    "policy_hash": "66be935ddeef32c5a1950a98d2a9f9fbb7b63cd5f6c87ba9f2999fc1824385cc",
+    "rule_hash": "18c790986886cdf0fe3a6498e427f62bdd4ba74493e704aaad6bf800bd1530c6",
+    "evt_template_hash": "92c8f7496fc15eb9de506baf17fd11fc288ee0cb7e239b4aac0d11549bac45c7"
+  },
+  "model_evaluation": "NOT_RUN"
+}

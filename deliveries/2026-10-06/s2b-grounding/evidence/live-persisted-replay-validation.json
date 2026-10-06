@@ -1,0 +1,226 @@
+{
+  "status": "PERSISTED_REAL_CHAINS_REAUTHORIZED_AND_REPLAYED",
+  "database": "postgresql",
+  "new_table_foreign_keys": {
+    "grounding_records": [
+      {
+        "name": "grounding_records_tenant_id_workspace_id_project_id_analys_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "analysis_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "analysis_runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "grounding_records_tenant_id_workspace_id_project_id_call_i_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "call_id",
+          "analysis_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "analysis_calls",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id",
+          "analysis_id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ],
+    "raw_provider_replies": [
+      {
+        "name": "raw_provider_replies_tenant_id_workspace_id_project_id_ana_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "analysis_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "analysis_runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "raw_provider_replies_tenant_id_workspace_id_project_id_cal_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "call_id",
+          "analysis_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "analysis_calls",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id",
+          "analysis_id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ]
+  },
+  "api_health": {
+    "identity": "DEV_ONLY",
+    "prompt_revision": "grounded-selection-v2",
+    "model_task": "CONSTRAINED_EVIDENCE_SELECTION",
+    "automatic_business_actions": false,
+    "process_id": 45069
+  },
+  "cases": [
+    {
+      "scenario": "M01",
+      "analysis_id": "a1c3434f-446c-457c-b572-b052d837844b",
+      "stored_calls": 4,
+      "raw_journals": 4,
+      "grades": 4,
+      "fresh_process_and_http_replay": "IDENTICAL_NO_NEW_CALLS",
+      "http_guards": {
+        "unauthenticated": 401,
+        "foreign_tenant": 404,
+        "forged_role": 422
+      },
+      "actual_input_tokens": 1605,
+      "actual_output_tokens": 410,
+      "provider_time_ms": 36462,
+      "technical_gate": "PASS",
+      "stage": "PROTOTYPE",
+      "pending_approvals": 2,
+      "business_receipts": 0,
+      "scan": "PASS",
+      "sandbox_cleanup": "REMOVED",
+      "actual_mcp": "RECORDED",
+      "parent_audit": "VERIFIED"
+    },
+    {
+      "scenario": "M01-blocked",
+      "analysis_id": "e1fc3068-6878-4e43-8c06-e001933804b4",
+      "stored_calls": 4,
+      "raw_journals": 4,
+      "grades": 4,
+      "fresh_process_and_http_replay": "IDENTICAL_NO_NEW_CALLS",
+      "http_guards": {
+        "unauthenticated": 401,
+        "foreign_tenant": 404,
+        "forged_role": 422
+      },
+      "actual_input_tokens": 1783,
+      "actual_output_tokens": 468,
+      "provider_time_ms": 35586,
+      "technical_gate": "BLOCKED",
+      "stage": "PROTOTYPE",
+      "pending_approvals": 1,
+      "business_receipts": 0,
+      "scan": "PASS",
+      "sandbox_cleanup": "REMOVED",
+      "actual_mcp": "RECORDED",
+      "parent_audit": "VERIFIED"
+    },
+    {
+      "scenario": "M02",
+      "analysis_id": "3535615f-3f53-4197-a926-881686a91102",
+      "stored_calls": 4,
+      "raw_journals": 4,
+      "grades": 4,
+      "fresh_process_and_http_replay": "IDENTICAL_NO_NEW_CALLS",
+      "http_guards": {
+        "unauthenticated": 401,
+        "foreign_tenant": 404,
+        "forged_role": 422
+      },
+      "actual_input_tokens": 1766,
+      "actual_output_tokens": 470,
+      "provider_time_ms": 53965,
+      "technical_gate": "UNKNOWN",
+      "stage": "PROTOTYPE",
+      "pending_approvals": 1,
+      "business_receipts": 0,
+      "scan": "PASS",
+      "sandbox_cleanup": "REMOVED",
+      "actual_mcp": "RECORDED",
+      "parent_audit": "VERIFIED"
+    },
+    {
+      "scenario": "M03",
+      "analysis_id": "b10cb1fa-553e-4e82-b28a-ae520a354753",
+      "stored_calls": 4,
+      "raw_journals": 4,
+      "grades": 4,
+      "fresh_process_and_http_replay": "IDENTICAL_NO_NEW_CALLS",
+      "http_guards": {
+        "unauthenticated": 401,
+        "foreign_tenant": 404,
+        "forged_role": 422
+      },
+      "actual_input_tokens": 1930,
+      "actual_output_tokens": 524,
+      "provider_time_ms": 70462,
+      "technical_gate": "PASS",
+      "stage": "PROTOTYPE",
+      "pending_approvals": 2,
+      "business_receipts": 0,
+      "scan": "PASS",
+      "sandbox_cleanup": "REMOVED",
+      "actual_mcp": "RECORDED",
+      "parent_audit": "VERIFIED"
+    },
+    {
+      "scenario": "M04",
+      "analysis_id": "c24f58b0-de75-4147-afb4-2b4e6dd012e9",
+      "stored_calls": 3,
+      "raw_journals": 3,
+      "grades": 3,
+      "fresh_process_and_http_replay": "IDENTICAL_NO_NEW_CALLS",
+      "http_guards": {
+        "unauthenticated": 401,
+        "foreign_tenant": 404,
+        "forged_role": 422
+      },
+      "actual_input_tokens": 1509,
+      "actual_output_tokens": 325,
+      "provider_time_ms": 52366,
+      "technical_gate": "PASS",
+      "stage": "PROTOTYPE",
+      "pending_approvals": 2,
+      "business_receipts": 0,
+      "scan": "PASS",
+      "sandbox_cleanup": "REMOVED",
+      "actual_mcp": "RECORDED",
+      "parent_audit": "VERIFIED"
+    }
+  ],
+  "new_model_calls_by_this_verification": 0,
+  "external_business_writes": false,
+  "model_quality": {
+    "structural_passes": 5,
+    "semantic_passes": 4,
+    "real_model_calls": 19
+  }
+}

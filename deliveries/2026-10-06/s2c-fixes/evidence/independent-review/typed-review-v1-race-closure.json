@@ -1,0 +1,6 @@
+{
+  "error": "SOURCE_EVIDENCE_CHANGED_DURING_REVIEW",
+  "output_published": false,
+  "regression_closed": true,
+  "fixture_root": "/tmp/forgeflow-s2c-typed-race-closure-ejslm4nu"
+}

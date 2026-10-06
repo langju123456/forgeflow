@@ -1,0 +1,8 @@
+{
+  "status": "RUNNING",
+  "pid": 65879,
+  "url": "http://127.0.0.1:8773/docs",
+  "replaced_own_pid": 65125,
+  "ownership": "PID_COMMAND_CWD_LISTENER_AND_HEALTH_MATCH",
+  "other_project_actions": "NONE"
+}

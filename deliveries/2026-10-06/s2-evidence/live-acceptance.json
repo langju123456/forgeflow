@@ -1,0 +1,159 @@
+{
+  "checked_at_utc": "2026-10-06T05:15:46.463707+00:00",
+  "runtime_chain_status": "THREE_REAL_CASES_EXECUTED_AND_PERSISTED",
+  "provenance": "ACTUAL_POSTGRES_DOCKER_SEMGREP_MCP_OLLAMA_LOCAL",
+  "real_case_model_calls": 12,
+  "cross_process_replay": "SAME_ANALYSIS_SAME_FOUR_CALLS",
+  "cases": [
+    {
+      "fixture": "pass",
+      "run_id": "91fc3349-5da4-4bf2-b091-9a78b5722320",
+      "analysis_id": "893bb66f-f194-497b-8163-32c6892bbd14",
+      "technical_gate": "PASS",
+      "analysis_state": "COMPLETE",
+      "known_validated_calls": 4,
+      "source_reauthorized_read": true,
+      "model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "actual_input_tokens": 2172,
+      "actual_output_tokens": 691,
+      "provider_time_ms": 80596,
+      "actual_read_tool_receipts": [
+        {
+          "tool": "knowledge.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "78a57bfaa2288accba2adfc31b26de0d0a8a897726bf2eaeea70be4bba5abd5d",
+          "top_k": 1,
+          "result_count": 1,
+          "source_refs": [
+            "src_0e2770ae35db4f14c76936a64e2d4ef2"
+          ]
+        },
+        {
+          "tool": "memory.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "bb649be053c0b4458593d4fab2b0e942254e2bf602d5cd9410e4b2a21730cc3e",
+          "top_k": 1,
+          "result_count": 1,
+          "source_refs": [
+            "src_9b94600840c60e4a71ddd1b34e9a6123"
+          ]
+        }
+      ],
+      "parent_audit_verified": true,
+      "analysis_audit_verified": true,
+      "analysis_audit_head": "2fbc3522b9d5f9ac8f1dbf1472291123da667ab6ae70bad1ef25a34d35d861e0",
+      "project_stage": "PROTOTYPE",
+      "pending_approvals": 2,
+      "action_receipts": 0,
+      "mcp_protocol_activity": "RECORDED",
+      "checker_cleanup": "REMOVED",
+      "scanner_result": "PASS"
+    },
+    {
+      "fixture": "blocked",
+      "run_id": "efc9e005-806a-4a01-b2b9-2e6b76a11852",
+      "analysis_id": "8fb7a49b-9ea2-49a5-a85f-4e1f07950159",
+      "technical_gate": "BLOCKED",
+      "analysis_state": "INCOMPLETE",
+      "known_validated_calls": 4,
+      "source_reauthorized_read": true,
+      "model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "actual_input_tokens": 2190,
+      "actual_output_tokens": 703,
+      "provider_time_ms": 127030,
+      "actual_read_tool_receipts": [
+        {
+          "tool": "knowledge.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "529b268ab9771897452c3a3dea52f118251f88e3afba2d271f19b66b2a45a920",
+          "top_k": 1,
+          "result_count": 1,
+          "source_refs": [
+            "src_1d55831023f0f6f898c7c1f743b4459e"
+          ]
+        },
+        {
+          "tool": "memory.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "64bf0e6a413d9f86ff12dc7bde2885007f0a8f54c677d73edd179f8521459566",
+          "top_k": 1,
+          "result_count": 1,
+          "source_refs": [
+            "src_ba0dd2d36b0f2d9ab8f3aa32c1038e49"
+          ]
+        }
+      ],
+      "parent_audit_verified": true,
+      "analysis_audit_verified": true,
+      "analysis_audit_head": "3208b7d0c22e37024a7851c28e4ecc6324d2896413c8c0bb4f43f77571c571ca",
+      "project_stage": "PROTOTYPE",
+      "pending_approvals": 1,
+      "action_receipts": 0,
+      "mcp_protocol_activity": "RECORDED",
+      "checker_cleanup": "REMOVED",
+      "scanner_result": "PASS"
+    },
+    {
+      "fixture": "unknown",
+      "run_id": "d9ac612b-55e6-494a-a1c5-a44edc196692",
+      "analysis_id": "b6b463a8-a554-45fa-a5a6-f36111706bf1",
+      "technical_gate": "UNKNOWN",
+      "analysis_state": "INCOMPLETE",
+      "known_validated_calls": 4,
+      "source_reauthorized_read": true,
+      "model_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "actual_input_tokens": 1962,
+      "actual_output_tokens": 555,
+      "provider_time_ms": 118480,
+      "actual_read_tool_receipts": [
+        {
+          "tool": "knowledge.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "6095de12bfeba37568f3c184d8f13ec8b83e25c65990b048cba66e8500e1aa00",
+          "top_k": 1,
+          "result_count": 1,
+          "source_refs": [
+            "src_3bf278177c7f1363ea6ce48dc9e5f623"
+          ]
+        },
+        {
+          "tool": "knowledge.search",
+          "transport": "IN_PROCESS",
+          "role": "pm",
+          "query_hash": "bf7626f3e804a5316fd7ef11e2dd319e13ed095ea7e8464cf5f4ecd6c54732db",
+          "top_k": 1,
+          "result_count": 0,
+          "source_refs": []
+        }
+      ],
+      "parent_audit_verified": true,
+      "analysis_audit_verified": true,
+      "analysis_audit_head": "91263a92d14a090e0c415a03b2d7add7bcb7202fc77598f785317209f54744d7",
+      "project_stage": "PROTOTYPE",
+      "pending_approvals": 1,
+      "action_receipts": 0,
+      "mcp_protocol_activity": "RECORDED",
+      "checker_cleanup": "REMOVED",
+      "scanner_result": "PASS"
+    }
+  ],
+  "semantic_quality": {
+    "method": "LIMITED_MANUAL_REVIEW_NOT_FULL_MODEL_BENCHMARK",
+    "status": "NOT_FULLY_ACCEPTED",
+    "observed_failure": {
+      "fixture": "pass",
+      "claim": "Unknown evidence status",
+      "source": "aurora-evt-sop v1 general unknown-evidence rule",
+      "reason": "The cited general rule does not establish an unknown measurement in this PASS instance."
+    },
+    "gate_and_action_authority": "IMMUTABLE_DETERMINISTIC_GATE_AND_SEPARATE_HUMAN_APPROVAL"
+  },
+  "frozen_twelve_model_cases": "NOT_EXECUTED_BY_THIS_THREE_CASE_ACCEPTANCE",
+  "production_acceptance": "NOT_ACCEPTED_DEV_ONLY",
+  "external_business_writes": false
+}

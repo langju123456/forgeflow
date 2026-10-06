@@ -1,0 +1,15 @@
+{
+  "reviewer": "sre_ops_contract",
+  "mode": "READ_ONLY_STATIC",
+  "status": "NO_CONFIRMED_P1_P2",
+  "files": [
+    "src/forgeflow/sre_ops.py",
+    "src/forgeflow/sre_api.py",
+    "src/forgeflow/sre_cli.py",
+    "skills/sre-operations/SKILL.md",
+    "tests/test_sre_ops.py"
+  ],
+  "tests_repeated_by_reviewer": false,
+  "runtime_model_network_access": false,
+  "findings": "Scope, human/role and whole-run ACL precede output; events authorized; source/skill/report/payload drift denied; scoped run FK; paused receipt correctly treated as historical; gate and approval separate."
+}

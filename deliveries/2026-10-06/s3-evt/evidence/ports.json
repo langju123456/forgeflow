@@ -1,0 +1,26 @@
+{
+  "current": {
+    "status": "ALREADY_RUNNING",
+    "pid": 65879,
+    "url": "http://127.0.0.1:8773/docs"
+  },
+  "historical": [
+    {
+      "port": 8769,
+      "listener": "OFFLINE"
+    },
+    {
+      "port": 8770,
+      "listener": "OFFLINE"
+    },
+    {
+      "port": 8771,
+      "listener": "OFFLINE"
+    },
+    {
+      "port": 8772,
+      "listener": "OFFLINE"
+    }
+  ],
+  "other_project_actions": "NONE"
+}

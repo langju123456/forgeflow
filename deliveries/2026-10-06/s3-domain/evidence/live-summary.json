@@ -1,0 +1,298 @@
+{
+  "status": "PASS_FIVE_REAL_CHAIN_REPLAYS_FIFTEEN_STATIC_REVIEWS",
+  "cases": [
+    {
+      "scenario": "M01",
+      "run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+      "analysis_id": "f8133625-68c9-41ef-8e0d-ca4054682b31",
+      "historical_actual_model_calls": 4,
+      "linked_model_roles": [
+        "supervisor",
+        "pm"
+      ],
+      "technical_gate": "PASS",
+      "source_run_hash": "909332500aec551f81c885113eef083459b7cf778e210688efcbd97defde8d9f",
+      "parent_and_events": "UNCHANGED",
+      "model_replay": "IDENTICAL",
+      "sre_replay": "IDENTICAL",
+      "business_receipts": 0,
+      "domain_reviews": [
+        {
+          "fixture": "aligned",
+          "key": "s3-domain:M01:aligned:01",
+          "review_id": "11b6e02a-88ee-4511-95d4-e41078d95460",
+          "architect": "PASS",
+          "android_static": "PASS",
+          "android_readiness": "UNKNOWN",
+          "handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "bom-mismatch",
+          "key": "s3-domain:M01:bom-mismatch:01",
+          "review_id": "ba642850-0e11-4a37-9351-9f23f4aa865f",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "missing-exported",
+          "key": "s3-domain:M01:missing-exported:01",
+          "review_id": "f9309cc3-57e1-4533-a7f3-bfc226cde220",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        }
+      ]
+    },
+    {
+      "scenario": "M01-blocked",
+      "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+      "analysis_id": "e1cde7ad-64ef-4dc9-80e0-3779f97b3154",
+      "historical_actual_model_calls": 4,
+      "linked_model_roles": [
+        "supervisor",
+        "pm"
+      ],
+      "technical_gate": "BLOCKED",
+      "source_run_hash": "b90c304773d54c8a59522c65535d4d7051747df5b9855e90be035861f33082ed",
+      "parent_and_events": "UNCHANGED",
+      "model_replay": "IDENTICAL",
+      "sre_replay": "IDENTICAL",
+      "business_receipts": 0,
+      "domain_reviews": [
+        {
+          "fixture": "aligned",
+          "key": "s3-domain:M01-blocked:aligned:01",
+          "review_id": "732011ee-07a5-4999-8515-58bcce424c54",
+          "architect": "PASS",
+          "android_static": "PASS",
+          "android_readiness": "UNKNOWN",
+          "handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "bom-mismatch",
+          "key": "s3-domain:M01-blocked:bom-mismatch:01",
+          "review_id": "3b93dca9-3726-40e4-a1b1-17b5bbaddc23",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "missing-exported",
+          "key": "s3-domain:M01-blocked:missing-exported:01",
+          "review_id": "8ed71d9a-320b-4daf-a736-5d58c1457faa",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        }
+      ]
+    },
+    {
+      "scenario": "M02",
+      "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+      "analysis_id": "27047b96-9f37-481e-b288-182275231ca4",
+      "historical_actual_model_calls": 4,
+      "linked_model_roles": [
+        "supervisor",
+        "pm"
+      ],
+      "technical_gate": "UNKNOWN",
+      "source_run_hash": "61306aeb8ee0b68655e069d5acfe3978d9bae7b923fdc3698e30ca8c6dbd78fd",
+      "parent_and_events": "UNCHANGED",
+      "model_replay": "IDENTICAL",
+      "sre_replay": "IDENTICAL",
+      "business_receipts": 0,
+      "domain_reviews": [
+        {
+          "fixture": "aligned",
+          "key": "s3-domain:M02:aligned:01",
+          "review_id": "311187fb-1d2c-4299-979d-4fbbab48be81",
+          "architect": "PASS",
+          "android_static": "PASS",
+          "android_readiness": "UNKNOWN",
+          "handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "bom-mismatch",
+          "key": "s3-domain:M02:bom-mismatch:01",
+          "review_id": "880d69bb-60ad-44d5-862d-24d4fc9c984b",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "missing-exported",
+          "key": "s3-domain:M02:missing-exported:01",
+          "review_id": "7aca60f7-d0d9-422e-a816-f96670101c4a",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        }
+      ]
+    },
+    {
+      "scenario": "M03",
+      "run_id": "02f831a1-c438-400c-9184-5cfb61779998",
+      "analysis_id": "f3c3f10c-867d-428d-9ec9-73f6a73e7b6c",
+      "historical_actual_model_calls": 4,
+      "linked_model_roles": [
+        "supervisor",
+        "pm"
+      ],
+      "technical_gate": "UNKNOWN",
+      "source_run_hash": "c2b8311ad77569f28d48039a07e5d56bf30ee49ced2f8fe1c017a88650771e6f",
+      "parent_and_events": "UNCHANGED",
+      "model_replay": "IDENTICAL",
+      "sre_replay": "IDENTICAL",
+      "business_receipts": 0,
+      "domain_reviews": [
+        {
+          "fixture": "aligned",
+          "key": "s3-domain:M03:aligned:01",
+          "review_id": "b30fab0e-4839-49cf-82d3-9b8d9ae00b07",
+          "architect": "PASS",
+          "android_static": "PASS",
+          "android_readiness": "UNKNOWN",
+          "handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "bom-mismatch",
+          "key": "s3-domain:M03:bom-mismatch:01",
+          "review_id": "30d62e2f-ae5f-4d0c-b1b9-219ea6f74e7b",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "missing-exported",
+          "key": "s3-domain:M03:missing-exported:01",
+          "review_id": "425528fb-1821-474b-a34a-007f8929d418",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        }
+      ]
+    },
+    {
+      "scenario": "M04",
+      "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+      "analysis_id": "faeb6660-c8bd-4b89-87cd-833f38e6690f",
+      "historical_actual_model_calls": 4,
+      "linked_model_roles": [
+        "supervisor",
+        "pm"
+      ],
+      "technical_gate": "PASS",
+      "source_run_hash": "7fc7472a5f964a6c6da0030b6305b7a3e868fd6ae653cc4741d9eb3fb9903686",
+      "parent_and_events": "UNCHANGED",
+      "model_replay": "IDENTICAL",
+      "sre_replay": "IDENTICAL",
+      "business_receipts": 0,
+      "domain_reviews": [
+        {
+          "fixture": "aligned",
+          "key": "s3-domain:M04:aligned:01",
+          "review_id": "8c547b23-cd30-4de1-9edd-456935db5f3a",
+          "architect": "PASS",
+          "android_static": "PASS",
+          "android_readiness": "UNKNOWN",
+          "handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "bom-mismatch",
+          "key": "s3-domain:M04:bom-mismatch:01",
+          "review_id": "63ec3c4b-6a4c-4c8a-bc2b-4a0e9b382b90",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        },
+        {
+          "fixture": "missing-exported",
+          "key": "s3-domain:M04:missing-exported:01",
+          "review_id": "90f53acd-00ff-436d-a353-35d66338c8e3",
+          "architect": "FAIL",
+          "android_static": "FAIL",
+          "android_readiness": "BLOCKED",
+          "handoff": "DOMAIN_CONFLICT",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE"
+        }
+      ]
+    }
+  ],
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "execution": "RECORDED_REAL_CHAIN_REPLAY_PLUS_NEW_STATIC_ROLE_REVIEWS",
+  "new_model_calls": 0,
+  "new_sandbox_executions": 0,
+  "external_business_writes": false,
+  "health": {
+    "identity": "DEV_ONLY",
+    "revision": "domain-source-contract-v1",
+    "process_id": 62737,
+    "mode": "LOCAL_SYNTHETIC_PROTOTYPE",
+    "model_roles": [
+      "supervisor",
+      "pm"
+    ],
+    "deterministic_sops": [
+      "hardware",
+      "sre",
+      "architect",
+      "android"
+    ],
+    "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+    "automatic_business_actions": false
+  },
+  "negative_http": {
+    "foreign_tenant": 404,
+    "invalid_identity": 401,
+    "changed_fixture_same_key": 409
+  },
+  "domain_foreign_keys": [
+    {
+      "name": "domain_reviews_tenant_id_workspace_id_project_id_run_id_fkey",
+      "constrained_columns": [
+        "tenant_id",
+        "workspace_id",
+        "project_id",
+        "run_id"
+      ],
+      "referred_schema": null,
+      "referred_table": "runs",
+      "referred_columns": [
+        "tenant_id",
+        "workspace_id",
+        "project_id",
+        "id"
+      ],
+      "options": {},
+      "comment": null
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "seal": "deliveries/2026-10-05/manifest.json",
+  "checked_entries": 95,
+  "mismatches": [],
+  "status": "UNCHANGED",
+  "note": "After authorized S2 source changes, differences describe history; do not rewrite the S1 seal."
+}

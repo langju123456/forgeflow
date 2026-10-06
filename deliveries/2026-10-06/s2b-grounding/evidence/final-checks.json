@@ -1,0 +1,40 @@
+{
+  "status": "FINAL_CHECKS_PASSED_WITH_DISCLOSED_MODEL_LIMITS",
+  "at_utc": "2026-10-06T06:36:21.881305+00:00",
+  "ruff": "ALL_CHECKS_PASSED",
+  "current_full_test_suite": {
+    "tests": 483,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 13,
+    "passed": 470
+  },
+  "frozen_integrity_tests": {
+    "tests": 62,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 62
+  },
+  "historical_seals": [
+    {
+      "path": "deliveries/2026-10-05/manifest.json",
+      "sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+      "files_verified": 95
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-manifest.json",
+      "sha256": "bad4bb190ce2916d61ed2c0d86f4df735d782b9e6da3cba524fd009699fc3031",
+      "files_verified": 38
+    },
+    {
+      "path": "deliveries/2026-10-06/manifest.json",
+      "sha256": "b2378605f10b1160910df6d02d3f3745e6559a1ff9561f45b9445421d4d8bdab",
+      "files_verified": 66
+    }
+  ],
+  "actual_persisted_scenarios": 5,
+  "replay_new_model_calls": 0,
+  "audit_chains_verified": 5,
+  "new_model_outputs_after_evaluation": 0
+}

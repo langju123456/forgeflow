@@ -1,0 +1,29 @@
+{
+  "reviewers": [
+    "s2_context_schema",
+    "s2b_grounding_ledger/ledger_review"
+  ],
+  "status": "NO_REMAINING_CONFIRMED_P1_P2_AT_REVIEW",
+  "closed_finding": "P2 raw response commit occurred after sealed call validation; now immutable raw capture precedes finish_call",
+  "review_tests": {
+    "context_workflow_journal": 94,
+    "ledger_and_sealed_store": 98
+  },
+  "source_hashes": {
+    "src/forgeflow/grounded_store.py": "2433e58df0cf4158db1b0a86af488809be17651d53cbeda6e91d87635ed03104",
+    "src/forgeflow/grounded_workflow.py": "c7bf0b2a2b369337da4fd2bdbf5f438df1cccdd05438fdbac87e51c36e510f19",
+    "src/forgeflow/grounded_context.py": "1dd9b7741167d6db22369137187d057b8739960e7f9d2c4270df22b33f797caf",
+    "scripts/s2b_evaluate.py": "e270a9039de330bf1119c53c73fc43d191fbeacb9d8616e13c8e3d26e4eb6613",
+    "scripts/s2b_live_evaluate.py": "102f121ee2a10ab14cf5efda9522fe8e78b9404dc4f24c37df82ed4ea170ca47",
+    "src/forgeflow/grounded_runtime.py": "bd0a5b25be78f9b63c4588e075f4de0ff4e5425786cccf93a421e9b3c47b9020",
+    "src/forgeflow/grounded_api.py": "c3f8b6b178c2426b38ea9cf6880b7d66793a503e6349821a85fb9c001636a30b",
+    "scripts/start_grounded_api.py": "2521050c9b27496f3ac748927032803ddd1da8884b19f1c99a022bdebc640d78"
+  },
+  "scope": "READ_ONLY_NO_REAL_MODEL_OR_EXTERNAL_RUNTIME_CALLS",
+  "limits": [
+    "Privileged database writers remain trusted",
+    "Pre-capture crash remains outcome unknown",
+    "Revoked source content cannot be published; confirmed usage is preserved separately",
+    "M03 derived overlay sandbox not executed; full frozen hardware gold PARTIAL"
+  ]
+}

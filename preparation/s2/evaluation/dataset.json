@@ -1,0 +1,1529 @@
+{
+  "id": "aurora-lexical-heldout-v1",
+  "schema_version": 1,
+  "authoring": "Manually specified synthetic corpus and exact relevance. Human per-question gold review remains pending.",
+  "split_policy": "All questions heldout from S1 scorer implementation. No training/tuning questions or model labels. Do not rewrite gold after seeing results.",
+  "temporal_policy": "Current rows have valid_until null; expired rows use 2000-01-01 UTC. Superseded versions never become new current references.",
+  "top_k": 5,
+  "repetitions": 5,
+  "warmup": "One unmeasured search for each question, after freeze.",
+  "scopes": {
+    "aurora-a": {
+      "tenant_id": "eval-a",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "orion-a": {
+      "tenant_id": "eval-a",
+      "workspace_id": "engineering",
+      "project_id": "orion"
+    },
+    "ops-a": {
+      "tenant_id": "eval-a",
+      "workspace_id": "operations",
+      "project_id": "aurora"
+    },
+    "aurora-b": {
+      "tenant_id": "eval-b",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    }
+  },
+  "principals": {
+    "hw-a": {
+      "scope": "aurora-a",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 1
+    },
+    "hw-low": {
+      "scope": "aurora-a",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 0
+    },
+    "hw-high": {
+      "scope": "aurora-a",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 3
+    },
+    "pm-a": {
+      "scope": "aurora-a",
+      "roles": [
+        "pm"
+      ],
+      "clearance": 0
+    },
+    "hw-b": {
+      "scope": "aurora-b",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 1
+    },
+    "hw-orion": {
+      "scope": "orion-a",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 1
+    },
+    "hw-ops": {
+      "scope": "ops-a",
+      "roles": [
+        "hardware"
+      ],
+      "clearance": 1
+    }
+  },
+  "documents": [
+    {
+      "scope": "aurora-a",
+      "id": "evt-boot",
+      "version": "v1",
+      "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+      "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "thermal-budget",
+      "version": "v1",
+      "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+      "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "npi-bom",
+      "version": "v1",
+      "content": "Bill of materials BOM revision A2 is obsolete for this synthetic project.",
+      "source_hash": "9b1f0ad1031e316d76c3b7eb811ae45bf2c9ce620963db3243a79a356325f142",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "npi-bom",
+      "version": "v2",
+      "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+      "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "ci-smoke",
+      "version": "v1",
+      "content": "Android CI smoke must succeed. Failed build validation blocks the synthetic gate.",
+      "source_hash": "3acbd14e221b1420998d190c371339f4ffdfd67ccaf049bb9aa829206ed174d0",
+      "roles": [
+        "hardware",
+        "sre"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "sre-rollback",
+      "version": "v1",
+      "content": "Rollback uses a signed rollback bundle. Pause the deployment, then restore the previous image.",
+      "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+      "roles": [
+        "hardware",
+        "sre"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "android-flashing",
+      "version": "v1",
+      "content": "Use fastboot flash only with an approved firmware manifest. Verify the image signature before writing.",
+      "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+      "roles": [
+        "hardware",
+        "android"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "evt-entry",
+      "version": "v1",
+      "content": "EVT entry follows PROTOTYPE. A completed run does not alone advance the project stage.",
+      "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "approval-rules",
+      "version": "v1",
+      "content": "Human stage approval is separate from technical PASS. Approval binds immutable parameters, policy, source versions and stage revision.",
+      "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "memory-policy",
+      "version": "v1",
+      "content": "Memory candidate is unconfirmed history. Confirmed decisions require a reviewer, scoped source events and unchanged classification.",
+      "source_hash": "b3d5cdc00abef43aeb291334816b63bd492da08a0dc30162e57029f4bee5a095",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "zh-release",
+      "version": "v1",
+      "content": "发布 检查清单：验证负责人、回滚材料、交付版本以及审核记录。技术检查与人工批准分别记录。",
+      "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "zh-aging",
+      "version": "v1",
+      "content": "老化 测试：重复上电并记录失败次数，标注测试样本、硬件批次和观测时间。",
+      "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "pm-schedule",
+      "version": "v1",
+      "content": "项目排期 应标注项目经理、责任人、里程碑与依赖关系；未解决风险必须记录。",
+      "source_hash": "dce23a144ff2fba5d0cad1ade3ee9af9dce51e751b92711a66a95ee9b1b783c8",
+      "roles": [
+        "pm"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "zh-permissions",
+      "version": "v1",
+      "content": "权限 检查：先验证租户、工作区、项目、角色与密级，再读取资料；猜测标识不能获得访问。",
+      "source_hash": "2ac4918589857e8356e7825f74b3a0c2867b1c7ff852cf1f6eadb78f1d3c81b4",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "thermal-report-2026",
+      "version": "v1",
+      "content": "THERMAL-REPORT-2026 reported thermal peak 82 Celsius for the old build.",
+      "source_hash": "9aa438b284f3dc1ae72ad3aa8f88d388a734b70d7e2c9b3e5b939271859a8f10",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "thermal-report-2026",
+      "version": "v2",
+      "content": "THERMAL-REPORT-2026 current revision reports thermal peak 68 Celsius for build B7.",
+      "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "labnote-boot-pass",
+      "version": "v1",
+      "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+      "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": "Unresolved contradictory source pair with labnote-boot-fail; real Store has no cross-document subject_key."
+    },
+    {
+      "scope": "aurora-a",
+      "id": "labnote-boot-fail",
+      "version": "v1",
+      "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+      "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": "Unresolved contradictory source pair with labnote-boot-pass; neither record is superseded."
+    },
+    {
+      "scope": "aurora-a",
+      "id": "rf-archive",
+      "version": "v1",
+      "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+      "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 0,
+      "valid_until": "2000-01-01T00:00:00Z",
+      "design_note": "Expired exact citation can be structurally valid but is not current evidence."
+    },
+    {
+      "scope": "aurora-a",
+      "id": "pm-risk",
+      "version": "v1",
+      "content": "Supplier risk mitigation uses a contingency schedule and an alternate source. PM-only synthetic planning note.",
+      "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+      "roles": [
+        "pm"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "restricted-cost",
+      "version": "v1",
+      "content": "Restricted synthetic supplier cost table: component price is 42 units. This is a fake classroom record.",
+      "source_hash": "ac99f9ab8a999e1fdbfbdecad6de6e5de01831bc5058b19156520ec43174e240",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 2,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "aurora-a",
+      "id": "secret-decoy",
+      "version": "v1",
+      "content": "EVT entry EVT entry EVT entry EVT entry. Forbidden high-classification decoy; never put this synthetic record in low-clearance context.",
+      "source_hash": "3168745aef222d63fef1a88fb392e31a9c73ce6b34c156c85e1123fe7b6ae40f",
+      "roles": [
+        "hardware"
+      ],
+      "classification": 3,
+      "valid_until": null,
+      "design_note": "Stronger lexical match than evt-entry, tests ACL before ranking."
+    },
+    {
+      "scope": "aurora-a",
+      "id": "private-canary",
+      "version": "v1",
+      "content": "NEVER-APPROVED-P1 synthetic token belongs to a PM-only note. It grants no tool or approval authority.",
+      "source_hash": "ba7930271113fdb76cf284ed1b21931a0b25287215fe69f8ff94042dac13d8a6",
+      "roles": [
+        "pm"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": ""
+    },
+    {
+      "scope": "orion-a",
+      "id": "evt-boot",
+      "version": "v1",
+      "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+      "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": "Same content and ID in another full scope; explicit repository metadata trace checks source scope."
+    },
+    {
+      "scope": "ops-a",
+      "id": "evt-boot",
+      "version": "v1",
+      "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+      "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": "Same content and ID in another full scope; explicit repository metadata trace checks source scope."
+    },
+    {
+      "scope": "aurora-b",
+      "id": "evt-boot",
+      "version": "v1",
+      "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+      "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+      "roles": [
+        "hardware",
+        "pm",
+        "supervisor"
+      ],
+      "classification": 0,
+      "valid_until": null,
+      "design_note": "Same content and ID in another full scope; explicit repository metadata trace checks source scope."
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "split": "heldout",
+      "query": "minimum required boot cycles",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q02",
+      "split": "heldout",
+      "query": "thermal peak",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q03",
+      "split": "heldout",
+      "query": "BOM revision A3",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical",
+        "version"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q04",
+      "split": "heldout",
+      "query": "CI smoke",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "ci-smoke",
+          "version": "v1",
+          "source_hash": "3acbd14e221b1420998d190c371339f4ffdfd67ccaf049bb9aa829206ed174d0",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q05",
+      "split": "heldout",
+      "query": "rollback bundle",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "sre-rollback",
+          "version": "v1",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q06",
+      "split": "heldout",
+      "query": "fastboot flash",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "android-flashing",
+          "version": "v1",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q07",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q08",
+      "split": "heldout",
+      "query": "npi-bom",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id",
+        "version"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q09",
+      "split": "heldout",
+      "query": "thermal-budget",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q10",
+      "split": "heldout",
+      "query": "approval-rules",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "approval-rules",
+          "version": "v1",
+          "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q11",
+      "split": "heldout",
+      "query": "startup endurance",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Startup endurance refers to repeated boot cycles; no matching surface words are guaranteed."
+    },
+    {
+      "id": "Q12",
+      "split": "heldout",
+      "query": "heat ceiling",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Heat ceiling refers to maximum thermal temperature."
+    },
+    {
+      "id": "Q13",
+      "split": "heldout",
+      "query": "parts catalogue",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Parts catalogue refers to bill of materials."
+    },
+    {
+      "id": "Q14",
+      "split": "heldout",
+      "query": "backout instructions",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "sre-rollback",
+          "version": "v1",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Backout instructions refer to rollback."
+    },
+    {
+      "id": "Q15",
+      "split": "heldout",
+      "query": "发布",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q16",
+      "split": "heldout",
+      "query": "老化",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-aging",
+          "version": "v1",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q17",
+      "split": "heldout",
+      "query": "项目排期",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-schedule",
+          "version": "v1",
+          "source_hash": "dce23a144ff2fba5d0cad1ade3ee9af9dce51e751b92711a66a95ee9b1b783c8",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q18",
+      "split": "heldout",
+      "query": "权限",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-permissions",
+          "version": "v1",
+          "source_hash": "2ac4918589857e8356e7825f74b3a0c2867b1c7ff852cf1f6eadb78f1d3c81b4",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q19",
+      "split": "heldout",
+      "query": "怎么刷入固件",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "android-flashing",
+          "version": "v1",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q20",
+      "split": "heldout",
+      "query": "最高允许温度",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q21",
+      "split": "heldout",
+      "query": "release checklist",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q22",
+      "split": "heldout",
+      "query": "burn-in test",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-aging",
+          "version": "v1",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q23",
+      "split": "heldout",
+      "query": "bill of materials",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q24",
+      "split": "heldout",
+      "query": "Which current BOM replaces A2?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "english"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q25",
+      "split": "heldout",
+      "query": "THERMAL-REPORT-2026",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q26",
+      "split": "heldout",
+      "query": "Labnote boot current measurements",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "conflict",
+        "english"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": true,
+      "counterpart": null,
+      "reason": "Both current records describe build B7 boot count and contradict; retrieve both, flag disagreement independently from citation validity."
+    },
+    {
+      "id": "Q27",
+      "split": "heldout",
+      "query": "Which labnote records contradict boot count?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "conflict",
+        "english"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": true,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q28",
+      "split": "heldout",
+      "query": "rf-archive",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "expiry",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "rf-archive",
+          "version": "v1",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "status": "EXPIRED"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Retrieve archive as EXPIRED; it cannot supply current positive gate evidence."
+    },
+    {
+      "id": "Q29",
+      "split": "heldout",
+      "query": "obsolete calibration chamber",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "expiry",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "rf-archive",
+          "version": "v1",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "status": "EXPIRED"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": ""
+    },
+    {
+      "id": "Q30",
+      "split": "heldout",
+      "query": "quantum lidar actuator",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "No document covers this subject."
+    },
+    {
+      "id": "Q31",
+      "split": "heldout",
+      "query": "EVT antenna accreditation",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "Generic EVT overlap does not establish antenna accreditation evidence."
+    },
+    {
+      "id": "Q32",
+      "split": "heldout",
+      "query": "无线充电技术",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "chinese"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "No wireless charging document exists."
+    },
+    {
+      "id": "Q33",
+      "split": "heldout",
+      "query": "pm-risk",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "exact-id"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q34",
+      "reason": "PM-only record must be unavailable to hardware."
+    },
+    {
+      "id": "Q34",
+      "split": "heldout",
+      "query": "pm-risk",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-risk",
+          "version": "v1",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q33",
+      "reason": ""
+    },
+    {
+      "id": "Q35",
+      "split": "heldout",
+      "query": "restricted-cost",
+      "principal": "hw-high",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "classification",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "restricted-cost",
+          "version": "v1",
+          "source_hash": "ac99f9ab8a999e1fdbfbdecad6de6e5de01831bc5058b19156520ec43174e240",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q36",
+      "reason": ""
+    },
+    {
+      "id": "Q36",
+      "split": "heldout",
+      "query": "restricted-cost",
+      "principal": "hw-low",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "classification",
+        "exact-id"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q35",
+      "reason": ""
+    },
+    {
+      "id": "Q37",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "aurora-b",
+      "tags": [
+        "acl-negative",
+        "tenant",
+        "exact-id"
+      ],
+      "relevant": [],
+      "expected_denial": true,
+      "conflict_required": false,
+      "counterpart": "Q38",
+      "reason": ""
+    },
+    {
+      "id": "Q38",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-b",
+      "scope": "aurora-b",
+      "tags": [
+        "acl-control",
+        "tenant",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-b",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q37",
+      "reason": ""
+    },
+    {
+      "id": "Q39",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "orion-a",
+      "tags": [
+        "acl-negative",
+        "project",
+        "exact-id"
+      ],
+      "relevant": [],
+      "expected_denial": true,
+      "conflict_required": false,
+      "counterpart": "Q40",
+      "reason": ""
+    },
+    {
+      "id": "Q40",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-orion",
+      "scope": "orion-a",
+      "tags": [
+        "acl-control",
+        "project",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "orion-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q39",
+      "reason": ""
+    },
+    {
+      "id": "Q41",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "ops-a",
+      "tags": [
+        "acl-negative",
+        "workspace",
+        "exact-id"
+      ],
+      "relevant": [],
+      "expected_denial": true,
+      "conflict_required": false,
+      "counterpart": "Q42",
+      "reason": ""
+    },
+    {
+      "id": "Q42",
+      "split": "heldout",
+      "query": "evt-boot",
+      "principal": "hw-ops",
+      "scope": "ops-a",
+      "tags": [
+        "acl-control",
+        "workspace",
+        "exact-id"
+      ],
+      "relevant": [
+        {
+          "scope": "ops-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q41",
+      "reason": ""
+    },
+    {
+      "id": "Q43",
+      "split": "heldout",
+      "query": "supplier risk mitigation",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "lexical"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q44",
+      "reason": ""
+    },
+    {
+      "id": "Q44",
+      "split": "heldout",
+      "query": "supplier risk mitigation",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-risk",
+          "version": "v1",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q43",
+      "reason": ""
+    },
+    {
+      "id": "Q45",
+      "split": "heldout",
+      "query": "EVT entry",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-decoy",
+        "classification",
+        "lexical"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-entry",
+          "version": "v1",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null,
+      "reason": "High-clearance decoy is the strongest lexical match but cannot be read by this principal."
+    },
+    {
+      "id": "Q46",
+      "split": "heldout",
+      "query": "NEVER-APPROVED-P1",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "exact-token"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q47",
+      "reason": ""
+    },
+    {
+      "id": "Q47",
+      "split": "heldout",
+      "query": "NEVER-APPROVED-P1",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "exact-token"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "private-canary",
+          "version": "v1",
+          "source_hash": "ba7930271113fdb76cf284ed1b21931a0b25287215fe69f8ff94042dac13d8a6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "Q46",
+      "reason": ""
+    }
+  ],
+  "relevance_policy": "Gold is the direct source supplying the requested requirement, procedure or fact; incidental topical mentions are not relevant. Current version is default unless expiry is explicitly tested. Contradiction tasks require both records."
+}

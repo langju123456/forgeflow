@@ -1,0 +1,38 @@
+{
+  "status": "ARCHIVED_ANALYSIS_AUDIT_VERIFIED",
+  "results": [
+    {
+      "scenario": "M01",
+      "events": 12,
+      "audit_head": "64539db0efd398c96264a4221e8bb43d0b645e1cbe37a9d88089df718da8d262",
+      "status": "VERIFIED"
+    },
+    {
+      "scenario": "M01-blocked",
+      "events": 12,
+      "audit_head": "36ced8afd03867a34d218b960da73478e0da1057f19eaeadf06bf7ad4e837cb3",
+      "status": "VERIFIED"
+    },
+    {
+      "scenario": "M02",
+      "events": 12,
+      "audit_head": "b5c3ccf199eee107f8f8867152c90667aeeaa06583e6589dff83189183552dd2",
+      "status": "VERIFIED"
+    },
+    {
+      "scenario": "M03",
+      "events": 12,
+      "audit_head": "0d342b15930d61a442de91f2e917c9d8adb64e3c7febc61a16413532221ad2e4",
+      "status": "VERIFIED"
+    },
+    {
+      "scenario": "M04",
+      "events": 9,
+      "audit_head": "7431587f94b6d7499ee4f93e04bef4d30e6d14143eb429767a0b43d8b386e4c7",
+      "status": "VERIFIED"
+    }
+  ],
+  "new_model_calls": 0,
+  "external_writes": false,
+  "trust_limit": "Hash chains do not defend against a privileged database writer."
+}

@@ -1,0 +1,65 @@
+{
+  "version": "synthetic-evt-policy-v1",
+  "synthetic": true,
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "policies": [
+    {
+      "id": "synthetic-evt-apk-device-v1",
+      "version": "synthetic-evt-policy-v1",
+      "synthetic": true,
+      "scope": {"tenant_id": "synthetic-lab", "workspace_id": "engineering", "project_id": "aurora"},
+      "purpose": "EVT_READINESS_REVIEW",
+      "review_scope": "FULL_EVT_EVIDENCE",
+      "stage_transition_allowed": false,
+      "applicability": {
+        "hardware": "APPLICABLE",
+        "architect": "APPLICABLE",
+        "android_source": "APPLICABLE",
+        "android_apk": "APPLICABLE",
+        "android_device": "APPLICABLE",
+        "sre": "APPLICABLE"
+      },
+      "limitations": "Synthetic readiness review only; APK/device evidence is required and currently unavailable. This is not certification and permits no stage transition."
+    },
+    {
+      "id": "synthetic-source-review-v1",
+      "version": "synthetic-evt-policy-v1",
+      "synthetic": true,
+      "scope": {"tenant_id": "synthetic-lab", "workspace_id": "engineering", "project_id": "aurora"},
+      "purpose": "SOURCE_REVIEW_ACCEPTANCE",
+      "review_scope": "SOURCE_REVIEW_ONLY",
+      "stage_transition_allowed": false,
+      "applicability": {
+        "hardware": "APPLICABLE",
+        "architect": "APPLICABLE",
+        "android_source": "APPLICABLE",
+        "android_apk": "NOT_APPLICABLE",
+        "android_device": "NOT_APPLICABLE",
+        "sre": "APPLICABLE"
+      },
+      "limitations": "Explicit synthetic source-review acceptance only. Excluded APK/device checks are NOT_APPLICABLE, not PASS; this cannot establish full EVT eligibility or authorize a stage transition."
+    },
+    {
+      "id": "synthetic-applicability-unresolved-v1",
+      "version": "synthetic-evt-policy-v1",
+      "synthetic": true,
+      "scope": {"tenant_id": "synthetic-lab", "workspace_id": "engineering", "project_id": "aurora"},
+      "purpose": "EVT_READINESS_REVIEW",
+      "review_scope": "APPLICABILITY_UNRESOLVED",
+      "stage_transition_allowed": false,
+      "applicability": {
+        "hardware": "APPLICABLE",
+        "architect": "APPLICABLE",
+        "android_source": "APPLICABLE",
+        "android_apk": "UNKNOWN",
+        "android_device": "UNKNOWN",
+        "sre": "APPLICABLE"
+      },
+      "limitations": "Synthetic applicability example. Unknown applicability cannot be treated as an exclusion, readiness evidence or approval authority."
+    }
+  ]
+}

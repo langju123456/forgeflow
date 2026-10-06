@@ -1,0 +1,23 @@
+{
+  "protocol_version": "lexical-baseline-eval-v1",
+  "recorded_at": "2026-10-05T17:08:24.868492+00:00",
+  "dataset_id": "aurora-lexical-heldout-v1",
+  "questions": 47,
+  "files": {
+    "dataset.json": "2d559eb4a66bcfbe2202142426bff8cb69222c635c59ed51aefcec24b0509ee3",
+    "protocol.md": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b",
+    "evaluator.py": "e23898ac53600a372cacd4038c45347251a7f605785e6c65b774de6cd83b8fc8",
+    "run_baseline.py": "90567994d2670ef755bf1680fb67df9f111c3492efe915b5ce5f478c262f2201",
+    "write_dataset.py": "ea8d822826104bb2471f3438ef6601e74bc05350f1d299fdce19508c0f68bb89"
+  },
+  "protected_s1": {
+    "manifest_sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+    "files_checked": 95,
+    "scorer_sha256": {
+      "src/forgeflow/context.py": "a8b2ef118efbbd38f6e7cad057f6a4fbd2dc0d4b946930404d4269b6164fef7b",
+      "src/forgeflow/store.py": "d1316fb4ebd00f7389439f0f6079c4c7c3097e34c4964dd781d88dce850e444b",
+      "src/forgeflow/contracts.py": "fb82cb35f51d1d52fc5b763adf70508ca66a1b835919eced098e19310e8bae75"
+    }
+  },
+  "instruction": "Corpus/gold and evaluator are frozen before first heldout retrieval. Do not overwrite; revisions require a new explicitly versioned benchmark."
+}

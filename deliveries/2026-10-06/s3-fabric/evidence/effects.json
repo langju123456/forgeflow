@@ -1,0 +1,1342 @@
+{
+  "provenance": "ACTUAL_LOCAL_POSTGRESQL",
+  "approval_provenance": "TEST_DRIVER",
+  "actual_user_business_approvals": 0,
+  "new_model_calls": 0,
+  "external_writes": 0,
+  "decisions": {
+    "TEST_STAGE": {
+      "approval": {
+        "id": "dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "TEST_STAGE",
+        "target_receipt_id": "",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-TEST_STAGE",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "TEST_STAGE",
+          "target_receipt_id": "",
+          "parameters": {
+            "from_stage": "PROTOTYPE",
+            "to_stage": "TEST_STAGE",
+            "expected_revision": 0
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": false
+        },
+        "proposal_hash": "afd68f8a3625fb003d99c68ca7396d716b2ad105f83d0cb3890b51c9bcc9e225",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "2d9fbf44-251a-4842-aea7-8a3ba70d9203",
+        "created_at": "2026-10-06T09:09:47.136573+00:00",
+        "expires_at": "2026-10-06T10:09:47.136573+00:00",
+        "payload_hash": "5ab85bca6bdce771e435b9795e9dedacd91ea2e47b149a3b32a41dff7169a11b",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    },
+    "ISSUE": {
+      "approval": {
+        "id": "f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "ISSUE",
+        "target_receipt_id": "",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-ISSUE",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "ISSUE",
+          "target_receipt_id": "",
+          "parameters": {
+            "title": "Synthetic Aurora local workflow follow-up",
+            "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+            "evt_gate": "UNKNOWN",
+            "remote_tracker": false
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": false
+        },
+        "proposal_hash": "5d0311694a5cf67eca3bcc172a0c78b5fcbdac771687f018d0d99a7277fb699a",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "1a3e2640-d84b-4881-8d89-9a38729d45f6",
+        "created_at": "2026-10-06T09:09:47.570929+00:00",
+        "expires_at": "2026-10-06T10:09:47.570929+00:00",
+        "payload_hash": "d85cfbb4de3a712b102751c19a3d1d94e827340ac5f05d9584501780e759148c",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    },
+    "MEMORY_ACTIVATE": {
+      "approval": {
+        "id": "926b0a5f-eece-42ef-9563-366bdb3b6fd9",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "MEMORY_ACTIVATE",
+        "target_receipt_id": "",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-MEMORY_ACTIVATE",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "MEMORY_ACTIVATE",
+          "target_receipt_id": "",
+          "parameters": {
+            "subject": "Aurora synthetic local workflow",
+            "status": "APPROVED_REFERENCE",
+            "source_event_ids": [
+              "0bad092c-a92c-4a14-bfce-632be44a1476",
+              "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+              "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+            ],
+            "receipt_hashes": {
+              "289c1937-dfdb-490b-8224-4aa1e3aba887": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674",
+              "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+            }
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": false
+        },
+        "proposal_hash": "57fc8caad1281414a0904995e4358e2d0b9a6cb4e95fb9adc274bff0d513ad88",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "bc6e56c3-7ab8-4cdb-9958-fe022ef09416",
+        "created_at": "2026-10-06T09:09:47.669628+00:00",
+        "expires_at": "2026-10-06T10:09:47.669628+00:00",
+        "payload_hash": "9048fcf538f6c2fbe96add9d36c81480c2bb902fddc62fb8ffd405cd45aabb64",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    },
+    "MEMORY_REVOKE": {
+      "approval": {
+        "id": "4c326c98-2d0b-4a86-a65b-a3e97c2fe631",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "MEMORY_REVOKE",
+        "target_receipt_id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-MEMORY_REVOKE",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "MEMORY_REVOKE",
+          "target_receipt_id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7",
+          "parameters": {
+            "item_id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+            "from_status": "ACTIVE",
+            "expected_revision": 0,
+            "to_status": "REVOKED",
+            "receipt_hash": "90e1d3b993c8ddf8d052f969b36d05eadbce472d59c861fbb43e5a8cb806d9db"
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": true
+        },
+        "proposal_hash": "3fcbfffb1086504c3e260ebe939ca2828d4be4fcb076b7ae0e6afe677ee2093f",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "b0bdf844-3628-4335-b8e3-112b3627ae56",
+        "created_at": "2026-10-06T09:09:47.797657+00:00",
+        "expires_at": "2026-10-06T10:09:47.797657+00:00",
+        "payload_hash": "6af7360b5d3162583519f0ae62f254dac374735501cc3b5ed1ec3ce883d23fdb",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    },
+    "ISSUE_RETRACT": {
+      "approval": {
+        "id": "3d2cb433-8f8d-4084-9b5a-ccb74369cda2",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "ISSUE_RETRACT",
+        "target_receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-ISSUE_RETRACT",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "ISSUE_RETRACT",
+          "target_receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+          "parameters": {
+            "item_id": "2fdfd385-676a-4448-b43a-02b87e60b46b",
+            "from_status": "OPEN",
+            "expected_revision": 0,
+            "to_status": "RETRACTED",
+            "receipt_hash": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": true
+        },
+        "proposal_hash": "085ab08a7ae31eb3d5eaf880468803e70eb4283b87ff1b34323b8df2be32d5e5",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "ba5d972c-f1c4-479a-af93-994baf044c8c",
+        "created_at": "2026-10-06T09:09:47.858902+00:00",
+        "expires_at": "2026-10-06T10:09:47.858902+00:00",
+        "payload_hash": "6696b840ded8d1cd2f36d37cd4e61e3a6728df0a42824d943b97a00c3d37fc63",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    },
+    "STAGE_REVERT": {
+      "approval": {
+        "id": "a3d35470-566a-4b32-b02c-f24cc970c8a2",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "kind": "STAGE_REVERT",
+        "target_receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+        "created_by": "fabric-test-owner",
+        "idempotency_key": "s3d-action-01-STAGE_REVERT",
+        "proposal": {
+          "schema": "fabric-action-v1",
+          "revision": "fabric-stable-technical-v1",
+          "scope": {
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "kind": "STAGE_REVERT",
+          "target_receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+          "parameters": {
+            "from_stage": "TEST_STAGE",
+            "to_stage": "PROTOTYPE",
+            "expected_revision": 1,
+            "receipt_hash": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674"
+          },
+          "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+          "approval_provenance": "TEST_DRIVER",
+          "simulation": true,
+          "full_evt_eligibility": false,
+          "external_writes": false,
+          "compensation_allows_stale_technical_evidence": true
+        },
+        "proposal_hash": "8793e6a8ad36c89e7e3df7f042b262d51dceb4e5638f33b4933b87de1d1948ca",
+        "decision": "APPROVED",
+        "reviewer": "fabric-test-reviewer",
+        "revision": 1,
+        "decision_event_id": "da8c0043-4e6f-4e4f-a951-de5ff2fe525c",
+        "created_at": "2026-10-06T09:09:47.930731+00:00",
+        "expires_at": "2026-10-06T10:09:47.930731+00:00",
+        "payload_hash": "fab56fe49eea9f878d8714a66a846084311ff68169cc61d554d95283b2d06ee8",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "replayed": false,
+      "executed": false
+    }
+  },
+  "approvals": [
+    {
+      "id": "f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "ISSUE",
+      "target_receipt_id": "",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-ISSUE",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "ISSUE",
+        "target_receipt_id": "",
+        "parameters": {
+          "title": "Synthetic Aurora local workflow follow-up",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "evt_gate": "UNKNOWN",
+          "remote_tracker": false
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": false
+      },
+      "proposal_hash": "5d0311694a5cf67eca3bcc172a0c78b5fcbdac771687f018d0d99a7277fb699a",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "1a3e2640-d84b-4881-8d89-9a38729d45f6",
+      "created_at": "2026-10-06T09:09:47.570929+00:00",
+      "expires_at": "2026-10-06T10:09:47.570929+00:00",
+      "payload_hash": "d85cfbb4de3a712b102751c19a3d1d94e827340ac5f05d9584501780e759148c",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "3d2cb433-8f8d-4084-9b5a-ccb74369cda2",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "ISSUE_RETRACT",
+      "target_receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-ISSUE_RETRACT",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "ISSUE_RETRACT",
+        "target_receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+        "parameters": {
+          "item_id": "2fdfd385-676a-4448-b43a-02b87e60b46b",
+          "from_status": "OPEN",
+          "expected_revision": 0,
+          "to_status": "RETRACTED",
+          "receipt_hash": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": true
+      },
+      "proposal_hash": "085ab08a7ae31eb3d5eaf880468803e70eb4283b87ff1b34323b8df2be32d5e5",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "ba5d972c-f1c4-479a-af93-994baf044c8c",
+      "created_at": "2026-10-06T09:09:47.858902+00:00",
+      "expires_at": "2026-10-06T10:09:47.858902+00:00",
+      "payload_hash": "6696b840ded8d1cd2f36d37cd4e61e3a6728df0a42824d943b97a00c3d37fc63",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "926b0a5f-eece-42ef-9563-366bdb3b6fd9",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "MEMORY_ACTIVATE",
+      "target_receipt_id": "",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-MEMORY_ACTIVATE",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "MEMORY_ACTIVATE",
+        "target_receipt_id": "",
+        "parameters": {
+          "subject": "Aurora synthetic local workflow",
+          "status": "APPROVED_REFERENCE",
+          "source_event_ids": [
+            "0bad092c-a92c-4a14-bfce-632be44a1476",
+            "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+            "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+          ],
+          "receipt_hashes": {
+            "289c1937-dfdb-490b-8224-4aa1e3aba887": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674",
+            "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+          }
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": false
+      },
+      "proposal_hash": "57fc8caad1281414a0904995e4358e2d0b9a6cb4e95fb9adc274bff0d513ad88",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "bc6e56c3-7ab8-4cdb-9958-fe022ef09416",
+      "created_at": "2026-10-06T09:09:47.669628+00:00",
+      "expires_at": "2026-10-06T10:09:47.669628+00:00",
+      "payload_hash": "9048fcf538f6c2fbe96add9d36c81480c2bb902fddc62fb8ffd405cd45aabb64",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "4c326c98-2d0b-4a86-a65b-a3e97c2fe631",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "MEMORY_REVOKE",
+      "target_receipt_id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-MEMORY_REVOKE",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "MEMORY_REVOKE",
+        "target_receipt_id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7",
+        "parameters": {
+          "item_id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+          "from_status": "ACTIVE",
+          "expected_revision": 0,
+          "to_status": "REVOKED",
+          "receipt_hash": "90e1d3b993c8ddf8d052f969b36d05eadbce472d59c861fbb43e5a8cb806d9db"
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": true
+      },
+      "proposal_hash": "3fcbfffb1086504c3e260ebe939ca2828d4be4fcb076b7ae0e6afe677ee2093f",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "b0bdf844-3628-4335-b8e3-112b3627ae56",
+      "created_at": "2026-10-06T09:09:47.797657+00:00",
+      "expires_at": "2026-10-06T10:09:47.797657+00:00",
+      "payload_hash": "6af7360b5d3162583519f0ae62f254dac374735501cc3b5ed1ec3ce883d23fdb",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "a3d35470-566a-4b32-b02c-f24cc970c8a2",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "STAGE_REVERT",
+      "target_receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-STAGE_REVERT",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "STAGE_REVERT",
+        "target_receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+        "parameters": {
+          "from_stage": "TEST_STAGE",
+          "to_stage": "PROTOTYPE",
+          "expected_revision": 1,
+          "receipt_hash": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674"
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": true
+      },
+      "proposal_hash": "8793e6a8ad36c89e7e3df7f042b262d51dceb4e5638f33b4933b87de1d1948ca",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "da8c0043-4e6f-4e4f-a951-de5ff2fe525c",
+      "created_at": "2026-10-06T09:09:47.930731+00:00",
+      "expires_at": "2026-10-06T10:09:47.930731+00:00",
+      "payload_hash": "fab56fe49eea9f878d8714a66a846084311ff68169cc61d554d95283b2d06ee8",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "kind": "TEST_STAGE",
+      "target_receipt_id": "",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "s3d-action-01-TEST_STAGE",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "kind": "TEST_STAGE",
+        "target_receipt_id": "",
+        "parameters": {
+          "from_stage": "PROTOTYPE",
+          "to_stage": "TEST_STAGE",
+          "expected_revision": 0
+        },
+        "adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": false
+      },
+      "proposal_hash": "afd68f8a3625fb003d99c68ca7396d716b2ad105f83d0cb3890b51c9bcc9e225",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 1,
+      "decision_event_id": "2d9fbf44-251a-4842-aea7-8a3ba70d9203",
+      "created_at": "2026-10-06T09:09:47.136573+00:00",
+      "expires_at": "2026-10-06T10:09:47.136573+00:00",
+      "payload_hash": "5ab85bca6bdce771e435b9795e9dedacd91ea2e47b149a3b32a41dff7169a11b",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    }
+  ],
+  "receipts": {
+    "TEST_STAGE": {
+      "id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5",
+      "kind": "TEST_STAGE",
+      "effect_json": {
+        "before": {
+          "stage": "PROTOTYPE",
+          "revision": 0
+        },
+        "after": {
+          "stage": "TEST_STAGE",
+          "revision": 1
+        },
+        "simulation": true,
+        "target_receipt_id": ""
+      },
+      "event_id": "0bad092c-a92c-4a14-bfce-632be44a1476",
+      "executed_at": "2026-10-06T09:09:47.541997+00:00",
+      "payload_hash": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "ISSUE": {
+      "id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+      "kind": "ISSUE",
+      "effect_json": {
+        "item_id": "2fdfd385-676a-4448-b43a-02b87e60b46b",
+        "memory_id": null,
+        "before": null,
+        "after": {
+          "status": "OPEN",
+          "revision": 0
+        },
+        "item_hash": "5e7caa2051b516b8fcda7e4e93f2eda7c96258c77bf4b37a67fbdf59525360bb"
+      },
+      "event_id": "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+      "executed_at": "2026-10-06T09:09:47.636122+00:00",
+      "payload_hash": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "MEMORY_ACTIVATE": {
+      "id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "926b0a5f-eece-42ef-9563-366bdb3b6fd9",
+      "kind": "MEMORY_ACTIVATE",
+      "effect_json": {
+        "item_id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+        "memory_id": "c5d9462b-a704-4915-96ce-24ff92b8ceba",
+        "before": null,
+        "after": {
+          "status": "ACTIVE",
+          "revision": 0
+        },
+        "item_hash": "b59573f34402e7a714a19e15b5402804ecb463546c5f68e19da8c79a8019f187"
+      },
+      "event_id": "60269aeb-7869-4359-bbfb-ca37952eeb4a",
+      "executed_at": "2026-10-06T09:09:47.741324+00:00",
+      "payload_hash": "90e1d3b993c8ddf8d052f969b36d05eadbce472d59c861fbb43e5a8cb806d9db",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "MEMORY_REVOKE": {
+      "id": "b0554ba4-7ea3-4733-aac8-673bae0495b7",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "4c326c98-2d0b-4a86-a65b-a3e97c2fe631",
+      "kind": "MEMORY_REVOKE",
+      "effect_json": {
+        "item_id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+        "before": {
+          "status": "ACTIVE",
+          "revision": 0
+        },
+        "after": {
+          "status": "REVOKED",
+          "revision": 1
+        },
+        "target_receipt_id": "da13c4c4-8d8e-4ab1-af7b-171dcb49f4d7"
+      },
+      "event_id": "79490204-303e-4265-9e33-0a2eeab15253",
+      "executed_at": "2026-10-06T09:09:47.841791+00:00",
+      "payload_hash": "214a8ff40bbeb54bb4a4a2e3c17b59bb57c3c2e6d05bf2fae16afa99de332649",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "ISSUE_RETRACT": {
+      "id": "48e8c7a5-fca4-4648-9b1c-97f325bde48e",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "3d2cb433-8f8d-4084-9b5a-ccb74369cda2",
+      "kind": "ISSUE_RETRACT",
+      "effect_json": {
+        "item_id": "2fdfd385-676a-4448-b43a-02b87e60b46b",
+        "before": {
+          "status": "OPEN",
+          "revision": 0
+        },
+        "after": {
+          "status": "RETRACTED",
+          "revision": 1
+        },
+        "target_receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d"
+      },
+      "event_id": "13310bda-4a39-44f9-9a40-3d5dcee6f711",
+      "executed_at": "2026-10-06T09:09:47.913460+00:00",
+      "payload_hash": "f6cf66396638ff1f5847242a4bc63bd458c9149d4b1d59e4c611f11099952657",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "STAGE_REVERT": {
+      "id": "a2399ee8-7cf1-4faa-97ce-3bf2d28f9d80",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "a3d35470-566a-4b32-b02c-f24cc970c8a2",
+      "kind": "STAGE_REVERT",
+      "effect_json": {
+        "before": {
+          "stage": "TEST_STAGE",
+          "revision": 1
+        },
+        "after": {
+          "stage": "PROTOTYPE",
+          "revision": 2
+        },
+        "simulation": true,
+        "target_receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887"
+      },
+      "event_id": "5b6a0bee-e0e6-455d-abc4-bc21918f2320",
+      "executed_at": "2026-10-06T09:09:47.971972+00:00",
+      "payload_hash": "8dcdc96b2619fda41a1ebf7dfab128bc60be0a41c9a2f8d9b68bd2c4a8e6b869",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    }
+  },
+  "failures": [
+    {
+      "expected": "FABRIC_GATE_NOT_PASS",
+      "observed": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "expected": "FABRIC_GATE_NOT_PASS",
+      "observed": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "expected": "FABRIC_GATE_NOT_PASS",
+      "observed": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "expected": "NOT_FOUND",
+      "observed": "NOT_FOUND"
+    }
+  ],
+  "memory_active_before_revoke": [
+    {
+      "reference": {
+        "id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "approval_id": "926b0a5f-eece-42ef-9563-366bdb3b6fd9",
+        "memory_id": "c5d9462b-a704-4915-96ce-24ff92b8ceba",
+        "kind": "MEMORY",
+        "status": "ACTIVE",
+        "revision": 0,
+        "body": {
+          "parameters": {
+            "subject": "Aurora synthetic local workflow",
+            "status": "APPROVED_REFERENCE",
+            "source_event_ids": [
+              "0bad092c-a92c-4a14-bfce-632be44a1476",
+              "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+              "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+            ],
+            "receipt_hashes": {
+              "289c1937-dfdb-490b-8224-4aa1e3aba887": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674",
+              "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+            }
+          },
+          "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+          "simulation": true,
+          "memory_source_hash": "03ca07473386360e4719b8c913df2c5e5feec124c58b8afd468c2d405219c012",
+          "source_event_ids": [
+            "0bad092c-a92c-4a14-bfce-632be44a1476",
+            "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+            "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+          ],
+          "source_event_hashes": {
+            "0bad092c-a92c-4a14-bfce-632be44a1476": "dbc9802c16b29495405030701ce941814d369f3b9a9972dff9b7fc70c1ba1a3a",
+            "deceb0b4-0c8e-4c48-b765-98970dff1f12": "3418d746a8b34de6db2e07fc43f2dea925a2f89424b4ebeaace97c9e1266ec3e",
+            "fa32a50e-2659-4022-a73a-b2fc5862ec90": "a1f1226779920f0ffb3f0fb991acdee58eba39a10fbee4d30b039e545260d782"
+          }
+        },
+        "payload_hash": "b59573f34402e7a714a19e15b5402804ecb463546c5f68e19da8c79a8019f187",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "citation": {
+        "id": "c5d9462b-a704-4915-96ce-24ff92b8ceba",
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "type": "episodic",
+        "subject": "Aurora synthetic local workflow",
+        "content": "Synthetic local Stage and Issue effects completed. EVT remains UNKNOWN; APK/device checks NOT_RUN. Review ecbc1e1f-4920-4575-8015-4fba1144c41b hash 6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "source_hash": "03ca07473386360e4719b8c913df2c5e5feec124c58b8afd468c2d405219c012",
+        "dedup_hash": "68b66bd2552db9daf289e885a0ec3ef0eacf1df014672b7ab39619d5a21f3989",
+        "status": "CANDIDATE",
+        "classification": 0,
+        "roles": [
+          "admin",
+          "fabric_executor",
+          "hardware",
+          "memory_writer",
+          "pm",
+          "reviewer",
+          "submitter",
+          "supervisor",
+          "worker"
+        ],
+        "created_by": "fabric-test-executor",
+        "human_confirmed": false,
+        "valid_from": "2026-10-06T09:09:47.734833+00:00",
+        "valid_until": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e",
+        "version": "1",
+        "citation_id": "c5d9462b-a704-4915-96ce-24ff92b8ceba",
+        "subject_key": "Aurora synthetic local workflow",
+        "supersedes": null,
+        "sources": [
+          {
+            "id": "0bad092c-a92c-4a14-bfce-632be44a1476",
+            "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+            "step_id": null,
+            "sequence": 10,
+            "kind": "FABRIC_ACTION_EXECUTED",
+            "actor": "fabric-test-executor",
+            "payload": {
+              "receipt_id": "289c1937-dfdb-490b-8224-4aa1e3aba887",
+              "approval_id": "dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5",
+              "kind": "TEST_STAGE",
+              "proposal_hash": "afd68f8a3625fb003d99c68ca7396d716b2ad105f83d0cb3890b51c9bcc9e225",
+              "effect_hash": "d1707d40cfc18033520f08725f0454348a731faf77b3fc16c8ae036030c4ee68",
+              "transport": "IN_PROCESS",
+              "provenance": "TEST_DRIVER",
+              "external_writes": false
+            },
+            "payload_hash": "eda7de57b555e957a64ade663004e78c68b744427e0085f3f20b9b79e7211c1d",
+            "prev_hash": "b112797837781da0d3876cc100ffef261e88314bf5a633cf2b052c6b08d3c2db",
+            "event_hash": "dbc9802c16b29495405030701ce941814d369f3b9a9972dff9b7fc70c1ba1a3a",
+            "classification": 0,
+            "created_at": "2026-10-06T09:09:47.540853+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          {
+            "id": "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+            "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+            "step_id": null,
+            "sequence": 13,
+            "kind": "FABRIC_ACTION_EXECUTED",
+            "actor": "fabric-test-executor",
+            "payload": {
+              "receipt_id": "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d",
+              "approval_id": "f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+              "kind": "ISSUE",
+              "proposal_hash": "5d0311694a5cf67eca3bcc172a0c78b5fcbdac771687f018d0d99a7277fb699a",
+              "effect_hash": "e7078dbe904b57492b546f2dd8ea3b55d945cdc4427bb20823795425133f0a30",
+              "transport": "IN_PROCESS",
+              "provenance": "TEST_DRIVER",
+              "external_writes": false
+            },
+            "payload_hash": "df9748a719365a6c8e661f09860e1886669df1e3ca376b1edace5093e95e1667",
+            "prev_hash": "42a681d2a613b87b64065bfe30a1b204089f4d685cdedfc0559d702ae9629ba8",
+            "event_hash": "3418d746a8b34de6db2e07fc43f2dea925a2f89424b4ebeaace97c9e1266ec3e",
+            "classification": 0,
+            "created_at": "2026-10-06T09:09:47.635351+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          {
+            "id": "fa32a50e-2659-4022-a73a-b2fc5862ec90",
+            "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+            "step_id": null,
+            "sequence": 7,
+            "kind": "FABRIC_REVIEW_COMPLETED",
+            "actor": "fabric-test-owner",
+            "payload": {
+              "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+              "report_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+              "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+              "flow_gate": "PASS",
+              "evt_gate": "UNKNOWN",
+              "transport": "IN_PROCESS"
+            },
+            "payload_hash": "7ef1b999dc6d83beafe73d88a63dca55df5dc5381ffac3db8576c5ae020ae107",
+            "prev_hash": "893f55b52d2700ea33829c7077b445bfd36240268eec2138c7b0e7f0046fc9b2",
+            "event_hash": "a1f1226779920f0ffb3f0fb991acdee58eba39a10fbee4d30b039e545260d782",
+            "classification": 0,
+            "created_at": "2026-10-06T09:07:26.681795+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          }
+        ],
+        "source_event_ids": [
+          "0bad092c-a92c-4a14-bfce-632be44a1476",
+          "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+          "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+        ]
+      },
+      "reference_status": "ACTIVE",
+      "underlying_status": "CANDIDATE",
+      "approval_provenance": "TEST_DRIVER",
+      "confirms_evt": false
+    }
+  ],
+  "items": [
+    {
+      "id": "a827798a-3a75-46db-89e5-5a77a92fd9c4",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "926b0a5f-eece-42ef-9563-366bdb3b6fd9",
+      "memory_id": "c5d9462b-a704-4915-96ce-24ff92b8ceba",
+      "kind": "MEMORY",
+      "status": "REVOKED",
+      "revision": 1,
+      "body": {
+        "parameters": {
+          "subject": "Aurora synthetic local workflow",
+          "status": "APPROVED_REFERENCE",
+          "source_event_ids": [
+            "0bad092c-a92c-4a14-bfce-632be44a1476",
+            "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+            "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+          ],
+          "receipt_hashes": {
+            "289c1937-dfdb-490b-8224-4aa1e3aba887": "d4eed29ee8cf6efcff7b8717ec1ca649f898ad889e59142a4d9457e8aaabc674",
+            "e8100d9f-7c34-46e7-a521-bf6f9c52ea5d": "a0483575735d29be80bbcfbcc6b94d98307724470251a05f68451b1da763e6de"
+          }
+        },
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "simulation": true,
+        "memory_source_hash": "03ca07473386360e4719b8c913df2c5e5feec124c58b8afd468c2d405219c012",
+        "source_event_ids": [
+          "0bad092c-a92c-4a14-bfce-632be44a1476",
+          "deceb0b4-0c8e-4c48-b765-98970dff1f12",
+          "fa32a50e-2659-4022-a73a-b2fc5862ec90"
+        ],
+        "source_event_hashes": {
+          "0bad092c-a92c-4a14-bfce-632be44a1476": "dbc9802c16b29495405030701ce941814d369f3b9a9972dff9b7fc70c1ba1a3a",
+          "deceb0b4-0c8e-4c48-b765-98970dff1f12": "3418d746a8b34de6db2e07fc43f2dea925a2f89424b4ebeaace97c9e1266ec3e",
+          "fa32a50e-2659-4022-a73a-b2fc5862ec90": "a1f1226779920f0ffb3f0fb991acdee58eba39a10fbee4d30b039e545260d782"
+        }
+      },
+      "payload_hash": "046924fef409de97dd74797ca3826b49c92b4c9ac7aece1fbf794d734bd8a283",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    {
+      "id": "2fdfd385-676a-4448-b43a-02b87e60b46b",
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "approval_id": "f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+      "memory_id": null,
+      "kind": "ISSUE",
+      "status": "RETRACTED",
+      "revision": 1,
+      "body": {
+        "parameters": {
+          "title": "Synthetic Aurora local workflow follow-up",
+          "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+          "evt_gate": "UNKNOWN",
+          "remote_tracker": false
+        },
+        "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+        "review_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+        "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+        "simulation": true
+      },
+      "payload_hash": "20877ef3515131eae93e3a28bf6ddf072593f876f757cba3aa8bf7f04071c41f",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    }
+  ],
+  "project_after": {
+    "current_stage": "PROTOTYPE",
+    "stage_revision": 2,
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora-fabric-e2e"
+  },
+  "recovery": {
+    "signal": "SIGKILL",
+    "child_exit_code": -9,
+    "effects_before_commit": "ROLLED_BACK",
+    "restarted_store_execution": "ONE_COMMITTED_RECEIPT",
+    "after_commit_replay": "SAME_RECEIPT"
+  },
+  "original_unchanged": true,
+  "technical_review_after_actions": {
+    "id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+    "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+    "created_by": "fabric-test-owner",
+    "idempotency_key": "s3d-review-01-pass",
+    "fixture_id": "aligned",
+    "report_json": {
+      "revision": "fabric-stable-technical-v1",
+      "scope": {
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "synthetic": true,
+      "authority": "DETERMINISTIC_LOCAL_FLOW_CONTRACT",
+      "policy_id": "synthetic-local-fabric-v1",
+      "policy_hash": "c2e2fe898271848fff788964ed63b8ebe281fae82fe468f9accf3dc134452382",
+      "purpose": "LOCAL_SYNTHETIC_FLOW_VALIDATION",
+      "technical_hash": "98f689edde383b7a4ce1da227ab0bd8525340ac397b6bb5b26fd7eeaf2279e99",
+      "technical_binding": {
+        "namespace": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+        "request_hash": "b20fca6286d9d42e5f67910ec120082094066977ad8ea3e2a7f20527f5373351",
+        "technical_source": "b23bdb1f38685d4d6cc51cda17694176e3c09f252a0f0aeb34f206d96dbb2733",
+        "fixture_id": "aligned",
+        "current_sources": {
+          "policy_hash": "c2e2fe898271848fff788964ed63b8ebe281fae82fe468f9accf3dc134452382",
+          "xml_hash": "e06abd156ec93e06928db9a35c2358c01262ad4ca280977c4edbd0f38bb7839d",
+          "code_hash": "92c8f7496fc15eb9de506baf17fd11fc288ee0cb7e239b4aac0d11549bac45c7",
+          "runtime_policy_hash": "66be935ddeef32c5a1950a98d2a9f9fbb7b63cd5f6c87ba9f2999fc1824385cc",
+          "rule_hash": "18c790986886cdf0fe3a6498e427f62bdd4ba74493e704aaad6bf800bd1530c6",
+          "hardware_skill_hash": "5be2b263b18d98b1ae2f48c29da1558ce1ef1208dcfcba4b4dfc61a9c59c7199",
+          "domain_skill_hashes": {
+            "architect": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+            "android": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4"
+          },
+          "sre_skill_hash": "46def06c825486a578d266372ab5bbbe3bc62bb8246f72f7e494a27d26a8bd5e",
+          "implementation_hashes": {
+            "fabric_contract.py": "c89ab1e3d6f2322b85d1b792888206f16c9ea5faa8ff6355e98ce60924bd94c5",
+            "evt_review.py": "920c76252e971ec825a078ccffe60da36eba7ab999cf3b87e6b6be0dfc66e3ac",
+            "sre_ops.py": "1d8853f25376e69375dfd14865c145eb4bdb6cc1e71e2fefb4df8f9c9c2572c7",
+            "domain_checks.py": "56cd91daa7ef1c79964ca1398b33bb5c78bd8f75ed79bba8d58caa1a3ab01a99",
+            "analysis_context.py": "462dabb070b9fe0c290f7f2573d7784f49d579a583780eec2c6af820d695e6aa",
+            "gate.py": "c5bac00ed05780bd9fd11c52102357909c88b080e0c7500d88b79f43a67a145d",
+            "policy.py": "94044987a4f48afe5e86e9d0576f3ba5d71471743d9ef3134d263c7c399fe636",
+            "templates.py": "3bf79d80fc27238705fa9053caf252bcf07da38762f12621c3cd2c66ca2c8a6e"
+          }
+        }
+      },
+      "sources": {
+        "policy_hash": "c2e2fe898271848fff788964ed63b8ebe281fae82fe468f9accf3dc134452382",
+        "xml_hash": "e06abd156ec93e06928db9a35c2358c01262ad4ca280977c4edbd0f38bb7839d",
+        "code_hash": "92c8f7496fc15eb9de506baf17fd11fc288ee0cb7e239b4aac0d11549bac45c7",
+        "runtime_policy_hash": "66be935ddeef32c5a1950a98d2a9f9fbb7b63cd5f6c87ba9f2999fc1824385cc",
+        "rule_hash": "18c790986886cdf0fe3a6498e427f62bdd4ba74493e704aaad6bf800bd1530c6",
+        "hardware_skill_hash": "5be2b263b18d98b1ae2f48c29da1558ce1ef1208dcfcba4b4dfc61a9c59c7199",
+        "domain_skill_hashes": {
+          "architect": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+          "android": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4"
+        },
+        "sre_skill_hash": "46def06c825486a578d266372ab5bbbe3bc62bb8246f72f7e494a27d26a8bd5e",
+        "implementation_hashes": {
+          "fabric_contract.py": "c89ab1e3d6f2322b85d1b792888206f16c9ea5faa8ff6355e98ce60924bd94c5",
+          "evt_review.py": "920c76252e971ec825a078ccffe60da36eba7ab999cf3b87e6b6be0dfc66e3ac",
+          "sre_ops.py": "1d8853f25376e69375dfd14865c145eb4bdb6cc1e71e2fefb4df8f9c9c2572c7",
+          "domain_checks.py": "56cd91daa7ef1c79964ca1398b33bb5c78bd8f75ed79bba8d58caa1a3ab01a99",
+          "analysis_context.py": "462dabb070b9fe0c290f7f2573d7784f49d579a583780eec2c6af820d695e6aa",
+          "gate.py": "c5bac00ed05780bd9fd11c52102357909c88b080e0c7500d88b79f43a67a145d",
+          "policy.py": "94044987a4f48afe5e86e9d0576f3ba5d71471743d9ef3134d263c7c399fe636",
+          "templates.py": "3bf79d80fc27238705fa9053caf252bcf07da38762f12621c3cd2c66ca2c8a6e"
+        }
+      },
+      "source_template_authority": "PUBLIC_SYNTHETIC_TEMPLATE",
+      "fixture_id": "aligned",
+      "checks": [
+        {
+          "id": "hardware",
+          "status": "PASS",
+          "reason": "RECORDED_SYNTHETIC_HARDWARE_GATE",
+          "source_pointer": "/assessment_json/status"
+        },
+        {
+          "id": "current_execution_sources",
+          "status": "PASS",
+          "reason": "CURRENT_CODE_RULE_POLICY_HARDWARE_SKILL",
+          "source_pointer": "/snapshot_json"
+        },
+        {
+          "id": "request_binding",
+          "status": "PASS",
+          "reason": "EXACT_SCOPED_REQUEST",
+          "source_pointer": "/request_json"
+        },
+        {
+          "id": "current_audit_chain",
+          "status": "PASS",
+          "reason": "FULL_CURRENT_AUDIT_CHAIN",
+          "source_pointer": "/events"
+        },
+        {
+          "id": "sre.audit_binding",
+          "status": "PASS",
+          "reason": "CHECK_COMPLETED_BINDING",
+          "source_pointer": "/events/CHECK_COMPLETED"
+        },
+        {
+          "id": "sre.lease_closure",
+          "status": "PASS",
+          "reason": "COMPLETED_FENCED_ATTEMPT",
+          "source_pointer": "/steps/readiness"
+        },
+        {
+          "id": "sre.execution_cleanup",
+          "status": "PASS",
+          "reason": "TERMINAL_REMOVAL_RECEIPT",
+          "source_pointer": "/result_json/cleanup"
+        },
+        {
+          "id": "sre.resource_and_scan",
+          "status": "PASS",
+          "reason": "RECORDED_PROFILE_AND_EXACT_SCAN",
+          "source_pointer": "/result_json/inspect"
+        },
+        {
+          "id": "sre.mcp_receipt",
+          "status": "PASS",
+          "reason": "RECORDED_MCP_PROTOCOL_REQUIRED",
+          "source_pointer": "/result_json/mcp"
+        },
+        {
+          "id": "architect.parent_artifact_binding",
+          "status": "PASS",
+          "reason": "BOUND_PARENT_ARTIFACT",
+          "source_pointer": "/artifacts/result.json"
+        },
+        {
+          "id": "architect.hardware_android_bom",
+          "status": "PASS",
+          "reason": "BOM_ALIGNED",
+          "source_pointer": "/artifacts/result.json -> /templates/manifest"
+        },
+        {
+          "id": "architect.interface_contract",
+          "status": "PASS",
+          "reason": "INTERFACE_ALIGNED",
+          "source_pointer": "/templates/manifest -> /policy/contract"
+        },
+        {
+          "id": "architect.exposure_contract",
+          "status": "PASS",
+          "reason": "EXPOSURE_ALIGNED",
+          "source_pointer": "/templates/manifest/application"
+        },
+        {
+          "id": "android.manifest_parse",
+          "status": "PASS",
+          "reason": "BOUNDED_PUBLIC_SYNTHETIC_XML",
+          "source_pointer": "/templates/manifest"
+        },
+        {
+          "id": "android.package_sdk",
+          "status": "PASS",
+          "reason": "PACKAGE_SDK_ALIGNED",
+          "source_pointer": "/templates/manifest/uses-sdk"
+        },
+        {
+          "id": "android.application_contract",
+          "status": "PASS",
+          "reason": "APPLICATION_ALIGNED",
+          "source_pointer": "/templates/manifest/application"
+        }
+      ],
+      "flow_gate": "PASS",
+      "evt_gate": "UNKNOWN",
+      "local_test_stage_allowed": true,
+      "test_stage": {
+        "from_stage": "PROTOTYPE",
+        "to_stage": "TEST_STAGE",
+        "simulation": true
+      },
+      "evt_stage_transition_allowed": false,
+      "full_evt_eligibility": false,
+      "android_apk_status": "UNKNOWN",
+      "android_device_status": "UNKNOWN",
+      "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+      "android_device": "NOT_RUN_NO_ANDROID_DEVICE",
+      "architect": {
+        "checks": [
+          {
+            "id": "parent_artifact_binding",
+            "status": "PASS",
+            "reason": "BOUND_PARENT_ARTIFACT",
+            "source_pointer": "/artifacts/result.json"
+          },
+          {
+            "id": "hardware_android_bom",
+            "status": "PASS",
+            "reason": "BOM_ALIGNED",
+            "source_pointer": "/artifacts/result.json -> /templates/manifest"
+          },
+          {
+            "id": "interface_contract",
+            "status": "PASS",
+            "reason": "INTERFACE_ALIGNED",
+            "source_pointer": "/templates/manifest -> /policy/contract"
+          },
+          {
+            "id": "exposure_contract",
+            "status": "PASS",
+            "reason": "EXPOSURE_ALIGNED",
+            "source_pointer": "/templates/manifest/application"
+          }
+        ],
+        "static_status": "PASS"
+      },
+      "android": {
+        "checks": [
+          {
+            "id": "manifest_parse",
+            "status": "PASS",
+            "reason": "BOUNDED_PUBLIC_SYNTHETIC_XML",
+            "source_pointer": "/templates/manifest"
+          },
+          {
+            "id": "package_sdk",
+            "status": "PASS",
+            "reason": "PACKAGE_SDK_ALIGNED",
+            "source_pointer": "/templates/manifest/uses-sdk"
+          },
+          {
+            "id": "application_contract",
+            "status": "PASS",
+            "reason": "APPLICATION_ALIGNED",
+            "source_pointer": "/templates/manifest/application"
+          }
+        ],
+        "static_status": "PASS",
+        "build_status": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+        "device_status": "NOT_RUN_NO_ANDROID_DEVICE"
+      },
+      "sre": {
+        "operational_readiness": "READY",
+        "checks": [
+          {
+            "id": "audit_binding",
+            "status": "PASS",
+            "reason": "CHECK_COMPLETED_BINDING",
+            "source_pointer": "/events/CHECK_COMPLETED"
+          },
+          {
+            "id": "lease_closure",
+            "status": "PASS",
+            "reason": "COMPLETED_FENCED_ATTEMPT",
+            "source_pointer": "/steps/readiness"
+          },
+          {
+            "id": "execution_cleanup",
+            "status": "PASS",
+            "reason": "TERMINAL_REMOVAL_RECEIPT",
+            "source_pointer": "/result_json/cleanup"
+          },
+          {
+            "id": "resource_and_scan",
+            "status": "PASS",
+            "reason": "RECORDED_PROFILE_AND_EXACT_SCAN",
+            "source_pointer": "/result_json/inspect"
+          },
+          {
+            "id": "mcp_receipt",
+            "status": "PASS",
+            "reason": "RECORDED_MCP_PROTOCOL_REQUIRED",
+            "source_pointer": "/result_json/mcp"
+          }
+        ]
+      },
+      "audit_chain_valid": true,
+      "human_approval_required": true,
+      "automatic_business_actions": false,
+      "action_kinds": [
+        "TEST_STAGE",
+        "ISSUE",
+        "MEMORY_ACTIVATE"
+      ],
+      "compensations": {
+        "STAGE_REVERT": {
+          "original_kind": "TEST_STAGE",
+          "receipt_bound": true,
+          "current_revision_cas": true
+        },
+        "ISSUE_RETRACT": {
+          "original_kind": "ISSUE",
+          "receipt_bound": true,
+          "current_revision_cas": true
+        },
+        "MEMORY_REVOKE": {
+          "original_kind": "MEMORY_ACTIVATE",
+          "receipt_bound": true,
+          "current_revision_cas": true
+        }
+      },
+      "stage_transition": "NOT_EXECUTED"
+    },
+    "report_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+    "event_id": "fa32a50e-2659-4022-a73a-b2fc5862ec90",
+    "payload_hash": "c9e9183ef3f5133d9f5f5b9c5526b8cdd8131857df21a2c898fe9864e78e7309",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora-fabric-e2e"
+  }
+}

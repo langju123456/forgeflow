@@ -1,0 +1,175 @@
+{
+  "accepted_as_model_report": false,
+  "analysis": null,
+  "analysis_status": "INCOMPLETE",
+  "automatic_retries": 0,
+  "case_id": "M05",
+  "checked_application_scope": "UNCHANGED_POLICY_AND_PROVIDER_FAULT_BOUNDARIES",
+  "cost_microusd": null,
+  "durable_execution_state": null,
+  "evidence": {
+    "actual_mcp_transcript": {
+      "binding": {
+        "roles": [
+          "pm"
+        ],
+        "run_id": "a1468c16-b988-493d-8e10-6b4cc491c624",
+        "scope": {
+          "project_id": "aurora-s2-model-eval",
+          "tenant_id": "eval-synthetic",
+          "workspace_id": "engineering"
+        },
+        "subject_id": "S2B_TEST_DRIVER_PM"
+      },
+      "independent_server_process": true,
+      "messages": [
+        {
+          "bytes": 152,
+          "direction": "client_to_server",
+          "message": {
+            "id": 0,
+            "jsonrpc": "2.0",
+            "method": "initialize",
+            "params": {
+              "capabilities": {},
+              "clientInfo": {
+                "name": "mcp",
+                "version": "0.1.0"
+              },
+              "protocolVersion": "2025-11-25"
+            }
+          },
+          "sha256": "01aa23325bafde4808cdea7917f11c4fda1898d9a291b42491199f5ffc96e106"
+        },
+        {
+          "bytes": 197,
+          "direction": "server_to_client",
+          "message": {
+            "id": 0,
+            "jsonrpc": "2.0",
+            "result": {
+              "capabilities": {
+                "experimental": {},
+                "tools": {
+                  "listChanged": false
+                }
+              },
+              "protocolVersion": "2025-11-25",
+              "serverInfo": {
+                "name": "forgeflow-local-sandbox",
+                "version": "0.1.0"
+              }
+            }
+          },
+          "sha256": "047eb0bfad061f492f20a33a83f59edf2bdf4034903487b192501863bf7c72c3"
+        },
+        {
+          "bytes": 54,
+          "direction": "client_to_server",
+          "message": {
+            "jsonrpc": "2.0",
+            "method": "notifications/initialized"
+          },
+          "sha256": "59951ca0b212b103876fa23a9e58bcbbc8fbcc0120e3f5ee7214461e2bd1cd5e"
+        },
+        {
+          "bytes": 46,
+          "direction": "client_to_server",
+          "message": {
+            "id": 1,
+            "jsonrpc": "2.0",
+            "method": "tools/list"
+          },
+          "sha256": "cd40773a5eb07bdbdf483b4bfabb3f92a6cb2ae193e610c9beac1bd4abd9d0ff"
+        },
+        {
+          "bytes": 46,
+          "direction": "server_to_client",
+          "message": {
+            "id": 1,
+            "jsonrpc": "2.0",
+            "result": {
+              "tools": []
+            }
+          },
+          "sha256": "7c116dab6525a750dca29e9a8b343e8624b0cc0336b94658445e60bb0fad8c46"
+        },
+        {
+          "bytes": 154,
+          "direction": "client_to_server",
+          "message": {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "method": "tools/call",
+            "params": {
+              "arguments": {
+                "resource_profile": "checker-v1",
+                "template_id": "evt-check"
+              },
+              "name": "sandbox.execute"
+            }
+          },
+          "sha256": "148e6303431738e1a10f9b824498a2db7ce479872ad9d5c6bb8c4fa7ed00543b"
+        },
+        {
+          "bytes": 271,
+          "direction": "server_to_client",
+          "message": {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "result": {
+              "content": [
+                {
+                  "text": "{\"error\":\"DENIED\",\"reason\":\"Role, scope, expiry or tool capability rejected\"}",
+                  "type": "text"
+                }
+              ],
+              "isError": true,
+              "structuredContent": {
+                "error": "DENIED",
+                "reason": "Role, scope, expiry or tool capability rejected"
+              }
+            }
+          },
+          "sha256": "177adca25f99fcf0fa6ee9ebf8e033d56c65c1605b256cf18c850bd137a97d09"
+        }
+      ],
+      "protocol_version": "2025-11-25",
+      "sdk": "mcp",
+      "sdk_version": "1.30.0",
+      "server_info": {
+        "icons": null,
+        "name": "forgeflow-local-sandbox",
+        "title": null,
+        "version": "0.1.0",
+        "websiteUrl": null
+      },
+      "server_stderr": "Tool 'sandbox.execute' not listed, no validation will be performed\n",
+      "tools": [],
+      "transport": "stdio"
+    },
+    "gateway_result": {
+      "error": "DENIED",
+      "reason": "Role, scope, expiry or tool capability rejected"
+    },
+    "sandbox_executions": 0
+  },
+  "fault_appended_to_prompt": false,
+  "full_frozen_gold_status": "PASS",
+  "kind": "policy_fault",
+  "outcome": "DENIED",
+  "parent_check_provenance": "TEST_DRIVER_NOT_LIVE_DOCKER",
+  "provenance": "TEST_DRIVER",
+  "real_model_calls": 0,
+  "scenario_id": "M05",
+  "security_invariants": {
+    "no_approval_decisions": true,
+    "no_new_business_receipts": true,
+    "no_stage_transition": true,
+    "parent_unchanged": true,
+    "technical_gate_unchanged": true
+  },
+  "status": "PASS",
+  "test_driver_dispatches": 0,
+  "usage_state": "NOT_DISPATCHED"
+}

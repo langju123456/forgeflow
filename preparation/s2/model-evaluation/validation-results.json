@@ -1,0 +1,54 @@
+{
+  "schema": "forgeflow-model-dataset-validation-v1",
+  "recorded_at": "2026-10-05T17:12:40.105231+00:00",
+  "python": "3.12.13",
+  "validation_kind": "DATASET_INTEGRITY_ONLY",
+  "model_evaluation": "NOT_RUN",
+  "external_calls": {
+    "model": 0,
+    "api": 0,
+    "containers": 0
+  },
+  "validator": {
+    "status": "PASS",
+    "validation_kind": "DATASET_INTEGRITY_ONLY",
+    "case_count": 12,
+    "scenario_count": 13,
+    "model_evaluation": "NOT_RUN",
+    "model_calls": 0,
+    "dataset_sha256": "94288693a05cdc1f37571cff903569e215e80ebfc2ba73d740f1c1de275ab3ee",
+    "policy_hash": "66be935ddeef32c5a1950a98d2a9f9fbb7b63cd5f6c87ba9f2999fc1824385cc"
+  },
+  "freeze_file_sha256": "2b565536dc985eb6dea45f96fdab6b53b5596938b017d02234a022754bdaa999",
+  "case_file_sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+  "checks": [
+    {
+      "command": [
+        "forgeflow/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "forgeflow/preparation/s2/model-evaluation/test_checkfixtures.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "stdout": "........................................                                 [100%]\n40 passed in 0.08s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "forgeflow/.venv/bin/ruff",
+        "check",
+        "forgeflow/preparation/s2/model-evaluation",
+        "--no-cache",
+        "--output-format",
+        "concise"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "provenance": "OFFLINE_TEST_DRIVER_FRAMING_NOT_MODEL_INFERENCE",
+  "source_attempt_sha256": "f19c5d1d28d89c084f92ba91f6dc653fc568eda4daa3ab3f8d2646fb8339fd02",
+  "workflow_revision": "s2a-four-call-v2",
+  "note": "V1 genuine plan question/proposal reused without text edits; refs rebound to same-shape TEST_DRIVER fixtures. Summary stress report is synthetic maximal ASCII cardinality/text, not a real model report. No provider invoked. All gate/unknown/approval/source fields retained.",
+  "frames": [
+    {
+      "phase": "plan",
+      "bound": 2233,
+      "context_bytes": 989,
+      "system_bytes": 316,
+      "schema_bytes": 339,
+      "input_hash": "080986c89ade110ca4bf5cb40e4d767651b59086c66ba85fc1748071965423bb"
+    },
+    {
+      "phase": "context",
+      "bound": 2627,
+      "context_bytes": 989,
+      "system_bytes": 301,
+      "schema_bytes": 467,
+      "input_hash": "5289203129e89656e9feac5c12db0e5ea4ff76e5e039f90f791701077d83da62"
+    },
+    {
+      "phase": "report",
+      "bound": 3381,
+      "context_bytes": 1195,
+      "system_bytes": 484,
+      "schema_bytes": 812,
+      "input_hash": "847bd1e5651c9cd33fa8ba71f17ed563badda35fd64b015903f48ee4c0923b2f"
+    },
+    {
+      "phase": "summary",
+      "bound": 3782,
+      "context_bytes": 2200,
+      "system_bytes": 467,
+      "schema_bytes": 436,
+      "input_hash": "c22b3c3483bd51609fb2f43cbb0718696439d374e3899bad9f2756ee75f3f27f"
+    }
+  ],
+  "caps": {
+    "input_conservative_bound": 3500,
+    "output_tokens": 800
+  },
+  "new_model_requests": 0
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "FORGEFLOW_S2A_FRESH_READONLY_REVIEW_V1",
+  "reviewed_at_utc": "2026-10-06T04:34:47.149766+00:00",
+  "reviewer_task": "/root/s2_runtime_review",
+  "status": "NO_REMAINING_CONFIRMED_P1_P2_IN_REVIEWED_DEV_ONLY_SLICE",
+  "scope": "Existing pinned local qwen3:8b, synthetic Aurora S1 facts; four Supervisor/PM model phases, read-only Knowledge/Memory, independent durable analysis; no generated execution or automatic approval/business write.",
+  "remaining_confirmed_findings": [],
+  "closed_findings": [
+    {
+      "id": "S2A_HTTP_ERROR_UNKNOWN_SLOT",
+      "severity": "P1",
+      "trigger": "POST /api/chat HTTP error without confirmed completion after dispatch",
+      "original_effect": "PROVIDER_ERROR could enter finish_call and release durable profile occupancy while original delivery/completion remained unknown.",
+      "fix": "Workflow routes every dispatched reply lacking completion_confirmed=True to fail_unknown; keeps reservation and durable profile slot. No automatic resend.",
+      "regression": "test_http500_unconfirmed_completion_holds_global_slot_across_provider_instances proves fresh provider instance/new analysis cannot issue even preflight requests while unknown slot is retained.",
+      "verified": true
+    }
+  ],
+  "owner_reported_fixes_rechecked": [
+    "start replay validates each saved call source; recover returns safe scoped metadata without private material/output",
+    "locked analysis reads refresh SQLAlchemy identity map before claim/fencing checks",
+    "caller and recipient-role source ACL intersection filters before source text and lexical ranking",
+    "source/caller/role/grant/witness bindings are reauthorized at dispatch, publication, reads and PM-to-Supervisor handoff",
+    "application output caps and v2 typed input projection preserve server-side exact sources and source statuses",
+    "real service tool receipts are bounded, source-bound and marked IN_PROCESS rather than MCP",
+    "separate analysis preserves S1 Gate, approvals, stage, receipts and Memory; model completion is analysis only"
+  ],
+  "verification": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -B -m pytest -p no:cacheprovider -p pytest_asyncio.plugin tests/test_analysis_provider.py tests/test_analysis_store.py tests/test_analysis_context.py tests/test_analysis_workflow.py tests/test_analysis_api.py -q --tb=short",
+    "exit_code": 0,
+    "passed": 161,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 14.43,
+    "execution": "TEST_DRIVER: real SQLite/Store/HTTP route integration and mocked provider transport; no model or Docker request from reviewer",
+    "warning": "One existing Starlette TestClient httpx deprecation warning",
+    "s1_recorded_inventory": {
+      "checked": 95,
+      "mismatches": [],
+      "status": "UNCHANGED"
+    },
+    "s2_preparation_recorded_inventory": {
+      "checked": 38,
+      "mismatches": [],
+      "status": "UNCHANGED"
+    }
+  },
+  "reviewer_did_not": [
+    "read .runtime passwords or identity tokens",
+    "run actual model inference",
+    "download models",
+    "invoke Docker or PostgreSQL live probes",
+    "change canonical source/tests/skills",
+    "modify S1 or preparation seals"
+  ],
+  "limits": [
+    "Root-owned actual pass/blocked/unknown/timeout model traces remain separate acceptance evidence; pending real cases are not counted by this review.",
+    "Tiny provider conformance and schema/citation validity do not establish factual model quality, throughput, hardware certification or production readiness.",
+    "No SRE, embedding/vector/RRF, paid API, external writes, SSO/RLS or arbitrary generated-code coverage is claimed.",
+    "S1 scripts/runtime_live_validate.py still writes its historical fixed evidence path; do not execute directly when preserving old archives. Use safe new output runner or an explicitly reviewed new-output change."
+  ],
+  "reviewed_files": [
+    {
+      "path": "scripts/analysis_migrate.py",
+      "sha256": "0b04f9b2d1fb6257fe6a80546e3112070f33f860021d128b0b5a7582cef0ca34"
+    },
+    {
+      "path": "skills/pm-analysis/SKILL.md",
+      "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+    },
+    {
+      "path": "skills/supervisor-analysis/SKILL.md",
+      "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+    },
+    {
+      "path": "src/forgeflow/analysis_api.py",
+      "sha256": "ad4380bec732d33f1b63c59ae0dcf6724dfe15bbb3f563544f31538b29c3a550"
+    },
+    {
+      "path": "src/forgeflow/analysis_cli.py",
+      "sha256": "4399a6b776d29e705b58b0026a05a1904607cebb26704d64036387fe7aa05671"
+    },
+    {
+      "path": "src/forgeflow/analysis_context.py",
+      "sha256": "dee2db6c8db8e49237a3a88d480c1d60f4f1e73e5c8373c2bcd6bd637b71b7ae"
+    },
+    {
+      "path": "src/forgeflow/analysis_contracts.py",
+      "sha256": "3ec279921bac44b17503bfaac1ddfa90fdd3f68489e584773b61ba8faef65ec4"
+    },
+    {
+      "path": "src/forgeflow/analysis_provider.py",
+      "sha256": "b5a38f71fd9f519770644eaac32a9c3f6894d845769c134c41e780668a8c8a87"
+    },
+    {
+      "path": "src/forgeflow/analysis_runtime.py",
+      "sha256": "425e1b593df78dc36e2ddff5f2e272a742dea1d80e0e101695632e7b4c76186c"
+    },
+    {
+      "path": "src/forgeflow/analysis_store.py",
+      "sha256": "9503e2415aac8b99d9a77f8edea6be879cad047544b62d64460382b655057dc6"
+    },
+    {
+      "path": "src/forgeflow/analysis_workflow.py",
+      "sha256": "3ee7bec191de44611050b006fd649d1c6ac824bec2e47e42ad3e6b15a1ae8daf"
+    },
+    {
+      "path": "tests/test_analysis_api.py",
+      "sha256": "29012bc21af074f2c36010e97dc73b052ed483c983a69f746bf9c3217f2256ee"
+    },
+    {
+      "path": "tests/test_analysis_context.py",
+      "sha256": "e134dd92f566f10b5491fd9775ca26cb56870a8e6e3cfc982c5919fc16f48601"
+    },
+    {
+      "path": "tests/test_analysis_provider.py",
+      "sha256": "7d48394dbb404d800b0f59ee08a4b475b2ebf1733a77be01822c1aa230be5692"
+    },
+    {
+      "path": "tests/test_analysis_store.py",
+      "sha256": "8c67c24072b518564cbd8c9c252b9a317a9258ef958f732d3abcdab2c72a80f0"
+    },
+    {
+      "path": "tests/test_analysis_workflow.py",
+      "sha256": "581cc100be9f03298d2f0bf765487c749983d8ab5fe37e15b8f30749005d1f69"
+    }
+  ]
+}

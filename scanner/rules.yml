@@ -1,0 +1,51 @@
+# Original ForgeFlow rules. No Semgrep Registry rule set is downloaded.
+# Limited auxiliary static checks; not an isolation or safety proof.
+rules:
+  - id: forgeflow.python.dynamic-evaluation
+    languages: [python]
+    message: Dynamic execution is outside the checker capability.
+    severity: ERROR
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+      - pattern: compile(...)
+      - pattern: __import__(...)
+  - id: forgeflow.python.os-command
+    languages: [python]
+    message: Operating system command execution is outside the checker capability.
+    severity: ERROR
+    pattern-either:
+      - pattern: os.system(...)
+      - pattern: os.popen(...)
+      - pattern: os.execl(...)
+      - pattern: os.execv(...)
+      - pattern: os.execve(...)
+      - pattern: os.execvp(...)
+  - id: forgeflow.python.subprocess
+    languages: [python]
+    message: Spawning additional executables is outside the checker capability.
+    severity: ERROR
+    pattern-either:
+      - pattern: subprocess.run(...)
+      - pattern: subprocess.Popen(...)
+      - pattern: subprocess.call(...)
+      - pattern: subprocess.check_call(...)
+      - pattern: subprocess.check_output(...)
+  - id: forgeflow.python.unsafe-deserialization
+    languages: [python]
+    message: Unsafe deserialization is outside the checker capability.
+    severity: ERROR
+    pattern-either:
+      - pattern: pickle.load(...)
+      - pattern: pickle.loads(...)
+      - pattern: marshal.load(...)
+      - pattern: marshal.loads(...)
+      - pattern: yaml.unsafe_load(...)
+  - id: forgeflow.python.native-library
+    languages: [python]
+    message: Native-library loading is outside the checker capability.
+    severity: ERROR
+    pattern-either:
+      - pattern: ctypes.CDLL(...)
+      - pattern: ctypes.PyDLL(...)
+      - pattern: ctypes.cdll.LoadLibrary(...)

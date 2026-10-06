@@ -1,0 +1,206 @@
+{
+  "actual_check_witness": {
+    "evaluation_clock": "2026-10-05T12:00:00Z",
+    "input_manifest": {
+      "metrics": {
+        "bom_revision": {
+          "observed_at": "2026-10-04T00:00:00Z",
+          "status": "MEASURED",
+          "valid_until": "2026-11-05T00:00:00Z",
+          "value": "A3"
+        },
+        "boot_cycles": {
+          "observed_at": "2026-10-04T00:00:00Z",
+          "status": "MEASURED",
+          "valid_until": "2026-11-05T00:00:00Z",
+          "value": 100
+        },
+        "boot_failures": {
+          "observed_at": "2026-10-04T00:00:00Z",
+          "status": "MEASURED",
+          "valid_until": "2026-11-05T00:00:00Z",
+          "value": 0
+        },
+        "ci_smoke": {
+          "observed_at": "2026-10-04T00:00:00Z",
+          "status": "MEASURED",
+          "valid_until": "2026-11-05T00:00:00Z",
+          "value": true
+        },
+        "thermal_peak_c": {
+          "observed_at": "2026-10-04T00:00:00Z",
+          "status": "MEASURED",
+          "valid_until": "2026-11-05T00:00:00Z",
+          "value": 68
+        }
+      },
+      "project": "Project Aurora",
+      "source_ref": "fixture:aurora-evt-synthetic-v1",
+      "synthetic": true,
+      "version": "v1"
+    },
+    "trusted_input": null
+  },
+  "claim_catalog": {
+    "concerns": [],
+    "observations": [
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_c3b50815017f75b8",
+        "metric": "boot_cycles",
+        "source_ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "value": 100
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_d0f217c61b9c0e2b",
+        "metric": "boot_failures",
+        "source_ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "value": 0
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_82383be9183f0f25",
+        "metric": "bom_revision",
+        "source_ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "value": "A3"
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_76713a903c3b94c5",
+        "metric": "ci_smoke",
+        "source_ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "value": true
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_e21a499df529e3a9",
+        "metric": "thermal_peak_c",
+        "source_ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "value": 68
+      }
+    ]
+  },
+  "context_snapshot": {
+    "caller": {
+      "clearance": 0,
+      "kind": "user",
+      "roles": [
+        "admin",
+        "hardware",
+        "pm",
+        "reviewer",
+        "submitter"
+      ],
+      "scopes": [
+        {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      ],
+      "subject_id": "local-owner"
+    },
+    "catalog_hash": "bdbdfca5008ddf10da144757de4eff24465a91d77e8cb3ddade38e578970ee4b",
+    "context_revision": "analysis-context-v2-mcp-witness",
+    "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+    "grounding": {
+      "case_hash": "62c8bac3a70060094f5f9386a251267ca00bf280613af4c4c6c0bb5f836321b4",
+      "dataset_sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+      "evaluation_clock": "2026-10-05T12:00:00Z",
+      "export_grant_revision": "b7f42552f2eabaf9550533a72cee1426cdf7c3e8ad1eb42c13cfee6918eea1a2",
+      "input_contract": "UNCHANGED_CANONICAL_FIXTURE_CHECK",
+      "report_status_authority": "SERVER_DERIVED_AUTHORIZED_CATALOG",
+      "revision": "s2b-frozen-grounding-v1",
+      "s2c_context_revision": "s2c-authoritative-checks-v1",
+      "scenario_id": "M01",
+      "scope_mapping": {
+        "from": {
+          "project_id": "aurora-s2-model-eval",
+          "tenant_id": "eval-synthetic",
+          "workspace_id": "engineering"
+        },
+        "purpose": "EXACT_SYNTHETIC_EVAL_SOURCE_IMPORT_ONLY",
+        "run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+        "to": {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      },
+      "source_records": [
+        {
+          "classification": 0,
+          "origin": "fixtures/aurora-pass.json",
+          "scope": {
+            "project_id": "aurora-s2-model-eval",
+            "tenant_id": "eval-synthetic",
+            "workspace_id": "engineering"
+          },
+          "source_hash": "5d881d6ad02d55d25f93dd7151a82d784e89fecae5471bdeb6a08978c4789173",
+          "source_id": "c-aurora-pass-v1",
+          "status": "CURRENT",
+          "trust": "UNTRUSTED_DATA",
+          "version": "v1"
+        }
+      ]
+    },
+    "material_hash": "046ef79810892f5e589e4305ea3cf3acfd20a8a8010d09e7fd3b10e29bb535ec",
+    "role": "supervisor",
+    "run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+    "scope": {
+      "project_id": "aurora",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering"
+    },
+    "sources": [
+      {
+        "classification": 0,
+        "id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+        "kind": "run",
+        "ref": "src_c7834eee0fef3ef09fc6674bf49edde0",
+        "source_hash": "046ef79810892f5e589e4305ea3cf3acfd20a8a8010d09e7fd3b10e29bb535ec",
+        "status": "CHECK_COMPLETED",
+        "version": "efed8d10-ad3f-4677-aceb-fe18b865a00c",
+        "witness_hash": "ef1ed2ab7e59b49fc6455877637c331c45c552476d6e88b1a7a6622a4f7724e6"
+      },
+      {
+        "classification": 0,
+        "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+        "kind": "document",
+        "ref": "src_36ccde376ddd5e5c48629223f9e014f1",
+        "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+        "status": "CURRENT",
+        "version": "v1",
+        "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+      },
+      {
+        "classification": 0,
+        "id": "c-aurora-pass-v1",
+        "kind": "eval_fixture",
+        "ref": "src_f44a30c263436d565316e32ca9e8dc06",
+        "source_hash": "5d881d6ad02d55d25f93dd7151a82d784e89fecae5471bdeb6a08978c4789173",
+        "status": "CURRENT",
+        "version": "v1",
+        "witness_hash": "8d82c45531fdc4e8967742f2b438202fe3031c954610d8e16124ddfc5b12deee"
+      }
+    ]
+  },
+  "experiment_freeze_hash": "c55917ef78e08c8a8c0001e979c4a0abc3fd2da0470ca90890803c2d6205744c",
+  "parent_input_hash": "95d7cb11f43c30efdf45be1e392a630aa298c9fcc613b36be7cf259c1a9db24f",
+  "parent_run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+  "scenario_id": "M01",
+  "source_origin_refs": {
+    "c-aurora-pass-v1": "src_f44a30c263436d565316e32ca9e8dc06"
+  }
+}

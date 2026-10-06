@@ -1,0 +1,167 @@
+[
+  {
+    "scenario": "M01-blocked",
+    "calls": 4,
+    "analysis_state": "INCOMPLETE",
+    "checker_gate": "BLOCKED",
+    "records": [
+      {
+        "call": "1cabd9a3-c3d2-4a40-93dc-0989d1ce9ae1",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "PLAN"
+      },
+      {
+        "call": "753827b8-fdb0-4ead-a810-6487e1fe0cf3",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "CONTEXT_PROPOSAL"
+      },
+      {
+        "call": "85207f02-1ada-44c8-a10e-cb388689d1fc",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "FINAL_REPORT"
+      },
+      {
+        "call": "7e13313a-0db8-4041-8ed8-645043d5b19c",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "SUMMARY"
+      }
+    ],
+    "raw_chain_sha256": "b3bb8094282cad29cd154115c940ec340cc3a59b3c44e959d0efd3a171722a25"
+  },
+  {
+    "scenario": "M01",
+    "calls": 4,
+    "analysis_state": "COMPLETE",
+    "checker_gate": "PASS",
+    "records": [
+      {
+        "call": "0064c4f2-ec86-4079-9c61-76aed1449021",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "PLAN"
+      },
+      {
+        "call": "1b9a70a2-eaf5-4ff7-b3ab-8ef2b0a2079b",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "CONTEXT_PROPOSAL"
+      },
+      {
+        "call": "d95133ec-4b84-4d24-8951-7f5f9cc66a67",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "FINAL_REPORT"
+      },
+      {
+        "call": "cbb8796d-ef5f-4029-9405-e67fba71db32",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "SUMMARY"
+      }
+    ],
+    "raw_chain_sha256": "0d487569d3e217794d95b91b71eda077711139963cba3b2ea65109d7c40b3cf4"
+  },
+  {
+    "scenario": "M02",
+    "calls": 4,
+    "analysis_state": "INCOMPLETE",
+    "checker_gate": "UNKNOWN",
+    "records": [
+      {
+        "call": "e4f65087-54b8-4e86-bb77-68868d87425e",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "PLAN"
+      },
+      {
+        "call": "85aa65e4-b874-4628-bcbf-bcd791f55c19",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "CONTEXT_PROPOSAL"
+      },
+      {
+        "call": "7224920f-d017-457b-a361-136b71b8df40",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "FINAL_REPORT"
+      },
+      {
+        "call": "182ccb04-e784-41ed-9f2b-95fbf041cfea",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "SUMMARY"
+      }
+    ],
+    "raw_chain_sha256": "7236e45dda1808b8809eb0c46e34f9d8ef13ef5f5d50f7e020f75f8bae981d44"
+  },
+  {
+    "scenario": "M03",
+    "calls": 4,
+    "analysis_state": "INCOMPLETE",
+    "checker_gate": "UNKNOWN",
+    "records": [
+      {
+        "call": "75806101-5c35-4ef8-a167-a9d34874e16d",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "PLAN"
+      },
+      {
+        "call": "072ea30d-77e1-44a8-a344-a019eb5d66cc",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "CONTEXT_PROPOSAL"
+      },
+      {
+        "call": "c8215903-7d33-43a2-b0a0-fedac4a517e2",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "FINAL_REPORT"
+      },
+      {
+        "call": "c84bab20-6c99-4946-b64b-a757e663eefd",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "SUMMARY"
+      }
+    ],
+    "raw_chain_sha256": "d9c98bd40163adedb52b5d093e915332b3390a9a12bbcabec1fdada7680167ac"
+  },
+  {
+    "scenario": "M04",
+    "calls": 4,
+    "analysis_state": "COMPLETE",
+    "checker_gate": "PASS",
+    "records": [
+      {
+        "call": "87f7c3a7-5295-452d-9793-b2410e17cdfb",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "PLAN"
+      },
+      {
+        "call": "47436859-1c0f-434d-9faa-fe21ad38f165",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "CONTEXT_PROPOSAL"
+      },
+      {
+        "call": "a375cf72-e279-4e5a-9be5-9c2c45332abe",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "FINAL_REPORT"
+      },
+      {
+        "call": "d3476276-851f-4add-8e9c-fb38e1acfbd3",
+        "nested_match": true,
+        "flattened_match": false,
+        "phase": "SUMMARY"
+      }
+    ],
+    "raw_chain_sha256": "d9f05617aa4b62dc7fb5ebf2f30e11a5eb19c664e00ada469dc84765b7935cc8"
+  }
+]

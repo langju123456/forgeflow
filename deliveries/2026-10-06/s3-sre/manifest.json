@@ -1,0 +1,98 @@
+{
+  "schema": "forgeflow-s3a-sre-incremental-delivery-v1",
+  "status": "LOCAL_RECORDED_SRE_SOP_RUNNING",
+  "source_original": "/path/to/forgeflow",
+  "date": "2026-10-06",
+  "previous_delivery": {
+    "path": "deliveries/2026-10-06/s2c-fixes/manifest.json",
+    "sha256": "8db84d5b5d1ef87316b825df27922d97e9fd98b7011d9fbbd339d81ff32565a5"
+  },
+  "tests_passed": 16,
+  "actual_postgres_scenarios": 5,
+  "model_calls_added": 0,
+  "sandbox_executions_added": 0,
+  "external_business_writes": false,
+  "zip_tests": "CANCELLED_BY_USER",
+  "files": [
+    {
+      "path": "deliveries/2026-10-06/s3-sre/DELIVERY.md",
+      "bytes": 3484,
+      "sha256": "ed15db514b0d5018f63fae113730619feb5568a5ced7653566dfd9339a7d0bbc"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/M01-blocked.json",
+      "bytes": 2864,
+      "sha256": "ca4febb4e7806a36bee6b4ecb6a10cf80d808dcf93d40d9da1c8cb02cca93544"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/M01.json",
+      "bytes": 2851,
+      "sha256": "8a7dea0323e57c5f748e5dafd87dbee1441158e31ea46effde6d3dc2406097e5"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/M02.json",
+      "bytes": 2856,
+      "sha256": "a9053e307d012e8c61c69c1bca31f2c393f8e784cf728a28afa8e6af40063422"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/M03.json",
+      "bytes": 2856,
+      "sha256": "6c158dfc96d21cf5422a06cb9634fcdf9d239cf7977d9264d9e848eeaa751a58"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/M04.json",
+      "bytes": 2851,
+      "sha256": "ec0bbfcfde8a5c5553d3f5c908eb4fd8f4b506f291d4bca72d44e5ee7ad72667"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/independent-review.json",
+      "bytes": 582,
+      "sha256": "43bb85c540692ed0eb60a5567a7f36612f101251b907493bbceab99d5701f94e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/live-summary.json",
+      "bytes": 4163,
+      "sha256": "86a91e3dafb9840882c171b2e78f1030843ffc882b9cc8338af55a5c4b3124b3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/manual-cli-read.json",
+      "bytes": 298,
+      "sha256": "dd21e82fe428aec9253b469cce65d97ef70837cd4a4d84a6098cac2bfa37425b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/evidence/sre-tests.xml",
+      "bytes": 2329,
+      "sha256": "8194c168da9a6647cf9993609d154983de0a2ceaae94e6880f6a32239b700f06"
+    },
+    {
+      "path": "docs/14-sre-operational-sop.md",
+      "bytes": 1591,
+      "sha256": "50574a37f713a7bc339304c6ce133bdcf7db5483068bb14ece15cb4e167e220d"
+    },
+    {
+      "path": "skills/sre-operations/SKILL.md",
+      "bytes": 904,
+      "sha256": "46def06c825486a578d266372ab5bbbe3bc62bb8246f72f7e494a27d26a8bd5e"
+    },
+    {
+      "path": "src/forgeflow/sre_api.py",
+      "bytes": 2117,
+      "sha256": "fa9c7637455049bc101d9d1c40008ad31bd18272075117744fb86054b033a9fc"
+    },
+    {
+      "path": "src/forgeflow/sre_cli.py",
+      "bytes": 1168,
+      "sha256": "f2b3e83d9ff30d401602d3b4b5720fc6dff28c96e603f75522116f57f9e1c24b"
+    },
+    {
+      "path": "src/forgeflow/sre_ops.py",
+      "bytes": 12894,
+      "sha256": "1d8853f25376e69375dfd14865c145eb4bdb6cc1e71e2fefb4df8f9c9c2572c7"
+    },
+    {
+      "path": "tests/test_sre_ops.py",
+      "bytes": 8243,
+      "sha256": "09960aaa9d968155912efb2ad7dae19bac274569f2e3d97d49d4eec6959231ea"
+    }
+  ]
+}

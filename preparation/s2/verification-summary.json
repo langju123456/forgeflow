@@ -1,0 +1,264 @@
+{
+  "status": "S2_PREPARATION_VALIDATED_NOT_MODEL_IMPLEMENTATION",
+  "recorded_at": "2026-10-05T17:14:22.197654+00:00",
+  "scope": "New preparation files only. No S1 live regression rerun; unchanged S1 sealed inventory verified.",
+  "root_pytest": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -p no:cacheprovider preparation/s2/evaluation/test_evaluator.py preparation/s2/model-evaluation/test_checkfixtures.py -q --junitxml=preparation/s2/validation.xml",
+    "exit_code": 0,
+    "counts": {
+      "tests": 62,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "elapsed_console_seconds": 0.28,
+    "kind": "EVALUATOR_AND_INPUT_INTEGRITY_ONLY"
+  },
+  "root_ruff": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/ruff check --config pyproject.toml preparation/s2",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "model_fixture_validator": {
+    "exit_code": 0,
+    "status": "PASS",
+    "named_cases": 12,
+    "scenarios": 13,
+    "model_evaluation": "NOT_RUN",
+    "freeze_byte_sha256": "2b565536dc985eb6dea45f96fdab6b53b5596938b017d02234a022754bdaa999"
+  },
+  "retrieval_freeze_verified": true,
+  "retrieval_freeze_byte_sha256": "4b31cf95cdd0b2fbe5b63f706d7fb5b5db3da0aa913ada875ebc120c5785c8f5",
+  "lexical_run": "preparation/s2/evaluation/runs/20261005T170825-lexical-v1-891375a5/report.json",
+  "lexical_run_sha256": "b571c323728c46c2084db500e593d90f5786fe7042b4f124d12d47b7f2ed86ba",
+  "lexical_metrics": {
+    "question_count": 47,
+    "positive_questions": 37,
+    "core_content_questions": 30,
+    "acl_control_questions": 7,
+    "paired_acl_controls_recovered": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "macro_recall_at_5": 0.7837837837837838,
+    "macro_mrr_at_5": 0.7837837837837838,
+    "core_content_recall_at_5": 0.7333333333333333,
+    "core_content_mrr_at_5": 0.7333333333333333,
+    "micro_relevant_retrieval": {
+      "numerator": 32,
+      "denominator": 40,
+      "rate": 0.8
+    },
+    "citation_resolves": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "citation_exact_authorized": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "returned_citation_current_usable": {
+      "numerator": 53,
+      "denominator": 58,
+      "rate": 0.9137931034482759
+    },
+    "returned_expected_source_status_correct": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "expected_status_gold_coverage": {
+      "numerator": 32,
+      "denominator": 40,
+      "rate": 0.8
+    },
+    "acl_negative_query_leak": {
+      "numerator": 0,
+      "denominator": 7,
+      "rate": 0.0
+    },
+    "adversarial_exposure_query_leak": {
+      "numerator": 0,
+      "denominator": 8,
+      "rate": 0.0
+    },
+    "all_query_leak": {
+      "numerator": 0,
+      "denominator": 47,
+      "rate": 0.0
+    },
+    "forbidden_candidate_rows": 0,
+    "forbidden_citation_rows": 0,
+    "forbidden_candidate_observation_rate": {
+      "numerator": 0,
+      "denominator": 3165,
+      "rate": 0.0
+    },
+    "forbidden_citation_observation_rate": {
+      "numerator": 0,
+      "denominator": 290,
+      "rate": 0.0
+    },
+    "unknown_returned_sources": 0,
+    "unanswerable_nonempty_context": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.3333333333333333
+    },
+    "unanswerable_empty_context": {
+      "numerator": 2,
+      "denominator": 3,
+      "rate": 0.6666666666666666
+    },
+    "required_conflict_flag_coverage": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+    },
+    "latency_search_including_service_citation": {
+      "n": 235,
+      "median_ms": 1.702917,
+      "p95_ms": 2.7285,
+      "max_ms": 2.988875
+    },
+    "stable_query_results": {
+      "numerator": 47,
+      "denominator": 47,
+      "rate": 1.0
+    },
+    "denial_expected_and_observed": {
+      "numerator": 3,
+      "denominator": 3,
+      "rate": 1.0
+    },
+    "retrieval_slices": {
+      "acl-control": {
+        "questions": 7,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "acl-decoy": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "chinese": {
+        "questions": 6,
+        "macro_recall_at_5": 0.6666666666666666,
+        "macro_mrr_at_5": 0.6666666666666666
+      },
+      "classification": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "conflict": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "cross-language": {
+        "questions": 4,
+        "macro_recall_at_5": 0.0,
+        "macro_mrr_at_5": 0
+      },
+      "english": {
+        "questions": 15,
+        "macro_recall_at_5": 0.6,
+        "macro_mrr_at_5": 0.6
+      },
+      "exact-id": {
+        "questions": 11,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "exact-token": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "expiry": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "lexical": {
+        "questions": 14,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "project": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "role": {
+        "questions": 3,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "synonym": {
+        "questions": 4,
+        "macro_recall_at_5": 0.0,
+        "macro_mrr_at_5": 0
+      },
+      "tenant": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "version": {
+        "questions": 5,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "workspace": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      }
+    },
+    "latency_slices": {
+      "positive": {
+        "n": 185,
+        "median_ms": 1.766041,
+        "p95_ms": 2.769167,
+        "max_ms": 2.988875
+      },
+      "acl_negative": {
+        "n": 35,
+        "median_ms": 1.469375,
+        "p95_ms": 1.842375,
+        "max_ms": 1.863042
+      },
+      "unanswerable": {
+        "n": 15,
+        "median_ms": 1.564583,
+        "p95_ms": 2.405459,
+        "max_ms": 2.405459
+      }
+    }
+  },
+  "s1_seal": {
+    "seal": "deliveries/2026-10-05/manifest.json",
+    "checked_entries": 95,
+    "mismatches": [],
+    "status": "UNCHANGED",
+    "note": "After authorized S2 source changes, differences describe history; do not rewrite the S1 seal."
+  },
+  "no_provider_execution": {
+    "generation_calls": 0,
+    "embedding_calls": 0,
+    "paid_api_calls": 0,
+    "model_downloads": 0
+  },
+  "remaining": [
+    "Human model/data/download or API/project/budget choice",
+    "Actual provider capabilities, prompt/schema/profile/export bundle",
+    "S2 durable adapter/analysis/budget implementation and real LLM acceptance",
+    "Real embedding/vector/RRF acceptance; SRE source ACL/policy increment"
+  ]
+}

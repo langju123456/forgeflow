@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-05T16:04:02.446755+00:00",
+  "status": "SCANNER_MODULE_TESTED_NOT_FULL_PROJECT_COMPLETE",
+  "engine": "Semgrep CE",
+  "engine_version": "1.179.0",
+  "image": "sha256:a35b3db6cc6c0663069d815f6c29aa57533719a4b95a1a23fc43ab2a55c4f0fe",
+  "tests": {
+    "passed": 35,
+    "protocol_helper_lifecycle": 29,
+    "real_isolated_docker": 6,
+    "current_evt_template": "real PASS + cleanup REMOVED"
+  },
+  "lint": "passed",
+  "sha256": {
+    "scanner.py": "c657b592e6875730cfc02c4a45fe0b034b161485f68436586898efae9e7b2dc5",
+    "forgeflow_scan_runner.py": "acfab5d229cf998918ccef8566d2eb7a46838f2276564676e9d77bda20cdf5bd",
+    "rules.yml": "59ea979476b1076bf84153f377b35d9529c354dca17a1c11e8b7fa27d11963eb",
+    "test_scanner.py": "0706b572b3276f40e68c33c72ac60f48b0b06374a0031cf63bf7865d0cccb39f",
+    "Dockerfile.scanner": "347da65515aef7ab6629cf264be72fffc7806e2715a7af7734e43e383df8d691",
+    "build_scanner.py": "bcb1802dd42d77bf8fd43bba4452d3a83febb08bb515b53413c3fca54b948c26",
+    "vendor/semgrep-1.179.0-LICENSE": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331",
+    "TEMPLATE_SCAN.json": "e4fa68523ffe733bc2c823d5c3bca05392a3868fe6342537262771004a45f834"
+  },
+  "limitations": [
+    "PASS is finite-rule no-findings, not a safety proof",
+    "Authenticated durable handle must be stored before scan; exact fullscope cleanup and held flock+revocation tombstone now implemented; end-to-end worker crash requires orchestrator integration test",
+    "No full transitive dependency hash lock; runtime image immutable ID is pinned",
+    "Small synthetic fixture resource benchmark only",
+    "No model-generated source or credentials were used"
+  ]
+}

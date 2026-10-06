@@ -1,0 +1,84 @@
+{
+  "id": "bc45ff65-b379-44bb-b064-42f1834cc15b",
+  "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+  "created_by": "local-owner",
+  "idempotency_key": "s3-sre:M04:01",
+  "request_hash": "f660428db199e4773d61b51a9971828eae91ff433c000a8d9b6293d824afbd1d",
+  "source_hash": "80661a3dd6d898d487d9c5ac55b0be8fb65e6bac1c0e3d228a7f72ada515ce80",
+  "report_json": {
+    "revision": "sre-recorded-operations-v1",
+    "role": "sre",
+    "authority": "DETERMINISTIC_SOP",
+    "source_observation": "RECORDED_RECEIPTS_NOT_LIVE_PROBE",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+    "source_hash": "80661a3dd6d898d487d9c5ac55b0be8fb65e6bac1c0e3d228a7f72ada515ce80",
+    "skill_hash": "46def06c825486a578d266372ab5bbbe3bc62bb8246f72f7e494a27d26a8bd5e",
+    "operational_readiness": "READY",
+    "technical_gate": "PASS",
+    "checks": [
+      {
+        "id": "audit_binding",
+        "status": "PASS",
+        "reason": "CHECK_COMPLETED_BINDING",
+        "source_pointer": "/events/CHECK_COMPLETED"
+      },
+      {
+        "id": "lease_closure",
+        "status": "PASS",
+        "reason": "COMPLETED_FENCED_ATTEMPT",
+        "source_pointer": "/steps/readiness"
+      },
+      {
+        "id": "execution_cleanup",
+        "status": "PASS",
+        "reason": "TERMINAL_REMOVAL_RECEIPT",
+        "source_pointer": "/result_json/cleanup"
+      },
+      {
+        "id": "resource_and_scan",
+        "status": "PASS",
+        "reason": "RECORDED_PROFILE_AND_EXACT_SCAN",
+        "source_pointer": "/result_json/inspect"
+      },
+      {
+        "id": "mcp_receipt",
+        "status": "PASS",
+        "reason": "RECORDED_MCP_PROTOCOL_REQUIRED",
+        "source_pointer": "/result_json/mcp"
+      }
+    ],
+    "supervisor_handoff": "READY_FOR_HUMAN_REVIEW",
+    "human_approval_required": true,
+    "human_approval_state": "PENDING",
+    "business_receipt_count": 0,
+    "business_actions_executed_by_sop": false
+  },
+  "audit_json": {
+    "kind": "SRE_SOP_COMPLETED",
+    "actor": "local-owner",
+    "role": "sre",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+    "source_event_head": "c46016241f60c6d1d1646b83022d55e66465d7269e1fcc05d92251f7a360b151",
+    "report_hash": "8725361ef5c13e671dc18e93ed0ecd35ddd54ab9e219e0936858fe251ac4a5ea",
+    "transport": "IN_PROCESS",
+    "allowed_tools": [
+      "execution.events.read",
+      "execution.receipts.read"
+    ]
+  },
+  "payload_hash": "7ff929d4bdd31ca70c24813f9769564b0b9c18df0978290b2a999d9e45502947",
+  "created_at": "2026-10-06T07:51:28.561443+00:00",
+  "tenant_id": "synthetic-lab",
+  "workspace_id": "engineering",
+  "project_id": "aurora"
+}

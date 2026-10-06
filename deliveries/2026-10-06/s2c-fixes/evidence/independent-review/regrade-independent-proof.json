@@ -1,0 +1,24 @@
+{
+  "review_root": "/tmp/forgeflow-s2c-regrade-independent-g60l9zah",
+  "archive_unchanged": true,
+  "archive_recorded_files": 50,
+  "original_counts": {
+    "FAIL": 5,
+    "NOT_RUN": 0,
+    "PASS": 8
+  },
+  "regraded_counts": {
+    "PASS": 13,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "original_confirmed_model_calls": 20,
+  "model_calls_added": 0,
+  "structural_passes": 5,
+  "selection_passes": 5,
+  "server_state_passes": 5,
+  "actual_check_gold_passes": 5,
+  "canonical_typed_passes": 5,
+  "source_sha256": "bdc5d01679d731b530608ad4024b98c51a50beadadfb7526a2d0ce8a1414dea4",
+  "summary_sha256": "9c418e367db7ed578b200847aafa0d2d18f3f60e11871a5c71497922c2dbe48e"
+}

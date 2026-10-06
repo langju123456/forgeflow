@@ -1,0 +1,338 @@
+{
+  "provenance": "ACTUAL_LOOPBACK_HTTP_AND_POSTGRESQL_SCHEMA",
+  "health": {
+    "identity": "DEV_ONLY",
+    "revision": "fabric-stable-technical-v1",
+    "process_id": 69967,
+    "mode": "LOCAL_SYNTHETIC_PROTOTYPE",
+    "fabric_scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "fabric_action_adapter": "LOCAL_SYNTHETIC_PARAMETER_BOUND_APPROVAL_REQUIRED",
+    "evt_review_contract": "ENFORCED_FOR_CURRENT_HTTP_ACCEPTANCE",
+    "default_policy": "synthetic-evt-apk-device-v1",
+    "hardware_only_approvals": "GRANTS_BLOCKED_REJECTION_ALLOWED",
+    "model_roles": [
+      "supervisor",
+      "pm"
+    ],
+    "deterministic_sops": [
+      "hardware",
+      "sre",
+      "architect",
+      "android"
+    ],
+    "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+    "android_device": "NOT_RUN_NO_ANDROID_DEVICE",
+    "full_evt_eligibility": false,
+    "evt_stage_transition_allowed": false,
+    "stage_action_adapter": "ISOLATED_LOCAL_TEST_STAGE_ONLY",
+    "issue_adapter": "LOCAL_DB_ONLY",
+    "memory_adapter": "ISOLATED_LOCAL_APPROVAL_REQUIRED",
+    "human_approval_required": true,
+    "automatic_business_actions": false
+  },
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/fabric/reviews/ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/fabric/reviews/ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "expected_status": 401,
+      "observed_status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/fabric/reviews/ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "expected_status": 404,
+      "observed_status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/fabric/reviews/ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "expected_status": 404,
+      "observed_status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/runs/85b429cb-ca4b-4831-8172-116a1919b6f3/report",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/f85ef504-0f41-4a05-ac44-07f8c5e059d1/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/926b0a5f-eece-42ef-9563-366bdb3b6fd9/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/4c326c98-2d0b-4a86-a65b-a3e97c2fe631/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/3d2cb433-8f8d-4084-9b5a-ccb74369cda2/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/a3d35470-566a-4b32-b02c-f24cc970c8a2/execute",
+      "expected_status": 200,
+      "observed_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/fabric/approvals/dc1ed9de-bfb5-4fb8-a2e4-ff4c9c6f77c5/execute",
+      "expected_status": 403,
+      "observed_status": 403
+    },
+    {
+      "path": "unknown-proposal",
+      "expected_status": 409,
+      "observed_status": 409,
+      "code": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "method": "GET",
+      "path": "/fabric/memory",
+      "expected_status": 200,
+      "observed_status": 200
+    }
+  ],
+  "receipt_replay_from_separate_api_process": 6,
+  "new_effects": 0,
+  "new_model_calls": 0,
+  "scoped_foreign_keys": {
+    "fabric_reviews": [
+      {
+        "name": "fabric_reviews_tenant_id_workspace_id_project_id_event_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "event_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "events",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_reviews_tenant_id_workspace_id_project_id_run_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ],
+    "fabric_approvals": [
+      {
+        "name": "fabric_approvals_tenant_id_workspace_id_project_id_review__fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "review_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "fabric_reviews",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_approvals_tenant_id_workspace_id_project_id_run_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ],
+    "fabric_receipts": [
+      {
+        "name": "fabric_receipts_tenant_id_workspace_id_project_id_approval_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "approval_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "fabric_approvals",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_receipts_tenant_id_workspace_id_project_id_event_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "event_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "events",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_receipts_tenant_id_workspace_id_project_id_run_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ],
+    "fabric_items": [
+      {
+        "name": "fabric_items_tenant_id_workspace_id_project_id_approval_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "approval_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "fabric_approvals",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_items_tenant_id_workspace_id_project_id_memory_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "memory_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "memories",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "fabric_items_tenant_id_workspace_id_project_id_run_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ]
+  },
+  "service_replacement": {
+    "verified_previous_pid": 65879,
+    "current_pid": 69967,
+    "port": 8773,
+    "other_project_actions": "NONE"
+  }
+}

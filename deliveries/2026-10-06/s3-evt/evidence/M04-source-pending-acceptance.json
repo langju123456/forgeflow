@@ -1,0 +1,45 @@
+{
+  "id": "3aadc43b-af6e-4bdf-919c-3e40416f9555",
+  "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+  "review_id": "8cb36cb5-cf3a-4ff0-a9c8-75b55fe81070",
+  "created_by": "local-owner",
+  "idempotency_key": "accept:s3-evt:M04:aligned:synthetic-source-review-v1:01",
+  "proposal": {
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+    "review_id": "8cb36cb5-cf3a-4ff0-a9c8-75b55fe81070",
+    "review_hash": "e5e71245c50462042a6daf197cbad202abdabc3325cb7fd8c0e63bdfed1d0aff",
+    "technical_source_hash": "0762575e90e678f08f1d4681f5fac637cb1019a81922730e9c6b4240c719ffd8",
+    "policy_id": "synthetic-source-review-v1",
+    "policy_hash": "721e3402193c55cf9820ed39efe4ae2e5330008cf20a6f5564c81d786ca59834",
+    "purpose": "SOURCE_REVIEW_ACCEPTANCE",
+    "stage_transition_allowed": false,
+    "expected_parent_revision": 2,
+    "expected_stage_revision": 0
+  },
+  "proposal_hash": "fbdb535df31f3d4ff97692f1a4c296ba8dd9bf5e5faf09b155caa6600fa4586a",
+  "decision": "PENDING",
+  "reviewer": null,
+  "revision": 0,
+  "audit_json": {
+    "kind": "EVT_ACCEPTANCE_REQUESTED",
+    "actor": "local-owner",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "proposal_hash": "fbdb535df31f3d4ff97692f1a4c296ba8dd9bf5e5faf09b155caa6600fa4586a",
+    "business_action": "NONE"
+  },
+  "payload_hash": "a109d1bb86d31912c6490dfbcff9896968c66b59f07fc5fbd1767bd8a7782c3f",
+  "created_at": "2026-10-06T08:37:44.906460+00:00",
+  "expires_at": "2026-10-06T09:37:44.906460+00:00",
+  "tenant_id": "synthetic-lab",
+  "workspace_id": "engineering",
+  "project_id": "aurora"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "FAILED",
+  "cases": [],
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "execution": "RECORDED_REAL_CHAIN_REPLAY_PLUS_NEW_STATIC_ROLE_REVIEWS",
+  "new_model_calls": null,
+  "new_sandbox_executions": 0,
+  "external_business_writes": false,
+  "health": {
+    "identity": "DEV_ONLY",
+    "revision": "domain-source-contract-v1",
+    "process_id": 62737,
+    "mode": "LOCAL_SYNTHETIC_PROTOTYPE",
+    "model_roles": [
+      "supervisor",
+      "pm"
+    ],
+    "deterministic_sops": [
+      "hardware",
+      "sre",
+      "architect",
+      "android"
+    ],
+    "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+    "automatic_business_actions": false
+  },
+  "error_type": "AssertionError",
+  "error_code": null
+}

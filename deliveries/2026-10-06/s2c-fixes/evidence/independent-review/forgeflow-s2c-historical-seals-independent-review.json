@@ -1,0 +1,30 @@
+[
+  {
+    "manifest": "deliveries/2026-10-05/manifest.json",
+    "sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+    "entries": 95,
+    "mismatches": [],
+    "missing": []
+  },
+  {
+    "manifest": "deliveries/2026-10-05/s2-preparation-manifest.json",
+    "sha256": "bad4bb190ce2916d61ed2c0d86f4df735d782b9e6da3cba524fd009699fc3031",
+    "entries": 38,
+    "mismatches": [],
+    "missing": []
+  },
+  {
+    "manifest": "deliveries/2026-10-06/manifest.json",
+    "sha256": "b2378605f10b1160910df6d02d3f3745e6559a1ff9561f45b9445421d4d8bdab",
+    "entries": 66,
+    "mismatches": [],
+    "missing": []
+  },
+  {
+    "manifest": "deliveries/2026-10-06/s2b-grounding/manifest.json",
+    "sha256": "78cf92a949c1ee99060148a8a31a2d7a86c547ea30d2b17af83fd42121bc04b5",
+    "entries": 134,
+    "mismatches": [],
+    "missing": []
+  }
+]

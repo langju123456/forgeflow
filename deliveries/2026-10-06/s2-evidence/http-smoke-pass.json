@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-06T05:08:43.115456+00:00",
+  "transport": "ACTUAL_LOOPBACK_HTTP",
+  "base_url": "http://127.0.0.1:8769",
+  "health": {
+    "identity": "DEV_ONLY",
+    "profile": "SYNTHETIC_LOCAL_QWEN3",
+    "registered_model": "qwen3:8b",
+    "pinned_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "provider_live_status": "CHECK_VIA_PREFLIGHT_AND_ACTUAL_CALL_EVIDENCE",
+    "hardware_orchestration": "DETERMINISTIC_S1",
+    "automatic_business_actions": false
+  },
+  "analysis_id": "893bb66f-f194-497b-8163-32c6892bbd14",
+  "analysis_state": "COMPLETE",
+  "analysis_call_count": 4,
+  "event_count": 12,
+  "technical_gate": "PASS",
+  "stage": "PROTOTYPE",
+  "pending_approvals": 2,
+  "action_receipt_count": 0,
+  "anonymous_status": 401,
+  "forged_headers_status": 401,
+  "generation_or_business_mutations": false
+}

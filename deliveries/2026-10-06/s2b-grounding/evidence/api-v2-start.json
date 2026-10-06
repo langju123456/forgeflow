@@ -1,0 +1,16 @@
+{
+  "stopped_verified_task_v1_pid": 42032,
+  "new_api": {
+    "status": "RUNNING",
+    "pid": 45069,
+    "url": "http://127.0.0.1:8770/docs"
+  },
+  "selection_health": {
+    "identity": "DEV_ONLY",
+    "prompt_revision": "grounded-selection-v2",
+    "model_task": "CONSTRAINED_EVIDENCE_SELECTION",
+    "automatic_business_actions": false,
+    "process_id": 45069
+  },
+  "other_services": "NOT_TOUCHED"
+}

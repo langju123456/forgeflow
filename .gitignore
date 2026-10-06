@@ -1,0 +1,30 @@
+.venv/
+.runtime/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.db
+*.db-shm
+*.db-wal
+
+# Added for the baseline: credentials, runtime state and local noise.
+# deliveries/ evidence is intentionally NOT ignored.
+dev.env
+db.env
+*.env
+.env*
+*.pem
+*.key
+identities.json
+fabric-identities.json
+*.sqlite
+*.sqlite3
+*.log
+*.pid
+.DS_Store
+
+# Possible personal screenshots; kept on disk, not versioned.
+sources/IMG_0194.PNG
+sources/IMG_0195.PNG
+sources/IMG_0196.PNG

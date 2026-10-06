@@ -1,0 +1,48 @@
+{
+  "kind": "READABLE_DOCUMENT_SNAPSHOTS_ONLY",
+  "transformation": "Relative Markdown links rebased; unique source/evaluator/data/results remain in preparation/s2.",
+  "documents": [
+    {
+      "original": "preparation/s2/README.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/README.md",
+      "original_sha256": "9ae01434a0c9d53cf4238dc7c51bfe9a6d2fc60ea9d9881d3b5c7ac54d0683bd",
+      "snapshot_sha256": "e321df22c17eb0d77d977aa6199315b238f9dce51e813487ec42c850fbafa0df"
+    },
+    {
+      "original": "preparation/s2/01-integration-contract.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/01-integration-contract.md",
+      "original_sha256": "0e613595b4a869a399beb828d61937a99e6b6cc6a96b670b54574ddcd7b17e30",
+      "snapshot_sha256": "27bf9dbd2836ff196e91c6e1dbe944773cd91cca63c2c688e55144c5ed9437c8"
+    },
+    {
+      "original": "preparation/s2/02-model-decision.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/02-model-decision.md",
+      "original_sha256": "7bc72dbe397607bd2d63d20d127e075a767430c6ffe2c9ffbd677e1e25b4062f",
+      "snapshot_sha256": "e3158f4c3116c47a90e39ad34e943d96414ddb759d96769a6642df58f6800485"
+    },
+    {
+      "original": "preparation/s2/evaluation/README.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/evaluation/README.md",
+      "original_sha256": "b0bd7565df2eae32e3572b6f02d317b78412991a4ee43031b54e01640618747e",
+      "snapshot_sha256": "afa6478edb4f4ad7ba7024cd34ecd0f88928b549c23b4d4208f5e87068e45d0a"
+    },
+    {
+      "original": "preparation/s2/evaluation/RESULTS.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/evaluation/RESULTS.md",
+      "original_sha256": "f1b41d529d47bf207b6b23695ceadc2fb3cc6630761ffeaebc843e276dbe74b0",
+      "snapshot_sha256": "a2575eb9115340789c19461b4d473893c287bb59fa29f724ddcdffc8d6f5917c"
+    },
+    {
+      "original": "preparation/s2/evaluation/protocol.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/evaluation/protocol.md",
+      "original_sha256": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b",
+      "snapshot_sha256": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b"
+    },
+    {
+      "original": "preparation/s2/model-evaluation/README.md",
+      "snapshot": "deliveries/2026-10-05/s2-preparation-docs/model-evaluation/README.md",
+      "original_sha256": "52fb786ca6426b7b77600b3f769709cc69b33acb0527b45ad2edfc60b01c4851",
+      "snapshot_sha256": "52fb786ca6426b7b77600b3f769709cc69b33acb0527b45ad2edfc60b01c4851"
+    }
+  ]
+}

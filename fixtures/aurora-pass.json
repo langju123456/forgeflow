@@ -1,0 +1,38 @@
+{
+  "project": "Project Aurora",
+  "version": "v1",
+  "source_ref": "fixture:aurora-evt-synthetic-v1",
+  "synthetic": true,
+  "metrics": {
+    "boot_cycles": {
+      "value": 100,
+      "status": "MEASURED",
+      "observed_at": "2026-10-04T00:00:00Z",
+      "valid_until": "2026-11-05T00:00:00Z"
+    },
+    "boot_failures": {
+      "value": 0,
+      "status": "MEASURED",
+      "observed_at": "2026-10-04T00:00:00Z",
+      "valid_until": "2026-11-05T00:00:00Z"
+    },
+    "bom_revision": {
+      "value": "A3",
+      "status": "MEASURED",
+      "observed_at": "2026-10-04T00:00:00Z",
+      "valid_until": "2026-11-05T00:00:00Z"
+    },
+    "ci_smoke": {
+      "value": true,
+      "status": "MEASURED",
+      "observed_at": "2026-10-04T00:00:00Z",
+      "valid_until": "2026-11-05T00:00:00Z"
+    },
+    "thermal_peak_c": {
+      "value": 68,
+      "status": "MEASURED",
+      "observed_at": "2026-10-04T00:00:00Z",
+      "valid_until": "2026-11-05T00:00:00Z"
+    }
+  }
+}

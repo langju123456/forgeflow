@@ -1,0 +1,30 @@
+{
+  "id": "aurora-domain-contract",
+  "version": "domain-artifacts-v1",
+  "synthetic": true,
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "hardware": {"bom_revision": "A3"},
+  "android": {
+    "package": "io.forgeflow.aurora",
+    "min_sdk": 26,
+    "target_sdk": 34,
+    "launcher_activity": ".MainActivity",
+    "launcher_exported": true,
+    "debuggable": false
+  },
+  "metadata": {
+    "bom_name": "aurora.bom.revision",
+    "protocol_name": "aurora.protocol.version",
+    "protocol_version": "1"
+  },
+  "reference_urls": [
+    "https://developer.android.com/guide/topics/manifest/uses-sdk-element",
+    "https://developer.android.com/guide/topics/manifest/activity-element",
+    "https://developer.android.com/about/versions/12/behavior-changes-12#exported"
+  ],
+  "limitations": "Controlled synthetic interface values; source inspection only, no Android build or device execution."
+}

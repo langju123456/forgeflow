@@ -1,0 +1,167 @@
+{
+  "claim_catalog": {
+    "concerns": [
+      {
+        "id": "c_9660fddfeeaf3f7a",
+        "kind": "thermal_peak_c:VIOLATED",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a"
+      }
+    ],
+    "observations": [
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_2cb43b3965634da0",
+        "metric": "boot_cycles",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "value": 100
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_beb9ad95cfac54fe",
+        "metric": "boot_failures",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "value": 0
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_c0abedfbb94d3464",
+        "metric": "bom_revision",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "value": "A3"
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_99004a58e1600020",
+        "metric": "ci_smoke",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "value": true
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "VIOLATED",
+        "evidence_state": "MEASURED",
+        "id": "c_e406362275d71c32",
+        "metric": "thermal_peak_c",
+        "source_ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "value": 89
+      }
+    ]
+  },
+  "context_snapshot": {
+    "caller": {
+      "clearance": 0,
+      "kind": "user",
+      "roles": [
+        "admin",
+        "hardware",
+        "pm",
+        "reviewer",
+        "submitter"
+      ],
+      "scopes": [
+        {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      ],
+      "subject_id": "local-owner"
+    },
+    "catalog_hash": "4e4baf4dc4018bcf329f6821daa4177ffd2df95931196ba9e529dda21fcfd2d6",
+    "context_revision": "analysis-context-v2-mcp-witness",
+    "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+    "grounding": {
+      "case_hash": "69a95f943fbef62b52d882eb53174686730c9b87a890841d12f31787609de62a",
+      "dataset_sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+      "evaluation_clock": "2026-10-05T12:00:00Z",
+      "export_grant_revision": "d09cd606b45ec21c0a149cd3675cf1185ab218bf2ca885d9aa10c06e164db162",
+      "revision": "s2b-frozen-grounding-v1",
+      "scenario_id": "M01-blocked",
+      "scope_mapping": {
+        "from": {
+          "project_id": "aurora-s2-model-eval",
+          "tenant_id": "eval-synthetic",
+          "workspace_id": "engineering"
+        },
+        "purpose": "EXACT_SYNTHETIC_EVAL_SOURCE_IMPORT_ONLY",
+        "run_id": "97c71faa-d2ce-473b-a4a7-b75951d4d1d7",
+        "to": {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      },
+      "source_records": [
+        {
+          "classification": 0,
+          "origin": "fixtures/aurora-blocked.json",
+          "scope": {
+            "project_id": "aurora-s2-model-eval",
+            "tenant_id": "eval-synthetic",
+            "workspace_id": "engineering"
+          },
+          "source_hash": "40111b01eda02da1a184d0dc3b9b32fc03f30a4d1f91a9a15d1c21d5b2b4d419",
+          "source_id": "c-aurora-blocked-v1",
+          "status": "CURRENT",
+          "trust": "UNTRUSTED_DATA",
+          "version": "v1"
+        }
+      ]
+    },
+    "material_hash": "d7ac9be80e8b1c2630dc35360255b275866ff32e1fdd47ddbd450cca39a8fb62",
+    "role": "supervisor",
+    "run_id": "97c71faa-d2ce-473b-a4a7-b75951d4d1d7",
+    "scope": {
+      "project_id": "aurora",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering"
+    },
+    "sources": [
+      {
+        "classification": 0,
+        "id": "97c71faa-d2ce-473b-a4a7-b75951d4d1d7",
+        "kind": "run",
+        "ref": "src_35d946c47b897a683a0c95a7e225406a",
+        "source_hash": "d7ac9be80e8b1c2630dc35360255b275866ff32e1fdd47ddbd450cca39a8fb62",
+        "status": "CHECK_COMPLETED",
+        "version": "45d27784-d7c9-4db6-816e-276734e341f0",
+        "witness_hash": "73cda20269af20b8bacbafcedc1568aaac04bc08e88bcb254a0722d79dd9a159"
+      },
+      {
+        "classification": 0,
+        "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+        "kind": "document",
+        "ref": "src_9a99e810e9e45cc95323670e9751c622",
+        "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+        "status": "CURRENT",
+        "version": "v1",
+        "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+      },
+      {
+        "classification": 0,
+        "id": "c-aurora-blocked-v1",
+        "kind": "eval_fixture",
+        "ref": "src_e4050c491743f3678d93a7be279492b7",
+        "source_hash": "40111b01eda02da1a184d0dc3b9b32fc03f30a4d1f91a9a15d1c21d5b2b4d419",
+        "status": "CURRENT",
+        "version": "v1",
+        "witness_hash": "e630e04183aa718a28059595ae7b0a7271fc6afb7c67171b9fd5f55b3c327424"
+      }
+    ]
+  },
+  "experiment_freeze_hash": "67e0057163eba619a08a201d34bc5d6ac88178f4b36f2a181581797e56fec061",
+  "parent_input_hash": "baaa1b64a40495220bc0f521c156315944aa8033f79005a509623c04142255fd",
+  "parent_run_id": "97c71faa-d2ce-473b-a4a7-b75951d4d1d7",
+  "scenario_id": "M01-blocked",
+  "source_origin_refs": {
+    "c-aurora-blocked-v1": "src_e4050c491743f3678d93a7be279492b7"
+  }
+}

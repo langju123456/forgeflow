@@ -1,0 +1,25 @@
+{
+  "reviewer": "s2_context_schema",
+  "status": "NO_CONFIRMED_NEW_P1_P2",
+  "offline_tests": {
+    "selection": 20,
+    "additional_factory_test_driver_calls": 8,
+    "real_model_calls": 0
+  },
+  "source_sha256": {
+    "src/forgeflow/grounded_selection.py": "dac002b796fb3c77d91c253dd7b7b6ecb59e1af9249a12494ec819ce4eec2020",
+    "src/forgeflow/grounded_selection_runtime.py": "8919117d9e1b900308b1bb1cc9862099c22733be9b958ec1f539e9b8500aab22",
+    "src/forgeflow/grounded_selection_api.py": "f9de314aeb2792dd7c0cae99fc1dd5e4a10106cb18b11e191a9f12b9bec011fe",
+    "src/forgeflow/grounded_cli.py": "4a7009f2ff9b2672803f0acdde67d2a390cf7814826a8b2efa39333009d45440",
+    "scripts/start_selection_api.py": "a21ebdec6828bfad424467a64488c24f8b25b2f4a8c3fec47d87acdd1fd7323f",
+    "scripts/s2b_live_evaluate.py": "a131196e48bab6ac614468af23f59e706575949cbe7196dcca5fc2014780c882",
+    "src/forgeflow/grounded_store.py": "2433e58df0cf4158db1b0a86af488809be17651d53cbeda6e91d87635ed03104"
+  },
+  "reviewed": "dynamic schemas/catalog source rederivation/task isolation/legacy reads/fixed V2 CLI and startup; full raw journal reauth",
+  "unchanged_semantic_predicate": true,
+  "limits": [
+    "Constrained evidence selection, not open-ended reasoning benchmark",
+    "M03 derived sandbox not executed",
+    "Unknown dispatch never auto-replayed"
+  ]
+}

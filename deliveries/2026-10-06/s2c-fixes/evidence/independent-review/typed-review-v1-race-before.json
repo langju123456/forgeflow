@@ -1,0 +1,12 @@
+{
+  "fixture_root": "/tmp/forgeflow-s2c-typed-race-review-86id20mb",
+  "initial_hash": "33c3a8cba7362ca3ed9db0b7584fd91f6a9adf3813bd6c6092e5fe68207f8e8d",
+  "final_hash": "2b338aa802d44fb7017d724627bc502780740e9d683948f894a2266d26c94aab",
+  "reported_hash": "2b338aa802d44fb7017d724627bc502780740e9d683948f894a2266d26c94aab",
+  "counts": {
+    "PASS": 13,
+    "FAIL": 0
+  },
+  "input_changed": true,
+  "new_file_actual_strict_status": "FAIL"
+}

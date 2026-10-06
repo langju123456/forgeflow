@@ -1,0 +1,195 @@
+{
+  "claim_catalog": {
+    "concerns": [
+      {
+        "id": "c_b216936f5b874b64",
+        "kind": "ci_smoke:EXPIRED",
+        "source_ref": "src_2e0fa771d6d97076c30b4b6e5c6fabbf"
+      },
+      {
+        "id": "c_bf32710fd4911243",
+        "kind": "thermal_peak_c:CONFLICT",
+        "source_ref": "src_2e0fa771d6d97076c30b4b6e5c6fabbf"
+      }
+    ],
+    "observations": [
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_564bba877ee57440",
+        "metric": "boot_cycles",
+        "source_ref": "src_97d1d161e498f25a9ec08fb163a8d1a7",
+        "value": 100
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_2b3f45c271210a77",
+        "metric": "boot_failures",
+        "source_ref": "src_97d1d161e498f25a9ec08fb163a8d1a7",
+        "value": 0
+      },
+      {
+        "authority": "HARDWARE_CHECK",
+        "check_state": "SATISFIED",
+        "evidence_state": "MEASURED",
+        "id": "c_0559ba99d8927741",
+        "metric": "bom_revision",
+        "source_ref": "src_97d1d161e498f25a9ec08fb163a8d1a7",
+        "value": "A3"
+      },
+      {
+        "authority": "SYNTHETIC_OVERLAY",
+        "check_state": "UNKNOWN",
+        "evidence_state": "EXPIRED",
+        "id": "c_c94792f8bfd47ffc",
+        "metric": "ci_smoke",
+        "source_ref": "src_2e0fa771d6d97076c30b4b6e5c6fabbf",
+        "value": true
+      },
+      {
+        "authority": "SYNTHETIC_OVERLAY",
+        "check_state": "UNKNOWN",
+        "evidence_state": "CONFLICT",
+        "id": "c_a995e3b902edff91",
+        "metric": "thermal_peak_c",
+        "source_ref": "src_2e0fa771d6d97076c30b4b6e5c6fabbf",
+        "value": 68
+      }
+    ]
+  },
+  "context_snapshot": {
+    "caller": {
+      "clearance": 0,
+      "kind": "user",
+      "roles": [
+        "admin",
+        "hardware",
+        "pm",
+        "reviewer",
+        "submitter"
+      ],
+      "scopes": [
+        {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      ],
+      "subject_id": "local-owner"
+    },
+    "catalog_hash": "eed01e933b1617d4cd9235aa19ee27fd5d84b366e788a8841850503b2ad9deb8",
+    "context_revision": "analysis-context-v2-mcp-witness",
+    "grant_revision": "002cac8c6b04033fb26273438ddb5c344cb2f185c39de3d7449a54ddfa4dcbdc",
+    "grounding": {
+      "case_hash": "9812d30afff2cea37683cfcb538b2076395d058c3feccad5f59bd0a3f275b5a9",
+      "dataset_sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+      "evaluation_clock": "2026-10-05T12:00:00Z",
+      "export_grant_revision": "49b5487d7d967bd685b3b0537c320b0efb045b4f0d72a3be33246cda2abeafa1",
+      "revision": "s2b-frozen-grounding-v1",
+      "scenario_id": "M03",
+      "scope_mapping": {
+        "from": {
+          "project_id": "aurora-s2-model-eval",
+          "tenant_id": "eval-synthetic",
+          "workspace_id": "engineering"
+        },
+        "purpose": "EXACT_SYNTHETIC_EVAL_SOURCE_IMPORT_ONLY",
+        "run_id": "77e0f666-439a-4d90-8188-1217edcbb01c",
+        "to": {
+          "project_id": "aurora",
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering"
+        }
+      },
+      "source_records": [
+        {
+          "classification": 0,
+          "origin": "DERIVED_SYNTHETIC_EVAL_OVERLAY",
+          "provenance": {
+            "base_fixture_ref": {
+              "file_sha256": "a5740e5b48c8740ea5afb06e0955f9a4f2cf2eea453f8f5a8c756d8b5fc43a4a",
+              "path": "fixtures/aurora-pass.json",
+              "semantic_sha256": "95d7cb11f43c30efdf45be1e392a630aa298c9fcc613b36be7cf259c1a9db24f",
+              "version": "v1"
+            },
+            "derived_source_ref": "fixture:aurora-conflict-stale-overlay-v1",
+            "evidence_overlays": [
+              {
+                "metric": "thermal_peak_c",
+                "updates": {
+                  "conflict": true
+                }
+              },
+              {
+                "metric": "ci_smoke",
+                "updates": {
+                  "valid_until": "2026-10-04T12:00:00Z"
+                }
+              }
+            ]
+          },
+          "scope": {
+            "project_id": "aurora-s2-model-eval",
+            "tenant_id": "eval-synthetic",
+            "workspace_id": "engineering"
+          },
+          "source_hash": "224646d913e387e65deae3c98f9e724bcf6d56c066881f59dfb4629290700a06",
+          "source_id": "c-aurora-conflict-stale-overlay-v1",
+          "status": "CONFLICT",
+          "trust": "UNTRUSTED_DATA",
+          "version": "v1"
+        }
+      ]
+    },
+    "material_hash": "15fd6f723238e87b67521caca1104154bb2d365a7ff7f7afeed4922e4e6247f7",
+    "role": "supervisor",
+    "run_id": "77e0f666-439a-4d90-8188-1217edcbb01c",
+    "scope": {
+      "project_id": "aurora",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering"
+    },
+    "sources": [
+      {
+        "classification": 0,
+        "id": "77e0f666-439a-4d90-8188-1217edcbb01c",
+        "kind": "run",
+        "ref": "src_97d1d161e498f25a9ec08fb163a8d1a7",
+        "source_hash": "15fd6f723238e87b67521caca1104154bb2d365a7ff7f7afeed4922e4e6247f7",
+        "status": "CHECK_COMPLETED",
+        "version": "4779a06a-cb54-48bd-9207-4be085df0fc3",
+        "witness_hash": "e83eff004787b1f5df046c9b6be83fe67fbe7d5089b0f92b417365fc49cb16c8"
+      },
+      {
+        "classification": 0,
+        "id": "586c8e64-cd61-4c81-8f75-9ae3c23baa75",
+        "kind": "document",
+        "ref": "src_17782270ec0c94683cd694753a03c39f",
+        "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+        "status": "CURRENT",
+        "version": "v1",
+        "witness_hash": "697e06f7bc1237bc1a5d5e0b01e3354ec45931dcccfba24dd6dd45332f66f6e4"
+      },
+      {
+        "classification": 0,
+        "id": "c-aurora-conflict-stale-overlay-v1",
+        "kind": "eval_overlay",
+        "ref": "src_2e0fa771d6d97076c30b4b6e5c6fabbf",
+        "source_hash": "224646d913e387e65deae3c98f9e724bcf6d56c066881f59dfb4629290700a06",
+        "status": "CONFLICT",
+        "version": "v1",
+        "witness_hash": "59112aec224ac8a98a355ee342fe1dc7eda23b313cfeb1501200fedcb84f7591"
+      }
+    ]
+  },
+  "experiment_freeze_hash": "67e0057163eba619a08a201d34bc5d6ac88178f4b36f2a181581797e56fec061",
+  "parent_input_hash": "95d7cb11f43c30efdf45be1e392a630aa298c9fcc613b36be7cf259c1a9db24f",
+  "parent_run_id": "77e0f666-439a-4d90-8188-1217edcbb01c",
+  "scenario_id": "M03",
+  "source_origin_refs": {
+    "c-aurora-conflict-stale-overlay-v1": "src_2e0fa771d6d97076c30b4b6e5c6fabbf"
+  }
+}

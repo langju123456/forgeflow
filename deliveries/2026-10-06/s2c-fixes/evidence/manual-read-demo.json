@@ -1,0 +1,34 @@
+{
+  "status": "ACTUAL_CLI_PERSISTED_READ_DEMO_PASS",
+  "model_calls_added": 0,
+  "cases": [
+    {
+      "scenario": "M03",
+      "command": "PYTHONPATH=src .venv/bin/python -m forgeflow.s2c_cli show f3c3f10c-867d-428d-9ec9-73f6a73e7b6c",
+      "analysis_id": "f3c3f10c-867d-428d-9ec9-73f6a73e7b6c",
+      "state": "INCOMPLETE",
+      "call_count": 4,
+      "server_projection": {
+        "status": "INCOMPLETE",
+        "status_authority": "SERVER_DERIVED_AUTHORIZED_CATALOG",
+        "catalog_hash": "8da1fd215aa6dedaf67bc4ff887d229c9a667d52bd5481a512c8387ed259ff93"
+      },
+      "raw_report_status_present": false,
+      "stdout_sha256": "2c84afea51a94038b93393d28589c29b92fa81ff55cfc54a9770faa70880c023"
+    },
+    {
+      "scenario": "M04",
+      "command": "PYTHONPATH=src .venv/bin/python -m forgeflow.s2c_cli show faeb6660-c8bd-4b89-87cd-833f38e6690f",
+      "analysis_id": "faeb6660-c8bd-4b89-87cd-833f38e6690f",
+      "state": "COMPLETE",
+      "call_count": 4,
+      "server_projection": {
+        "status": "COMPLETE",
+        "status_authority": "SERVER_DERIVED_AUTHORIZED_CATALOG",
+        "catalog_hash": "bf00f3a627adc99b0d6120eafd7fa1ce4f241d59c6ddd9e3b0f6b4a0f09884c1"
+      },
+      "raw_report_status_present": false,
+      "stdout_sha256": "14eec4361f6517ab4edbfae46868e40b01fdc39cda5756b38b95b277ecaabd7f"
+    }
+  ]
+}

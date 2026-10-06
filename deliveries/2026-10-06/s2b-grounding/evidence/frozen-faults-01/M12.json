@@ -1,0 +1,257 @@
+{
+  "accepted_as_model_report": false,
+  "analysis": {
+    "calls": [
+      {
+        "analysis_id": "9e75e1c3-a463-4a91-94a8-01dee0bd4bdd",
+        "context_hash": "c84fb8518bbb60f61d27965768f5c0368df1bb40a571ee45ada28fcf7e29808e",
+        "created_at": "2026-10-06T05:57:46+00:00",
+        "deadline": "2026-10-06T05:58:46+00:00",
+        "delivery_status": "OUTCOME_UNKNOWN",
+        "error_code": "PROVIDER_INTERRUPTED",
+        "finished_at": "2026-10-06T05:57:46+00:00",
+        "id": "d296d78d-1158-49ff-a5e9-d0adbba9ac00",
+        "input_hash": "6009474ce39cc56ed6052028532d6de557891779b3ae8ad14f143d61d4d66129",
+        "input_token_limit": 3500,
+        "intent_hash": "24683ec2836afb5c9b249e5c916caca0949bc04b37a5fb711022f41b58009cba",
+        "lease_epoch": 1,
+        "material_hash": "e4855e657a3a29c2c02c85919ce06ee61dced3d44f6855f246fe142a42874c12",
+        "material_json": {
+          "analysis_revision": "s2a-four-call-v2",
+          "classification": 0,
+          "max_calls": 4,
+          "max_input_tokens": 3500,
+          "max_output_tokens": 800,
+          "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+          "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+          "profile_id": "S2_SYNTHETIC_LOCAL",
+          "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "provider_billing": "LOCAL_NO_BILLING",
+          "skill_bindings": [
+            {
+              "name": "supervisor-analysis",
+              "role": "supervisor",
+              "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+            },
+            {
+              "name": "pm-analysis",
+              "role": "pm",
+              "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+            }
+          ],
+          "source_snapshot": {
+            "caller": {
+              "clearance": 0,
+              "kind": "user",
+              "roles": [
+                "admin",
+                "hardware",
+                "pm",
+                "reviewer",
+                "submitter",
+                "supervisor"
+              ],
+              "scopes": [
+                {
+                  "project_id": "aurora-s2-model-eval",
+                  "tenant_id": "eval-synthetic",
+                  "workspace_id": "engineering"
+                }
+              ],
+              "subject_id": "S2B_TEST_DRIVER_USER"
+            },
+            "context_revision": "analysis-context-v2-mcp-witness",
+            "grant_revision": "7fa65e2e087ce94cc4324009a605eefc17d7dddc50c00629ce87d54e77c46c82",
+            "material_hash": "24f32af45d785d8ed2bc3dbd87f206f0f3844921f0e419de3dcc0c9349d54121",
+            "role": "supervisor",
+            "run_id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+            "scope": {
+              "project_id": "aurora-s2-model-eval",
+              "tenant_id": "eval-synthetic",
+              "workspace_id": "engineering"
+            },
+            "sources": [
+              {
+                "classification": 0,
+                "id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+                "kind": "run",
+                "ref": "src_ccee5e70a6db82538fcd6673dddc857c",
+                "source_hash": "24f32af45d785d8ed2bc3dbd87f206f0f3844921f0e419de3dcc0c9349d54121",
+                "status": "CHECK_COMPLETED",
+                "version": "d048ac30-af40-4f5f-9a71-e505ce331219",
+                "witness_hash": "373e1cd6e700ba023f27dcfe8d21bc33e8ba7bfdf576e944a8d3b070b5f8539a"
+              },
+              {
+                "classification": 0,
+                "id": "2a13503f-9319-49b0-ab1f-a6bdbc95e372",
+                "kind": "document",
+                "ref": "src_d66161c14dc75efa59885b6b4735e383",
+                "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+                "status": "CURRENT",
+                "version": "v1",
+                "witness_hash": "f2ca81a4eb0c8532fde4be55dcce9e5a5114393ae3b3b61c3afd19f8212f05bf"
+              }
+            ]
+          },
+          "timeout_seconds": 180
+        },
+        "output_hash": null,
+        "output_json": null,
+        "output_token_limit": 800,
+        "phase": "PLAN",
+        "profile_id": "S2_SYNTHETIC_LOCAL",
+        "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "project_id": "aurora-s2-model-eval",
+        "provider_metadata_json": {},
+        "role": "supervisor",
+        "run_id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+        "state": "OUTCOME_UNKNOWN",
+        "step_key": "supervisor-plan",
+        "tenant_id": "eval-synthetic",
+        "tokens_reserved": 4300,
+        "usage_json": {
+          "cost_microusd": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "state": "UNKNOWN"
+        },
+        "usage_state": "UNKNOWN",
+        "workspace_id": "engineering"
+      }
+    ],
+    "calls_reserved": 1,
+    "cancel_requested_at": null,
+    "classification": 0,
+    "created_at": "2026-10-06T05:57:46+00:00",
+    "created_by": "S2B_TEST_DRIVER_USER",
+    "deadline": "2026-10-06T06:00:46+00:00",
+    "id": "9e75e1c3-a463-4a91-94a8-01dee0bd4bdd",
+    "idempotency_key": "same-original-logical-call",
+    "lease_epoch": 2,
+    "lease_expires_at": null,
+    "lease_owner": null,
+    "lease_token": null,
+    "material_hash": "6042238ef65c3e973280d84efd75787429bc34a4aa91f331ec7bad6c3dabd67a",
+    "material_json": {
+      "analysis_revision": "s2a-four-call-v2",
+      "classification": 0,
+      "max_calls": 4,
+      "max_input_tokens": 3500,
+      "max_output_tokens": 800,
+      "output_schema_hash": "a5bb16d4f6acca8363b7182a6d9f0eefbf303dcf2b0a721d3167c7970b402709",
+      "policy_revision": "258527fc4585cc9528c9375a261f9c84289c42f555d59e549295e945320c965f",
+      "profile_id": "S2_SYNTHETIC_LOCAL",
+      "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "provider_billing": "LOCAL_NO_BILLING",
+      "skill_bindings": [
+        {
+          "name": "supervisor-analysis",
+          "role": "supervisor",
+          "sha256": "7c1c74fd48e95ae6ad5c8ccdc12caa1616d624018b3f69a13acf1d350647f789"
+        },
+        {
+          "name": "pm-analysis",
+          "role": "pm",
+          "sha256": "3e5f3633e3cd36f3a4f42782958b36276fabf3278140eeef513cb06be9d122a9"
+        }
+      ],
+      "source_snapshot": {
+        "caller": {
+          "clearance": 0,
+          "kind": "user",
+          "roles": [
+            "admin",
+            "hardware",
+            "pm",
+            "reviewer",
+            "submitter",
+            "supervisor"
+          ],
+          "scopes": [
+            {
+              "project_id": "aurora-s2-model-eval",
+              "tenant_id": "eval-synthetic",
+              "workspace_id": "engineering"
+            }
+          ],
+          "subject_id": "S2B_TEST_DRIVER_USER"
+        },
+        "context_revision": "analysis-context-v2-mcp-witness",
+        "grant_revision": "7fa65e2e087ce94cc4324009a605eefc17d7dddc50c00629ce87d54e77c46c82",
+        "material_hash": "24f32af45d785d8ed2bc3dbd87f206f0f3844921f0e419de3dcc0c9349d54121",
+        "role": "supervisor",
+        "run_id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+        "scope": {
+          "project_id": "aurora-s2-model-eval",
+          "tenant_id": "eval-synthetic",
+          "workspace_id": "engineering"
+        },
+        "sources": [
+          {
+            "classification": 0,
+            "id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+            "kind": "run",
+            "ref": "src_ccee5e70a6db82538fcd6673dddc857c",
+            "source_hash": "24f32af45d785d8ed2bc3dbd87f206f0f3844921f0e419de3dcc0c9349d54121",
+            "status": "CHECK_COMPLETED",
+            "version": "d048ac30-af40-4f5f-9a71-e505ce331219",
+            "witness_hash": "373e1cd6e700ba023f27dcfe8d21bc33e8ba7bfdf576e944a8d3b070b5f8539a"
+          },
+          {
+            "classification": 0,
+            "id": "2a13503f-9319-49b0-ab1f-a6bdbc95e372",
+            "kind": "document",
+            "ref": "src_d66161c14dc75efa59885b6b4735e383",
+            "source_hash": "a00d6c3556d047880226a267e9891030966abd5cdc87e069962a2537dc79e14a",
+            "status": "CURRENT",
+            "version": "v1",
+            "witness_hash": "f2ca81a4eb0c8532fde4be55dcce9e5a5114393ae3b3b61c3afd19f8212f05bf"
+          }
+        ]
+      },
+      "timeout_seconds": 180
+    },
+    "parent_request_hash": "481dfe611bdb545289714082e8d5ebc72acf000f9d6c2c8a7dd97726785c9695",
+    "parent_snapshot_hash": "d7bf7d7579d366b1aefe4a7b88288e669969b077b25ea683aeeea2f177b7affe",
+    "profile_id": "S2_SYNTHETIC_LOCAL",
+    "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "project_id": "aurora-s2-model-eval",
+    "revision": 5,
+    "run_id": "a5d6a3ed-40b4-485e-9491-3f25d9ab8ecd",
+    "state": "OUTCOME_UNKNOWN",
+    "summary_hash": null,
+    "summary_json": null,
+    "tenant_id": "eval-synthetic",
+    "tokens_reserved": 4300,
+    "workspace_id": "engineering"
+  },
+  "analysis_status": "INCOMPLETE",
+  "automatic_retries": 0,
+  "case_id": "M12",
+  "cost_microusd": null,
+  "durable_execution_state": "OUTCOME_UNKNOWN",
+  "evidence": {
+    "budget_reservation": "RETAINED_UNTIL_RECONCILIATION",
+    "interrupt_observed": true,
+    "local_cancel_is_remote_stop_proof": false,
+    "new_model_dispatches_after_replay": 0,
+    "recovered_state": "OUTCOME_UNKNOWN"
+  },
+  "fault_appended_to_prompt": false,
+  "kind": "adapter_fault",
+  "outcome": "OUTCOME_UNKNOWN",
+  "parent_check_provenance": "TEST_DRIVER_NOT_LIVE_DOCKER",
+  "provenance": "TEST_DRIVER",
+  "real_model_calls": 0,
+  "scenario_id": "M12",
+  "security_invariants": {
+    "no_approval_decisions": true,
+    "no_new_business_receipts": true,
+    "no_stage_transition": true,
+    "parent_unchanged": true,
+    "technical_gate_unchanged": true
+  },
+  "status": "PASS",
+  "test_driver_dispatches": 1,
+  "usage_state": "UNKNOWN"
+}

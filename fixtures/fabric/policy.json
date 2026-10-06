@@ -1,0 +1,45 @@
+{
+  "id": "synthetic-local-fabric-v1",
+  "version": "fabric-policy-v1",
+  "synthetic": true,
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora-fabric-e2e"
+  },
+  "purpose": "LOCAL_SYNTHETIC_FLOW_VALIDATION",
+  "source_template_authority": "PUBLIC_SYNTHETIC_TEMPLATE",
+  "full_evt_eligibility": false,
+  "evt_stage_transition_allowed": false,
+  "human_approval_required": true,
+  "automatic_business_actions": false,
+  "test_stage": {"from_stage": "PROTOTYPE", "to_stage": "TEST_STAGE", "simulation": true},
+  "action_kinds": ["TEST_STAGE", "ISSUE", "MEMORY_ACTIVATE"],
+  "compensations": {
+    "STAGE_REVERT": {"original_kind": "TEST_STAGE", "receipt_bound": true, "current_revision_cas": true},
+    "ISSUE_RETRACT": {"original_kind": "ISSUE", "receipt_bound": true, "current_revision_cas": true},
+    "MEMORY_REVOKE": {"original_kind": "MEMORY_ACTIVATE", "receipt_bound": true, "current_revision_cas": true}
+  },
+  "contract": {
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "hardware": {"bom_revision": "A3"},
+    "android": {
+      "package": "io.forgeflow.aurora",
+      "min_sdk": 26,
+      "target_sdk": 34,
+      "launcher_activity": ".MainActivity",
+      "launcher_exported": true,
+      "debuggable": false
+    },
+    "metadata": {
+      "bom_name": "aurora.bom.revision",
+      "protocol_name": "aurora.protocol.version",
+      "protocol_version": "1"
+    }
+  },
+  "limitations": "Only an isolated local synthetic flow and source XML are evaluated. Android build/device evidence is unavailable. This policy grants no EVT stage eligibility or hardware certification. Every action and receipt-bound compensation requires its own parameter-bound approval."
+}

@@ -1,0 +1,718 @@
+{
+  "schema": "forgeflow-s2b-incremental-delivery-manifest-v1",
+  "date": "2026-10-06",
+  "created_at_utc": "2026-10-06T06:36:21.907098+00:00",
+  "unique_development_original": "/path/to/forgeflow",
+  "status": "LOCAL_CHAIN_RUNNING_MODEL_QUALITY_PARTIALLY_ACCEPTED",
+  "application_revision": "grounded-selection-v2",
+  "historical_seals": [
+    {
+      "path": "deliveries/2026-10-05/manifest.json",
+      "sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+      "files_verified": 95
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-manifest.json",
+      "sha256": "bad4bb190ce2916d61ed2c0d86f4df735d782b9e6da3cba524fd009699fc3031",
+      "files_verified": 38
+    },
+    {
+      "path": "deliveries/2026-10-06/manifest.json",
+      "sha256": "b2378605f10b1160910df6d02d3f3745e6559a1ff9561f45b9445421d4d8bdab",
+      "files_verified": 66
+    }
+  ],
+  "actual_current_model_calls": 19,
+  "phase_total_confirmed_model_calls": 36,
+  "model_quality_scope": "CONSTRAINED_EVIDENCE_SELECTION_NOT_OPEN_ENDED_REASONING",
+  "current_structure_passes": 5,
+  "current_semantic_passes": 4,
+  "complete_frozen_acceptance": {
+    "PASS": 11,
+    "PARTIAL": 1,
+    "FAIL": 1
+  },
+  "external_business_writes": false,
+  "remaining_gaps": [
+    "M03_DERIVED_OVERLAY_SANDBOX_CHECK",
+    "M04_COMPLETION_STATUS_FALSE_NEGATIVE"
+  ],
+  "tests": {
+    "full_passed": 470,
+    "full_skipped": 13,
+    "frozen_integrity_passed": 62
+  },
+  "note": "Additive S2B original modules, tests, scripts and readable daily evidence. Includes immutable V1 source archives, which are not development originals. Dependencies are pinned by the three unchanged historical seals; no runtime credentials, databases, models or venv. Model failures remain failures.",
+  "files": [
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/ARCHITECTURE.md",
+      "bytes": 9191,
+      "sha256": "2e8ceba2b66c9e3669de947d021a25c1bc62c262322d6491edd4484dee98138e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/DELIVERY.md",
+      "bytes": 5481,
+      "sha256": "1509579896729dcb4530a2bc221033f2a14d9b170188c37cb475af50425e7645"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/analysis-audit-validation.json",
+      "bytes": 1078,
+      "sha256": "91480a4db35cbfa8cb9741a7e43b038766cf9bde8f6737d10af3a76778a9141c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/api-v2-start.json",
+      "bytes": 404,
+      "sha256": "9b07b74002988216a107d50c1d0c75dfeeafc4889c11512fc431ca7051b50e1d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/02961904-1973-4f4e-95fd-3ebf5773aee4.json",
+      "bytes": 3688,
+      "sha256": "28e9e638ca3fb9a3afc880843d661decdab7d8933f1f9c2a432195daf8c64561"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/0501a11c-2452-437b-a148-8e8820de6ca4.json",
+      "bytes": 2494,
+      "sha256": "092536b971e9186281ff07e8e2c0230dca0230aaf1687e60caec9957db2c59bb"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/1127fcdf-17b8-4580-bf13-c1a12a5bf294.json",
+      "bytes": 2834,
+      "sha256": "7d80f961251047a0e258acdc6f4fc4645a8d477ab8ea9334b258d736fa75532f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/52efef4f-3f6b-44b7-80bd-cd6aada3374f.json",
+      "bytes": 2503,
+      "sha256": "77c3f1250a169d8d82cf16197dbfb7698ea00c0897b972ba344e2195f28a9d53"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/7fd89a6d-36f1-4548-9012-2b6dbc7a2c65.json",
+      "bytes": 2825,
+      "sha256": "f03a97053b13cb4f3e9c1c83297e9e78d7737dd950d084d3604f5468840136f4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/8916cac9-e969-4498-8199-926ee14c0eca.json",
+      "bytes": 3269,
+      "sha256": "bf9cb5081e2c651df3c9aa8e9b619a64f6f750e3c2c4b0a20bbe3759cb02e072"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/919f9301-005e-4e61-aa02-ddac464b13fa.json",
+      "bytes": 3177,
+      "sha256": "2ea9fc58c19fdcc348acb005f232c780b9992576fb38892345c85d09a8da7655"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/92bf1e11-3671-40f1-86ee-2a4e7c36bd0a.json",
+      "bytes": 3253,
+      "sha256": "a753b46875fd03462a31b34e945f7227f753e14413c0da69107226c0eef6718f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/9f1083d8-61c9-4cff-b94b-1d8eb3cd544b.json",
+      "bytes": 2742,
+      "sha256": "9facd901127461c9d345e793898cb3500f53c02a674a172fe79d9a670887ff44"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/a381c2b2-5633-4365-9fad-5b022bb45cac.json",
+      "bytes": 2922,
+      "sha256": "a51527663e77ed4d58a44041bcc104c2b74f649a5485cf941a491b97cfc853fd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/b7d51c0d-5232-48c2-ae12-bbf7c32bb4db.json",
+      "bytes": 2586,
+      "sha256": "0f9ed4d2cd437e615a7b6491bf2d466d9d1e66a69a716a64c4b963927aae6012"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/bab0c655-64fe-462b-9c6b-e0110da4e49b.json",
+      "bytes": 3352,
+      "sha256": "4e4c4db1a908256c53a084a26c24b8210f2dbb15750be8dd1d8f3c24fd656d5b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/cada7644-c354-4b54-a759-67d468d9b482.json",
+      "bytes": 3712,
+      "sha256": "ce1d9c7b6d52d3b74e8ed7276facf730caef20581dfadf0bcd21f4e5aa6e098b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/d05ac87f-9647-41d6-82dc-4921b7c873c1.json",
+      "bytes": 3827,
+      "sha256": "ad9be460690aef93a45d302914268b14ae1feafc65e38454d5561ac577137e9b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/db76ac82-e200-47fb-9ca0-7ada71569809.json",
+      "bytes": 3260,
+      "sha256": "4a263bd9cf9b23942f25ae8b79812924e6b448e265de260dbb10552fef09b225"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/f542f581-a4a3-4778-be61-00ab4d3ed6ba.json",
+      "bytes": 2917,
+      "sha256": "c989ac345a4b4e78769a3b98dde868cb0f90038d3d6761eb59d0c63e34621f9b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/call-freezes/fd6d907b-e34c-4d47-bbbe-81d4bb3f5d70.json",
+      "bytes": 2411,
+      "sha256": "d43faa98d8323fdec3551cdc7e8180229abf33584eca68bad630c48d0e718529"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/completion.json",
+      "bytes": 164,
+      "sha256": "af2e5d0393d855e4b6a385a73c1e523fa6cf8d1f156610347411a8313c5231cd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/context-freezes/M01-blocked.json",
+      "bytes": 5690,
+      "sha256": "8ae23f5885426e714d126392cdbc10375da21c91b6b4ee7308744ce142868d54"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/context-freezes/M01.json",
+      "bytes": 5502,
+      "sha256": "c4763fa4c83e93ac345ef89efd54b6ddb916c5d1fb92eaaa7187c97442b45dba"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/context-freezes/M02.json",
+      "bytes": 5665,
+      "sha256": "48ebe9b536e5cef756168514f952e4301a036a5bd91aeb1651e17e76ffa96ec0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/context-freezes/M03.json",
+      "bytes": 6701,
+      "sha256": "fcd01d7c8da7b913ac2b6f2a129aa44d60c817e30dd79d19750653cbb0ce95d4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/context-freezes/M04.json",
+      "bytes": 6687,
+      "sha256": "1a3abb9c319e5f0c88daec3ae66bbcc21730f634392835698dd48a97b318e573"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/experiment-freeze.json",
+      "bytes": 39180,
+      "sha256": "518f3b879d315426a47fa08196bb5853a5bce5e35b36b72650cbdae09dcb4bf2"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/M01-blocked.json",
+      "bytes": 90682,
+      "sha256": "1c3a094e498a9a9df741facefc34b1a30774399336a7cd76f9c315d0bcf3f11d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/M01.json",
+      "bytes": 89563,
+      "sha256": "c4b52f2fec4d680898b30c3e6f7c18a2707625779be07779ef69f9dcb737f8d8"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/M02.json",
+      "bytes": 126748,
+      "sha256": "e4aefe82e57ae7fa8a87b50226e89a71c362104d563935a39b3a80cca870721c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/M03.json",
+      "bytes": 142027,
+      "sha256": "39acaba10e9e93996d536b777a93dc709fc27cd7611ce251cb681423a3ab1ebf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/M04.json",
+      "bytes": 103674,
+      "sha256": "741e4851b04efb6e6bcfe151c08e8437a0d3a30bb63447bb4a16284386ff16ca"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/plan.json",
+      "bytes": 29052,
+      "sha256": "ba68a4bd526b34b390aab213e0b242eeb9b15972b5f683089ddd1f22f766be67"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/live/summary.json",
+      "bytes": 604093,
+      "sha256": "43133541169a04fa1029330f891fe103b0f9e8b72505903e6939db14edcbbb1d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/preflight.json",
+      "bytes": 325,
+      "sha256": "fd637220a39dc11dda7482eeb876f2f630edef38a5229cc2d08b65d9b7bd5c4b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/raw-chains/M01-blocked.json",
+      "bytes": 173744,
+      "sha256": "3e2998413bb5e602e22bc7cd9950dd97d5608d97e6f6a4956a4105b58a959a16"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/raw-chains/M01.json",
+      "bytes": 178309,
+      "sha256": "54afb0f72eefde89f2b27f1345845f41b43d77f4fcf0cc043963299bd97d0463"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/raw-chains/M02.json",
+      "bytes": 210076,
+      "sha256": "b9a912977ca2f3fa4b563a35a980cf59dabb587b4178b2d23f327ba43d355fc4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/raw-chains/M03.json",
+      "bytes": 236352,
+      "sha256": "d8785c6c6e4186ff85fc289dab6640346e986eeebff687e50f4d9cd345cb494b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/raw-chains/M04.json",
+      "bytes": 193025,
+      "sha256": "62fe2779cee276faf3ea1f0c795276319415bed42678586f66da18c7356df7d0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/source-at-freeze/grounded_cli.py",
+      "bytes": 3957,
+      "sha256": "811aa95a6b5f013bdf5986df08dd532df63ad29195143ba1468106263c0bdfdc"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/source-at-freeze/grounded_cli_archive.json",
+      "bytes": 313,
+      "sha256": "2bdbdf3abd5541ca1b7c615ab84420281507ea3154dc4328b56f6b42e836bb09"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/source-at-freeze/manifest.json",
+      "bytes": 317,
+      "sha256": "1f8e40003add72c51ef2908bc33bd14269c5045fe3b26fe20f3a41d3a4d1a4a9"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-01/source-at-freeze/s2b_live_evaluate.py",
+      "bytes": 7811,
+      "sha256": "102f121ee2a10ab14cf5efda9522fe8e78b9404dc4f24c37df82ed4ea170ca47"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/0b7541aa-023c-48ce-9969-191d1dc86034.json",
+      "bytes": 2411,
+      "sha256": "0ef75c97d8f5345886a619dd5f47676109cbc6179d77c83e12aa099f847eb7d6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/2227c6d6-a5ba-4552-bbe9-b07ef68f2be5.json",
+      "bytes": 2742,
+      "sha256": "c9e30c553188b318f9a362cac28c4ea6b4e2bd87c6ae43e3e778d75f5256dfb2"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/2d635ca3-82a1-4112-ba05-7e71c8d88aaa.json",
+      "bytes": 2503,
+      "sha256": "770f892b21b6eca09e530aaafe2f0d842e99510f0a6cb12c32e8a712db8f25b3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/2f0db55f-f047-481a-a818-b157a93066dd.json",
+      "bytes": 3551,
+      "sha256": "18e5e92fd3e9523e47658ee1ea6d7d362ffc8a22853596c46e3c2d87e2bc7675"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/3f435425-9820-4c2a-ba60-d5c3cb0eedff.json",
+      "bytes": 4026,
+      "sha256": "025ac64c65f9edd7b7bd4f22545b0a725bdb32009de7f5b637a0d174fea0ecfa"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/5f3a84cb-b398-41c1-8a92-9beb7c7a2010.json",
+      "bytes": 2825,
+      "sha256": "c55893d40935d4231306f44b2012b6eb74fdf26447fca6c049d9f04f139060ca"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/6e259d07-f402-477b-9b7a-8a7c3ccf401b.json",
+      "bytes": 2917,
+      "sha256": "682c15a760e9ed682f1ac590d31635e59de63b755a66ac2f91576aa2cb49bc37"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/7789cea8-dec6-400b-a3a8-8efd68811b42.json",
+      "bytes": 3350,
+      "sha256": "08ebe1e0882668705bc4a84e928ffc83d14edf706ab3003e36bb8b9fd6efd0f2"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/7d5693e2-4e34-4a9d-82ed-53e7341da7b8.json",
+      "bytes": 3778,
+      "sha256": "6ea357c86ddb25ff3ef7bd57ee7dc8a6df1720d73e6ff2fee2b0f26afa8bf8fd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/82ff024b-e0bb-4edd-a185-5e99376cc3c6.json",
+      "bytes": 3925,
+      "sha256": "0e77b8fc77e4fc953008923a9e2c0083f0259a2af6c60b4b2823ea86003492fc"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/85dd71db-c972-4ecf-9029-0dcd80f994fb.json",
+      "bytes": 3253,
+      "sha256": "f747b93aab8b46b0478bacfc2ba19f74967ecd817fdfe02f99602fe3f9adf6e3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/99a0a023-7710-4348-8c51-b4a3242eba44.json",
+      "bytes": 2834,
+      "sha256": "8846158e67f7d79cfbf376adcd95d6efe327cb495780e4847f7f9bc2333630ff"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/a3cf9d5d-889e-4f51-9643-4f40704b3b09.json",
+      "bytes": 2922,
+      "sha256": "40d5a5063c69fbb69046d410ff12729c91398afe5c67a97584cc62430ed270ef"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/bd6ec3d4-311c-4fb2-94c1-6beb05671962.json",
+      "bytes": 3892,
+      "sha256": "33d98bca298171aedb322b53a592a4614b73b2ef08239d58740e46ae2c8740d7"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/ca67313e-3799-40eb-88f6-b0e275ced287.json",
+      "bytes": 2494,
+      "sha256": "89e51e990c146268e7bedb35853be90cd5f48745bce5c9b6b2591f1e949e8129"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/cc9cb11d-d713-42d0-b327-9e0f7b2e09b8.json",
+      "bytes": 3916,
+      "sha256": "b7e9302b5795b24f28d04e0a4499780eb1dc9c788881d5499bed73069ae4c1fe"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/d557e040-16a0-4563-9f3d-cf6585853d9d.json",
+      "bytes": 3464,
+      "sha256": "2b1da6bc7791673bb3df7056bde78de179e91a1c20ce6f80f133ca9d9fe7311e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/de543f28-8857-4384-bef8-00affa2c2563.json",
+      "bytes": 3473,
+      "sha256": "9ec8ec9c020ecd5b991f6f1d4a7840b79e515388cf048c2c421869bbb22a4b25"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/call-freezes/e082266f-bd3d-4008-ae9f-9020a99abe22.json",
+      "bytes": 2586,
+      "sha256": "fdeb12c097e2b370dc571e87fc7b9354dc1df0ff31d83a81d257952885e364c4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/completion.json",
+      "bytes": 164,
+      "sha256": "5d2d58edc7f9db4515202e3bd2e0f477495f3ab5cee6b8484f63920c6defd97a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/context-freezes/M01-blocked.json",
+      "bytes": 5690,
+      "sha256": "bf69bf76ff24e37b79dcc9b73b11ae9c3cd28959679052d8f8a6575ebc2d6367"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/context-freezes/M01.json",
+      "bytes": 5502,
+      "sha256": "6d380e2fead5c7a94987cb4a3c96d42446a2395537dd57d7cbb4a272d193c26a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/context-freezes/M02.json",
+      "bytes": 5665,
+      "sha256": "819089150c7879439768d10d481c48a9b270d774ec646f259f6cdcf753f64407"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/context-freezes/M03.json",
+      "bytes": 6701,
+      "sha256": "39795dfcf5447224d3946e17c3878a9e643e3478645a821334a0db51df85cd72"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/context-freezes/M04.json",
+      "bytes": 6687,
+      "sha256": "93be4a5c48b2477bbfc9e9ba80e82cff10d8360ffe56e6d1d09c1067d41312e0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/experiment-freeze.json",
+      "bytes": 39652,
+      "sha256": "36e92e999d244bab8e54e3e74a4723eff29b1e64b69fbe6ab4f4663f0f1b3c68"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/M01-blocked.json",
+      "bytes": 140004,
+      "sha256": "d32a57acfb352499ed3ba69456e6bba9ccdc60c7bef535e7c4f381e4da638293"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/M01.json",
+      "bytes": 136475,
+      "sha256": "062516b610695f6d4db5c31f56278582b2813aafce3326dcdcee14a0f3514f5d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/M02.json",
+      "bytes": 139722,
+      "sha256": "2187fe543ae3926bcf88dcd497e1ced22d2f73c8e077138dc0f5800fa8d305a4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/M03.json",
+      "bytes": 156172,
+      "sha256": "e580ed0c46361145cd8d43562b8aad45619b23e1b8c52a8ead25dc032eb1d835"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/M04.json",
+      "bytes": 113171,
+      "sha256": "f1071ab4776383f1acb52844030d431efd5c4ad77480a56dd4c34ed2f4cfe263"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/plan.json",
+      "bytes": 29052,
+      "sha256": "ba68a4bd526b34b390aab213e0b242eeb9b15972b5f683089ddd1f22f766be67"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/live/summary.json",
+      "bytes": 750311,
+      "sha256": "c27fbe8acfb54d397cd451a949d2359c042ff069a8adf687fba408ea62f97192"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/preflight.json",
+      "bytes": 325,
+      "sha256": "fd637220a39dc11dda7482eeb876f2f630edef38a5229cc2d08b65d9b7bd5c4b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/raw-chains/M01-blocked.json",
+      "bytes": 227239,
+      "sha256": "1038a3f7b4763cc4662e7c0832ba65b9985e596995618e8f1e1c553e69f43fd6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/raw-chains/M01.json",
+      "bytes": 229123,
+      "sha256": "873a9c28175e981ad49f3d518de98bdbe78e65a88eb6dd9d73cb6d2240161732"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/raw-chains/M02.json",
+      "bytes": 223071,
+      "sha256": "a75831541612fba7067fa80b61186290e7e12a692f690587676708a0191cbe88"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/raw-chains/M03.json",
+      "bytes": 250504,
+      "sha256": "367e18728b55e02a4740146918e8731e5f07c044393d109354ead9c35eeecad4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/experiment-02/raw-chains/M04.json",
+      "bytes": 202544,
+      "sha256": "25fda818fd845f2ca9cd35e29d9eaac8012c7cb955eb58a98e95aff1eeb7e866"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/final-checks.json",
+      "bytes": 1108,
+      "sha256": "020b5bb87e26162aa093cae9e4cee07cf17be223e5560d5fe40dd8da15f073b1"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-acceptance-summary.json",
+      "bytes": 4230,
+      "sha256": "c32c0ab460e6da9171ba93ee2e60ca490391c238ec1d41a05f5e14a2ad88d459"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M05.json",
+      "bytes": 5064,
+      "sha256": "0f6801e9bede0d99919375e4d43531feec0e66740972cc7c4083de10267290f8"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M06.json",
+      "bytes": 814,
+      "sha256": "8f080f20956e798d6fa2e4c883c176e7e4efa82ad62de3739e67b1116443e1af"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M07.json",
+      "bytes": 10609,
+      "sha256": "9e0e7ce477fce2949296f4e3f2546694f2f3b11e02b6baf6fe185f01709ae67a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M08.json",
+      "bytes": 10577,
+      "sha256": "a7902319b7b8ba0f9aa67d869d18253185a9b7e55918ea44acef6ea67c0752ef"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M09.json",
+      "bytes": 10640,
+      "sha256": "098b2732ef43a18efcf95c25d821a8b19614a58b6a0ce5b20b692ccdc855e0e7"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M10.json",
+      "bytes": 10123,
+      "sha256": "1d52532b72851ef13ae312f9f71c8d25639ea0f52e945fb3638dc916d43952c3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M11.json",
+      "bytes": 25173,
+      "sha256": "55824b7b6fb60b16bfb9ff73b19bb230887687dd9e3e35b463b415c2e20698f4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/M12.json",
+      "bytes": 10050,
+      "sha256": "ac43bbdc9857d9bed07bc0d51e5e4f257a5858aa1ba6f99a185bec17136f01e6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/plan.json",
+      "bytes": 29052,
+      "sha256": "ba68a4bd526b34b390aab213e0b242eeb9b15972b5f683089ddd1f22f766be67"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-faults-01/summary.json",
+      "bytes": 92314,
+      "sha256": "6be0ff80bf8e7dca3e6bbce0ba0f2e4ec73a393dacd5b21e6b3f8ff4e9a3b0bd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/frozen-integrity-final.xml",
+      "bytes": 10213,
+      "sha256": "b795c900b39d041d05431dcb34f7e8bf9d842302e885e67e17da5e52924e8811"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/full-current-final.xml",
+      "bytes": 70111,
+      "sha256": "d7ebe76887334594033ad6bb82cc1c4f2df076428d2705fc9420871a1e10ee5b"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/full-default-final.xml",
+      "bytes": 66399,
+      "sha256": "6f97d5110b00b67db9d5f46c7f1580edc1c13df1becee7bbe84c3f5f68930a2a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/historical-seals-before.json",
+      "bytes": 567,
+      "sha256": "fb428eab9eaad87d645892863911fe3a951a715a66895fc185e2762fef7d8229"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/independent-review.json",
+      "bytes": 1600,
+      "sha256": "15394d099152077ed616c9361843fb6411c3135573b3d7f168037bf532a8a3c1"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/live-persisted-replay-validation-final.json",
+      "bytes": 7053,
+      "sha256": "4c32da6deab621835782769cf37b4d5788f6c968f743b791ad38a5f748bac6ca"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/live-persisted-replay-validation.json",
+      "bytes": 6204,
+      "sha256": "9efb4a1b969ac947fffe3f0b1e4a8f36b7229897eb86fb084fe98a474286b880"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/new-contracts.xml",
+      "bytes": 22290,
+      "sha256": "88e9a626684b66169721d3444ee5afde2be03be9e93580167c4245a23695290a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/v2-contracts-final.xml",
+      "bytes": 3970,
+      "sha256": "2d5b6f0078039d735a174b3f4b0853dfbb1bfd36ff9fbd05047d9cf996bcca4a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/v2-contracts.xml",
+      "bytes": 4608,
+      "sha256": "205d684c8af6dc6ae0e09f43f7199035aeea6369b4dc0b70b9594abb942b36be"
+    },
+    {
+      "path": "deliveries/2026-10-06/s2b-grounding/evidence/v2-independent-review.json",
+      "bytes": 1343,
+      "sha256": "17707b89b8ac0470435049e942a31525f5561f9b4712abeff4fb9709d64efce6"
+    },
+    {
+      "path": "docs/12-s2b-grounding.md",
+      "bytes": 9191,
+      "sha256": "2e8ceba2b66c9e3669de947d021a25c1bc62c262322d6491edd4484dee98138e"
+    },
+    {
+      "path": "scripts/s2b_evaluate.py",
+      "bytes": 33012,
+      "sha256": "e270a9039de330bf1119c53c73fc43d191fbeacb9d8616e13c8e3d26e4eb6613"
+    },
+    {
+      "path": "scripts/s2b_live_evaluate.py",
+      "bytes": 8469,
+      "sha256": "a131196e48bab6ac614468af23f59e706575949cbe7196dcca5fc2014780c882"
+    },
+    {
+      "path": "scripts/selection_audit_evidence.py",
+      "bytes": 2576,
+      "sha256": "4c6e170c69d1417a09f2c7267a55c9afa2f392af5c17ea24662ffe115d1bf6b7"
+    },
+    {
+      "path": "scripts/selection_validate_evidence.py",
+      "bytes": 7981,
+      "sha256": "d2ccf32e53c54d2df43fecf60d46d865848feceea06f58a0ce9e2c0b53758e27"
+    },
+    {
+      "path": "scripts/start_grounded_api.py",
+      "bytes": 4698,
+      "sha256": "2521050c9b27496f3ac748927032803ddd1da8884b19f1c99a022bdebc640d78"
+    },
+    {
+      "path": "scripts/start_selection_api.py",
+      "bytes": 1059,
+      "sha256": "a21ebdec6828bfad424467a64488c24f8b25b2f4a8c3fec47d87acdd1fd7323f"
+    },
+    {
+      "path": "skills/pm-grounded/SKILL.md",
+      "bytes": 574,
+      "sha256": "5b5159f3767bb1e9c434e9bce498221bce3dcdec815b25cf5892b8b2e8dbf19f"
+    },
+    {
+      "path": "skills/supervisor-grounded/SKILL.md",
+      "bytes": 590,
+      "sha256": "c62b9cec3562e937499723357b5fa9ce0f91cee9815f22915542c61e6660c2ae"
+    },
+    {
+      "path": "src/forgeflow/grounded_api.py",
+      "bytes": 4128,
+      "sha256": "c3f8b6b178c2426b38ea9cf6880b7d66793a503e6349821a85fb9c001636a30b"
+    },
+    {
+      "path": "src/forgeflow/grounded_cli.py",
+      "bytes": 4378,
+      "sha256": "4a7009f2ff9b2672803f0acdde67d2a390cf7814826a8b2efa39333009d45440"
+    },
+    {
+      "path": "src/forgeflow/grounded_context.py",
+      "bytes": 24828,
+      "sha256": "1dd9b7741167d6db22369137187d057b8739960e7f9d2c4270df22b33f797caf"
+    },
+    {
+      "path": "src/forgeflow/grounded_contracts.py",
+      "bytes": 4926,
+      "sha256": "9e24c65afce9a5d6e3bf32dabc22648344902a59483575aebe7dab9fed8cbaa6"
+    },
+    {
+      "path": "src/forgeflow/grounded_runtime.py",
+      "bytes": 4303,
+      "sha256": "bd0a5b25be78f9b63c4588e075f4de0ff4e5425786cccf93a421e9b3c47b9020"
+    },
+    {
+      "path": "src/forgeflow/grounded_selection.py",
+      "bytes": 6687,
+      "sha256": "dac002b796fb3c77d91c253dd7b7b6ecb59e1af9249a12494ec819ce4eec2020"
+    },
+    {
+      "path": "src/forgeflow/grounded_selection_api.py",
+      "bytes": 824,
+      "sha256": "f9de314aeb2792dd7c0cae99fc1dd5e4a10106cb18b11e191a9f12b9bec011fe"
+    },
+    {
+      "path": "src/forgeflow/grounded_selection_runtime.py",
+      "bytes": 1880,
+      "sha256": "8919117d9e1b900308b1bb1cc9862099c22733be9b958ec1f539e9b8500aab22"
+    },
+    {
+      "path": "src/forgeflow/grounded_store.py",
+      "bytes": 25524,
+      "sha256": "2433e58df0cf4158db1b0a86af488809be17651d53cbeda6e91d87635ed03104"
+    },
+    {
+      "path": "src/forgeflow/grounded_workflow.py",
+      "bytes": 9084,
+      "sha256": "c7bf0b2a2b369337da4fd2bdbf5f438df1cccdd05438fdbac87e51c36e510f19"
+    },
+    {
+      "path": "tests/test_grounded_api.py",
+      "bytes": 13828,
+      "sha256": "2ff9b72210f8d07c8b78c25c82a98e403ccd0bc046cd070acbc5e890d1f51ef5"
+    },
+    {
+      "path": "tests/test_grounded_context.py",
+      "bytes": 18987,
+      "sha256": "4c42918df57cb35b003846cb058e887ff34a9e25abbee17e159f08580a8e66df"
+    },
+    {
+      "path": "tests/test_grounded_contracts.py",
+      "bytes": 4021,
+      "sha256": "1e4664b0c7babd2eb2af4e4db1c072114d6309f5062c1069ea86d0a0b8dcc79a"
+    },
+    {
+      "path": "tests/test_grounded_frozen_eval.py",
+      "bytes": 14510,
+      "sha256": "47eb1b4de4774c5bc8eb1bb5dd5d7c2495c3c36a224aeb4247fcabc5b6643f17"
+    },
+    {
+      "path": "tests/test_grounded_selection.py",
+      "bytes": 12375,
+      "sha256": "e2aa552e86728eac6cdaadc8b20bb5b564e02d479aa612e3310d4c227f62cd13"
+    },
+    {
+      "path": "tests/test_grounded_store.py",
+      "bytes": 27112,
+      "sha256": "3a3d886e9548950d2c7f1b771121945567617cc53237889de7709d1a22b3f141"
+    },
+    {
+      "path": "tests/test_grounded_workflow.py",
+      "bytes": 5646,
+      "sha256": "51b9549027444178980406fab69b74a1358911b1d4fe12e8713ae1e714515df3"
+    },
+    {
+      "path": "tests/test_selection_runtime.py",
+      "bytes": 2363,
+      "sha256": "ac2b20f57228bfc7b29400391f0d9979c08ca9e4492b64cc258b4e4536a86864"
+    }
+  ]
+}

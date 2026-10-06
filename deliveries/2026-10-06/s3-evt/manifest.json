@@ -1,0 +1,266 @@
+{
+  "project": "ForgeFlow",
+  "delivery": "2026-10-06 S3C bound synthetic EVT review contract",
+  "status": "LOCAL_EVT_REVIEW_INCREMENT_VERIFIED",
+  "unique_source": "/path/to/forgeflow",
+  "api": "http://127.0.0.1:8773/docs",
+  "tests": {
+    "related_passed": 67,
+    "new_EVT": 25,
+    "prior_roles": 42
+  },
+  "actual_bound_reviews": 19,
+  "pending_source_acceptances": 2,
+  "new_model_calls": 0,
+  "new_sandbox_executions": 0,
+  "actual_human_decisions": 0,
+  "business_actions": 0,
+  "stage_issue_memory_adapters": "NOT_MIGRATED_LOCAL_FOLLOWUP",
+  "android_build_device": "NOT_RUN_REQUIRES_NEW_AUTHORIZATION",
+  "downloads_performed": false,
+  "zip_created": false,
+  "dependencies": [
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/manifest.json",
+      "sha256": "8db84d5b5d1ef87316b825df27922d97e9fd98b7011d9fbbd339d81ff32565a5",
+      "status": "SEALED_DEPENDENCY_UNMODIFIED"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/manifest.json",
+      "sha256": "e2ca6aa9e231adb5d96d93935953d7399037c7ec3f18d9efa6ed12702961c932",
+      "status": "SEALED_DEPENDENCY_UNMODIFIED"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-domain/manifest.json",
+      "sha256": "916352798c0fd4ef8e843f467219cc7d053a1ea7fd4f8a426431c0ec2ccd9358",
+      "status": "SEALED_DEPENDENCY_UNMODIFIED"
+    }
+  ],
+  "entries": [
+    {
+      "path": "CURRENT_EVT.md",
+      "size": 1490,
+      "sha256": "24ac188bf5d72ad615c4c4b7f6fd540802610d00275507e0f30c13eab96c296f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/ANDROID_INSTALL_PLAN.md",
+      "size": 4224,
+      "sha256": "138924e5a3067a487e4a665a4dcbc7f7834c13b31f784509d1f0ef1702209607"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/DELIVERY.md",
+      "size": 4771,
+      "sha256": "da94f652316198451846714c3adb8185c2261e7689dc416100bc094e3ddad55d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/docs/16-evt-bound-contract.md",
+      "size": 4499,
+      "sha256": "6f6760753b1207922f2146939b0718e7edaf86689a63234e7877a41fd91ab144"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-aligned-synthetic-applicability-unresolved-v1.json",
+      "size": 4471,
+      "sha256": "587da6cb6531c4281dfda1c776cd6767e96949e22f51fcf55c0fe5384056c36f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-aligned-synthetic-evt-apk-device-v1.json",
+      "size": 4448,
+      "sha256": "2395444c2b396e393420abbd7be03a3ec19778f5fa4f8a4951806f3dbd9ab701"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-aligned-synthetic-source-review-v1.json",
+      "size": 4515,
+      "sha256": "5664bc737a810dcba354de00da896b3a3805437cc8d00137f38a54340ac326de"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-blocked-aligned-synthetic-applicability-unresolved-v1.json",
+      "size": 4476,
+      "sha256": "2b8c4ce7133d62725dc424601cc6fb185725e92642ec0fdc19a71e70e5905a79"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-blocked-aligned-synthetic-evt-apk-device-v1.json",
+      "size": 4453,
+      "sha256": "946612bfd1588533c172e6878937d7b6ff0afb44ad2f48a916871765598182ff"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-blocked-aligned-synthetic-source-review-v1.json",
+      "size": 4523,
+      "sha256": "6e4abe46dd2ea4fb16fb9b08332f4bfb00bdb7d4a331734a25463583e4de3ed8"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-bom-mismatch-synthetic-evt-apk-device-v1.json",
+      "size": 4447,
+      "sha256": "d6de5f8982127dea02a76fa2eb85f95f07590a06d204c126ee5d3d050876df51"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-bom-mismatch-synthetic-source-review-v1.json",
+      "size": 4517,
+      "sha256": "4d258e1c8a4d5df0a696ea5f3d1eb9e882560fa4889780d6899b0982ed97e6a4"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-missing-exported-synthetic-evt-apk-device-v1.json",
+      "size": 4451,
+      "sha256": "e5d891312c7c8a62b73cb2b3624debd5394fcde9accaf1521fa00fea44b6da04"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-missing-exported-synthetic-source-review-v1.json",
+      "size": 4521,
+      "sha256": "d16cf4ff352352b07dec7e6aaf5110a59b191e2ac8d1ee4489fd327bc9fd347c"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M01-source-pending-acceptance.json",
+      "size": 1757,
+      "sha256": "6b88ce8cb38812689c6c21d7fea2f4fc95120d9e1bcc3bf16a740f4be2a1cd96"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M02-aligned-synthetic-applicability-unresolved-v1.json",
+      "size": 4478,
+      "sha256": "86db91b0836626a131c9ebcdcfbd0479863a417e346f2b81e2a89a0ec68707e9"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M02-aligned-synthetic-evt-apk-device-v1.json",
+      "size": 4455,
+      "sha256": "e8b445a83ee0a151cf945f3000c917b245dbea36123ce130d6ce9e5b80a6c649"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M02-aligned-synthetic-source-review-v1.json",
+      "size": 4525,
+      "sha256": "996530390066fa2bf875d436ce57b194e65da55cf3030d21f72112c2addebab0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M03-aligned-synthetic-applicability-unresolved-v1.json",
+      "size": 4478,
+      "sha256": "9eea6e5e813517d2e590e5acb766246ff5b2ef697900fc604a37ddd7bfb4fbcd"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M03-aligned-synthetic-evt-apk-device-v1.json",
+      "size": 4455,
+      "sha256": "21fdd2d42bea7e400d9535e719f7bd3af4a2122c68330b830936c348c3162fe3"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M03-aligned-synthetic-source-review-v1.json",
+      "size": 4525,
+      "sha256": "5b2995c034f63ded3755d0858c01990c89b1590b919e5a65d4fa0828f8e2a9ad"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M04-aligned-synthetic-applicability-unresolved-v1.json",
+      "size": 4471,
+      "sha256": "5590b29c3a96a3f3c2599b4445c1d493909b0882055b3ff23151f94ff538c311"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M04-aligned-synthetic-evt-apk-device-v1.json",
+      "size": 4448,
+      "sha256": "0f603a1331244e08746a52bed48aaebe066bebec045fd06bc8c9cd4fbb4a7c02"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M04-aligned-synthetic-source-review-v1.json",
+      "size": 4515,
+      "sha256": "b0521760b7c5057ce4521f91871f8385bdd74c82b2be8a5202136cb4d069bc03"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/M04-source-pending-acceptance.json",
+      "size": 1757,
+      "sha256": "d5975e814c63ef20b12f814f4f3097addf9ff33b47bdd6917db77a9210ae8011"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/evt-tests.xml",
+      "size": 3302,
+      "sha256": "5503e091fa321ca00229d014db28e509648e2139ba30923e923d6d0acd7b0625"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/idempotent-start.json",
+      "size": 81,
+      "sha256": "72c18a3423f1f60ba9480a24411d83537b2965031aa955307c0c9cbd22fdd434"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/independent-review.json",
+      "size": 1369,
+      "sha256": "3c6e29dc00b60bde171c9b883b113a9f06bf643d170dd62770ac6458f68bc4e9"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/live-summary.json",
+      "size": 15227,
+      "sha256": "e63e3153285d79725eeb03d328b41d4acf5be3ba0bc7f82ea73132a6f993f6c5"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/manual-cli-read.json",
+      "size": 4448,
+      "sha256": "2395444c2b396e393420abbd7be03a3ec19778f5fa4f8a4951806f3dbd9ab701"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/ports.json",
+      "size": 415,
+      "sha256": "12ae127b64f5c8be60533af1abfe2f0ef1932959506c2cabb8194560307466f9"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/prior-seal-unchanged.json",
+      "size": 156,
+      "sha256": "f0e25f1a234b5dcf707653028f1b1442dddb4076bd0e2c4013a6e7db638f5dcf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/related-tests.xml",
+      "size": 8988,
+      "sha256": "42e776dd3eac2137d86fb9a8d213510d8fcb4922fd547da5f816c66dc34b2033"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/ruff.txt",
+      "size": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/evidence/service-update.json",
+      "size": 205,
+      "sha256": "561a45727a8b142c17c719d343930789f1ba6700c5fe1700d9a88b709cf4ab7a"
+    },
+    {
+      "path": "docs/16-evt-bound-contract.md",
+      "size": 4499,
+      "sha256": "6f6760753b1207922f2146939b0718e7edaf86689a63234e7877a41fd91ab144"
+    },
+    {
+      "path": "fixtures/aurora-evt-review/policies.json",
+      "size": 2556,
+      "sha256": "b19e10ff8c17e1715c8b6199e9773c218d2b3eedb6e4c5c6690bf9f1bcd77543"
+    },
+    {
+      "path": "scripts/evt_regression.py",
+      "size": 9944,
+      "sha256": "3670041abed188d2d580c99684264b58b85d4a8998a66f726928a08c2480def5"
+    },
+    {
+      "path": "scripts/evt_service.py",
+      "size": 3328,
+      "sha256": "8c89dc16e6cb525eba391e1f50938823501308a69a60e82873fecedecbdd6e93"
+    },
+    {
+      "path": "src/forgeflow/evt_api.py",
+      "size": 5756,
+      "sha256": "7aa82524f4ec083b0c136eb746ac9c6b02942620d04de96e23c5303a0eb80a22"
+    },
+    {
+      "path": "src/forgeflow/evt_cli.py",
+      "size": 1428,
+      "sha256": "3e981622abef595ef9dbe1fcf70566f2f3bbec4aba172cb6aa6edbddf4eb3272"
+    },
+    {
+      "path": "src/forgeflow/evt_contract.py",
+      "size": 8637,
+      "sha256": "07c0e1b06f7a78eaecd2ba81c0ea49eae2a07bd0b079ba73e60bdbd04728cafe"
+    },
+    {
+      "path": "src/forgeflow/evt_review.py",
+      "size": 15669,
+      "sha256": "920c76252e971ec825a078ccffe60da36eba7ab999cf3b87e6b6be0dfc66e3ac"
+    },
+    {
+      "path": "tests/test_evt_contract.py",
+      "size": 6394,
+      "sha256": "a89e1dd3c56b182758ed0207bc8b4f69b463ef3834e74f5b13817078e8db4424"
+    },
+    {
+      "path": "tests/test_evt_review.py",
+      "size": 11187,
+      "sha256": "30af4f86b794fcb65e1ab3a5098ace3839342d99ce593f682cfd730904432896"
+    }
+  ]
+}

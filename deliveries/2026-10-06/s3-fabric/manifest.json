@@ -1,0 +1,278 @@
+{
+  "project": "ForgeFlow",
+  "delivery": "2026-10-06 S3D isolated local Stage Issue Memory flow",
+  "created_at_utc": "2026-10-06T09:18:27.993165+00:00",
+  "status": "LOCAL_DETERMINISTIC_FABRIC_VERIFIED",
+  "unique_source": "/path/to/forgeflow",
+  "api": "http://127.0.0.1:8773/docs",
+  "api_module": "forgeflow.fabric_api",
+  "scope": "synthetic-lab/engineering/aurora-fabric-e2e",
+  "tests": {
+    "passed": 111,
+    "new": 44,
+    "prior": 67
+  },
+  "actual_new_checks": 2,
+  "actual_fixture_decisions": 6,
+  "actual_local_effect_and_compensation_receipts": 6,
+  "actual_user_business_approvals": 0,
+  "actual_http_checks": 15,
+  "new_model_calls": 0,
+  "external_writes": 0,
+  "downloads": 0,
+  "full_evt_eligibility": false,
+  "android_build_device": "NOT_RUN",
+  "dependencies": [
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/manifest.json",
+      "sha256": "8db84d5b5d1ef87316b825df27922d97e9fd98b7011d9fbbd339d81ff32565a5",
+      "entries_verified": 110,
+      "status": "UNCHANGED"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-sre/manifest.json",
+      "sha256": "e2ca6aa9e231adb5d96d93935953d7399037c7ec3f18d9efa6ed12702961c932",
+      "entries_verified": 16,
+      "status": "UNCHANGED"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-domain/manifest.json",
+      "sha256": "916352798c0fd4ef8e843f467219cc7d053a1ea7fd4f8a426431c0ec2ccd9358",
+      "entries_verified": 43,
+      "status": "UNCHANGED"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-evt/manifest.json",
+      "sha256": "61b2dc00ca416bde2b721345ff827663167894210de2eb631b9ff6b14a7f903d",
+      "entries_verified": 45,
+      "status": "UNCHANGED"
+    }
+  ],
+  "entries": [
+    {
+      "path": "CURRENT_FABRIC.md",
+      "size": 1339,
+      "sha256": "ebefaa0632255c1351c815b52392ad044c664127f2c32cac0e84c11689d4a5a7"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/DELIVERY.md",
+      "size": 4537,
+      "sha256": "17fcb973628fbc5e24e37992abe9c393d9f50ca3d324d6c70227b14299fa4d01"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/INDEPENDENT_REVIEW.md",
+      "size": 1267,
+      "sha256": "ea76c9f1783d5829ecb461a2a46795c499be7749432a0390b44400c2fefa0bcf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/01-design-review.md",
+      "size": 7121,
+      "sha256": "d03330e6dbad33e2db70eeb5ca799bd0d666a0998640381070a2728b5f10a2a2"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/02-contracts.md",
+      "size": 19085,
+      "sha256": "8062d238eebbe018b7daf7955726bba4498dcdbaed9d57fc5d601a04d64ffe1a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/03-threat-model.md",
+      "size": 7838,
+      "sha256": "8909fda266ded5521c5c3bc6cda02d76df9753915d304945d424b91a216a0d38"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/04-acceptance-matrix.md",
+      "size": 22245,
+      "sha256": "40f00199af81995a04494ec336d2e254f191dc62b929809a4763a328ce9853d5"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/05-reuse-and-sources.md",
+      "size": 10993,
+      "sha256": "61096a92714ed5a3cfdde9edb9876ff9cb79c2153949d07e48128de3cb0cac53"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/06-execution-plan.md",
+      "size": 8602,
+      "sha256": "7c0499bcf58fd4b7d297458f2a0f23b66d41bf8e44b5742d8d38525cdfd3a15a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/07-manual-demo-and-learning.md",
+      "size": 4291,
+      "sha256": "2dbcb30f2c988b5a472845b93251b4498e6651340aa70a0e0da43afa9dfe0d68"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/08-runtime-conformance.md",
+      "size": 4256,
+      "sha256": "aa90c3bf605db1e29279734bf98bdf39ac5620b66ff57c7eb94ffdcb6c97cf30"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/09-implementation-review.md",
+      "size": 14425,
+      "sha256": "94cf40aee74d618d48c99b475c8c4aa7c2af4f1d46c93e4b29e44c7a20fe26e9"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/10-local-model-demo.md",
+      "size": 6284,
+      "sha256": "1f7c93e352a75244350ffd6c58150073549d27248d46d29121a67ebecfa0326e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/11-s2a-contracts-threats-acceptance.md",
+      "size": 6726,
+      "sha256": "0aa1d347de4636c89fe675c1f19c60ffd9506e06e5c87fb7b78b8e2186007502"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/12-s2b-grounding.md",
+      "size": 9191,
+      "sha256": "2e8ceba2b66c9e3669de947d021a25c1bc62c262322d6491edd4484dee98138e"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/13-s2c-state-and-derived-check.md",
+      "size": 6234,
+      "sha256": "b272ab98f0faf8ca9bc8f63a963422d50d487ba16e8a9ce2246f01dd5a209adf"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/14-sre-operational-sop.md",
+      "size": 1591,
+      "sha256": "50574a37f713a7bc339304c6ce133bdcf7db5483068bb14ece15cb4e167e220d"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/15-domain-prototype.md",
+      "size": 4954,
+      "sha256": "5609b934ff45b806c2995e426f05ca8557b18e117977aeba46b357b72bb5fbde"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/16-evt-bound-contract.md",
+      "size": 4499,
+      "sha256": "6f6760753b1207922f2146939b0718e7edaf86689a63234e7877a41fd91ab144"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/17-fabric-local-contract.md",
+      "size": 8492,
+      "sha256": "ffe06798b01279ff9017844f995046b206e2634fdad8e87a0ca37aad17bfe7f6"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/18-capability-and-next-phase.md",
+      "size": 5817,
+      "sha256": "b7fe61458f9345a48fcc9d565a498473a047b35d1d4b3f747a524b65fbc5e547"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/documentation/THIRD_PARTY.md",
+      "size": 1199,
+      "sha256": "e39a700233683d80c0dd75e70a26dd06896f3ee114acbc2f25b6b7324de58b83"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/checks.json",
+      "size": 6859,
+      "sha256": "852c5d07f65a53e50596b9f592a1e4290810d91e3aae74026daa5453795e9746"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/effects.json",
+      "size": 57038,
+      "sha256": "5da92335b49a766f105575c17ec678623911f47d37efcf1589c6db0726fdd0b0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/http-attempt-01-failed.json",
+      "size": 275,
+      "sha256": "38a09b8b9751af15d5fbc65b3feee6448ac7b6d17449d5b769061fb42abe9992"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/http-schema.json",
+      "size": 8906,
+      "sha256": "7bf9ea10a0cfd8798d072122b3626bf020596a301440ae45e39bc062962b4f23"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/idempotent-replay.json",
+      "size": 311,
+      "sha256": "df9d8d24806bcfe55afc3587547eee7e3e05b2f6fc37c8a93e86776f393edd88"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/parent-after-effects.json",
+      "size": 59429,
+      "sha256": "d22f57f94b110e7c509dfb6636dab5dc4c9e9a4948bc93dedc0af7e22b791e24"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/parent-pass.json",
+      "size": 51793,
+      "sha256": "a5aa54f6ce72a4efd5d572ced69c490a709568f4214d0a98d7c4761f4e7aae8a"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/parent-unknown.json",
+      "size": 49903,
+      "sha256": "5261497bc2f6ce0e029c203e34df68a90dff3afac3cbc4f1451bd1b32a5985f0"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/prior-seals-unchanged.json",
+      "size": 822,
+      "sha256": "34966828c21e3dc683e19b841d5b55771306cd92443b68b3027b34a0e1d3d88f"
+    },
+    {
+      "path": "deliveries/2026-10-06/s3-fabric/evidence/related-tests.xml",
+      "size": 15346,
+      "sha256": "3a46e89b640b2b3b06e7613e3c7f4f911a7fe0d3501adcb309a5b2e2f25bca04"
+    },
+    {
+      "path": "docs/17-fabric-local-contract.md",
+      "size": 8492,
+      "sha256": "ffe06798b01279ff9017844f995046b206e2634fdad8e87a0ca37aad17bfe7f6"
+    },
+    {
+      "path": "docs/18-capability-and-next-phase.md",
+      "size": 5817,
+      "sha256": "b7fe61458f9345a48fcc9d565a498473a047b35d1d4b3f747a524b65fbc5e547"
+    },
+    {
+      "path": "fixtures/fabric/policy.json",
+      "size": 1818,
+      "sha256": "c2e2fe898271848fff788964ed63b8ebe281fae82fe468f9accf3dc134452382"
+    },
+    {
+      "path": "scripts/fabric_e2e.py",
+      "size": 11176,
+      "sha256": "3591fedc2399b1fdd9f8f5b0d8fcbc356ed42d153b65ef2cae8c8870f4be3f5a"
+    },
+    {
+      "path": "scripts/fabric_http_verify.py",
+      "size": 4373,
+      "sha256": "98d6d683cfb382ae3693f90319ce1e68d2e875e37078804af427ddcb1eda7fe6"
+    },
+    {
+      "path": "scripts/fabric_service.py",
+      "size": 2376,
+      "sha256": "850870edc201e20f128fe1238826ddda2f2e1e2995348c3f1db80da44dfc4c67"
+    },
+    {
+      "path": "src/forgeflow/fabric_api.py",
+      "size": 6469,
+      "sha256": "7fa6fa913bb3612b25ad00e851c680e4b9a2d4d813024aa667206587b53c2f6d"
+    },
+    {
+      "path": "src/forgeflow/fabric_cli.py",
+      "size": 3752,
+      "sha256": "c41864fd1982c1acaa8730d3858cd6020abcdae708c1bd62ec552148413c0bfd"
+    },
+    {
+      "path": "src/forgeflow/fabric_contract.py",
+      "size": 17679,
+      "sha256": "c89ab1e3d6f2322b85d1b792888206f16c9ea5faa8ff6355e98ce60924bd94c5"
+    },
+    {
+      "path": "src/forgeflow/fabric_runtime.py",
+      "size": 2499,
+      "sha256": "112bcbe8614c840239ad081db015f8f0cd9f5e888ff6464356b75ba628758634"
+    },
+    {
+      "path": "src/forgeflow/fabric_store.py",
+      "size": 26177,
+      "sha256": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2"
+    },
+    {
+      "path": "tests/test_fabric_contract.py",
+      "size": 15240,
+      "sha256": "66833c1f4008463efc265df66150b3d594fe0a0ce2713bed3ee8019bc7b53057"
+    },
+    {
+      "path": "tests/test_fabric_store.py",
+      "size": 20244,
+      "sha256": "4bdf29010d6895887daffe17e1a00ce46fc65804c29a36b58be7e887c13ef1f7"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "732011ee-07a5-4999-8515-58bcce424c54",
+  "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+  "created_by": "local-owner",
+  "idempotency_key": "s3-domain:M01-blocked:aligned:01",
+  "fixture_id": "aligned",
+  "request_hash": "a3b03ec8135f6c895f4e75086ef36833b3927e844202e1488180d057daf3660f",
+  "source_hash": "4c19e9ae6a1686252c98cbfb0c7b8b4a05e4c271a09cfd66adb1d67906ca9947",
+  "report_json": {
+    "control_plane_revision": "domain-source-contract-v1",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+    "source_hash": "4c19e9ae6a1686252c98cbfb0c7b8b4a05e4c271a09cfd66adb1d67906ca9947",
+    "fixture_id": "aligned",
+    "synthetic": true,
+    "observation": "SOURCE_XML_AND_RECORDED_HARDWARE_NOT_APK_OR_DEVICE",
+    "sources": [
+      {
+        "id": "aurora-domain-contract",
+        "version": "domain-artifacts-v1",
+        "sha256": "205732c990ca721ffc80082ad7f7c5f15e9d2f792fa27e05c54d24549a8e646d",
+        "synthetic": true
+      },
+      {
+        "id": "aurora-domain-aligned",
+        "version": "domain-artifacts-v1",
+        "sha256": "e06abd156ec93e06928db9a35c2358c01262ad4ca280977c4edbd0f38bb7839d",
+        "synthetic": true
+      }
+    ],
+    "skill_hashes": {
+      "architect": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+      "android": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4"
+    },
+    "technical_gate": "BLOCKED",
+    "gate_integration": "SUPPLEMENTAL_NOT_ENFORCED_BY_EXISTING_EVT_GATE",
+    "human_approval_required": true,
+    "business_actions_executed_by_sop": false,
+    "revision": "domain-source-review-v1",
+    "parent_source_hash": "d980e17104ab95d6fafa4d9c801faf8d24049da4f9401150251e1c1b81d83d40",
+    "artifact_hash": "02cb4a21ad4e44b2e32eb24f4bcc5063bcd289c859784820782343def7f827bb",
+    "architect": {
+      "role": "architect",
+      "authority": "DETERMINISTIC_SOP",
+      "skill_hash": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+      "checks": [
+        {
+          "id": "parent_artifact_binding",
+          "status": "PASS",
+          "reason": "BOUND_PARENT_ARTIFACT",
+          "source_pointer": "/artifacts/result.json"
+        },
+        {
+          "id": "hardware_android_bom",
+          "status": "PASS",
+          "reason": "BOM_ALIGNED",
+          "source_pointer": "/artifacts/result.json/manifest/metrics/bom_revision -> /domain-sources/aurora-domain-aligned/manifest/application/meta-data[@android:name='aurora.bom.revision'] -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "interface_contract",
+          "status": "PASS",
+          "reason": "INTERFACE_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-aligned/manifest -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "exposure_contract",
+          "status": "PASS",
+          "reason": "EXPOSURE_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-aligned/manifest/application/activity/@android:exported -> /domain-sources/aurora-domain-contract"
+        }
+      ],
+      "static_status": "PASS",
+      "readiness": "READY"
+    },
+    "android": {
+      "role": "android",
+      "authority": "DETERMINISTIC_SOP",
+      "skill_hash": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4",
+      "checks": [
+        {
+          "id": "manifest_parse",
+          "status": "PASS",
+          "reason": "BOUNDED_XML_PARSED",
+          "source_pointer": "/domain-sources/aurora-domain-aligned/manifest"
+        },
+        {
+          "id": "package_sdk",
+          "status": "PASS",
+          "reason": "PACKAGE_SDK_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-aligned/manifest/uses-sdk"
+        },
+        {
+          "id": "application_contract",
+          "status": "PASS",
+          "reason": "APPLICATION_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-aligned/manifest/application -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "build_device",
+          "status": "UNKNOWN",
+          "reason": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+          "source_pointer": "/android/build-device-receipts"
+        }
+      ],
+      "static_status": "PASS",
+      "readiness": "UNKNOWN",
+      "build_status": "NOT_RUN_NO_ANDROID_TOOLCHAIN"
+    },
+    "supervisor_handoff": "NEEDS_ANDROID_BUILD_EVIDENCE",
+    "stage_transition": "NOT_EXECUTED"
+  },
+  "audit_json": {
+    "kind": "DOMAIN_SOP_COMPLETED",
+    "actor": "local-owner",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+    "source_event_head": "58893fd66fedb1515fc829a09c38528218e0ec77ae0daec21df88bf5567e3441",
+    "report_hash": "6ef788dbe1fe551d8f3c5b4d1382a4d73b33f0698f3cdc7a5fd9e08a4f7ab8fe",
+    "transport": "IN_PROCESS",
+    "model_calls": 0,
+    "allowed_tools": {
+      "architect": [
+        "domain.artifacts.read",
+        "execution.events.read",
+        "execution.receipts.read"
+      ],
+      "android": [
+        "domain.artifacts.read"
+      ]
+    }
+  },
+  "payload_hash": "e8d9abe89eddb3821ecd93f766a0c7b36a20edd2a7e9c9ea2650c81836df5ec1",
+  "created_at": "2026-10-06T08:13:10.693391+00:00",
+  "tenant_id": "synthetic-lab",
+  "workspace_id": "engineering",
+  "project_id": "aurora"
+}

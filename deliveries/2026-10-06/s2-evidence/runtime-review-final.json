@@ -1,0 +1,101 @@
+{
+  "schema": "FORGEFLOW_S2A_SMALL_DIFF_FRESH_REVIEW_V1",
+  "reviewed_at_utc": "2026-10-06T05:18:53.627485+00:00",
+  "reviewer_task": "/root/s2_runtime_review",
+  "status": "NO_REMAINING_CONFIRMED_P1_P2_IN_REVIEWED_SMALL_DIFF",
+  "scope": "Only MCP witness projection, context revision binding, archived receipt tests, local starter/HTTP smoke and collector evidence checks. Prior full runtime review remains separate.",
+  "prior_review": {
+    "path": "deliveries/2026-10-06/s2-evidence/runtime-review.json",
+    "sha256": "df773bf93ef9a96f4396b954bd8f35026fa7719d23b985902be5bb9f304a4df5",
+    "overwritten": false
+  },
+  "remaining_confirmed_findings": [],
+  "closed_findings": [
+    {
+      "id": "S2A_SMOKE_OPTIMIZATION_ASSERT",
+      "severity": "P2",
+      "trigger": "python -O or PYTHONOPTIMIZE removes assertion-only HTTP acceptance checks",
+      "original_effect": "Offline fake HTTP with anonymous/forged=200, mismatched run, EVT stage and approved receipt still wrote evidence and exited zero.",
+      "fix": "All smoke acceptance checks now use explicit if/SystemExit; collector uses explicit if/RuntimeError.",
+      "fresh_verification": {
+        "driver": "OFFLINE_FAKE_HTTP; fake task token only; no actual HTTP/identity access",
+        "python_optimized": true,
+        "bad_http_rejected": true,
+        "reason": "AUTHENTICATION_SMOKE_FAILED",
+        "evidence_written": false
+      },
+      "verified": true
+    },
+    {
+      "id": "S2A_MCP_WITNESS_SEMANTICS",
+      "severity": "P2",
+      "trigger": "Valid self-hashed transcript with response preceding request, unsolicited response, or invalid JSON-RPC request/response/notification field combinations",
+      "original_effect": "Helper could still label malformed witness RECORDED. No Gate or tool permission escalation was found.",
+      "fix": "Responses must match a previously sent unanswered request; notification/request/response fields are mutually constrained; final response-ID set exactly matches three request IDs.",
+      "fresh_verification": {
+        "archived_positive_fixtures": [
+          "pass",
+          "blocked",
+          "unknown",
+          "timeout"
+        ],
+        "valid_hash_negative_regressions": [
+          "response_before_request",
+          "unrequested_response",
+          "notification_id",
+          "request_result",
+          "response_method"
+        ],
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 0.18,
+        "driver": "OFFLINE_ARCHIVED_REAL_RECEIPTS; no new protocol execution"
+      },
+      "verified": true
+    }
+  ],
+  "context_revision_verification": {
+    "current_revision": "analysis-context-v2-mcp-witness",
+    "revision_in_snapshot_and_material_hash": true,
+    "old_revision_read": "ANALYSIS_CONTEXT_CHANGED",
+    "driver": "OFFLINE_DIRECT_REVISION_CHECK_NO_DB",
+    "archived_old_reports_retained": true
+  },
+  "script_boundary_review": [
+    "Starter binds the existing DEV API only on fixed loopback 8769; does not stop another listening process and failure terminates only its own spawned child.",
+    "Starter requires task-owned runtime directory; log/PID opens use O_NOFOLLOW and requested mode0600.",
+    "HTTP smoke uses fixed loopback, trust_env=False, read-only GETs, generated local identity and no model or business dispatch.",
+    "Collector verifies current source-authorized persistent snapshots, output and audit hashes, fixed model metadata and pending business authority with explicit checks; semantic quality remains NOT_FULLY_ACCEPTED.",
+    "New evidence paths refuse existing target paths; old reports and the first full review are not overwritten."
+  ],
+  "limits": [
+    "RECORDED means validated transcript activity; it does not prove sandbox safety, hardware certification, a successful Gate or human approval.",
+    "Actual Root-owned three-case model traces and PostgreSQL/Docker checks are separate evidence; this reviewer did not run inference, Docker or a PostgreSQL live probe.",
+    "Root reported PASS analysis COMPLETE and blocked/unknown analyses INCOMPLETE with four valid calls each; this report does not independently claim full semantic acceptance.",
+    "Observed unsupported PASS claim Unknown evidence status remains a model quality failure; schema/citation validity does not prove claim correctness.",
+    "No SRE, embedding, external API/write, production or arbitrary generated-code scope is added by this review."
+  ],
+  "reviewed_files": [
+    {
+      "path": "src/forgeflow/analysis_context.py",
+      "sha256": "462dabb070b9fe0c290f7f2573d7784f49d579a583780eec2c6af820d695e6aa"
+    },
+    {
+      "path": "tests/test_analysis_mcp_projection.py",
+      "sha256": "cc9e7de8856854a74c83d9a516d14e65ade943d7a26df6eedcac26642ddf199a"
+    },
+    {
+      "path": "scripts/start_analysis_api.py",
+      "sha256": "a086e9d05db965cc9aa444513a63c3893513a6cbec2e79183322c9959ff372e1"
+    },
+    {
+      "path": "scripts/analysis_http_smoke.py",
+      "sha256": "a521ec1510613e3b6b3826188c6e644b2cd555eedcb8447c17850f65ba510578"
+    },
+    {
+      "path": "scripts/analysis_collect_evidence.py",
+      "sha256": "72006556a474baa056cc09ed6ca26c5e618d14491bd5b860552f67dc08200210"
+    }
+  ]
+}

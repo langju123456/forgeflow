@@ -1,0 +1,154 @@
+{
+  "status": "FROZEN_EVALUATOR_ENVELOPE_MISMATCH_CONFIRMED",
+  "model_calls_added": 0,
+  "original_result_retained": "8 PASS / 5 FAIL",
+  "complete_original_case_count": 12,
+  "complete_original_scenario_count": 13,
+  "checks": [
+    {
+      "scenario": "M01-blocked",
+      "call_id": "1cabd9a3-c3d2-4a40-93dc-0989d1ce9ae1",
+      "actual_payload_sha256": "15cfe6bb47c5ee819096e3c6926ba71cb4515ceebad0bb5970c8a018cf0ded4a",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01-blocked",
+      "call_id": "753827b8-fdb0-4ead-a810-6487e1fe0cf3",
+      "actual_payload_sha256": "5b656f6a740de73c157f31857761b4c60607996b007d184fd9c4009d512387d6",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01-blocked",
+      "call_id": "85207f02-1ada-44c8-a10e-cb388689d1fc",
+      "actual_payload_sha256": "4fbd73fc9fe76e7294cb64d9b19180b7532ddba18b129f61dd7d37996c2a04e3",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01-blocked",
+      "call_id": "7e13313a-0db8-4041-8ed8-645043d5b19c",
+      "actual_payload_sha256": "5e95c74735e017d27f5637028f2850cd5a048362616225e5cff82e8abdcab4e2",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01",
+      "call_id": "0064c4f2-ec86-4079-9c61-76aed1449021",
+      "actual_payload_sha256": "dfa558e55b07e7bfdc09dfba8df07c11ab8712bf522532e274293fb8b64d6a6e",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01",
+      "call_id": "1b9a70a2-eaf5-4ff7-b3ab-8ef2b0a2079b",
+      "actual_payload_sha256": "801766e2aa563d1d4ae7ff510f1a1df40f51db05baa3f4ee10fb60e3c99d586f",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01",
+      "call_id": "d95133ec-4b84-4d24-8951-7f5f9cc66a67",
+      "actual_payload_sha256": "9bd1ad8ecb645312e45b657a394e858eb207b747660c9e85b49f7d9d9ba76135",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M01",
+      "call_id": "cbb8796d-ef5f-4029-9405-e67fba71db32",
+      "actual_payload_sha256": "51aed42598eaeed714d114d4052203cbacade1161453f41ec6c1f3685b05c8be",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M02",
+      "call_id": "e4f65087-54b8-4e86-bb77-68868d87425e",
+      "actual_payload_sha256": "a614037787c8467159db16b8121d4183b87336ca548e1bb41ae59aee89c0ce34",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M02",
+      "call_id": "85aa65e4-b874-4628-bcbf-bcd791f55c19",
+      "actual_payload_sha256": "3a9c63575a036f6314ec4115c51bfcb48dc6ad0efbc4048b7faa399029a9014d",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M02",
+      "call_id": "7224920f-d017-457b-a361-136b71b8df40",
+      "actual_payload_sha256": "3c7d35bb36c11f1ff13d1dde794b0c99e493d1b2bea511719fc4c1e14cfdac08",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M02",
+      "call_id": "182ccb04-e784-41ed-9f2b-95fbf041cfea",
+      "actual_payload_sha256": "826bb1c84df910947e51c040653d132c145a1a49b8a40425fd695d53ec68a35a",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M03",
+      "call_id": "75806101-5c35-4ef8-a167-a9d34874e16d",
+      "actual_payload_sha256": "b349ca15d184a6d0fb65c10512d1360f9a8499db7f05cf7619ba02b4af61091d",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M03",
+      "call_id": "072ea30d-77e1-44a8-a344-a019eb5d66cc",
+      "actual_payload_sha256": "2cc6883862865a580b28f448ea8ffe366a49d35b934f93933f7ac813959dc512",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M03",
+      "call_id": "c8215903-7d33-43a2-b0a0-fedac4a517e2",
+      "actual_payload_sha256": "deb3edea2dc5eeb84613922ee4bc6e0cf942c7105faef86b0aec9ef9c7776da6",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M03",
+      "call_id": "c84bab20-6c99-4946-b64b-a757e663eefd",
+      "actual_payload_sha256": "a7efa57c40f3ac5ca7e2596ad625a4df3e9dc6f0b1034e152bba0c406800df53",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M04",
+      "call_id": "87f7c3a7-5295-452d-9793-b2410e17cdfb",
+      "actual_payload_sha256": "fe2da5cdd1fe50af45ce31f5c8da2bbc60f148dd9b46ad46d6b0cb4cd8417fc5",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M04",
+      "call_id": "47436859-1c0f-434d-9faa-fe21ad38f165",
+      "actual_payload_sha256": "39a94e2164fdb2ac69c2657cc6cf6d2b672bfcbdb7e25c06f99c0ad97c82adaa",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M04",
+      "call_id": "a375cf72-e279-4e5a-9be5-9c2c45332abe",
+      "actual_payload_sha256": "3b3e9ca093936176c472a2b2186d78e7b3ab35bf7f2e642437d98425005567cc",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    },
+    {
+      "scenario": "M04",
+      "call_id": "d3476276-851f-4add-8e9c-fb38e1acfbd3",
+      "actual_payload_sha256": "0c33c811363d86ab03ce3a99a625a1af619f3aa7425faacfaa7109e5b1d56bb7",
+      "frozen_flattened_grader_matches": false,
+      "nested_persistence_contract_matches": true
+    }
+  ],
+  "source_hashes": {
+    "scripts/s2c_evaluate.py": "5e07044d7815c8c8f73a00544af26a38380d675cd98c5558f8870c6417d443c6",
+    "src/forgeflow/grounded_store.py": "2433e58df0cf4158db1b0a86af488809be17651d53cbeda6e91d87635ed03104"
+  },
+  "correction": "New separately reviewed grader must use nested typed canonical envelope for all five chains; no runtime, model response, golden answer or original experiment mutation."
+}

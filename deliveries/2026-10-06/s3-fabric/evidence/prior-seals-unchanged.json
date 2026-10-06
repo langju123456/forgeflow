@@ -1,0 +1,26 @@
+[
+  {
+    "path": "deliveries/2026-10-06/s2c-fixes/manifest.json",
+    "sha256": "8db84d5b5d1ef87316b825df27922d97e9fd98b7011d9fbbd339d81ff32565a5",
+    "entries_verified": 110,
+    "status": "UNCHANGED"
+  },
+  {
+    "path": "deliveries/2026-10-06/s3-sre/manifest.json",
+    "sha256": "e2ca6aa9e231adb5d96d93935953d7399037c7ec3f18d9efa6ed12702961c932",
+    "entries_verified": 16,
+    "status": "UNCHANGED"
+  },
+  {
+    "path": "deliveries/2026-10-06/s3-domain/manifest.json",
+    "sha256": "916352798c0fd4ef8e843f467219cc7d053a1ea7fd4f8a426431c0ec2ccd9358",
+    "entries_verified": 43,
+    "status": "UNCHANGED"
+  },
+  {
+    "path": "deliveries/2026-10-06/s3-evt/manifest.json",
+    "sha256": "61b2dc00ca416bde2b721345ff827663167894210de2eb631b9ff6b14a7f903d",
+    "entries_verified": 45,
+    "status": "UNCHANGED"
+  }
+]

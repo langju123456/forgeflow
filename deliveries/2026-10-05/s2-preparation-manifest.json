@@ -1,0 +1,200 @@
+{
+  "schema": "FORGEFLOW_S2_PREPARATION_SNAPSHOT_V1",
+  "recorded_at": "2026-10-05T17:19:28.188356+00:00",
+  "status": "PREPARATION_COMPLETE_MODEL_EMBEDDING_NOT_RUN",
+  "s1_manifest_sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+  "s1_inventory_unchanged_entries": 95,
+  "files": [
+    {
+      "path": "deliveries/2026-10-05/S2-PREPARATION.md",
+      "bytes": 7145,
+      "sha256": "876ac45ca420dfd217970ad265b36b4600df0a40a05bb9f72de2bd8ebcdb77fe"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/01-integration-contract.md",
+      "bytes": 24610,
+      "sha256": "27bf9dbd2836ff196e91c6e1dbe944773cd91cca63c2c688e55144c5ed9437c8"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/02-model-decision.md",
+      "bytes": 7183,
+      "sha256": "e3158f4c3116c47a90e39ad34e943d96414ddb759d96769a6642df58f6800485"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/README.md",
+      "bytes": 4669,
+      "sha256": "e321df22c17eb0d77d977aa6199315b238f9dce51e813487ec42c850fbafa0df"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/evaluation/README.md",
+      "bytes": 4050,
+      "sha256": "afa6478edb4f4ad7ba7024cd34ecd0f88928b549c23b4d4208f5e87068e45d0a"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/evaluation/RESULTS.md",
+      "bytes": 3691,
+      "sha256": "a2575eb9115340789c19461b4d473893c287bb59fa29f724ddcdffc8d6f5917c"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/evaluation/protocol.md",
+      "bytes": 5814,
+      "sha256": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/index.json",
+      "bytes": 2570,
+      "sha256": "c893f62d1c7e2e0c8b477169fef05a9a201b9910c70a7edab98f6e5de362d0f8"
+    },
+    {
+      "path": "deliveries/2026-10-05/s2-preparation-docs/model-evaluation/README.md",
+      "bytes": 8241,
+      "sha256": "52fb786ca6426b7b77600b3f769709cc69b33acb0527b45ad2edfc60b01c4851"
+    },
+    {
+      "path": "preparation/s2/01-integration-contract.md",
+      "bytes": 24586,
+      "sha256": "0e613595b4a869a399beb828d61937a99e6b6cc6a96b670b54574ddcd7b17e30"
+    },
+    {
+      "path": "preparation/s2/02-model-decision.md",
+      "bytes": 7159,
+      "sha256": "7bc72dbe397607bd2d63d20d127e075a767430c6ffe2c9ffbd677e1e25b4062f"
+    },
+    {
+      "path": "preparation/s2/README.md",
+      "bytes": 4622,
+      "sha256": "9ae01434a0c9d53cf4238dc7c51bfe9a6d2fc60ea9d9881d3b5c7ac54d0683bd"
+    },
+    {
+      "path": "preparation/s2/decision-proposal.json",
+      "bytes": 1723,
+      "sha256": "c18354e91cae15833b8c5e4470a580ff9128a89076aaecdb71c01296251239d8"
+    },
+    {
+      "path": "preparation/s2/evaluation/README.md",
+      "bytes": 3892,
+      "sha256": "b0bd7565df2eae32e3572b6f02d317b78412991a4ee43031b54e01640618747e"
+    },
+    {
+      "path": "preparation/s2/evaluation/RESULTS.md",
+      "bytes": 3615,
+      "sha256": "f1b41d529d47bf207b6b23695ceadc2fb3cc6630761ffeaebc843e276dbe74b0"
+    },
+    {
+      "path": "preparation/s2/evaluation/dataset.json",
+      "bytes": 41132,
+      "sha256": "2d559eb4a66bcfbe2202142426bff8cb69222c635c59ed51aefcec24b0509ee3"
+    },
+    {
+      "path": "preparation/s2/evaluation/evaluator.py",
+      "bytes": 26966,
+      "sha256": "e23898ac53600a372cacd4038c45347251a7f605785e6c65b774de6cd83b8fc8"
+    },
+    {
+      "path": "preparation/s2/evaluation/freeze.json",
+      "bytes": 1271,
+      "sha256": "4b31cf95cdd0b2fbe5b63f706d7fb5b5db3da0aa913ada875ebc120c5785c8f5"
+    },
+    {
+      "path": "preparation/s2/evaluation/protocol.md",
+      "bytes": 5814,
+      "sha256": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b"
+    },
+    {
+      "path": "preparation/s2/evaluation/run_baseline.py",
+      "bytes": 1463,
+      "sha256": "90567994d2670ef755bf1680fb67df9f111c3492efe915b5ce5f478c262f2201"
+    },
+    {
+      "path": "preparation/s2/evaluation/runs/20261005T170825-lexical-v1-891375a5/questions.jsonl",
+      "bytes": 66708,
+      "sha256": "e0c9d3ddd018875c24c9fb1a99da5b3cd1baf4cf7ff9073a0d94001cf3deef60"
+    },
+    {
+      "path": "preparation/s2/evaluation/runs/20261005T170825-lexical-v1-891375a5/report.json",
+      "bytes": 100373,
+      "sha256": "b571c323728c46c2084db500e593d90f5786fe7042b4f124d12d47b7f2ed86ba"
+    },
+    {
+      "path": "preparation/s2/evaluation/test_evaluator.py",
+      "bytes": 11373,
+      "sha256": "266bde33c0a4da809ae75e960ae813a42aeba8adcddabdcfcafb22b2ee9ad724"
+    },
+    {
+      "path": "preparation/s2/evaluation/validation.xml",
+      "bytes": 3356,
+      "sha256": "0402e111ecc92e7aeacd4e6a2bd97efc19a54013000abf59ac986db44930e4be"
+    },
+    {
+      "path": "preparation/s2/evaluation/write_dataset.py",
+      "bytes": 14461,
+      "sha256": "ea8d822826104bb2471f3438ef6601e74bc05350f1d299fdce19508c0f68bb89"
+    },
+    {
+      "path": "preparation/s2/machine-readiness.json",
+      "bytes": 835,
+      "sha256": "cc4a96cb1db35fd1e9bed40fb880798357ab842db2f2a6d8ffb5e57c10cf10b6"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/README.md",
+      "bytes": 8241,
+      "sha256": "52fb786ca6426b7b77600b3f769709cc69b33acb0527b45ad2edfc60b01c4851"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/cases.json",
+      "bytes": 84389,
+      "sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/checkfixtures.py",
+      "bytes": 17273,
+      "sha256": "89c803a3ad039c265cbdfefac620916389859d4b8965e0ea0217ccfee37e8350"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/freeze.json",
+      "bytes": 2034,
+      "sha256": "2b565536dc985eb6dea45f96fdab6b53b5596938b017d02234a022754bdaa999"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/test_checkfixtures.py",
+      "bytes": 6492,
+      "sha256": "eb8fc8ed9f31ca09dcd173c4e99a2bf2ad137e9853a4267cc3d536b915649817"
+    },
+    {
+      "path": "preparation/s2/model-evaluation/validation-results.json",
+      "bytes": 1583,
+      "sha256": "9657464734bf4ce627c66b5dbd42d1eaf292647109b9faf9ed0135bac88ebb58"
+    },
+    {
+      "path": "preparation/s2/official-source-checks.json",
+      "bytes": 3748,
+      "sha256": "3b0c237a790ec449045d4fa4ef9947d25fef65a7848652c3632b22af925074aa"
+    },
+    {
+      "path": "preparation/s2/preparation-review.json",
+      "bytes": 1805,
+      "sha256": "9963d1536a47be4d853fac24ab1ca08e9d186c3dcb349e4866aaf39e3bb65997"
+    },
+    {
+      "path": "preparation/s2/validation.xml",
+      "bytes": 10213,
+      "sha256": "05c9e13ee1bfb7f020555f74a70f7166644ecad9899e9818ee4d0239257f3646"
+    },
+    {
+      "path": "preparation/s2/verification-summary.json",
+      "bytes": 7143,
+      "sha256": "f20790d150cf58ea4913517c866204813f5eb4972054eefd9721ca3fa21baa9a"
+    },
+    {
+      "path": "preparation/s2/verify_preparation_seal.py",
+      "bytes": 1417,
+      "sha256": "393e22707e5e1d620d8fe0628e58b61ed4086c3837f29a1ca890e33782abd93d"
+    },
+    {
+      "path": "preparation/s2/verify_s1_seal.py",
+      "bytes": 1013,
+      "sha256": "c4f0c04907be0598e85b7377f5992f0c4bee9c7e7f252071bd1e9ea76d88486a"
+    }
+  ],
+  "note": "Unique preparation source, frozen synthetic inputs/evaluation evidence, and seven readable document snapshots. No secrets/runtime DB/models/venv/cache/test scratch. Later authorized S2 implementation receives separate version/evidence; never rewrite S1 or this recorded snapshot to hide changes."
+}

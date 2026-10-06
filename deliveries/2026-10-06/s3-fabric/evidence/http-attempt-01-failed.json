@@ -1,0 +1,8 @@
+{
+  "provenance": "ACTUAL_HTTP_VERIFIER_FAILURE",
+  "phase": "receipt replay",
+  "observed_status": 422,
+  "cause": "Harness sent {scope: scope}; execute API expects direct Scope body",
+  "correction": "Send direct Scope body; implementation unchanged",
+  "new_effects": 0
+}

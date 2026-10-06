@@ -1,0 +1,121 @@
+{
+  "status": "REAL_POSTGRES_SRE_RECORDED_SOP_COMPLETED",
+  "cases": [
+    {
+      "scenario": "M01",
+      "run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+      "review_id": "0143345c-a8aa-4aee-b2c7-94a008fc3697",
+      "key": "s3-sre:M01:01",
+      "operational_readiness": "READY",
+      "technical_gate": "PASS",
+      "supervisor_handoff": "READY_FOR_HUMAN_REVIEW",
+      "human_approval_state": "PENDING",
+      "business_receipts": 0,
+      "recorded_source_hash": "0e08ea26f6281de2fda2a0426080de06cf9733e44f7121ff0c15d5d103017770",
+      "fresh_process_replay": "IDENTICAL",
+      "parent_and_events": "UNCHANGED",
+      "http_replay": "IDENTICAL"
+    },
+    {
+      "scenario": "M01-blocked",
+      "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+      "review_id": "c125c447-1155-412e-86c5-bac06319d16f",
+      "key": "s3-sre:M01-blocked:01",
+      "operational_readiness": "READY",
+      "technical_gate": "BLOCKED",
+      "supervisor_handoff": "NEEDS_TECHNICAL_EVIDENCE",
+      "human_approval_state": "PENDING",
+      "business_receipts": 0,
+      "recorded_source_hash": "d980e17104ab95d6fafa4d9c801faf8d24049da4f9401150251e1c1b81d83d40",
+      "fresh_process_replay": "IDENTICAL",
+      "parent_and_events": "UNCHANGED",
+      "http_replay": "IDENTICAL"
+    },
+    {
+      "scenario": "M02",
+      "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+      "review_id": "64059820-9477-4b53-b289-3dee3b88b558",
+      "key": "s3-sre:M02:01",
+      "operational_readiness": "READY",
+      "technical_gate": "UNKNOWN",
+      "supervisor_handoff": "NEEDS_TECHNICAL_EVIDENCE",
+      "human_approval_state": "PENDING",
+      "business_receipts": 0,
+      "recorded_source_hash": "ba9a28a695c77434eaa37bb9f11a819da5f28f44f4bf8aa101c5e0fbb4a374c8",
+      "fresh_process_replay": "IDENTICAL",
+      "parent_and_events": "UNCHANGED",
+      "http_replay": "IDENTICAL"
+    },
+    {
+      "scenario": "M03",
+      "run_id": "02f831a1-c438-400c-9184-5cfb61779998",
+      "review_id": "f62d4aa3-2439-433f-a124-310ac8ea6fc9",
+      "key": "s3-sre:M03:01",
+      "operational_readiness": "READY",
+      "technical_gate": "UNKNOWN",
+      "supervisor_handoff": "NEEDS_TECHNICAL_EVIDENCE",
+      "human_approval_state": "PENDING",
+      "business_receipts": 0,
+      "recorded_source_hash": "f1544a1fd212ef3c17585f8b8ef06d8ab3afba79855e0a05481499cdc0f7d964",
+      "fresh_process_replay": "IDENTICAL",
+      "parent_and_events": "UNCHANGED",
+      "http_replay": "IDENTICAL"
+    },
+    {
+      "scenario": "M04",
+      "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+      "review_id": "bc45ff65-b379-44bb-b064-42f1834cc15b",
+      "key": "s3-sre:M04:01",
+      "operational_readiness": "READY",
+      "technical_gate": "PASS",
+      "supervisor_handoff": "READY_FOR_HUMAN_REVIEW",
+      "human_approval_state": "PENDING",
+      "business_receipts": 0,
+      "recorded_source_hash": "80661a3dd6d898d487d9c5ac55b0be8fb65e6bac1c0e3d228a7f72ada515ce80",
+      "fresh_process_replay": "IDENTICAL",
+      "parent_and_events": "UNCHANGED",
+      "http_replay": "IDENTICAL"
+    }
+  ],
+  "new_model_calls": 0,
+  "new_sandbox_executions": 0,
+  "external_business_writes": false,
+  "api": {
+    "url": "http://127.0.0.1:8772/docs",
+    "pid": 60055,
+    "health": {
+      "identity": "DEV_ONLY",
+      "role": "sre",
+      "revision": "sre-recorded-operations-v1",
+      "execution": "DETERMINISTIC_SOP",
+      "observation": "RECORDED_RECEIPTS_NOT_LIVE_PROBE",
+      "model_calls": 0,
+      "automatic_business_actions": false,
+      "process_id": 60055
+    },
+    "unauthenticated": 401,
+    "foreign_tenant": 404
+  },
+  "foreign_keys": [
+    {
+      "name": "sre_reviews_tenant_id_workspace_id_project_id_run_id_fkey",
+      "constrained_columns": [
+        "tenant_id",
+        "workspace_id",
+        "project_id",
+        "run_id"
+      ],
+      "referred_schema": null,
+      "referred_table": "runs",
+      "referred_columns": [
+        "tenant_id",
+        "workspace_id",
+        "project_id",
+        "id"
+      ],
+      "options": {},
+      "comment": null
+    }
+  ],
+  "observation": "Historical actual sandbox/MCP receipts; no new live infrastructure probe."
+}

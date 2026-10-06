@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-10-05T16:47:53.247358+00:00",
+  "hardware": {
+    "Chip": "Apple M4",
+    "Total Number of Cores": "10 (4 Performance and 6 Efficiency)",
+    "Memory": "24 GB"
+  },
+  "free_disk_gib": 143.5,
+  "ollama_binary": "/opt/homebrew/bin/ollama",
+  "endpoint": "http://127.0.0.1:11434",
+  "endpoint_status": "READ_ONLY_METADATA_AVAILABLE",
+  "installed_models": [
+    {
+      "name": "qwen3:8b",
+      "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "size": 5225388164
+    },
+    {
+      "name": "qwen2:7b",
+      "digest": "dd314f039b9d54d5553002c906ce50c9fe7242f73f0680abd04f01c8ecbd2755",
+      "size": 4431401491
+    }
+  ],
+  "inference_called": false,
+  "downloads_started": false,
+  "cloud_mode_verified": false,
+  "s1_evidence_modified": false,
+  "ollama_version": "0.32.1"
+}

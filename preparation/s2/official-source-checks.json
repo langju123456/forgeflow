@@ -1,0 +1,87 @@
+{
+  "checked_at": "2026-10-05T16:53:00.857356+00:00",
+  "method": "official web pages opened/read; no full copyrighted-page copy",
+  "sources": [
+    {
+      "id": "ollama-qwen3-8b",
+      "url": "https://ollama.com/library/qwen3:8b",
+      "verified_note": "Library metadata: 5.2GB Q4_K_M; prefix500a1f067a9f; not a local inference benchmark."
+    },
+    {
+      "id": "qwen3-official-card",
+      "url": "https://huggingface.co/Qwen/Qwen3-8B",
+      "verified_note": "Upstream license Apache-2.0; inference examples are not automatically adopted."
+    },
+    {
+      "id": "ollama-embedding",
+      "url": "https://ollama.com/library/qwen3-embedding:0.6b",
+      "verified_note": "Library metadata: 639MB Q8_0. Not installed or downloaded."
+    },
+    {
+      "id": "qwen-embedding-card",
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B",
+      "verified_note": "Upstream Apache-2.0, multilingual, up to1024 dimensions; query instruction matters."
+    },
+    {
+      "id": "ollama-chat",
+      "url": "https://docs.ollama.com/api/chat",
+      "verified_note": "tools, JSON schema format, think, stream, keep_alive. Installed-version conformance pending."
+    },
+    {
+      "id": "ollama-embed",
+      "url": "https://docs.ollama.com/api/embed",
+      "verified_note": "Embedding dimensions; truncate defaults true. Proposal sets truncate false and verifies shape."
+    },
+    {
+      "id": "ollama-tool-calling",
+      "url": "https://docs.ollama.com/capabilities/tool-calling",
+      "verified_note": "qwen3 examples; proposal validation/enforcement stays in ForgeFlow."
+    },
+    {
+      "id": "ollama-structured-output",
+      "url": "https://docs.ollama.com/capabilities/structured-outputs",
+      "verified_note": "JSON schema local output; current cloud mode does not support structured outputs."
+    },
+    {
+      "id": "ollama-faq",
+      "url": "https://docs.ollama.com/faq",
+      "verified_note": "Default loopback11434; model location/env settings and local-only cloud disable documented, not changed."
+    },
+    {
+      "id": "ollama-tags",
+      "url": "https://docs.ollama.com/api/tags",
+      "verified_note": "Read-only installed model names/digests/sizes; metadata GET does not prove inference."
+    },
+    {
+      "id": "openai-gpt5mini",
+      "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+      "verified_note": "Current page marked Deprecated; do not start new selection from remembered old price."
+    },
+    {
+      "id": "openai-terra",
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+      "verified_note": "Standard2USD input/12USD output per million; structured/function support; only alias listed. No entitlement verified."
+    },
+    {
+      "id": "openai-embedding",
+      "url": "https://developers.openai.com/api/docs/models/text-embedding-3-small",
+      "verified_note": "Public price0.02USD per million tokens; no credential or API call."
+    },
+    {
+      "id": "openai-embedding-guide",
+      "url": "https://developers.openai.com/api/docs/guides/embeddings",
+      "verified_note": "Default1536 dimensions; dimensions parameter; actually check returned shape before storing."
+    },
+    {
+      "id": "openai-structured",
+      "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+      "verified_note": "Refusal and incomplete output need explicit handling; schema compliance is not source truth."
+    },
+    {
+      "id": "openai-data",
+      "url": "https://developers.openai.com/api/docs/guides/your-data",
+      "verified_note": "Review endpoint data controls before approved external data export; no customer data sent."
+    }
+  ],
+  "scope": "static selection only, not account/model execution conformance"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "S2_DECISION_PROPOSAL_ONLY_V1",
+  "activation": "PENDING_USER_CHOICE",
+  "calls_authorized": false,
+  "downloads_authorized": false,
+  "credentials_configured": false,
+  "recommended_local": {
+    "provider": "ollama_local",
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "qwen3:8b",
+    "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "embedding_digest": null,
+    "embedding_dimension_proposed": 1024,
+    "concurrent_calls_proposed": 1,
+    "context_tokens_proposed": 8192,
+    "max_output_tokens_proposed": 1024,
+    "call_timeout_seconds_proposed": 60,
+    "run_timeout_seconds_proposed": 180,
+    "cloud_fallback": false,
+    "only_registered_fixed_templates": true,
+    "analysis_application_limits_proposed": {
+      "max_calls": 4,
+      "input_tokens_per_call": 3500,
+      "output_tokens_per_call": 800,
+      "remaining_run_deadline_enforced": true,
+      "first_slice": "Supervisor+PM analysis of S1 immutable hardware facts; hardware remains deterministic"
+    }
+  },
+  "optional_api": {
+    "provider": "openai",
+    "model": "gpt-5.6-terra",
+    "dated_snapshot": "NOT_LISTED_IN_FETCHED_OFFICIAL_PAGE",
+    "embedding_model": "text-embedding-3-small",
+    "embedding_dimension_default": 1536,
+    "budget_total_usd_proposed": 5,
+    "budget_per_run_usd_proposed": 0.1,
+    "extra_hosted_tools": false
+  },
+  "data_export_grant": "NONE; propose SYNTHETIC_ONLY",
+  "unapproved": [
+    "model inference",
+    "embedding download/inference",
+    "paid API",
+    "private credentials",
+    "global daemon/network changes",
+    "generated code",
+    "external issue/office write",
+    "deployment"
+  ]
+}

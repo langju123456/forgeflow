@@ -1,0 +1,145 @@
+{
+  "id": "880d69bb-60ad-44d5-862d-24d4fc9c984b",
+  "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+  "created_by": "local-owner",
+  "idempotency_key": "s3-domain:M02:bom-mismatch:01",
+  "fixture_id": "bom-mismatch",
+  "request_hash": "dd31b7cb8bc98309c5c9346c67c2bb136a5f9fa5e9d9b2a710d927a23103cd0c",
+  "source_hash": "cad321ae71dd0745fa7a6e5d2645c6e6dd47f7251aab58a97d47cb9403f73273",
+  "report_json": {
+    "control_plane_revision": "domain-source-contract-v1",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+    "source_hash": "cad321ae71dd0745fa7a6e5d2645c6e6dd47f7251aab58a97d47cb9403f73273",
+    "fixture_id": "bom-mismatch",
+    "synthetic": true,
+    "observation": "SOURCE_XML_AND_RECORDED_HARDWARE_NOT_APK_OR_DEVICE",
+    "sources": [
+      {
+        "id": "aurora-domain-contract",
+        "version": "domain-artifacts-v1",
+        "sha256": "205732c990ca721ffc80082ad7f7c5f15e9d2f792fa27e05c54d24549a8e646d",
+        "synthetic": true
+      },
+      {
+        "id": "aurora-domain-bom-mismatch",
+        "version": "domain-artifacts-v1",
+        "sha256": "d80b322c3905cb172d889699e5f468bc6a8d18595395051863313c71ca484d53",
+        "synthetic": true
+      }
+    ],
+    "skill_hashes": {
+      "architect": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+      "android": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4"
+    },
+    "technical_gate": "UNKNOWN",
+    "gate_integration": "SUPPLEMENTAL_NOT_ENFORCED_BY_EXISTING_EVT_GATE",
+    "human_approval_required": true,
+    "business_actions_executed_by_sop": false,
+    "revision": "domain-source-review-v1",
+    "parent_source_hash": "ba9a28a695c77434eaa37bb9f11a819da5f28f44f4bf8aa101c5e0fbb4a374c8",
+    "artifact_hash": "09177e09969b7f1a7f2f4269db48a12afdce86673d8d9afe1bcf5875bfe2836e",
+    "architect": {
+      "role": "architect",
+      "authority": "DETERMINISTIC_SOP",
+      "skill_hash": "acde2bdc0224562da48851aefec8ea018e22c577d6abcf820bedd745e84f6c1c",
+      "checks": [
+        {
+          "id": "parent_artifact_binding",
+          "status": "PASS",
+          "reason": "BOUND_PARENT_ARTIFACT",
+          "source_pointer": "/artifacts/result.json"
+        },
+        {
+          "id": "hardware_android_bom",
+          "status": "FAIL",
+          "reason": "BOM_CONFLICT",
+          "source_pointer": "/artifacts/result.json/manifest/metrics/bom_revision -> /domain-sources/aurora-domain-bom-mismatch/manifest/application/meta-data[@android:name='aurora.bom.revision'] -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "interface_contract",
+          "status": "PASS",
+          "reason": "INTERFACE_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-bom-mismatch/manifest -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "exposure_contract",
+          "status": "PASS",
+          "reason": "EXPOSURE_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-bom-mismatch/manifest/application/activity/@android:exported -> /domain-sources/aurora-domain-contract"
+        }
+      ],
+      "static_status": "FAIL",
+      "readiness": "BLOCKED"
+    },
+    "android": {
+      "role": "android",
+      "authority": "DETERMINISTIC_SOP",
+      "skill_hash": "ae1a58f469d32d5d7cc7dee41671676d403a919104b8fb3507cc06dbd82a0cb4",
+      "checks": [
+        {
+          "id": "manifest_parse",
+          "status": "PASS",
+          "reason": "BOUNDED_XML_PARSED",
+          "source_pointer": "/domain-sources/aurora-domain-bom-mismatch/manifest"
+        },
+        {
+          "id": "package_sdk",
+          "status": "PASS",
+          "reason": "PACKAGE_SDK_ALIGNED",
+          "source_pointer": "/domain-sources/aurora-domain-bom-mismatch/manifest/uses-sdk"
+        },
+        {
+          "id": "application_contract",
+          "status": "FAIL",
+          "reason": "APPLICATION_CONFLICT",
+          "source_pointer": "/domain-sources/aurora-domain-bom-mismatch/manifest/application -> /domain-sources/aurora-domain-contract"
+        },
+        {
+          "id": "build_device",
+          "status": "UNKNOWN",
+          "reason": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+          "source_pointer": "/android/build-device-receipts"
+        }
+      ],
+      "static_status": "FAIL",
+      "readiness": "BLOCKED",
+      "build_status": "NOT_RUN_NO_ANDROID_TOOLCHAIN"
+    },
+    "supervisor_handoff": "DOMAIN_CONFLICT",
+    "stage_transition": "NOT_EXECUTED"
+  },
+  "audit_json": {
+    "kind": "DOMAIN_SOP_COMPLETED",
+    "actor": "local-owner",
+    "scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+    "source_event_head": "66414345d4cbd21d41b673026a6effef7d1ccda7df9c32c65e16d173b0abc4cb",
+    "report_hash": "3cdbf3b71446f661d5b189e9753f993c36dbfb002cebd1cbf7ae3ef2b141483c",
+    "transport": "IN_PROCESS",
+    "model_calls": 0,
+    "allowed_tools": {
+      "architect": [
+        "domain.artifacts.read",
+        "execution.events.read",
+        "execution.receipts.read"
+      ],
+      "android": [
+        "domain.artifacts.read"
+      ]
+    }
+  },
+  "payload_hash": "61b57901914a2fe31dbc85ebaae9d8372d885cf8e2c5f1ef0d99a87738cdf5c5",
+  "created_at": "2026-10-06T08:13:13.222558+00:00",
+  "tenant_id": "synthetic-lab",
+  "workspace_id": "engineering",
+  "project_id": "aurora"
+}

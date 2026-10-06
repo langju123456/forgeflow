@@ -1,0 +1,146 @@
+{
+  "schema": "forgeflow-s2b-frozen-acceptance-summary-v1",
+  "frozen_cases": 12,
+  "frozen_scenarios": 13,
+  "case_file_sha256": "6c8d42a6c2b7e38542ae9bcacbd34b1a84d3e6ffba60ce973abdd2cb3d216e62",
+  "quality_scope": "CONSTRAINED_EVIDENCE_SELECTION_NOT_OPEN_ENDED_REASONING",
+  "current_application_revision": "grounded-selection-v2",
+  "current_real_model_calls": 19,
+  "current_structural_passes": 5,
+  "current_semantic_passes": 4,
+  "all_s2b_confirmed_model_calls": 36,
+  "automatic_retries": 0,
+  "frozen_acceptance_counts": {
+    "PASS": 11,
+    "PARTIAL": 1,
+    "FAIL": 1
+  },
+  "test_driver_fault_passes": 8,
+  "external_business_writes": false,
+  "known_gaps": [
+    "M03_DERIVED_OVERLAY_NOT_ACTUALLY_SANDBOX_CHECKED",
+    "M04_UNSUPPORTED_COMPLETION_STATUS_REJECTED"
+  ],
+  "historical_experiment": {
+    "path": "experiment-01",
+    "real_model_calls": 17,
+    "semantic_passes": 2,
+    "preserved": true
+  },
+  "results": [
+    {
+      "scenario_id": "M01",
+      "provenance": "REAL_LOCAL_MODEL",
+      "real_model_calls": 4,
+      "structural_validation": "PASS",
+      "semantic_validation": "PASS",
+      "model_quality_status": "PASS",
+      "full_frozen_gold_status": "PASS",
+      "analysis_state": "COMPLETE"
+    },
+    {
+      "scenario_id": "M01-blocked",
+      "provenance": "REAL_LOCAL_MODEL",
+      "real_model_calls": 4,
+      "structural_validation": "PASS",
+      "semantic_validation": "PASS",
+      "model_quality_status": "PASS",
+      "full_frozen_gold_status": "PASS",
+      "analysis_state": "INCOMPLETE"
+    },
+    {
+      "scenario_id": "M02",
+      "provenance": "REAL_LOCAL_MODEL",
+      "real_model_calls": 4,
+      "structural_validation": "PASS",
+      "semantic_validation": "PASS",
+      "model_quality_status": "PASS",
+      "full_frozen_gold_status": "PASS",
+      "analysis_state": "INCOMPLETE"
+    },
+    {
+      "scenario_id": "M03",
+      "provenance": "REAL_LOCAL_MODEL",
+      "real_model_calls": 4,
+      "structural_validation": "PASS",
+      "semantic_validation": "PASS",
+      "model_quality_status": "PASS",
+      "full_frozen_gold_status": "PARTIAL",
+      "analysis_state": "INCOMPLETE"
+    },
+    {
+      "scenario_id": "M04",
+      "provenance": "REAL_LOCAL_MODEL",
+      "real_model_calls": 3,
+      "structural_validation": "PASS",
+      "semantic_validation": "FAIL",
+      "model_quality_status": "FAIL",
+      "full_frozen_gold_status": "FAIL",
+      "analysis_state": "FAILED"
+    },
+    {
+      "scenario_id": "M05",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 0,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "DENIED"
+    },
+    {
+      "scenario_id": "M06",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 0,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "DENIED"
+    },
+    {
+      "scenario_id": "M07",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 1,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "OUTPUT_INVALID"
+    },
+    {
+      "scenario_id": "M08",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 1,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "REFUSED"
+    },
+    {
+      "scenario_id": "M09",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 1,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "OUTPUT_INVALID"
+    },
+    {
+      "scenario_id": "M10",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 1,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "OUTCOME_UNKNOWN"
+    },
+    {
+      "scenario_id": "M11",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 0,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "BUDGET_EXHAUSTED"
+    },
+    {
+      "scenario_id": "M12",
+      "provenance": "TEST_DRIVER",
+      "real_model_calls": 0,
+      "test_driver_dispatches": 1,
+      "full_frozen_gold_status": "PASS",
+      "boundary_outcome": "OUTCOME_UNKNOWN"
+    }
+  ]
+}

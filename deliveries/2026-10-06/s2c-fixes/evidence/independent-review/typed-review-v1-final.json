@@ -1,0 +1,33 @@
+{
+  "review": "Independent new canonical typed supplement review",
+  "recorded_at": "2026-10-06T07:18:32.923998+00:00",
+  "remaining_confirmed_P1_P2": [],
+  "closed_P2": {
+    "location": "scripts/s2c_typed_validate.py:200,229,273",
+    "trigger": "Evidence file changes after parsing and before later hash calculation",
+    "pre_fix_proof": "/tmp/forgeflow-s2c-typed-race-review-86id20mb/proof.json",
+    "post_fix_proof": "/tmp/forgeflow-s2c-typed-race-closure-ejslm4nu/proof.json",
+    "fix": "Capture parsed bytes and hash from same read, retain all input hashes, recheck before publishing any success output",
+    "closure": "SOURCE_EVIDENCE_CHANGED_DURING_REVIEW, no output directory"
+  },
+  "tests": {
+    "initial": "32 PASS; race missing",
+    "final": "34 PASS",
+    "xml": "/tmp/forgeflow-s2c-typed-independent-final.xml"
+  },
+  "sha256": {
+    "scripts/s2c_typed_validate.py": "c29fef6fc4cb06757e9f4eff1d192899f63312b9f836dbd597fbf46b56eb6014",
+    "tests/test_s2c_typed_validate.py": "1188a6d8f25ec02a2f78ba9b18a866936ca360b47f47debcb208aabc7f14ec32",
+    "scripts/s2c_evaluate.py": "5e07044d7815c8c8f73a00544af26a38380d675cd98c5558f8870c6417d443c6",
+    "scripts/s2c_live_evaluate.py": "21a87f87ccd240fae113660d658c209c58a78a7a00cac3740dbf220ff28afacc",
+    "tests/test_s2c_evaluate.py": "807c557e8a247b5dfe5d270e5dd68fb00ac4bcda5822a8e94472348011a2f239",
+    "tests/test_s2c_live_evaluate.py": "f50291e9418c9acf75a0ef3883db1f4fdb5ea1bc3bb8ef64c0947f101808ca5c"
+  },
+  "original_four_frozen_files_unchanged": true,
+  "limits": [
+    "Offline TEST_DRIVER fixtures only; no runtime, active experiment, model, network or Docker access",
+    "Review verifies typed catalog/input/assessment/import/source/raw/provenance/summary equality plus original frozen evaluator predicates; independent of general model reasoning quality",
+    "Supplement requires all five raw chains and original eight TEST_DRIVER fault rows, preserves 13 denominator, publishes separate posthoc verdicts without rewriting original results"
+  ],
+  "source_edits_by_reviewer": 0
+}

@@ -1,0 +1,35 @@
+{
+  "status": "PREPARATION_METHOD_REVIEW_CLOSED",
+  "recorded_at": "2026-10-05T17:18:34.602934+00:00",
+  "scope": "Fresh read-only review of retrieval evaluator methodology, frozen report, and model-evaluation input integrity; not provider/runtime/model quality acceptance.",
+  "reviewers": [
+    "/root/design_review",
+    "/root/context_skills/eval_protocol_review",
+    "/root/durable_store/eval_dataset_review"
+  ],
+  "confirmed_gaps_closed_before_first_retrieval": [
+    "Exact gold status deduplication",
+    "Freeze verification before and after search",
+    "Actual full-scope immutable citation origin rather than expected origin",
+    "CURRENT provenance metric separated from conflict-safe or Gate eligibility"
+  ],
+  "model_pre_run_revision_gaps_closed": [
+    "M03 overlay materialized into model-visible attributable context",
+    "BLOCKED named variant validated with the complete per-scenario checks",
+    "Explicit Supervisor/PM model-role allowlist",
+    "Per-phase trusted role envelopes and context identity",
+    "Gold citations and unknown fault usage/cost/reservation consistency"
+  ],
+  "review_read_lexical_run": "preparation/s2/evaluation/runs/20261005T170825-lexical-v1-891375a5/report.json",
+  "model_freeze_revision": 2,
+  "model_freeze_byte_sha256": "2b565536dc985eb6dea45f96fdab6b53b5596938b017d02234a022754bdaa999",
+  "remaining_preparation_method_blockers_confirmed": [],
+  "not_accepted_as_complete": [
+    "Actual LLM/embedding conformance or quality",
+    "Durable S2 call adapter, budget ledger or analysis storage",
+    "Actual system prompt/schema/provider/export/budget bundle",
+    "SRE source ACL/policy increment",
+    "Production, complete data security proof or full role/NPI coverage"
+  ],
+  "root_verification": "preparation/s2/verification-summary.json"
+}

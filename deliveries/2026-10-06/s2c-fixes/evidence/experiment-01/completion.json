@@ -1,0 +1,17 @@
+{
+  "ambiguous_dispatch_attempts": 0,
+  "automatic_retries": 0,
+  "case_count": 12,
+  "code_and_skills_unchanged": true,
+  "confirmed_model_calls": 20,
+  "executed_real_scenarios": 5,
+  "full_frozen_counts": {
+    "FAIL": 5,
+    "NOT_RUN": 0,
+    "PASS": 8
+  },
+  "scenario_count": 13,
+  "selection_passes": 0,
+  "server_state_passes": 5,
+  "status": "COMPLETED_WITH_REPORTED_RESULTS"
+}

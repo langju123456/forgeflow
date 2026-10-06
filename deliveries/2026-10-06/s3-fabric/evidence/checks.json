@@ -1,0 +1,114 @@
+{
+  "provenance": "ACTUAL_LOCAL_EXECUTION",
+  "approval_provenance": "TEST_DRIVER",
+  "original_before": {
+    "project": {
+      "current_stage": "PROTOTYPE",
+      "stage_revision": 0,
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "parents": {
+      "02f831a1-c438-400c-9184-5cfb61779998": "a54f523eb6c8e40ea84aa841a47266bc6efa56fe0514f5c2271cd186079b34ee",
+      "08d6ca27-13d8-4a62-95ca-c3c03184d5f4": "4c3aecb1ec3508d3f51e2227fbc2f6cc3e83f98668431681f8f34790f7070c5d",
+      "30d0e026-fadc-434a-8959-b4881c7ae680": "93bcd7704de693fdfbeaa7be8a5d8ee6bae5ed57b6079509698a4527d50a0401",
+      "338b59e5-294f-47f7-b0b0-21fe86594973": "0e225bf90763fd2b30b8d65347ebfa545ac1225f74d42b92d4578ecdcda66e7b",
+      "397512d5-fce3-419e-84b6-6997e15626bd": "5e2f181f34b6d7595abc83542f33c3cfb73f039e2c87acf07cc6ac2b041206d7",
+      "41b72762-808e-45dd-8ea8-07cd95304537": "e95fe49b5520b181e23855644a179ffcc0ca2961c7d757705d3bab788b83d577",
+      "4cdc9244-ce52-44cc-8ade-a78b841ba6bc": "4753a35a1023517a5ba181fcd6f1566baa7293786bbf07e20c2f957888a2bd00",
+      "55714dcd-79cd-48ac-a898-e13255472896": "7b2d68d40e23676e74694c7acceefc14ff84897a18982fba0861634cc6969c9b",
+      "5ba4460b-ca9c-4786-b3d1-100d4160ef52": "2e0a57a982e2f9c1228dbeae3ca16ad0eac9cbd822d6899df0a58a7c21b7f19c",
+      "627d36c6-ed60-444f-8c26-541a39fb452e": "3f92cdc8bb392abbde4ee57de912e385acf4072dbf78c1ed37266ab78bbce257",
+      "65d85a73-db28-4999-b23f-10128345103f": "82a6e73dd26fcc078d3b1b0cc840ae47417d7a1c810923333c45a09e0a6da56d",
+      "77e0f666-439a-4d90-8188-1217edcbb01c": "4f35ead36dd641e4ca4749f7393e1d0db61fe71f44acdefa2e493ae8fd7594cc",
+      "798fc9c2-1a4e-430a-ad54-2419751c9ba7": "f67303b7e3b858c25c1752594b7bf5fdcd159aaa717586188d869473cda7b678",
+      "885c6aca-4341-4021-b135-c5d25a1fefed": "5a8df725086db6d271f67b7e8e453f8e67d3a353674397d9e6ca7bc38d29185e",
+      "91fc3349-5da4-4bf2-b091-9a78b5722320": "75b3a15986f0b1cb7299b753a7cac4246b4f6bbe19eae9df34fcfaedbc319d63",
+      "97c71faa-d2ce-473b-a4a7-b75951d4d1d7": "739ec5a25b30046d0893db020f01cb0667e1e6c60b7dc0dda9c233c1c5fc5910",
+      "97da2a72-c5f9-41df-b764-022315f78f7b": "62733b2ce8526c93fdbab1bf0f32896776aa01b88752334576a8e7772752f9a1",
+      "d9ac612b-55e6-494a-a1c5-a44edc196692": "88ea23e9360d93db4fe177dbeeebac061d606ddeb1b855ff4d35539ea658f7fa",
+      "dfc2f671-4408-4935-9141-70358d12581f": "5ff57d2f34f56179c4535138fd59ff7aab363e95d1c62f7fdbb1437f3a043280",
+      "ed69696c-f9e1-4a91-8588-f1b552064770": "dafd734ee5008d4275054ec3e9ea0b5e70c90e3c63a81270cc49fa21efe36543",
+      "efc9e005-806a-4a01-b2b9-2e6b76a11852": "952d751b0373a28c723889e5e4a28480352c8ab2fba2a80bf01df02c87a713e8"
+    },
+    "evt_approvals_hash": "fade58780fde6a080ebf9d59aea214a72b97d74c5d9bfb2b047b0879b07a7f96",
+    "evt_approvals": [
+      {
+        "id": "36efe380-18c9-4d0a-8a9e-2b90d98be2a3",
+        "decision": "PENDING"
+      },
+      {
+        "id": "3aadc43b-af6e-4bdf-919c-3e40416f9555",
+        "decision": "PENDING"
+      }
+    ]
+  },
+  "cases": {
+    "pass": {
+      "run_id": "85b429cb-ca4b-4831-8172-116a1919b6f3",
+      "review_id": "ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "report_hash": "6463f5ca1f750817af9d0c77e5a7f7861b546de824476c51db4ba5006f14e1f6",
+      "flow_gate": "PASS",
+      "evt_gate": "UNKNOWN",
+      "execution_status": "SUCCEEDED",
+      "cleanup": "REMOVED",
+      "mcp_status": "SEE_RECORDED_TRANSCRIPT"
+    },
+    "unknown": {
+      "run_id": "92ef0ce1-079e-4ced-aa1e-350cca05ce2d",
+      "review_id": "3df3142f-47f5-44fc-afb2-af9ffb4045de",
+      "report_hash": "bfabb6a3014710933b4de327961e018e73841248d54ba0e3d5f647cb1e880e13",
+      "flow_gate": "UNKNOWN",
+      "evt_gate": "UNKNOWN",
+      "execution_status": "SUCCEEDED",
+      "cleanup": "REMOVED",
+      "mcp_status": "SEE_RECORDED_TRANSCRIPT"
+    }
+  },
+  "new_model_calls": 0,
+  "external_writes": 0,
+  "original_after": {
+    "project": {
+      "current_stage": "PROTOTYPE",
+      "stage_revision": 0,
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora"
+    },
+    "parents": {
+      "02f831a1-c438-400c-9184-5cfb61779998": "a54f523eb6c8e40ea84aa841a47266bc6efa56fe0514f5c2271cd186079b34ee",
+      "08d6ca27-13d8-4a62-95ca-c3c03184d5f4": "4c3aecb1ec3508d3f51e2227fbc2f6cc3e83f98668431681f8f34790f7070c5d",
+      "30d0e026-fadc-434a-8959-b4881c7ae680": "93bcd7704de693fdfbeaa7be8a5d8ee6bae5ed57b6079509698a4527d50a0401",
+      "338b59e5-294f-47f7-b0b0-21fe86594973": "0e225bf90763fd2b30b8d65347ebfa545ac1225f74d42b92d4578ecdcda66e7b",
+      "397512d5-fce3-419e-84b6-6997e15626bd": "5e2f181f34b6d7595abc83542f33c3cfb73f039e2c87acf07cc6ac2b041206d7",
+      "41b72762-808e-45dd-8ea8-07cd95304537": "e95fe49b5520b181e23855644a179ffcc0ca2961c7d757705d3bab788b83d577",
+      "4cdc9244-ce52-44cc-8ade-a78b841ba6bc": "4753a35a1023517a5ba181fcd6f1566baa7293786bbf07e20c2f957888a2bd00",
+      "55714dcd-79cd-48ac-a898-e13255472896": "7b2d68d40e23676e74694c7acceefc14ff84897a18982fba0861634cc6969c9b",
+      "5ba4460b-ca9c-4786-b3d1-100d4160ef52": "2e0a57a982e2f9c1228dbeae3ca16ad0eac9cbd822d6899df0a58a7c21b7f19c",
+      "627d36c6-ed60-444f-8c26-541a39fb452e": "3f92cdc8bb392abbde4ee57de912e385acf4072dbf78c1ed37266ab78bbce257",
+      "65d85a73-db28-4999-b23f-10128345103f": "82a6e73dd26fcc078d3b1b0cc840ae47417d7a1c810923333c45a09e0a6da56d",
+      "77e0f666-439a-4d90-8188-1217edcbb01c": "4f35ead36dd641e4ca4749f7393e1d0db61fe71f44acdefa2e493ae8fd7594cc",
+      "798fc9c2-1a4e-430a-ad54-2419751c9ba7": "f67303b7e3b858c25c1752594b7bf5fdcd159aaa717586188d869473cda7b678",
+      "885c6aca-4341-4021-b135-c5d25a1fefed": "5a8df725086db6d271f67b7e8e453f8e67d3a353674397d9e6ca7bc38d29185e",
+      "91fc3349-5da4-4bf2-b091-9a78b5722320": "75b3a15986f0b1cb7299b753a7cac4246b4f6bbe19eae9df34fcfaedbc319d63",
+      "97c71faa-d2ce-473b-a4a7-b75951d4d1d7": "739ec5a25b30046d0893db020f01cb0667e1e6c60b7dc0dda9c233c1c5fc5910",
+      "97da2a72-c5f9-41df-b764-022315f78f7b": "62733b2ce8526c93fdbab1bf0f32896776aa01b88752334576a8e7772752f9a1",
+      "d9ac612b-55e6-494a-a1c5-a44edc196692": "88ea23e9360d93db4fe177dbeeebac061d606ddeb1b855ff4d35539ea658f7fa",
+      "dfc2f671-4408-4935-9141-70358d12581f": "5ff57d2f34f56179c4535138fd59ff7aab363e95d1c62f7fdbb1437f3a043280",
+      "ed69696c-f9e1-4a91-8588-f1b552064770": "dafd734ee5008d4275054ec3e9ea0b5e70c90e3c63a81270cc49fa21efe36543",
+      "efc9e005-806a-4a01-b2b9-2e6b76a11852": "952d751b0373a28c723889e5e4a28480352c8ab2fba2a80bf01df02c87a713e8"
+    },
+    "evt_approvals_hash": "fade58780fde6a080ebf9d59aea214a72b97d74c5d9bfb2b047b0879b07a7f96",
+    "evt_approvals": [
+      {
+        "id": "36efe380-18c9-4d0a-8a9e-2b90d98be2a3",
+        "decision": "PENDING"
+      },
+      {
+        "id": "3aadc43b-af6e-4bdf-919c-3e40416f9555",
+        "decision": "PENDING"
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "review": "S2C independent read-only incremental review",
+  "recorded_at": "2026-10-06T07:07:56.429405+00:00",
+  "project_root": "/path/to/forgeflow",
+  "remaining_confirmed_P1_P2": [],
+  "closed_findings": [
+    {
+      "severity": "P1",
+      "boundary": "S2C typed internal report sharing",
+      "fix": "Exact GroundedReport type, re-derived server status, strict statusless selection and exact projection comparison",
+      "verification": "71 core tests; 6 closure tests"
+    },
+    {
+      "severity": "P1",
+      "boundary": "M03 source search actual derived input",
+      "fix": "S2CContextBuilder._checked delegates separate _base authoritative verifier",
+      "verification": "M03 offline four VALIDATED calls, INCOMPLETE; replay test PASS"
+    },
+    {
+      "severity": "P2",
+      "boundary": "Evaluator exact dispatched injection",
+      "fix": "Call/freezes/replies bijection and completed dispatch filtering",
+      "verification": "unused injection negative PASS"
+    },
+    {
+      "severity": "P2",
+      "boundary": "Evaluator trusted input authority",
+      "fix": "Independent frozen dataset/base/overlay/clock/scope/provider witness derivation",
+      "verification": "five equal-three-way tamper negatives PASS"
+    },
+    {
+      "severity": "P2",
+      "boundary": "Evaluator typed source metadata",
+      "fix": "Strict frozen kind/status/integer classification plus exact full-source export witness and scope mapping",
+      "verification": "four source metadata and one broadened grant negatives PASS; five positive behaviors PASS"
+    },
+    {
+      "severity": "P2",
+      "boundary": "Evaluator local interruption ambiguity",
+      "fix": "Exact original OUTCOME_UNKNOWN reply allowed without invented transport; stop further cases; missing journal fails closed",
+      "verification": "interruption/missing-journal tests PASS"
+    }
+  ],
+  "independent_test_runs": [
+    {
+      "result": "71 PASS",
+      "evidence": "/tmp/forgeflow-s2c-independent-core-review.xml"
+    },
+    {
+      "result": "90 PASS, 2 FAIL before final fixes",
+      "evidence": "/tmp/forgeflow-s2c-independent-integration-review.xml",
+      "failure_closure": "both closed in subsequent scoped tests"
+    },
+    {
+      "result": "6 PASS",
+      "evidence": "/tmp/forgeflow-s2c-independent-closure-review.xml"
+    },
+    {
+      "result": "13 PASS, 45 deselected",
+      "evidence": "/tmp/forgeflow-s2c-independent-evaluator-closure.xml"
+    },
+    {
+      "result": "5 PASS, 53 deselected",
+      "evidence": "/tmp/forgeflow-s2c-independent-evaluator-positive.xml"
+    }
+  ],
+  "offline_actual_store_M03": "/tmp/forgeflow-s2c-m03-review-nsg7el34/result.json",
+  "historical_inventory": "/tmp/forgeflow-s2c-historical-seals-independent-review.json",
+  "review_constraints": {
+    "source_edits": 0,
+    "runtime_startups": 0,
+    "model_calls": 0,
+    "network_calls": 0,
+    "docker_calls": 0,
+    "tests": "TEST_DRIVER only; Python guard blocks live/runtime/network"
+  },
+  "limits": [
+    "This review does not prove new actual local-model quality or real Docker execution. Root performs distinct newly frozen live experiment.",
+    "The eight fault cases exercise explicitly declared shared unchanged policy/provider fault boundaries, not all new model semantic phases.",
+    "The model task is constrained evidence selection; server-derived technical status is evaluated separately."
+  ],
+  "source_sha256": {
+    "src/forgeflow/s2c_api.py": "e78bc6e6aa6078f00152b1f26c76c5e2beae4990e96fdb2fc7d8b04e656bc642",
+    "src/forgeflow/s2c_checks.py": "fac9802338af67475704d85600270cb290fe8834614703273a902892192596f7",
+    "src/forgeflow/s2c_cli.py": "a7f5fe3013c800fdbb8392edf08165b75ac14a2849d8aea9274fa831894164a6",
+    "src/forgeflow/s2c_context.py": "7aed59ac1f95dabd958c1c3e0d5e042b144aca94def92bb086122203ddffc4be",
+    "src/forgeflow/s2c_contracts.py": "79ff4cefd59da846480cf416a2b1716b2c2a5ebc0ea713ee130b7a20a7f62f30",
+    "src/forgeflow/s2c_runtime.py": "ea983314bc9ea11340b05e4f05b3b1e3bbc6c1cb119ade387f603ae47f36af2e",
+    "src/forgeflow/s2c_store.py": "16d24b7af16f5409b96852b33a66f13fa04beb4245ce4d5f0c123a7ae488e643",
+    "src/forgeflow/s2c_workflow.py": "bdef86a3e4f031c8a00a4b8137fefb312f95eca90f7b294536cb1ab233032eb5",
+    "tests/test_s2c_checks.py": "4483ad2ebeaca5041fccaecc73f8c49267409bc7b5832446788fbf90937b0fe9",
+    "tests/test_s2c_context.py": "4d1017fc5fceaed74bc25f4665ec965297868a720257c7c0050da16d81747280",
+    "tests/test_s2c_contracts.py": "8f93dbcbf888ec320237532adec3e8879edb11a89174417e1f544eca3a4f4601",
+    "tests/test_s2c_evaluate.py": "807c557e8a247b5dfe5d270e5dd68fb00ac4bcda5822a8e94472348011a2f239",
+    "tests/test_s2c_live_evaluate.py": "f50291e9418c9acf75a0ef3883db1f4fdb5ea1bc3bb8ef64c0947f101808ca5c",
+    "tests/test_s2c_store.py": "6d5903e3e6b99777963a15d2f4aa777d2aafcf165ebcf8cedf10a08151365739",
+    "tests/test_s2c_workflow.py": "eda1525a361035396f3301a74be073e6af3fa2ab7ff794ef68f7098dcdb773c2",
+    "scripts/s2c_evaluate.py": "5e07044d7815c8c8f73a00544af26a38380d675cd98c5558f8870c6417d443c6",
+    "scripts/s2c_live_evaluate.py": "21a87f87ccd240fae113660d658c209c58a78a7a00cac3740dbf220ff28afacc",
+    "scripts/start_s2c_api.py": "c8da1628214ce2fec228bc7609345b2f101b0f40fb310b2477765cf6372c2d8a"
+  }
+}

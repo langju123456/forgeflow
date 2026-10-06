@@ -1,0 +1,6 @@
+{
+  "provenance": "ACTUAL_REPEAT_COMMAND_RESULTS",
+  "service": {"status": "ALREADY_RUNNING", "pid": 69967, "port": 8773},
+  "checks": {"status": "EXISTING_CHECKS_VALIDATED", "new_sandbox_checks": 0, "new_model_calls": 0},
+  "effects": {"status": "EXISTING_EFFECTS_REPLAYED", "receipts": 6, "new_effects": 0}
+}

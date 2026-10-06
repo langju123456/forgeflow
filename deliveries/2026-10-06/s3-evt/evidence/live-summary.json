@@ -1,0 +1,452 @@
+{
+  "status": "PASS_19_BOUND_EVT_REVIEWS_2_PENDING_SOURCE_ACCEPTANCES",
+  "cases": [
+    {
+      "scenario": "M01",
+      "run_id": "627d36c6-ed60-444f-8c26-541a39fb452e",
+      "historical_model_calls": 4,
+      "hardware_gate": "PASS",
+      "reviews": [
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "d6cee6a1-e414-48b3-a9ad-f5f4d97c6dc3",
+          "review_hash": "108e11c5ef90373dce1c26aa2b976ec9f7890adf450f2c3f0b17fd889f4a3e5a",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M01:aligned:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "9a465801-d66c-4625-a9d3-808a4a2274cb",
+          "review_hash": "34a56832d450b3488747ff8675effc7d5397f81ef067dd76df3c959cac890b9f",
+          "status": "PASS",
+          "key": "s3-evt:M01:aligned:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "id": "36efe380-18c9-4d0a-8a9e-2b90d98be2a3",
+            "decision": "PENDING",
+            "business_action": "NONE"
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-applicability-unresolved-v1",
+          "review_id": "08393eb9-0674-4a11-a2ed-113f45e9457d",
+          "review_hash": "8c3d99dd3433f5555bae158031805034ee810a4e6bfd01d2a1a4a3f1b7789aa5",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M01:aligned:synthetic-applicability-unresolved-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "bom-mismatch",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "fff89cb0-e02a-4fab-92df-a96818874ec7",
+          "review_hash": "cd0895ce019052e48f879ff623118506c3fbd12fdac2db1042a7c0598ab2d8a0",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01:bom-mismatch:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "bom-mismatch",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "03f59ad5-ceea-4ec2-95c3-f035c2671408",
+          "review_hash": "6a94706953f3116386b41fe5ebe48403ed29b46bbac310311d694e563772e1f6",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01:bom-mismatch:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "missing-exported",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "feeb3e82-0f1a-4cbc-af26-7653e1e5c053",
+          "review_hash": "b05e3888a82f74be500bc9a1e8581c29773d65623f6a67874f96ceecf183d95c",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01:missing-exported:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "missing-exported",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "171080ed-3da1-41bc-bf45-6c61f188c67e",
+          "review_hash": "14d9344eaf7cf0bb67b264b17d1ffb423cc5d11099ca530545625e96d9c4ed19",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01:missing-exported:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        }
+      ],
+      "parent_and_events": "UNCHANGED",
+      "stage": "PROTOTYPE",
+      "business_receipts": 0
+    },
+    {
+      "scenario": "M01-blocked",
+      "run_id": "885c6aca-4341-4021-b135-c5d25a1fefed",
+      "historical_model_calls": 4,
+      "hardware_gate": "BLOCKED",
+      "reviews": [
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "544e12a4-0b56-4e81-920f-0116b4d904a8",
+          "review_hash": "b044b0a5d929e0989a5f9d0408416f691611ccc67480969e965aacd288b21797",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01-blocked:aligned:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "56078eeb-378c-4e0a-927a-12a034203615",
+          "review_hash": "8025e65746f0fad4a9ac3f678c8035ba43b715f3f7c698da62ef5eecd14ffe55",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01-blocked:aligned:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-applicability-unresolved-v1",
+          "review_id": "6fa46cf6-fdb7-4f7a-b0c5-d1313ecdc8e1",
+          "review_hash": "391c0ed025b0fb73130c6a6befe35dcccaca4ef97192e2c955b5db337e171dac",
+          "status": "BLOCKED",
+          "key": "s3-evt:M01-blocked:aligned:synthetic-applicability-unresolved-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        }
+      ],
+      "parent_and_events": "UNCHANGED",
+      "stage": "PROTOTYPE",
+      "business_receipts": 0
+    },
+    {
+      "scenario": "M02",
+      "run_id": "97da2a72-c5f9-41df-b764-022315f78f7b",
+      "historical_model_calls": 4,
+      "hardware_gate": "UNKNOWN",
+      "reviews": [
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "d267447a-8565-47d0-a4cf-e7d14c01c700",
+          "review_hash": "1cfd15f96da211dc41f41726734a4c31161fa5db20d6751ced4fec9b62bc4ec0",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M02:aligned:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "a802e995-1719-47df-9976-f32a43206867",
+          "review_hash": "aae1e1b2c306f7d6288cf5d6e3d336fbac09650c5415205cf55f70326f851f9a",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M02:aligned:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-applicability-unresolved-v1",
+          "review_id": "467df2f5-ed26-4c8c-b052-083a1dc5c6c8",
+          "review_hash": "1b4bd6f04ec5880490a98411469382151b29592810ad806060f6f853328112a4",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M02:aligned:synthetic-applicability-unresolved-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        }
+      ],
+      "parent_and_events": "UNCHANGED",
+      "stage": "PROTOTYPE",
+      "business_receipts": 0
+    },
+    {
+      "scenario": "M03",
+      "run_id": "02f831a1-c438-400c-9184-5cfb61779998",
+      "historical_model_calls": 4,
+      "hardware_gate": "UNKNOWN",
+      "reviews": [
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "75b30d8c-785e-4de6-ab6b-63d02ea363c0",
+          "review_hash": "7f1840c5c19f850cfd501639bd2a3454bcf967d4dc490a0673b27df17fe44892",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M03:aligned:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "770566ed-2556-4253-bd98-68ac33ced5f7",
+          "review_hash": "ccd9a526527c21d18e2c9d49af8f39c46ecd8e76b2dbc5c6c5df275d1d0ab02a",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M03:aligned:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-applicability-unresolved-v1",
+          "review_id": "73c0f51f-ea68-44f7-ac45-de10ab5dc1ae",
+          "review_hash": "f72c35331a4f791b20226c023402e466249fe4695b2c32c83df01f9184f0ac42",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M03:aligned:synthetic-applicability-unresolved-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        }
+      ],
+      "parent_and_events": "UNCHANGED",
+      "stage": "PROTOTYPE",
+      "business_receipts": 0
+    },
+    {
+      "scenario": "M04",
+      "run_id": "30d0e026-fadc-434a-8959-b4881c7ae680",
+      "historical_model_calls": 4,
+      "hardware_gate": "PASS",
+      "reviews": [
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-evt-apk-device-v1",
+          "review_id": "86bd61e8-bfac-484e-b419-4bdf4e044131",
+          "review_hash": "e7d379da60cf16e0845cd33198adc42a602622a1dc983cbcbfd0a486a8e1a365",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M04:aligned:synthetic-evt-apk-device-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-source-review-v1",
+          "review_id": "8cb36cb5-cf3a-4ff0-a9c8-75b55fe81070",
+          "review_hash": "e5e71245c50462042a6daf197cbad202abdabc3325cb7fd8c0e63bdfed1d0aff",
+          "status": "PASS",
+          "key": "s3-evt:M04:aligned:synthetic-source-review-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "id": "3aadc43b-af6e-4bdf-919c-3e40416f9555",
+            "decision": "PENDING",
+            "business_action": "NONE"
+          }
+        },
+        {
+          "fixture": "aligned",
+          "policy": "synthetic-applicability-unresolved-v1",
+          "review_id": "f1102b5f-d9ac-4826-bdcb-3a68fedaac76",
+          "review_hash": "43abedb3d7f40add24a49acdef999609a13587d7c8d2e56fe8fe3e352787d1b3",
+          "status": "UNKNOWN",
+          "key": "s3-evt:M04:aligned:synthetic-applicability-unresolved-v1:01",
+          "replay": "IDENTICAL_HTTP_AND_FRESH_SERVICE",
+          "acceptance": {
+            "status": "DENIED",
+            "http": 403
+          }
+        }
+      ],
+      "parent_and_events": "UNCHANGED",
+      "stage": "PROTOTYPE",
+      "business_receipts": 0
+    }
+  ],
+  "scope": {
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  "new_model_calls": 0,
+  "new_sandbox_executions": 0,
+  "actual_human_decisions": 0,
+  "external_business_writes": false,
+  "health": {
+    "identity": "DEV_ONLY",
+    "revision": "evt-bound-review-v1",
+    "process_id": 65879,
+    "mode": "LOCAL_SYNTHETIC_PROTOTYPE",
+    "evt_review_contract": "ENFORCED_FOR_CURRENT_HTTP_ACCEPTANCE",
+    "default_policy": "synthetic-evt-apk-device-v1",
+    "hardware_only_approvals": "GRANTS_BLOCKED_REJECTION_ALLOWED",
+    "model_roles": [
+      "supervisor",
+      "pm"
+    ],
+    "deterministic_sops": [
+      "hardware",
+      "sre",
+      "architect",
+      "android"
+    ],
+    "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+    "stage_action_adapter": "NOT_MIGRATED",
+    "automatic_business_actions": false
+  },
+  "negative_http": {
+    "foreign_scope": 404,
+    "invalid_identity": 401,
+    "applicability_override": 422,
+    "policy_changed_same_key": 409,
+    "wrong_run_role_ref": 404,
+    "legacy_hardware_only_grant": {
+      "http": 409,
+      "code": "EVT_BOUND_APPROVAL_REQUIRED"
+    }
+  },
+  "foreign_keys": {
+    "evt_reviews": [
+      {
+        "name": "evt_reviews_tenant_id_workspace_id_project_id_domain_revie_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "domain_review_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "domain_reviews",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "evt_reviews_tenant_id_workspace_id_project_id_run_id_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "evt_reviews_tenant_id_workspace_id_project_id_sre_review_i_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "sre_review_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "sre_reviews",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ],
+    "evt_review_approvals": [
+      {
+        "name": "evt_review_approvals_tenant_id_workspace_id_project_id_rev_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "review_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "evt_reviews",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      },
+      {
+        "name": "evt_review_approvals_tenant_id_workspace_id_project_id_run_fkey",
+        "constrained_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "tenant_id",
+          "workspace_id",
+          "project_id",
+          "id"
+        ],
+        "options": {},
+        "comment": null
+      }
+    ]
+  }
+}

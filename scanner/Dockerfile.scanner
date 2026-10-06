@@ -1,0 +1,12 @@
+ARG BASE_IMAGE=python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+FROM ${BASE_IMAGE}
+# Build-time package installation uses the public package index. Runtime has no network.
+RUN python -m pip install --no-cache-dir 'semgrep==1.179.0'
+COPY rules.yml /opt/rules.yml
+COPY forgeflow_scan_runner.py /opt/forgeflow_scan_runner.py
+ARG RULES_HASH
+LABEL forgeflow.scanner.version="1.179.0" forgeflow.scanner.rules_hash=${RULES_HASH}
+USER 10001:10001
+WORKDIR /work
+ENTRYPOINT []
+CMD ["python", "/opt/forgeflow_scan_runner.py"]

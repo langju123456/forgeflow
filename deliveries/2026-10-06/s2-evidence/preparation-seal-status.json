@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "manifest": "deliveries/2026-10-05/manifest.json",
+      "manifest_sha256": "34470e90c36c856e0332f720970d001ac6f468775121b0bf0ec6f84c206a8665",
+      "recorded_files_checked": 95,
+      "mismatches": [],
+      "status": "UNCHANGED"
+    },
+    {
+      "manifest": "deliveries/2026-10-05/s2-preparation-manifest.json",
+      "manifest_sha256": "bad4bb190ce2916d61ed2c0d86f4df735d782b9e6da3cba524fd009699fc3031",
+      "recorded_files_checked": 38,
+      "mismatches": [],
+      "status": "UNCHANGED"
+    }
+  ],
+  "note": "Recorded inventories only; new manual runs may add files. Never rewrite old seals to hide drift."
+}

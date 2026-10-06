@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-05",
+  "kind": "design-review-delivery",
+  "implementation": "NOT_STARTED",
+  "runtime_tests": "NOT_RUN",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2150,
+      "sha256": "91d56018bb84be3ce0b52ff1a3e60534c42c6763dbeddff3218c9b5ac6fd6e51"
+    },
+    {
+      "path": "deliveries/2026-10-05/DELIVERY.md",
+      "bytes": 4086,
+      "sha256": "09ff5026d17ef772cae174051a6e336284db35ae76c0fff91c93ba3cd90d84e4"
+    },
+    {
+      "path": "deliveries/2026-10-05/REVIEW.md",
+      "bytes": 2774,
+      "sha256": "54dc6d9a45afa17f8f10bd8e2faa71d93c818097733844275f2d9753f06c6c47"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/01-design-review.md",
+      "bytes": 6881,
+      "sha256": "639897f1456c9effa3146f42e2b2c4a5a367f0cf43914f4a01a283bb1c2e8113"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/02-contracts.md",
+      "bytes": 18749,
+      "sha256": "5c24c074c1055410f1863af0c20a93db3c28db49a5f9a23e047c6fb180549a5b"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/03-threat-model.md",
+      "bytes": 7253,
+      "sha256": "66c57ad7344513cd06c4967d0ccd483cc93e2e23f86cd0d4fb462ae24552dc83"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/04-acceptance-matrix.md",
+      "bytes": 9751,
+      "sha256": "822a3d4f28ac8693f85845ecb253f8b8dc0c4135adc58bdc343b3396231e9c56"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/05-reuse-and-sources.md",
+      "bytes": 10993,
+      "sha256": "61096a92714ed5a3cfdde9edb9876ff9cb79c2153949d07e48128de3cb0cac53"
+    },
+    {
+      "path": "deliveries/2026-10-05/docs/06-execution-plan.md",
+      "bytes": 8347,
+      "sha256": "0846efa5575f7a3c169339a895d41cb8eb8c4edc4c9eb9b0a352277d296c9c00"
+    },
+    {
+      "path": "docs/01-design-review.md",
+      "bytes": 6881,
+      "sha256": "639897f1456c9effa3146f42e2b2c4a5a367f0cf43914f4a01a283bb1c2e8113"
+    },
+    {
+      "path": "docs/02-contracts.md",
+      "bytes": 18749,
+      "sha256": "5c24c074c1055410f1863af0c20a93db3c28db49a5f9a23e047c6fb180549a5b"
+    },
+    {
+      "path": "docs/03-threat-model.md",
+      "bytes": 7253,
+      "sha256": "66c57ad7344513cd06c4967d0ccd483cc93e2e23f86cd0d4fb462ae24552dc83"
+    },
+    {
+      "path": "docs/04-acceptance-matrix.md",
+      "bytes": 9751,
+      "sha256": "822a3d4f28ac8693f85845ecb253f8b8dc0c4135adc58bdc343b3396231e9c56"
+    },
+    {
+      "path": "docs/05-reuse-and-sources.md",
+      "bytes": 10993,
+      "sha256": "61096a92714ed5a3cfdde9edb9876ff9cb79c2153949d07e48128de3cb0cac53"
+    },
+    {
+      "path": "docs/06-execution-plan.md",
+      "bytes": 8347,
+      "sha256": "0846efa5575f7a3c169339a895d41cb8eb8c4edc4c9eb9b0a352277d296c9c00"
+    },
+    {
+      "path": "sources/IMG_0194.PNG",
+      "bytes": 551564,
+      "sha256": "3cc883104cfe7cda00e366bea6fb0427b721901dc73eb7a1c5183c20507670a7"
+    },
+    {
+      "path": "sources/IMG_0195.PNG",
+      "bytes": 521946,
+      "sha256": "5e09587fa60f2c2939cefcd418e1d8ce4026d8fb4b57ea2240908d8db7291aef"
+    },
+    {
+      "path": "sources/IMG_0196.PNG",
+      "bytes": 319631,
+      "sha256": "3ed2d4eba8abcd602f3cd2696b99f7302289091c085bf4f95bee7a40f128b3cd"
+    },
+    {
+      "path": "sources/MANIFEST.md",
+      "bytes": 2947,
+      "sha256": "d9b981c6d0ff5b74a68c28cb69e956b9cfa8b579e34a7a9070747fb24b8651be"
+    },
+    {
+      "path": "sources/checksums.sha256",
+      "bytes": 607,
+      "sha256": "36dfe9d4aa2b5b4d43d7c101ab0e0199498f35efa2dd075fe6dbce621563bf76"
+    },
+    {
+      "path": "sources/redacted-transcription.md",
+      "bytes": 2760,
+      "sha256": "4d9238080e43642b1e4833249cc6de3b7e363a64ca81aec74eb864450704cef7"
+    },
+    {
+      "path": "sources/proposal-v1-delegated-original.md",
+      "bytes": 16977,
+      "sha256": "381f0bde8da493e3bf7ccdd099eae9f010c3acac3c3971094652c53e2f1d645e"
+    },
+    {
+      "path": "sources/proposal-v2-upload-original.txt",
+      "bytes": 9516,
+      "sha256": "0fbf2dff1ae825823bdc0beedc190cd5ff565d2bcb86be542f917c23647079a6"
+    }
+  ]
+}

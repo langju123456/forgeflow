@@ -1,0 +1,147 @@
+[
+  {
+    "id": "7cb71fca-b189-4aff-9ad8-95e0c2af2173",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 1,
+    "actor": "local-owner",
+    "kind": "ANALYSIS_CREATED",
+    "payload_json": {
+      "material_hash": "f2acf448f74d7159e68746f57861d943418fbd7a04a3edba773cd04d085ca32e",
+      "parent_snapshot_hash": "d45872d9463e73151c6bd57331aa5b2f161dc200f871dd7ac65ee16e60a2e382",
+      "profile_revision": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+    },
+    "material_json": null,
+    "payload_hash": "a30ef9cfe253156a3e6df122a1423853fec65d35be4ec3fef398ef5cf3051cad",
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "event_hash": "39e5374d449b1cff54531b40fce6677f854ced7462efe3ee8343ea53de7f6d92",
+    "created_at": "2026-10-06T04:21:50.932792+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "8f51c715-42c1-4941-a3cf-16b2460d98e0",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 2,
+    "actor": "local-owner",
+    "kind": "ANALYSIS_CLAIMED",
+    "payload_json": {
+      "epoch": 1,
+      "owner": "analysis-6e6c4109e39b4e3ca552600c45459951"
+    },
+    "material_json": null,
+    "payload_hash": "66fbbfd59d14973c7b44717f46ca72ea15bc0b8485de0476b0adcc928aa304ba",
+    "prev_hash": "39e5374d449b1cff54531b40fce6677f854ced7462efe3ee8343ea53de7f6d92",
+    "event_hash": "c226880d8bbb0b29a8971feab70236652e5a4d66a43c54d765b3de29bc592826",
+    "created_at": "2026-10-06T04:21:50.964903+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "edfb44f2-4394-4e71-b7e5-409156d1f039",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 3,
+    "actor": "local-owner",
+    "kind": "CALL_DISPATCH_INTENT",
+    "payload_json": {
+      "call_id": "0981bfe4-2c37-4125-ae82-ad3e307411fa",
+      "phase": "PLAN",
+      "role": "supervisor",
+      "intent_hash": "77e63b47ccfe01c3c66de6ccd7e7ca534d9901a793fe2807f88078a491f5cc1d",
+      "tokens_reserved": 4300
+    },
+    "material_json": null,
+    "payload_hash": "a1cda2414c1a8819069bfd2c16860b4df8dd10d6580407beef07296f313b4059",
+    "prev_hash": "c226880d8bbb0b29a8971feab70236652e5a4d66a43c54d765b3de29bc592826",
+    "event_hash": "ae79e48a1e2c79e58b74ba7ec909dea8cf4d39121b352c9b2e7a3c4248cc5e4d",
+    "created_at": "2026-10-06T04:21:51.049622+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "19dbe859-2f98-465b-ab2d-801aa513dbbb",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 4,
+    "actor": "local-owner",
+    "kind": "CALL_FINISHED",
+    "payload_json": {
+      "call_id": "0981bfe4-2c37-4125-ae82-ad3e307411fa",
+      "state": "VALIDATED",
+      "output_hash": "4c4f569d0b5186e57533764acbcc68eeaf9f0921cccefaa61ab6ad7e744e4b0f",
+      "usage_state": "CONFIRMED"
+    },
+    "material_json": null,
+    "payload_hash": "87443a1099dcde8332ee8ea37c1b33703eb38fe2b0d430fe1ccc861c318af9f1",
+    "prev_hash": "ae79e48a1e2c79e58b74ba7ec909dea8cf4d39121b352c9b2e7a3c4248cc5e4d",
+    "event_hash": "cedb67e0ca28fab53693d34cfb9c7cf228a28ba1f87186702b53a19f3cb9ca03",
+    "created_at": "2026-10-06T04:22:09.598154+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "ff3f797c-e896-4ee5-997d-3e8e9eaed4a4",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 5,
+    "actor": "local-owner",
+    "kind": "CALL_DISPATCH_INTENT",
+    "payload_json": {
+      "call_id": "651f9e60-ce92-4ce7-b41c-2b63dbb5da45",
+      "phase": "CONTEXT_PROPOSAL",
+      "role": "pm",
+      "intent_hash": "783998ef4e85e7c4cd5f70c83e17af86d119329466e50577feba61175cdfdb21",
+      "tokens_reserved": 4300
+    },
+    "material_json": null,
+    "payload_hash": "abc124eacb9a3f9494578236b58b78c24a802f127e398ae9586d24c1bcddbb7d",
+    "prev_hash": "cedb67e0ca28fab53693d34cfb9c7cf228a28ba1f87186702b53a19f3cb9ca03",
+    "event_hash": "a3af6ffd853aaa67d83079c0b97c3c1b1360c611d9b1658ae1baa68b8cd1796b",
+    "created_at": "2026-10-06T04:22:10.194366+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "0c71fcc2-efba-4118-a9d3-e39614c9e5b8",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 6,
+    "actor": "local-owner",
+    "kind": "CALL_FINISHED",
+    "payload_json": {
+      "call_id": "651f9e60-ce92-4ce7-b41c-2b63dbb5da45",
+      "state": "VALIDATED",
+      "output_hash": "16fbfcd3d43e782c55e2637d01d7709e61f34789a339dd17f70f91e32b23c1da",
+      "usage_state": "CONFIRMED"
+    },
+    "material_json": null,
+    "payload_hash": "935b933b72c5988af730663b9d17abb5163b6b9fd1ddffd9bf0bc3cb9b51f336",
+    "prev_hash": "a3af6ffd853aaa67d83079c0b97c3c1b1360c611d9b1658ae1baa68b8cd1796b",
+    "event_hash": "9fdac2f2aa1d85fef4fe33821bff78fbe797b5e47c0ccb92e0b8077d2488c1a6",
+    "created_at": "2026-10-06T04:22:22.785885+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  },
+  {
+    "id": "163a7d11-9a5e-4b5a-b2c9-4ccf1459a1f0",
+    "analysis_id": "d7829c75-f796-4e47-ba50-f77c040774d9",
+    "sequence": 7,
+    "actor": "local-owner",
+    "kind": "ANALYSIS_ABORTED",
+    "payload_json": {
+      "code": "INPUT_CONSERVATIVE_BOUND_EXCEEDED",
+      "state": "FAILED",
+      "automatic_provider_retry": false
+    },
+    "material_json": null,
+    "payload_hash": "6d8824529a6843e303f7a7aa41a8c607491716979f95897290087267b234136f",
+    "prev_hash": "9fdac2f2aa1d85fef4fe33821bff78fbe797b5e47c0ccb92e0b8077d2488c1a6",
+    "event_hash": "9cf1350a88f338cd0e1032675d7e7b8707739e1a02968dda4330724a104de0f0",
+    "created_at": "2026-10-06T04:22:23.491972+00:00",
+    "tenant_id": "synthetic-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora"
+  }
+]

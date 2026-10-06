@@ -1,0 +1,74 @@
+{
+  "recorded_at": "2026-10-05T16:40:49.280951+00:00",
+  "stage": "S1_TRUSTED_TEMPLATE_DEV_ONLY",
+  "live_tests": {
+    "tests": "136",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "30.963",
+    "timestamp": "2026-10-06T00:29:28.987200+08:00"
+  },
+  "unit_tests": {
+    "tests": "136",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "13",
+    "time": "3.449",
+    "timestamp": "2026-10-06T00:31:21.523007+08:00"
+  },
+  "commands": [
+    ".venv/bin/python scripts/verify.py --live --output deliveries/2026-10-05/implementation-evidence",
+    ".venv/bin/python scripts/verify.py --output .runtime/unit-evidence",
+    ".venv/bin/ruff check --config pyproject.toml src tests scripts scanner/forgeflow_scan_runner.py"
+  ],
+  "exit_codes": {
+    "live_tests": 0,
+    "unit_tests": 0,
+    "ruff": 0
+  },
+  "versions": {
+    "forgeflow": "0.1.0",
+    "fastapi": "0.142.2",
+    "sqlalchemy": "2.1.3",
+    "psycopg": "3.3.6",
+    "mcp": "1.30.0",
+    "pydantic": "2.13.5",
+    "pytest": "8.4.2",
+    "ruff": "0.16.10"
+  },
+  "python": "3.12.13",
+  "docker_engine": "29.6.1",
+  "postgresql": "16",
+  "semgrep_ce": "1.179.0",
+  "mcp_negotiated_protocol": "2025-11-25",
+  "warning": "Starlette TestClient httpx legacy deprecation; tests work, migration remains maintenance task",
+  "development_password_rotation": {
+    "task_generated_app_password": "rotated",
+    "checked_new_connection": true,
+    "superuser": false,
+    "private_keys_accessed": false,
+    "config_file_mode": "0600"
+  },
+  "resource_check": {
+    "checker_label": "forgeflow.namespace=forgeflow-local-v1",
+    "remaining_checker_containers": 0,
+    "scanner_label": "forgeflow.owner=forgeflow-task6",
+    "remaining_scanner_containers": 0,
+    "retained_database": "forgeflow-task6-db",
+    "retained_lifecycle_locks_and_revocations": "intentional; no broad prune"
+  },
+  "manual_run_id": "08d6ca27-13d8-4a62-95ca-c3c03184d5f4",
+  "manual_state": "WAITING_APPROVAL",
+  "actual_human_approval": false,
+  "limits": [
+    "synthetic SOP/input",
+    "deterministic no LLM",
+    "lexical retrieval no embeddings",
+    "only sandbox.execute is MCP",
+    "local transactional Issue adapter",
+    "no production/SSO/RLS",
+    "no arbitrary generated code",
+    "no external write or paid API"
+  ]
+}

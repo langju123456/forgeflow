@@ -1,0 +1,394 @@
+{
+  "source": "REAL_PG_DOCKER_RECOVERY_FAILURE",
+  "reason": "Docker returned lower-case missing-object error; scanner failed closed as NEEDS_REVIEW. Fixed exact-object case-insensitive check; socket/daemon missing is still not proof of cleanup.",
+  "before": {
+    "id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+    "created_by": "scripted-reviewer",
+    "idempotency_key": "worker-crash",
+    "request_hash": "c8d3713a2cbd62bfe7dbaf7af1625ff8199213a40dc465e3c763a9bbc4897eab",
+    "request_json": {
+      "scope": {
+        "tenant_id": "test-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fa2416f55095"
+      },
+      "stage": "EVT",
+      "fixture_id": "aurora-pass",
+      "fixture_version": "v1",
+      "objective": "Assess Project Aurora EVT readiness"
+    },
+    "state": "NEEDS_REVIEW",
+    "current_step": "readiness",
+    "revision": 2,
+    "cancel_requested_at": null,
+    "cleanup_required": true,
+    "created_at": "2026-10-05T16:14:57.449478+00:00",
+    "result_json": null,
+    "assessment_json": null,
+    "snapshot_json": null,
+    "snapshot_hash": null,
+    "tenant_id": "test-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora-fa2416f55095",
+    "steps": [
+      {
+        "id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+        "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+        "step_key": "readiness",
+        "state": "OUTCOME_UNKNOWN",
+        "attempt": 1,
+        "fencing_epoch": 2,
+        "lease_owner": null,
+        "lease_token": null,
+        "lease_expires_at": null,
+        "heartbeat_at": "2026-10-05T16:14:57.461926+00:00",
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b",
+        "scanner_handle": "ffs-a6c25201b88664f0dea87d4739759608",
+        "input_hash": null,
+        "output_hash": null,
+        "tenant_id": "test-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fa2416f55095"
+      }
+    ],
+    "approvals": [],
+    "actions": [],
+    "artifacts": [],
+    "evidence": [],
+    "project": {
+      "current_stage": "PROTOTYPE",
+      "stage_revision": 0,
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    "receipts": []
+  },
+  "events_before": [
+    {
+      "id": "98f909da-92c9-4803-9aa1-948b29ecf92d",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": null,
+      "sequence": 1,
+      "kind": "RUN_SUBMITTED",
+      "actor": "scripted-reviewer",
+      "payload": {
+        "request_hash": "c8d3713a2cbd62bfe7dbaf7af1625ff8199213a40dc465e3c763a9bbc4897eab"
+      },
+      "payload_hash": "b04c0b91b7ed13338742be700e2d1924f001e4b0ae7ed774c6e3e8fc993c65d7",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "event_hash": "86d9c665b1c20ea1761eccd63d57de210c149bf384b2f5ddd52fe626e9e57ac9",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.454014+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "50b2d93e-6eed-4dfc-a2c2-b95e7d2cb66a",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 2,
+      "kind": "STEP_CLAIMED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "epoch": 1,
+        "attempt": 1,
+        "owner": "crash-probe",
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b"
+      },
+      "payload_hash": "f9bba5ac1f1b922cdd90258c470adf2e6bd516a0e790824be317786b2ce74d56",
+      "prev_hash": "86d9c665b1c20ea1761eccd63d57de210c149bf384b2f5ddd52fe626e9e57ac9",
+      "event_hash": "567e6af23576f465381ea6d839acff891297c7bdd4fe6f28764801d49e37bf24",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.464464+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "c8d31348-d030-42e2-acea-181b4f020e45",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 3,
+      "kind": "SANDBOX_PREPARED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "handle": "ff-348a7cf6464dbecddabbc6b7765ab02b"
+      },
+      "payload_hash": "d285b1097c81605732dbc0e8f01c5a79c02aa9964f75fe220e71707cc5994ba6",
+      "prev_hash": "567e6af23576f465381ea6d839acff891297c7bdd4fe6f28764801d49e37bf24",
+      "event_hash": "d38dc6f4da045e2199ded17eb381cbaee864ca7981ea73668d75c371306762aa",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.497279+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "ce36c6f4-cd27-4ef7-bd94-8d54bd872d7d",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 4,
+      "kind": "SCANNER_PREPARED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "handle": "ffs-a6c25201b88664f0dea87d4739759608"
+      },
+      "payload_hash": "fba778f07174e98e5485bad39eba459feed9354a9948fc3d9eee95cc86a78914",
+      "prev_hash": "d38dc6f4da045e2199ded17eb381cbaee864ca7981ea73668d75c371306762aa",
+      "event_hash": "6b0389c8b3782179824ae0bab9b738fdf7df9054d61689e41c535835d1df4bc5",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.501687+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "4ffddbd4-d13d-4d6a-90ef-215381987493",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 5,
+      "kind": "LEASE_REVOKED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b",
+        "revoked_epoch": 1,
+        "cleanup_required": true
+      },
+      "payload_hash": "f7cd040e4a5725585eac26c762f1f2b98b1935d1fd40b63a87a0c34a3c160eb3",
+      "prev_hash": "6b0389c8b3782179824ae0bab9b738fdf7df9054d61689e41c535835d1df4bc5",
+      "event_hash": "3d0329932efb4eff9977a2795c9eb03f46d8d226214ed9f360aa560ff6b4c570",
+      "classification": 0,
+      "created_at": "2026-10-05T16:15:01.602236+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "a1d6f199-eeda-4de6-bb09-c13b7000bba0",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": null,
+      "sequence": 6,
+      "kind": "RECOVERY_BLOCKED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "cleanup": "FAILED",
+        "unknown_dispatch": false
+      },
+      "payload_hash": "3bd51f377db8314c0a8f9d56c4a0c303c56e274a182611dee677efb0bccf0a67",
+      "prev_hash": "3d0329932efb4eff9977a2795c9eb03f46d8d226214ed9f360aa560ff6b4c570",
+      "event_hash": "62712103bcfb057d2047cdd044b0e452f91b71cad47c61f1785fb7b33c0007ee",
+      "classification": 0,
+      "created_at": "2026-10-05T16:15:01.775711+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    }
+  ],
+  "after": {
+    "id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+    "created_by": "scripted-reviewer",
+    "idempotency_key": "worker-crash",
+    "request_hash": "c8d3713a2cbd62bfe7dbaf7af1625ff8199213a40dc465e3c763a9bbc4897eab",
+    "request_json": {
+      "scope": {
+        "tenant_id": "test-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fa2416f55095"
+      },
+      "stage": "EVT",
+      "fixture_id": "aurora-pass",
+      "fixture_version": "v1",
+      "objective": "Assess Project Aurora EVT readiness"
+    },
+    "state": "QUEUED",
+    "current_step": "readiness",
+    "revision": 3,
+    "cancel_requested_at": null,
+    "cleanup_required": false,
+    "created_at": "2026-10-05T16:14:57.449478+00:00",
+    "result_json": null,
+    "assessment_json": null,
+    "snapshot_json": null,
+    "snapshot_hash": null,
+    "tenant_id": "test-lab",
+    "workspace_id": "engineering",
+    "project_id": "aurora-fa2416f55095",
+    "steps": [
+      {
+        "id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+        "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+        "step_key": "readiness",
+        "state": "OUTCOME_UNKNOWN",
+        "attempt": 1,
+        "fencing_epoch": 2,
+        "lease_owner": null,
+        "lease_token": null,
+        "lease_expires_at": null,
+        "heartbeat_at": "2026-10-05T16:14:57.461926+00:00",
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b",
+        "scanner_handle": "ffs-a6c25201b88664f0dea87d4739759608",
+        "input_hash": null,
+        "output_hash": null,
+        "tenant_id": "test-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fa2416f55095"
+      }
+    ],
+    "approvals": [],
+    "actions": [],
+    "artifacts": [],
+    "evidence": [],
+    "project": {
+      "current_stage": "PROTOTYPE",
+      "stage_revision": 0,
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    "receipts": []
+  },
+  "events_after": [
+    {
+      "id": "98f909da-92c9-4803-9aa1-948b29ecf92d",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": null,
+      "sequence": 1,
+      "kind": "RUN_SUBMITTED",
+      "actor": "scripted-reviewer",
+      "payload": {
+        "request_hash": "c8d3713a2cbd62bfe7dbaf7af1625ff8199213a40dc465e3c763a9bbc4897eab"
+      },
+      "payload_hash": "b04c0b91b7ed13338742be700e2d1924f001e4b0ae7ed774c6e3e8fc993c65d7",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "event_hash": "86d9c665b1c20ea1761eccd63d57de210c149bf384b2f5ddd52fe626e9e57ac9",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.454014+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "50b2d93e-6eed-4dfc-a2c2-b95e7d2cb66a",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 2,
+      "kind": "STEP_CLAIMED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "epoch": 1,
+        "attempt": 1,
+        "owner": "crash-probe",
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b"
+      },
+      "payload_hash": "f9bba5ac1f1b922cdd90258c470adf2e6bd516a0e790824be317786b2ce74d56",
+      "prev_hash": "86d9c665b1c20ea1761eccd63d57de210c149bf384b2f5ddd52fe626e9e57ac9",
+      "event_hash": "567e6af23576f465381ea6d839acff891297c7bdd4fe6f28764801d49e37bf24",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.464464+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "c8d31348-d030-42e2-acea-181b4f020e45",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 3,
+      "kind": "SANDBOX_PREPARED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "handle": "ff-348a7cf6464dbecddabbc6b7765ab02b"
+      },
+      "payload_hash": "d285b1097c81605732dbc0e8f01c5a79c02aa9964f75fe220e71707cc5994ba6",
+      "prev_hash": "567e6af23576f465381ea6d839acff891297c7bdd4fe6f28764801d49e37bf24",
+      "event_hash": "d38dc6f4da045e2199ded17eb381cbaee864ca7981ea73668d75c371306762aa",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.497279+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "ce36c6f4-cd27-4ef7-bd94-8d54bd872d7d",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 4,
+      "kind": "SCANNER_PREPARED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "handle": "ffs-a6c25201b88664f0dea87d4739759608"
+      },
+      "payload_hash": "fba778f07174e98e5485bad39eba459feed9354a9948fc3d9eee95cc86a78914",
+      "prev_hash": "d38dc6f4da045e2199ded17eb381cbaee864ca7981ea73668d75c371306762aa",
+      "event_hash": "6b0389c8b3782179824ae0bab9b738fdf7df9054d61689e41c535835d1df4bc5",
+      "classification": 0,
+      "created_at": "2026-10-05T16:14:57.501687+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "4ffddbd4-d13d-4d6a-90ef-215381987493",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": "4bc53f85-f187-46f4-b1f3-2a1cb5e4394e",
+      "sequence": 5,
+      "kind": "LEASE_REVOKED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "sandbox_handle": "ff-348a7cf6464dbecddabbc6b7765ab02b",
+        "revoked_epoch": 1,
+        "cleanup_required": true
+      },
+      "payload_hash": "f7cd040e4a5725585eac26c762f1f2b98b1935d1fd40b63a87a0c34a3c160eb3",
+      "prev_hash": "6b0389c8b3782179824ae0bab9b738fdf7df9054d61689e41c535835d1df4bc5",
+      "event_hash": "3d0329932efb4eff9977a2795c9eb03f46d8d226214ed9f360aa560ff6b4c570",
+      "classification": 0,
+      "created_at": "2026-10-05T16:15:01.602236+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "a1d6f199-eeda-4de6-bb09-c13b7000bba0",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": null,
+      "sequence": 6,
+      "kind": "RECOVERY_BLOCKED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "cleanup": "FAILED",
+        "unknown_dispatch": false
+      },
+      "payload_hash": "3bd51f377db8314c0a8f9d56c4a0c303c56e274a182611dee677efb0bccf0a67",
+      "prev_hash": "3d0329932efb4eff9977a2795c9eb03f46d8d226214ed9f360aa560ff6b4c570",
+      "event_hash": "62712103bcfb057d2047cdd044b0e452f91b71cad47c61f1785fb7b33c0007ee",
+      "classification": 0,
+      "created_at": "2026-10-05T16:15:01.775711+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    },
+    {
+      "id": "e80ff63a-53c0-4310-94e6-12adfee48b85",
+      "run_id": "374fdb58-3610-49ef-b3e2-6ec97cb4fcc0",
+      "step_id": null,
+      "sequence": 7,
+      "kind": "RECOVERY_CLEANED",
+      "actor": "forgeflow-local-worker",
+      "payload": {
+        "cleanup": "REMOVED",
+        "state": "QUEUED"
+      },
+      "payload_hash": "5a89645e049396e6e21b1e5fee0cb27ac14be9ebef6a4cd815bf9488df6c0fcb",
+      "prev_hash": "62712103bcfb057d2047cdd044b0e452f91b71cad47c61f1785fb7b33c0007ee",
+      "event_hash": "69e93d95ba7f7b7b01050974d9e6817e1475e998e0c6229676347a80817610fd",
+      "classification": 0,
+      "created_at": "2026-10-05T16:21:03.318103+00:00",
+      "tenant_id": "test-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fa2416f55095"
+    }
+  ]
+}

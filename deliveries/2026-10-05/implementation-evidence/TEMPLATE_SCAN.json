@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "reason": "NO_RULE_FINDINGS",
+  "findings": [],
+  "engine": "Semgrep CE",
+  "version": "1.179.0",
+  "rules_hash": "59ea979476b1076bf84153f377b35d9529c354dca17a1c11e8b7fa27d11963eb",
+  "source_hash": "92c8f7496fc15eb9de506baf17fd11fc288ee0cb7e239b4aac0d11549bac45c7",
+  "profile": "checker-scan-v1",
+  "cleanup": "REMOVED",
+  "image": "sha256:a35b3db6cc6c0663069d815f6c29aa57533719a4b95a1a23fc43ab2a55c4f0fe",
+  "handle": "ffs-4fcfa336d8315a8a78c337367dd21251",
+  "identity": {
+    "scope": {
+      "tenant_id": "scanner-fixture",
+      "workspace_id": "local",
+      "project_id": "aurora"
+    },
+    "run_id": "template-scan",
+    "step_id": "scan",
+    "attempt": 1
+  },
+  "inspect": {
+    "user": "10001:10001",
+    "readonly_rootfs": true,
+    "network": "none",
+    "memory": 536870912,
+    "memory_swap": 536870912,
+    "pids_limit": 64,
+    "nano_cpus": 1000000000,
+    "log_driver": "none",
+    "cap_drop": [
+      "ALL"
+    ],
+    "security_opt": [
+      "no-new-privileges=true"
+    ],
+    "tmpfs": {
+      "/tmp": "rw,nosuid,nodev,noexec,size=67108864,uid=10001,gid=10001,mode=0700",
+      "/work": "rw,nosuid,nodev,noexec,size=16777216,uid=10001,gid=10001,mode=0700"
+    },
+    "mount_count": 0
+  },
+  "stderr": "",
+  "engine_executed": true,
+  "errors": [],
+  "raw_output_hash": "438db627bd072522540d9ad5c5452e0f1980a1ff6db534847389570edbc7a148"
+}
