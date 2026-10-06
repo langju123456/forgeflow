@@ -27,6 +27,7 @@ WORKER = Principal(subject_id="forgeflow-local-worker", kind="service", scopes=(
                    roles=frozenset({"worker", "memory_writer", "hardware"}))
 # Evaluation harnesses that need APPROVED on a private throwaway SQLite database.
 HARNESS_STORE_CONSTRUCTORS = {"scripts/s2b_evaluate.py", "preparation/s2/evaluation/evaluator.py"}
+LIVE_DATABASE_MARKERS = ("database_url", "FORGEFLOW_DATABASE_URL", ".runtime", "load_store", "dev.env", "postgres")
 
 
 @pytest.fixture
@@ -123,7 +124,6 @@ def test_http_route_and_store_use_one_shared_gate_function():
 
 def test_load_store_returns_the_gated_implementation(store):
     from forgeflow.evt_store import EVTBoundStore
-
     from forgeflow.fabric_runtime import FabricStore
 
     assert isinstance(store, EVTBoundStore)
@@ -160,3 +160,9 @@ def test_only_the_two_known_evaluation_harnesses_build_the_base_store_outside_th
             if "__pycache__" not in path.parts and _store_uses(path)[0]:
                 found.add(str(path.relative_to(ROOT)))
     assert found == HARNESS_STORE_CONSTRUCTORS
+
+
+def test_whitelisted_harnesses_never_reach_the_live_database_or_runtime_credentials():
+    for name in HARNESS_STORE_CONSTRUCTORS:
+        text = (ROOT / name).read_text(encoding="utf-8")
+        assert [marker for marker in LIVE_DATABASE_MARKERS if marker in text] == [], name

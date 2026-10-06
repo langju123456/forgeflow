@@ -37,6 +37,7 @@ from .contracts import (
     authorize,
     digest,
 )
+from .evt_store import EVTBoundStore
 from .gate import RULE_HASH, evaluate
 from .grounded_context import FROZEN_CASES_SHA256, FROZEN_SCOPE, _read_cases, _scenario
 from .policy import POLICY_HASH, execution_policy
@@ -366,7 +367,7 @@ class S2CInputProvider:
                 raise DomainError("DERIVED_CHECK_SCAN_UNCONFIRMED")
 
 
-class _BoundCompletionStore(Store):
+class _BoundCompletionStore(EVTBoundStore):
     def __init__(self, provider, principal, result, assessment, snapshot):
         # Share the existing engine and transaction lock, never create a second DB.
         self.__dict__.update(provider.store.__dict__)

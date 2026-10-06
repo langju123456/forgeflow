@@ -10,6 +10,7 @@ from .api import Decision
 from .contracts import DomainError, Principal, Scope, StrictModel, authorize
 from .evt_contract import DEFAULT_POLICY
 from .evt_review import REVISION, EVTReviews
+from .evt_store import legacy_approval_gate
 from .prototype_api import create_prototype_app
 
 
@@ -99,8 +100,7 @@ def create_evt_app(source, identities, factory, *, test_harness=False):
     @app.post("/approvals/{approval_id}/decision")
     def legacy_decision(approval_id: str, body: Decision, principal: Principal = principal_dependency):
         authorize(principal, body.scope, {"reviewer"})
-        if body.decision == "APPROVED":
-            raise DomainError("EVT_BOUND_APPROVAL_REQUIRED", status=409)
+        legacy_approval_gate(body.decision)
         return source.decide(principal, body.scope, approval_id, body.proposal_hash,
                              body.expected_run_revision, "REJECTED")
 
