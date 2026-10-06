@@ -227,3 +227,13 @@ def test_existing_output_never_changes_original_review(tmp_path):
     with pytest.raises(RuntimeError, match="USE_NEW_REGRADE_DIRECTORY"):
         review.review_experiment(ARCHIVE, tmp_path)
     assert _hashes(tmp_path) == {"KEEP.txt": hashlib.sha256(b"immutable").hexdigest()}
+
+
+def test_working_tree_edits_to_frozen_files_do_not_break_the_replay(tmp_path, monkeypatch):
+    """Frozen files are read from the anchor commit; only the review code is checked in the working tree."""
+    original, output = tmp_path / "original", tmp_path / "new-review"
+    _copy_archive(original)
+    real = review._source_hashes
+    monkeypatch.setattr(review, "_source_hashes",
+                        lambda freeze, sha: {**real(freeze, sha), "src/forgeflow/local.py": "0" * 64})
+    assert review.review_experiment(original, output)["regraded_frozen_acceptance_counts"]["PASS"] == 13

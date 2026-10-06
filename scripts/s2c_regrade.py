@@ -19,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVISION = "s2c-nested-binding-canonical-regrade-v1"
+REVIEW_PATHS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
 ANCHOR_SCHEMA = "forgeflow-freeze-git-anchor-v1"
 ANCHOR_PATH = ROOT / "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json"
 MODEL_SCENARIOS = ("M01", "M01-blocked", "M02", "M03", "M04")
@@ -254,8 +255,7 @@ def _source_hashes(freeze, freeze_sha256, *, anchor_path=None, repo=None):
     for name, expected in source.items():
         committed = _anchored_source_bytes(repo, anchor["git_commit"], name)
         _require(hashlib.sha256(committed).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
-    review_paths = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
-    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in review_paths})
+    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in REVIEW_PATHS})
     return source
 
 
@@ -367,8 +367,9 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
         _require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(experiment_dir.resolve())
                  and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
                  "SOURCE_EVIDENCE_CHANGED_DURING_REGRADE")
-    for name, expected in sources.items():
-        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected,
+    # The frozen files are immutable at the anchor commit; only the review code lives in the working tree.
+    for name in REVIEW_PATHS:
+        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == sources[name],
                  "REVIEW_SOURCE_CHANGED_DURING_REGRADE")
     output_dir.mkdir(parents=True)
     _write_new(output_dir / "review-freeze.json", review_freeze)
