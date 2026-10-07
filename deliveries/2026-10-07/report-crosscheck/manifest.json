@@ -1,0 +1,10 @@
+{
+  "kind": "READ_ONLY_ATTACHED_REPORT_CROSSCHECK",
+  "source_attachment_sha256": "52db3e3c3fc5092be58cafc69b2c20850a7f0edfddb26d7555e5f6b29d737cc5",
+  "review_sha256": "931a09d973c37b70cd429f2795c64370280b3d6710a0ad215bbb357f63a93691",
+  "git_head": "cbfcdaac1fbb3058b8b2ceb01c53f98dbb62f0f6",
+  "new_tests_run": 0,
+  "source_code_changes": 0,
+  "runtime_mutations": 0,
+  "external_writes": 0
+}

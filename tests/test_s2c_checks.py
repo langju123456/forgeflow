@@ -14,6 +14,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from forgeflow import contracts
 from forgeflow.analysis_context import ROOT, SOP_CONTENT, SYNTHETIC_SCOPE
 from forgeflow.context import KnowledgeService, MemoryService
 from forgeflow.contracts import (
@@ -397,6 +398,7 @@ def test_frozen_clock_only_evaluates_synthetic_facts_not_current_authorization(e
     _, provider, scope, owner, *_ = env
     run = submitted(env)
     loaded = provider.load_run(owner, scope, run["id"])
-    result = evaluate(loaded["manifest"], {"status": "SUCCEEDED", "cleanup": "REMOVED"})
+    result = evaluate(loaded["manifest"], {"status": "SUCCEEDED", "cleanup": "REMOVED"},
+                      now=contracts.utcnow())
     assert result["status"] == "UNKNOWN"
     assert loaded["witness"]["evaluation_clock_kind"] == "FROZEN_SYNTHETIC"

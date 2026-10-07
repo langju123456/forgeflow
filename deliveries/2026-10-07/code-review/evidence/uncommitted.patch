@@ -1,0 +1,448 @@
+diff --git a/src/forgeflow/analysis_context.py b/src/forgeflow/analysis_context.py
+index fae5d03..7ae3b6c 100644
+--- a/src/forgeflow/analysis_context.py
++++ b/src/forgeflow/analysis_context.py
+@@ -10,11 +10,12 @@ from __future__ import annotations
+ import copy
+ import hashlib
+ from dataclasses import asdict, dataclass, replace
+-from datetime import UTC, datetime
++from datetime import datetime
+ from pathlib import Path
+ 
+ from sqlalchemy import select
+ 
++from . import contracts
+ from .analysis_contracts import ContextProposal, RoleReport, parse_output, strict_json_object
+ from .context import KnowledgeService, MemoryService
+ from .contracts import DomainError, ExecutionResult, Principal, Scope, authorize, canonical, digest
+@@ -586,10 +587,10 @@ class AnalysisContextBuilder:
+             or run["snapshot_hash"] != digest(snapshot)
+             or completed[0]["payload"].get("result_hash") != digest(result)
+             or completed[0]["payload"].get("assessment_hash") != digest(assessment)
+-            or digest(evaluate(manifest, result)) != digest(assessment)
++            or digest(evaluate(manifest, result, now=contracts.utcnow())) != digest(assessment)
+         ):
+             raise DomainError("SOURCE_CHANGED")
+-        now = self.store._now(session) if session is not None else datetime.now(UTC)
++        now = self.store._now(session) if session is not None else contracts.utcnow()
+         _fresh(snapshot.get("valid_until"), now)
+         for metric in manifest.get("metrics", {}).values():
+             _fresh(metric.get("valid_until"), now)
+diff --git a/src/forgeflow/analysis_workflow.py b/src/forgeflow/analysis_workflow.py
+index b7c00dc..69a3b90 100644
+--- a/src/forgeflow/analysis_workflow.py
++++ b/src/forgeflow/analysis_workflow.py
+@@ -12,6 +12,7 @@ import copy
+ from datetime import UTC, datetime
+ from uuid import uuid4
+ 
++from . import contracts
+ from .analysis_context import ANALYSIS_POLICY_HASH, PROFILE_ID
+ from .analysis_contracts import compact_schema
+ from .analysis_provider import MODEL_DIGEST
+@@ -244,7 +245,7 @@ class AnalysisWorkflow:
+         if bound > 3500:
+             raise DomainError("INPUT_CONSERVATIVE_BOUND_EXCEEDED", status=422)
+         material = self._material(active, *(sources or (bundle,)))
+-        now = datetime.now(UTC)
++        now = contracts.utcnow()
+         remaining = min(
+             60.0,
+             (_instant(lease["expires_at"]) - now).total_seconds(),
+diff --git a/src/forgeflow/context.py b/src/forgeflow/context.py
+index 7aa9bd5..24949d6 100644
+--- a/src/forgeflow/context.py
++++ b/src/forgeflow/context.py
+@@ -9,9 +9,10 @@ from __future__ import annotations
+ 
+ import re
+ from collections import Counter, defaultdict
+-from datetime import UTC, datetime
++from datetime import datetime
+ from typing import Protocol
+ 
++from . import contracts
+ from .contracts import ContextHit, DomainError, Principal, Scope, authorize
+ 
+ 
+@@ -117,7 +118,7 @@ def _hits(
+     kind: str,
+     rows: list[dict],
+ ) -> list[ContextHit]:
+-    now = datetime.now(UTC)
++    now = contracts.utcnow()
+     rows = _active_rows(rows, principal, scope, kind)
+     groups: dict[str, list[dict]] = defaultdict(list)
+     for row in rows:
+diff --git a/src/forgeflow/domain_checks.py b/src/forgeflow/domain_checks.py
+index 581b5ad..aec5a2a 100644
+--- a/src/forgeflow/domain_checks.py
++++ b/src/forgeflow/domain_checks.py
+@@ -13,8 +13,9 @@ from datetime import datetime
+ from pathlib import Path
+ from typing import Literal
+ 
++from . import contracts
+ from .analysis_contracts import strict_json_object
+-from .contracts import DomainError, Scope, digest, utcnow
++from .contracts import DomainError, Scope, digest
+ from .local import SCOPE
+ from .sre_ops import evaluate_operations, source_binding
+ 
+@@ -159,7 +160,7 @@ def _bom_evidence(run, manifest):
+         return None, "HARDWARE_BOM_MISSING_OR_UNBOUND"
+     try:
+         result, snapshot = run.get("result_json") or {}, run.get("snapshot_json") or {}
+-        now = utcnow()
++        now = contracts.utcnow()
+         # Only a bound synthetic fixture can carry this trusted server snapshot clock.
+         if manifest.get("synthetic") is True and result.get("synthetic") is True and snapshot.get("evaluation_clock"):
+             now = datetime.fromisoformat(snapshot["evaluation_clock"].replace("Z", "+00:00"))
+diff --git a/src/forgeflow/workflow.py b/src/forgeflow/workflow.py
+index 697f2ce..02092a2 100644
+--- a/src/forgeflow/workflow.py
++++ b/src/forgeflow/workflow.py
+@@ -12,6 +12,7 @@ import json
+ from datetime import datetime
+ from pathlib import Path
+ 
++from . import contracts
+ from .contracts import DomainError, ExecutionResult, ExecutionSpec, Principal, Scope, digest
+ from .gate import RULE_HASH, evaluate
+ from .policy import POLICY_HASH, execution_policy
+@@ -176,7 +177,7 @@ class Workflow:
+         if result.status == "SUCCEEDED" and not verify_checker_artifact(result, manifest):
+             result_dict.update(status="FAILED", reason="Independent artifact verification failed")
+         # No model/program self-report can override these independently held rules/input facts.
+-        assessment = evaluate(manifest, result_dict)
++        assessment = evaluate(manifest, result_dict, now=contracts.utcnow())
+         report = {
+             **result_dict,
+             "scan": scan,
+diff --git a/tests/test_analysis_context.py b/tests/test_analysis_context.py
+index 61287d7..615ab8e 100644
+--- a/tests/test_analysis_context.py
++++ b/tests/test_analysis_context.py
+@@ -6,13 +6,13 @@ import copy
+ import hashlib
+ import json
+ from dataclasses import replace
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ 
+ import pytest
+ from sqlalchemy import select
+ from sqlalchemy.orm import Session
+ 
+-from forgeflow import context
++from forgeflow import context, contracts
+ from forgeflow.analysis_context import (
+     ANALYSIS_POLICY_HASH,
+     PROFILE_ID,
+@@ -194,7 +194,7 @@ def test_document_expiry_invalidates_existing_context(env):
+                 *filters(DocumentVersion, scope), DocumentVersion.document_id == "aurora-evt-sop"
+             )
+         )
+-        version.valid_until = datetime.now(UTC) - timedelta(days=1)
++        version.valid_until = contracts.utcnow() - timedelta(days=1)
+     error("EVIDENCE_EXPIRED", lambda: builder.revalidate(bundle))
+ 
+ 
+diff --git a/tests/test_analysis_store.py b/tests/test_analysis_store.py
+index 6a15548..45735fa 100644
+--- a/tests/test_analysis_store.py
++++ b/tests/test_analysis_store.py
+@@ -1,7 +1,7 @@
+ """S2 durability/ACL/fault invariants. No provider, inference, or business effects."""
+ 
+ from concurrent.futures import ThreadPoolExecutor
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ from uuid import uuid4
+ 
+ import pytest
+@@ -9,6 +9,7 @@ from sqlalchemy import select
+ from sqlalchemy.exc import IntegrityError
+ from sqlalchemy.orm import Session
+ 
++from forgeflow import contracts
+ from forgeflow.analysis_store import AnalysisCall, AnalysisProviderSlot, AnalysisRun, AnalysisStore
+ from forgeflow.contracts import DomainError, Principal, RunRequest, Scope
+ from forgeflow.store import Document, Run, Store, filters
+@@ -117,7 +118,7 @@ def expire(env, row, *, global_deadline=False):
+         item = session.scalar(
+             select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"])
+         )
+-        item.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
++        item.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
+         if global_deadline:
+             item.deadline = item.lease_expires_at
+ 
+@@ -542,7 +543,7 @@ def test_complete_cannot_skip_required_roles_and_phases(env):
+ def test_db_deadline_and_expired_export_prevent_dispatch(env):
+     _s, a, scope, p, _run_id, material = env
+     row, lease = started(env)
+-    expired = {**material, "export_grant_expires_at": (datetime.now(UTC) - timedelta(minutes=1)).isoformat()}
++    expired = {**material, "export_grant_expires_at": (contracts.utcnow() - timedelta(minutes=1)).isoformat()}
+     error("ANALYSIS_DEADLINE", lambda: reserve(env, row, lease, material=expired))
+     expire(env, row, global_deadline=True)
+     error("STALE_ANALYSIS_LEASE", lambda: reserve(env, row, lease))
+@@ -780,7 +781,7 @@ def test_locked_load_refreshes_orm_cache_after_claim_interleaving(env, monkeypat
+                 lease_epoch=1,
+                 lease_owner="claim-a",
+                 lease_token="token-a",
+-                lease_expires_at=datetime.now(UTC) + timedelta(seconds=120),
++                lease_expires_at=contracts.utcnow() + timedelta(seconds=120),
+             )
+             .execution_options(synchronize_session=False)
+         )
+diff --git a/tests/test_analysis_workflow.py b/tests/test_analysis_workflow.py
+index 8331e23..b4f9747 100644
+--- a/tests/test_analysis_workflow.py
++++ b/tests/test_analysis_workflow.py
+@@ -8,13 +8,14 @@ import asyncio
+ import copy
+ import json
+ import shutil
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ from pathlib import Path
+ 
+ import httpx
+ import pytest
+ from sqlalchemy import select
+ 
++from forgeflow import contracts
+ from forgeflow.analysis_context import SOP_CONTENT, SYNTHETIC_SCOPE, AnalysisContextBuilder
+ from forgeflow.analysis_provider import MODEL, MODEL_DIGEST, OllamaProvider
+ from forgeflow.analysis_store import AnalysisCall, AnalysisRun, AnalysisStore
+@@ -342,7 +343,7 @@ async def test_process_interrupt_preserves_unknown_without_automatic_recovery_re
+         ledger.recover(caller, scope, replay["id"])
+     with ledger.store._tx() as session:
+         row = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope)))
+-        row.lease_expires_at = datetime.now(UTC) - timedelta(seconds=1)
++        row.lease_expires_at = contracts.utcnow() - timedelta(seconds=1)
+     assert ledger.recover(caller, scope, replay["id"])["state"] == "OUTCOME_UNKNOWN"
+ 
+ 
+diff --git a/tests/test_clock.py b/tests/test_clock.py
+index 97b894a..a33391e 100644
+--- a/tests/test_clock.py
++++ b/tests/test_clock.py
+@@ -12,6 +12,9 @@ from forgeflow.store import Store
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ CLOCK_FILES = {"clock_contract.py", "conftest.py"}
++# gate.py keeps a datetime.now default: it is pinned by preparation/s2/model-evaluation/freeze.json, so it
++# cannot change. Instead every call to gate.evaluate in the package must pass now= (checked below).
++PINNED_FILES = {"gate.py"}
+ 
+ 
+ def close(first, second):
+@@ -79,11 +82,21 @@ def _clock_reads(path, *, allow_definition=False):
+ 
+ def test_package_code_reads_time_only_through_contracts_utcnow():
+     offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
+-                 for path in sorted((ROOT / "src/forgeflow").glob("*.py"))
++                 for path in sorted((ROOT / "src/forgeflow").glob("*.py")) if path.name not in PINNED_FILES
+                  for line, what in _clock_reads(path, allow_definition=path.name == "contracts.py")]
+     assert offenders == []
+ 
+ 
++def test_every_gate_evaluation_in_the_package_passes_the_clock_explicitly():
++    offenders = []
++    for path in sorted((ROOT / "src/forgeflow").glob("*.py")):
++        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
++            if (isinstance(node, ast.Call) and getattr(node.func, "id", None) == "evaluate"
++                    and "now" not in {keyword.arg for keyword in node.keywords}):
++                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno}")
++    assert offenders == []
++
++
+ def test_tests_read_time_only_through_contracts_utcnow():
+     offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
+                  for path in sorted((ROOT / "tests").glob("*.py")) if path.name not in CLOCK_FILES
+diff --git a/tests/test_domain_checks.py b/tests/test_domain_checks.py
+index a99e2ea..640f907 100644
+--- a/tests/test_domain_checks.py
++++ b/tests/test_domain_checks.py
+@@ -203,7 +203,7 @@ def test_synthetic_bound_clock_is_honored_but_non_synthetic_result_cannot_choose
+     run, events = parent()
+     run["snapshot_json"]["evaluation_clock"] = "2026-10-05T12:00:00Z"
+     rebind_manifest(run, events, lambda manifest: None)
+-    monkeypatch.setattr("forgeflow.domain_checks.utcnow", lambda: datetime(2027, 1, 1, tzinfo=UTC))
++    monkeypatch.setattr("forgeflow.contracts.utcnow", lambda: datetime(2027, 1, 1, tzinfo=UTC))
+     assert checks(evaluate(run=run, events=events), "architect")["hardware_android_bom"]["status"] == "PASS"
+     run["result_json"]["synthetic"] = False
+     rebind_manifest(run, events, lambda manifest: None)
+diff --git a/tests/test_fabric_store.py b/tests/test_fabric_store.py
+index 81f7437..f26d221 100644
+--- a/tests/test_fabric_store.py
++++ b/tests/test_fabric_store.py
+@@ -14,7 +14,8 @@ from fastapi.testclient import TestClient
+ from sqlalchemy import DateTime, func, select
+ from test_fabric_contract import offline_parent, refresh_bindings
+ 
+-from forgeflow.contracts import DomainError, Principal, Scope, utcnow
++from forgeflow import contracts
++from forgeflow.contracts import DomainError, Principal, Scope
+ from forgeflow.fabric_api import create_fabric_app
+ from forgeflow.fabric_contract import FABRIC_SCOPE
+ from forgeflow.fabric_runtime import FabricStore
+@@ -63,7 +64,7 @@ def db(tmp_path):
+                              roles=frozenset({"fabric_executor", "memory_writer", "hardware"}), scopes=(FABRIC_SCOPE,))
+         source.ensure_project(FABRIC_SCOPE)
+         run, events = offline_parent()
+-        validity = (utcnow() + timedelta(days=1)).isoformat()
++        validity = (contracts.utcnow() + timedelta(days=1)).isoformat()
+         run["snapshot_json"]["valid_until"] = validity
+         run["assessment_json"]["status"] = hardware_status
+         for reference in run["snapshot_json"]["documents"]:
+@@ -136,7 +137,7 @@ def item(db, item_id):
+ 
+ def advance_document(db):
+     db.source.put_document(db.owner, db.scope, "aurora-evt-sop", "v2", DOC_CONTENT + " New version.",
+-                           DOC_ROLES, 0, valid_until=(utcnow() + timedelta(days=1)).isoformat())
++                           DOC_ROLES, 0, valid_until=(contracts.utcnow() + timedelta(days=1)).isoformat())
+ 
+ 
+ def test_review_and_core_prepare_do_not_execute_or_mint_hardware_only_approvals(db):
+diff --git a/tests/test_grounded_store.py b/tests/test_grounded_store.py
+index 77e4113..358ebf7 100644
+--- a/tests/test_grounded_store.py
++++ b/tests/test_grounded_store.py
+@@ -2,7 +2,7 @@
+ 
+ from concurrent.futures import ThreadPoolExecutor
+ from copy import deepcopy
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ from uuid import uuid4
+ 
+ import pytest
+@@ -10,6 +10,7 @@ from sqlalchemy import inspect, select
+ from sqlalchemy.exc import IntegrityError
+ from sqlalchemy.orm import Session
+ 
++from forgeflow import contracts
+ from forgeflow.analysis_store import AnalysisCall, AnalysisRun, AnalysisStore
+ from forgeflow.contracts import DomainError, Principal, RunRequest, Scope, digest
+ from forgeflow.grounded_contracts import QUESTION, render
+@@ -436,7 +437,7 @@ def test_capture_commits_exact_reply_before_grading_and_survives_crash_recovery(
+     # TEST_DRIVER crash: the worker vanishes after capture and before finish.
+     with Session(store.engine) as session, session.begin():
+         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
+-        item.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
++        item.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
+     recovered = analysis.recover(p, scope, row["id"])
+     assert recovered["state"] == "OUTCOME_UNKNOWN"
+     expect("ANALYSIS_CALL_TERMINAL", lambda: finish(env, row, lease, call, plan()))
+diff --git a/tests/test_mcp_bridge.py b/tests/test_mcp_bridge.py
+index 9da5a29..06d9b93 100644
+--- a/tests/test_mcp_bridge.py
++++ b/tests/test_mcp_bridge.py
+@@ -6,6 +6,9 @@ from test_sandbox import spec
+ from forgeflow.contracts import Principal, Scope
+ from forgeflow.mcp_bridge import MCPBridge
+ 
++# The stdio server is a subprocess that checks expires_at and lease_deadline against its own real clock.
++pytestmark = pytest.mark.real_clock
++
+ 
+ def principal(role="hardware", scope=None):
+     return Principal(subject_id=role, kind="agent", roles={role}, scopes=(scope or spec().scope,))
+diff --git a/tests/test_s2c_store.py b/tests/test_s2c_store.py
+index babf3d6..a9652a3 100644
+--- a/tests/test_s2c_store.py
++++ b/tests/test_s2c_store.py
+@@ -1,7 +1,7 @@
+ """TEST_DRIVER persistence: statusless model replies, server-owned completion."""
+ 
+ import copy
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ 
+ import pytest
+ from sqlalchemy import select
+@@ -10,6 +10,7 @@ from test_grounded_store import authorized, catalog, expect, plan
+ from test_grounded_store import env as old_environment
+ from test_s2c_contracts import selection
+ 
++from forgeflow import contracts
+ from forgeflow.analysis_store import AnalysisCall, AnalysisRun
+ from forgeflow.contracts import DomainError, canonical, digest
+ from forgeflow.grounded_store import GroundedStore, GroundingRecord, RawProviderReply
+@@ -184,11 +185,11 @@ def test_current_revocation_cancellation_and_stale_lease_block_completion(env):
+     expect("ANALYSIS_SOURCE_CHANGED", lambda: complete(env, row, lease, final, reauthorize=revoked))
+     with Session(source.engine) as session, session.begin():
+         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
+-        item.lease_expires_at = datetime.now(UTC) - timedelta(seconds=1)
++        item.lease_expires_at = contracts.utcnow() - timedelta(seconds=1)
+     expect("STALE_ANALYSIS_LEASE", lambda: complete(env, row, lease, final))
+     with Session(source.engine) as session, session.begin():
+         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
+-        item.lease_expires_at = datetime.now(UTC) + timedelta(seconds=60)
++        item.lease_expires_at = contracts.utcnow() + timedelta(seconds=60)
+     analysis.cancel(p, scope, row["id"])
+     expect("ANALYSIS_CANCEL_REQUESTED", lambda: complete(env, row, lease, final))
+ 
+diff --git a/tests/test_store.py b/tests/test_store.py
+index 16029dd..a56d17e 100644
+--- a/tests/test_store.py
++++ b/tests/test_store.py
+@@ -2,7 +2,7 @@
+ 
+ import os
+ from concurrent.futures import ThreadPoolExecutor
+-from datetime import UTC, datetime, timedelta
++from datetime import timedelta
+ from uuid import uuid4
+ 
+ import pytest
+@@ -10,6 +10,7 @@ from sqlalchemy import select
+ from sqlalchemy.exc import IntegrityError
+ from sqlalchemy.orm import Session
+ 
++from forgeflow import contracts
+ from forgeflow.contracts import DomainError, Principal, RunRequest, Scope, digest
+ from forgeflow.store import Approval, Artifact, Event, Run, Step, Store, filters, values
+ 
+@@ -87,7 +88,7 @@ def expire(store, scope, run_id):
+         row = s.scalar(
+             select(Step).where(*filters(Step, scope), Step.run_id == run_id, Step.lease_token.is_not(None))
+         )
+-        row.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
++        row.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
+ 
+ 
+ def test_concurrent_idempotency_and_subject_namespace(env):
+@@ -307,7 +308,7 @@ def test_approval_hash_revision_expiry_and_agent_denial(env):
+     )
+     with Session(store.engine) as s, s.begin():
+         row = s.scalar(select(Approval).where(*filters(Approval, scope), Approval.id == approval["id"]))
+-        row.expires_at = datetime.now(UTC) - timedelta(seconds=5)
++        row.expires_at = contracts.utcnow() - timedelta(seconds=5)
+     expect_error(
+         "APPROVAL_EXPIRED",
+         lambda: store.decide(
+diff --git a/tests/test_workflow_live.py b/tests/test_workflow_live.py
+index f2484a7..9bd9d0b 100644
+--- a/tests/test_workflow_live.py
++++ b/tests/test_workflow_live.py
+@@ -20,9 +20,12 @@ from forgeflow.local import load_workflow
+ from forgeflow.store import Store
+ from forgeflow.templates import template_hash
+ 
+-pytestmark = pytest.mark.skipif(
+-    os.environ.get("FORGEFLOW_LIVE") != "1", reason="Opt-in requires task-local Docker and PostgreSQL"
+-)
++pytestmark = [
++    pytest.mark.skipif(
++        os.environ.get("FORGEFLOW_LIVE") != "1", reason="Opt-in requires task-local Docker and PostgreSQL"
++    ),
++    pytest.mark.real_clock,  # real Docker, PostgreSQL and subprocesses compare timestamps with their own clock
++]
+ 
+ 
+ def setup_chain():

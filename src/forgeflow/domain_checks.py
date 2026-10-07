@@ -13,8 +13,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
+from . import contracts
 from .analysis_contracts import strict_json_object
-from .contracts import DomainError, Scope, digest, utcnow
+from .contracts import DomainError, Scope, digest
 from .local import SCOPE
 from .sre_ops import evaluate_operations, source_binding
 
@@ -159,7 +160,7 @@ def _bom_evidence(run, manifest):
         return None, "HARDWARE_BOM_MISSING_OR_UNBOUND"
     try:
         result, snapshot = run.get("result_json") or {}, run.get("snapshot_json") or {}
-        now = utcnow()
+        now = contracts.utcnow()
         # Only a bound synthetic fixture can carry this trusted server snapshot clock.
         if manifest.get("synthetic") is True and result.get("synthetic") is True and snapshot.get("evaluation_clock"):
             now = datetime.fromisoformat(snapshot["evaluation_clock"].replace("Z", "+00:00"))

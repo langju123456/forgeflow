@@ -20,9 +20,12 @@ from forgeflow.local import load_workflow
 from forgeflow.store import Store
 from forgeflow.templates import template_hash
 
-pytestmark = pytest.mark.skipif(
-    os.environ.get("FORGEFLOW_LIVE") != "1", reason="Opt-in requires task-local Docker and PostgreSQL"
-)
+pytestmark = [
+    pytest.mark.skipif(
+        os.environ.get("FORGEFLOW_LIVE") != "1", reason="Opt-in requires task-local Docker and PostgreSQL"
+    ),
+    pytest.mark.real_clock,  # real Docker, PostgreSQL and subprocesses compare timestamps with their own clock
+]
 
 
 def setup_chain():

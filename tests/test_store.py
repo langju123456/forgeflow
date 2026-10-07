@@ -2,7 +2,7 @@
 
 import os
 from concurrent.futures import ThreadPoolExecutor
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from uuid import uuid4
 
 import pytest
@@ -10,6 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from forgeflow import contracts
 from forgeflow.contracts import DomainError, Principal, RunRequest, Scope, digest
 from forgeflow.store import Approval, Artifact, Event, Run, Step, Store, filters, values
 
@@ -87,7 +88,7 @@ def expire(store, scope, run_id):
         row = s.scalar(
             select(Step).where(*filters(Step, scope), Step.run_id == run_id, Step.lease_token.is_not(None))
         )
-        row.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
+        row.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
 
 
 def test_concurrent_idempotency_and_subject_namespace(env):
@@ -307,7 +308,7 @@ def test_approval_hash_revision_expiry_and_agent_denial(env):
     )
     with Session(store.engine) as s, s.begin():
         row = s.scalar(select(Approval).where(*filters(Approval, scope), Approval.id == approval["id"]))
-        row.expires_at = datetime.now(UTC) - timedelta(seconds=5)
+        row.expires_at = contracts.utcnow() - timedelta(seconds=5)
     expect_error(
         "APPROVAL_EXPIRED",
         lambda: store.decide(

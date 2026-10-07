@@ -12,6 +12,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from . import contracts
 from .contracts import DomainError, ExecutionResult, ExecutionSpec, Principal, Scope, digest
 from .gate import RULE_HASH, evaluate
 from .policy import POLICY_HASH, execution_policy
@@ -176,7 +177,7 @@ class Workflow:
         if result.status == "SUCCEEDED" and not verify_checker_artifact(result, manifest):
             result_dict.update(status="FAILED", reason="Independent artifact verification failed")
         # No model/program self-report can override these independently held rules/input facts.
-        assessment = evaluate(manifest, result_dict)
+        assessment = evaluate(manifest, result_dict, now=contracts.utcnow())
         report = {
             **result_dict,
             "scan": scan,

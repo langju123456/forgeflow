@@ -1,0 +1,321 @@
+{
+  "reviewed_at": "2026-10-07T13:26:10.354216+08:00",
+  "baseline": "a185c622108779c85b308402568bf776af02eef3",
+  "head": "cbfcdaac1fbb3058b8b2ceb01c53f98dbb62f0f6",
+  "branch": "fix/fixture-expiry",
+  "master": "d5bc3eb44da2b5f155603ff17690c37ef5b9c76e",
+  "fix_commit_count_after_baseline": 8,
+  "commit_history": [
+    {
+      "commit": "cbfcdaac1fbb3058b8b2ceb01c53f98dbb62f0f6",
+      "authored": "2026-10-07T11:05:43+08:00",
+      "subject": "test: one shifted clock for the test session (fails before the clock exists)"
+    },
+    {
+      "commit": "d5bc3eb44da2b5f155603ff17690c37ef5b9c76e",
+      "authored": "2026-10-07T10:00:56+08:00",
+      "subject": "Merge fix/legacy-approval-bypass: block legacy hardware-only approvals at the Store"
+    },
+    {
+      "commit": "8fd4047c7dcd2fd83f23ac11861d99de47c823fb",
+      "authored": "2026-10-07T09:08:07+08:00",
+      "subject": "test: run the frozen replay with the anchor commit's own code"
+    },
+    {
+      "commit": "ac14c00e0cdb2df89c6b77e16c257c809ced7843",
+      "authored": "2026-10-07T09:06:26+08:00",
+      "subject": "fix: HTTP legacy decision route defers to the Store so blocked attempts are audited"
+    },
+    {
+      "commit": "1491a8e5649260c8073b065c41c13023df3c5a17",
+      "authored": "2026-10-07T07:37:41+08:00",
+      "subject": "fix: block legacy hardware-only approvals at the Store, not only at one HTTP route"
+    },
+    {
+      "commit": "5d73a03dd3b073563565a9b5268ae9a2cda8e7b3",
+      "authored": "2026-10-07T07:37:41+08:00",
+      "subject": "fix: late regrade source check covers review code only"
+    },
+    {
+      "commit": "25d44adf16db3de01140db8a00d488bad9aa4014",
+      "authored": "2026-10-07T07:34:09+08:00",
+      "subject": "fix: anchor the S2C frozen-source check to the baseline git commit"
+    },
+    {
+      "commit": "7a24cd7857e94bccfa8be0677b7c33b5a33492bc",
+      "authored": "2026-10-06T23:22:16+08:00",
+      "subject": "test: legacy approvals must be blocked at the Store (fails on baseline)"
+    }
+  ],
+  "changed_paths_count_including_untracked_clock_fixture": 31,
+  "files": [
+    {
+      "path": "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json",
+      "sha256": "048fc4a46fa8fd066ea2b05f8150bda7d6618692d960cfa9eb5b6538c2d50a21",
+      "bytes": 1029,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "scripts/s2c_regrade.py",
+      "sha256": "008d3aa134c3fcdd7019d79fe283fafdd1588c80be86cb81e5dc5519655a9c3f",
+      "bytes": 25658,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/analysis_context.py",
+      "sha256": "fd0430435e32b9ea002c4127d659b06bbdb54f863a592f5883db36e0525e8ce2",
+      "bytes": 40285,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "src/forgeflow/analysis_workflow.py",
+      "sha256": "7670c496005f0e2418dd5847a4df09a5b702b77a3119b7321d53da23cf041297",
+      "bytes": 18967,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "src/forgeflow/context.py",
+      "sha256": "4ba7f741c70efb17342264594bf0e7b45237deb71175a9b0ca6064032bee92ff",
+      "bytes": 10097,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "src/forgeflow/domain_checks.py",
+      "sha256": "46e7ed6b662559bd1c8868eb2ffcf849e39306b4c3293c784a4eba0774245740",
+      "bytes": 15839,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "src/forgeflow/evt_api.py",
+      "sha256": "18b541571608d1b3c1bcfac8daec7038b32bf56cf5b6229edfb47e20cc802d8a",
+      "bytes": 5979,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/evt_store.py",
+      "sha256": "8395da5dde994e8e85a5d7038d8db3aac6cadf9ae1eece42fa953f1cbb0e58cf",
+      "bytes": 3058,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/fabric_runtime.py",
+      "sha256": "3f766330cdf1b11836da54f750725a0f02356679dfeda2d3f07b158f73ae1f74",
+      "bytes": 2519,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/fabric_store.py",
+      "sha256": "2f9f6c442e6315b170f7181029ef5f199b1fe11dab423d0dcbe494071d241554",
+      "bytes": 26215,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/local.py",
+      "sha256": "bafb6cdd86f155eb7bdc9f3367449531eb6d08d5ec26cfbee2fd82547e10a55b",
+      "bytes": 5974,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/s2c_checks.py",
+      "sha256": "88662f8ec156bcc65135e5b18f283d2b43bae0d4a3346b93212a781a5041188b",
+      "bytes": 27787,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "src/forgeflow/workflow.py",
+      "sha256": "36bd1122656bf1716ee83e9121c5534867fd9d5505cfc0cc97497a4a29c3dcfb",
+      "bytes": 13289,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/clock_contract.py",
+      "sha256": "962151f86e4fdd7412fa342f89cd5f1b185500c91effe54c63590a0d4a1a0014",
+      "bytes": 974,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "45d77ea892a63f4960f90bec733f5120e7b9e269f18d634086c74efbe38357b0",
+      "bytes": 1385,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_analysis_context.py",
+      "sha256": "565ceb00a91fa6d5186d0bb1ae675d803972c6fbc44dece5c312e921d9cc69af",
+      "bytes": 19907,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_analysis_store.py",
+      "sha256": "aafebdb58f1ea24192ac5ac7b48241c93e52d9e8cf9e5538aaffd923c62dedd0",
+      "bytes": 32164,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_analysis_workflow.py",
+      "sha256": "b18c1fd37a6ce330eda7ea1d697f37b32079a0084e7477e58d7c841bf0c60d1c",
+      "bytes": 21746,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_clock.py",
+      "sha256": "5946c1ad55e0c96aa51c423663705823c190c9e4e57d344783de8ecfb5aaceb0",
+      "bytes": 4056,
+      "committed_delta": true,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_domain_checks.py",
+      "sha256": "141b824f643ac85823257decf86de5c062cf518aa0aa8a16ddea06a62490100d",
+      "bytes": 9991,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_evt_review.py",
+      "sha256": "1cb24561ce73ceeed207de490c9fd9970a6bfbda755cf4c4fe84c379a5c4dc23",
+      "bytes": 11234,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/test_fabric_store.py",
+      "sha256": "53596345bbf2bd5c17528d631db9b90b334fcb531165c6d7fbf9a6809b5766eb",
+      "bytes": 20288,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_freeze_git_anchor.py",
+      "sha256": "1f5ea85f63c2aa341a44f00efbc634cdd63c0b7dd9366099868b6b16b10ff939",
+      "bytes": 5948,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/test_frozen_replay_at_anchor.py",
+      "sha256": "bff6ffedce14690a82484e0e789e00a414b5ce15a2bf3283157e08e1d2605a83",
+      "bytes": 4942,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/test_grounded_store.py",
+      "sha256": "dfd88a6a16d35854d56859b4645db5e4f6cea678fa04b982be6516644dc426e1",
+      "bytes": 27130,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_legacy_gate.py",
+      "sha256": "2a9490fbad228f3587bce1f444023af8ae411b03e7019058bf3c9f1d2fd3a05d",
+      "bytes": 10459,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/test_mcp_bridge.py",
+      "sha256": "108d8c683f6933a7ee725be655dbdd29fe2abce99b60fb5ca7a6e7765115478a",
+      "bytes": 4179,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_s2c_regrade.py",
+      "sha256": "87bf9e231c959868209d01506e8ce23accf222cf63e3d495cdea06339049ab71",
+      "bytes": 12992,
+      "committed_delta": true,
+      "uncommitted_delta": false
+    },
+    {
+      "path": "tests/test_s2c_store.py",
+      "sha256": "de93d1a2e25b8b5d45fdd2b8b5a4250241662d051330bab2a6a444ad2222228a",
+      "bytes": 12790,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_store.py",
+      "sha256": "f2a7bb614dad2e5fea31aeb2a9e23131eeb2f37544ea5311de35d4ca8ab4d067",
+      "bytes": 22092,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    },
+    {
+      "path": "tests/test_workflow_live.py",
+      "sha256": "0d240b953d6001bb3f41213ff936122bf72f812b161e7547e79f5100803ed3c6",
+      "bytes": 12640,
+      "committed_delta": false,
+      "uncommitted_delta": true
+    }
+  ],
+  "historical_manifest_checks": [
+    {
+      "manifest": "deliveries/2026-10-06/s2c-fixes/manifest.json",
+      "manifest_sha256": "8db84d5b5d1ef87316b825df27922d97e9fd98b7011d9fbbd339d81ff32565a5",
+      "baseline_anchor_mismatches": [],
+      "current_worktree_mismatches": [
+        "scripts/s2c_regrade.py",
+        "src/forgeflow/s2c_checks.py",
+        "tests/test_s2c_regrade.py",
+        "tests/test_s2c_store.py"
+      ]
+    },
+    {
+      "manifest": "deliveries/2026-10-06/s3-sre/manifest.json",
+      "manifest_sha256": "e2ca6aa9e231adb5d96d93935953d7399037c7ec3f18d9efa6ed12702961c932",
+      "baseline_anchor_mismatches": [],
+      "current_worktree_mismatches": []
+    },
+    {
+      "manifest": "deliveries/2026-10-06/s3-domain/manifest.json",
+      "manifest_sha256": "916352798c0fd4ef8e843f467219cc7d053a1ea7fd4f8a426431c0ec2ccd9358",
+      "baseline_anchor_mismatches": [],
+      "current_worktree_mismatches": [
+        "src/forgeflow/domain_checks.py",
+        "tests/test_domain_checks.py"
+      ]
+    },
+    {
+      "manifest": "deliveries/2026-10-06/s3-evt/manifest.json",
+      "manifest_sha256": "61b2dc00ca416bde2b721345ff827663167894210de2eb631b9ff6b14a7f903d",
+      "baseline_anchor_mismatches": [],
+      "current_worktree_mismatches": [
+        "src/forgeflow/evt_api.py",
+        "tests/test_evt_review.py"
+      ]
+    },
+    {
+      "manifest": "deliveries/2026-10-06/s3-fabric/manifest.json",
+      "manifest_sha256": "b9fd3420988c6e95c37dc0acd4bfb8c82a7e1a71ad08b3311af9fcc7f6c43b28",
+      "baseline_anchor_mismatches": [],
+      "current_worktree_mismatches": [
+        "src/forgeflow/fabric_runtime.py",
+        "src/forgeflow/fabric_store.py",
+        "tests/test_fabric_store.py"
+      ]
+    }
+  ],
+  "delivery_changes_vs_baseline": [
+    "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json"
+  ],
+  "scope": "PROJECT_GIT_AND_WORKTREE_ONLY_NO_PRIVATE_SESSION_READS"
+}

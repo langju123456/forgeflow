@@ -16,7 +16,7 @@ import importlib.util
 import json
 import tempfile
 from collections.abc import Awaitable, Callable
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -158,6 +158,7 @@ class _FaultProvider:
 
 def _fault_environment(path: Path, scenario: dict):
     """Create synthetic test state; no connection to the task's live database."""
+    from forgeflow import contracts
     from forgeflow.analysis_context import SOP_CONTENT, AnalysisContextBuilder, ExportGrant
     from forgeflow.analysis_store import AnalysisStore
     from forgeflow.analysis_workflow import ROLE_TOOLS, AnalysisWorkflow
@@ -202,7 +203,7 @@ def _fault_environment(path: Path, scenario: dict):
         "classification": 0, "valid_until": "2026-11-05T00:00:00Z",
     }
     parent = store.complete_check(
-        worker, scope, run["id"], lease["token"], lease["epoch"], execution, evaluate(manifest, execution), snapshot
+        worker, scope, run["id"], lease["token"], lease["epoch"], execution, evaluate(manifest, execution, now=contracts.utcnow()), snapshot
     )
     ledger = AnalysisStore(store)
     ledger.create_schema()
@@ -215,6 +216,7 @@ def _fault_environment(path: Path, scenario: dict):
 async def _execute_fault(scenario: dict, path: Path) -> dict:
     from sqlalchemy import select
 
+    from forgeflow import contracts
     from forgeflow.analysis_store import AnalysisProviderSlot, AnalysisRun
     from forgeflow.contracts import DomainError, ExecutionSpec, Principal, digest
     from forgeflow.mcp_bridge import MCPBridge
@@ -303,7 +305,7 @@ async def _execute_fault(scenario: dict, path: Path) -> dict:
         _require(not replay_provider.calls, "LOST_REPLY_WAS_REDISPATCHED")
         with store._tx() as session:
             row = session.scalar(select(AnalysisRun).where(AnalysisRun.id == analysis["id"]))
-            row.lease_expires_at = datetime.now(UTC) - timedelta(seconds=1)
+            row.lease_expires_at = contracts.utcnow() - timedelta(seconds=1)
         recovered = ledger.recover(caller, scope, analysis["id"])
         _require(recovered["state"] == "OUTCOME_UNKNOWN", "RECOVERY_RELEASED_UNKNOWN_OUTCOME")
         analysis = ledger.get(caller, scope, analysis["id"], reauthorize=flow._reauthorize)

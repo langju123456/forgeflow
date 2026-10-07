@@ -1,0 +1,66 @@
+{
+  "adapter_upgrade": {
+    "provenance": "ISOLATED_SQLITE_OFFLINE_DERIVED_VERSION_UPGRADE",
+    "old_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2",
+    "current_hash": "2f9f6c442e6315b170f7181029ef5f199b1fe11dab423d0dcbe494071d241554",
+    "committed_receipt_replay": {
+      "error": "FABRIC_PROPOSAL_CHANGED"
+    },
+    "pending_reverse_decision": {
+      "error": "FABRIC_PROPOSAL_CHANGED"
+    },
+    "same_key_reproposal": {
+      "returned_id": "bc1da1df-0df9-41cf-9fc9-1ae16e2b4481",
+      "returned_adapter_hash": "9fc51fa1385d8a410ad7946100750aaedfd23f090d59ef7b4b92392b22a123d2"
+    },
+    "new_key_reproposal": {
+      "error": "FABRIC_ACTION_ALREADY_PROPOSED"
+    }
+  },
+  "clock_default_leak": {
+    "provenance": "ISOLATED_CLOCK_SIMULATION_NO_SYSTEM_CLOCK_CHANGE",
+    "gate_default_on_nov6": "UNKNOWN",
+    "explicit_test_clock_oct5": "PASS",
+    "assessments_equal": false
+  },
+  "regrade_provenance": {
+    "provenance": "CURRENT_WORKTREE_READ_ONLY_HASH_COMPARISON",
+    "evaluator_loaded_from": "scripts/s2c_evaluate.py",
+    "late_guard_paths": [
+      "scripts/s2c_regrade.py",
+      "scripts/s2c_typed_validate.py"
+    ],
+    "recorded_versus_worktree_differences": [
+      {
+        "path": "src/forgeflow/analysis_context.py",
+        "recorded_anchor_hash": "462dabb070b9fe0c290f7f2573d7784f49d579a583780eec2c6af820d695e6aa",
+        "actual_worktree_hash": "fd0430435e32b9ea002c4127d659b06bbdb54f863a592f5883db36e0525e8ce2"
+      },
+      {
+        "path": "src/forgeflow/analysis_workflow.py",
+        "recorded_anchor_hash": "3ee7bec191de44611050b006fd649d1c6ac824bec2e47e42ad3e6b15a1ae8daf",
+        "actual_worktree_hash": "7670c496005f0e2418dd5847a4df09a5b702b77a3119b7321d53da23cf041297"
+      },
+      {
+        "path": "src/forgeflow/context.py",
+        "recorded_anchor_hash": "a8b2ef118efbbd38f6e7cad057f6a4fbd2dc0d4b946930404d4269b6164fef7b",
+        "actual_worktree_hash": "4ba7f741c70efb17342264594bf0e7b45237deb71175a9b0ca6064032bee92ff"
+      },
+      {
+        "path": "src/forgeflow/local.py",
+        "recorded_anchor_hash": "016443a60fb0bf9a5bad45bcbf9bb147759996f05b707ccd2e670e59d54c223b",
+        "actual_worktree_hash": "bafb6cdd86f155eb7bdc9f3367449531eb6d08d5ec26cfbee2fd82547e10a55b"
+      },
+      {
+        "path": "src/forgeflow/s2c_checks.py",
+        "recorded_anchor_hash": "fac9802338af67475704d85600270cb290fe8834614703273a902892192596f7",
+        "actual_worktree_hash": "88662f8ec156bcc65135e5b18f283d2b43bae0d4a3346b93212a781a5041188b"
+      },
+      {
+        "path": "src/forgeflow/workflow.py",
+        "recorded_anchor_hash": "df2704975ff21b18125bc1bb1766d00f36bfd859b4a0533a55229b86b0bb5e89",
+        "actual_worktree_hash": "36bd1122656bf1716ee83e9121c5534867fd9d5505cfc0cc97497a4a29c3dcfb"
+      }
+    ]
+  }
+}

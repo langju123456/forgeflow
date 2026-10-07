@@ -10,6 +10,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from forgeflow import contracts
 from forgeflow.analysis_context import (
     ANALYSIS_POLICY_HASH,
     PROFILE_ID,
@@ -69,7 +70,7 @@ def environment(tmp_path):
             "valid_until": "2026-11-05T00:00:00Z",
         }
         store.complete_check(
-            worker, scope, run["id"], claim["token"], claim["epoch"], result, evaluate(manifest, result), snapshot
+            worker, scope, run["id"], claim["token"], claim["epoch"], result, evaluate(manifest, result, now=contracts.utcnow()), snapshot
         )
         builder = GroundedContextBuilder(
             store, scenario_id, export_grant=grant, cases_path=cases_path,
