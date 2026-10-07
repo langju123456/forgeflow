@@ -97,6 +97,21 @@ def test_every_gate_evaluation_in_the_package_passes_the_clock_explicitly():
     assert offenders == []
 
 
+def test_every_gate_evaluation_in_the_tests_passes_the_clock_explicitly():
+    """A fixture that evaluates on the real clock and a verifier on the shifted one disagree (SOURCE_CHANGED)."""
+    offenders = []
+    for path in sorted((ROOT / "tests").glob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        imports_gate = any(isinstance(node, ast.ImportFrom) and node.module == "forgeflow.gate"
+                           and any(alias.name == "evaluate" for alias in node.names) for node in ast.walk(tree))
+        if not imports_gate:
+            continue
+        offenders += [f"{path.relative_to(ROOT)}:{node.lineno}" for node in ast.walk(tree)
+                      if isinstance(node, ast.Call) and getattr(node.func, "id", None) == "evaluate"
+                      and "now" not in {keyword.arg for keyword in node.keywords}]
+    assert offenders == []
+
+
 def test_tests_read_time_only_through_contracts_utcnow():
     offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
                  for path in sorted((ROOT / "tests").glob("*.py")) if path.name not in CLOCK_FILES

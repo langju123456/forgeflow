@@ -87,7 +87,7 @@ def env(tmp_path):
         "valid_until": "2026-11-05T00:00:00Z",
     }
     store.complete_check(
-        worker, scope, run["id"], claim["token"], claim["epoch"], result, evaluate(manifest, result), snapshot
+        worker, scope, run["id"], claim["token"], claim["epoch"], result, evaluate(manifest, result, now=contracts.utcnow()), snapshot
     )
     builder = AnalysisContextBuilder(store)
     yield store, scope, caller, worker, run["id"], builder

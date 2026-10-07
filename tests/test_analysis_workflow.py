@@ -159,7 +159,7 @@ def checked(env, fixture="aurora-pass"):
         lease["token"],
         lease["epoch"],
         result,
-        evaluate(manifest, result),
+        evaluate(manifest, result, now=contracts.utcnow()),
         snapshot,
     )
 
