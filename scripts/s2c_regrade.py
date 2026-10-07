@@ -14,12 +14,17 @@ import importlib.util
 import json
 import re
 import subprocess
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVISION = "s2c-nested-binding-canonical-regrade-v1"
-REVIEW_PATHS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
+# Code the regrade executes besides the forgeflow modules it imports; hashed from the working tree.
+EXECUTED_FILES = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py", "scripts/s2c_evaluate.py",
+                  "scripts/s2b_evaluate.py", "preparation/s2/model-evaluation/checkfixtures.py",
+                  "preparation/s2/model-evaluation/cases.json", "preparation/s2/model-evaluation/freeze.json")
+EXECUTION_MODE = "CURRENT_WORKTREE_DEPENDENCIES"
 ANCHOR_SCHEMA = "forgeflow-freeze-git-anchor-v1"
 ANCHOR_PATH = ROOT / "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json"
 MODEL_SCENARIOS = ("M01", "M01-blocked", "M02", "M03", "M04")
@@ -255,8 +260,17 @@ def _source_hashes(freeze, freeze_sha256, *, anchor_path=None, repo=None):
     for name, expected in source.items():
         committed = _anchored_source_bytes(repo, anchor["git_commit"], name)
         _require(hashlib.sha256(committed).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
-    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in REVIEW_PATHS})
     return source
+
+
+def _review_dependencies():
+    """Hashes of the files this regrade really executes: its scripts and every forgeflow module loaded."""
+    names = set(EXECUTED_FILES)
+    for module in list(sys.modules.values()):
+        path = getattr(module, "__file__", None)
+        if path and Path(path).resolve().is_relative_to(ROOT / "src"):
+            names.add(str(Path(path).resolve().relative_to(ROOT)))
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(names)}
 
 
 def review_experiment(experiment_dir: Path, output_dir: Path):
@@ -280,6 +294,9 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
     _require(actual_files == {sid + ".json" for sid in MODEL_SCENARIOS}, "ALL_FIVE_RAW_CHAINS_REQUIRED")
     freeze = read_source(experiment_dir / "experiment-freeze.json")
     sources = _source_hashes(freeze, evidence_hashes["experiment-freeze.json"])
+    anchor = json.loads(ANCHOR_PATH.read_bytes())
+    anchored = {"git_commit": anchor["git_commit"], "freeze_sha256": anchor["freeze_sha256"], "files_sha256": sources}
+    dependencies_at_start = _review_dependencies()
     integrity, scenarios = original.load_scenarios()
     by_id = {case["scenario_id"]: case for case in scenarios}
     _require(tuple(by_id) == MODEL_SCENARIOS + FAULT_SCENARIOS, "FROZEN_DENOMINATOR_CHANGED")
@@ -329,6 +346,7 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
     _require({path.name for path in (experiment_dir / "call-freezes").iterdir()}
              == {call_id + ".json" for call_id in archived_call_ids}, "ARCHIVED_CALL_FREEZE_BIJECTION_INVALID")
     final_acceptance = original.acceptance_summary({"results": rows}, {"faults": fault_rows})
+    dependencies = _review_dependencies()  # files loaded by now; checked against the start below
     summary = {
         "schema_version": REVISION, "status": "ADDITIVE_OFFLINE_REGRADE_COMPLETED",
         "source_experiment": str(experiment_dir.resolve()), "dataset_integrity": integrity,
@@ -349,7 +367,8 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
         "grade_binding_contract": "SCOPED_IDS_WITH_NESTED_RECORD_SEVEN_FIELDS",
         "corrected_evaluator_bug": "FROZEN_GRADER_FLATTENED_PRODUCTION_NESTED_GRADE_RECORD",
         "original_equality_limitation": "PYTHON_EQUALITY_ACCEPTS_BOOL_INT_FLOAT_ALIASES_IN_CRITICAL_DICTS",
-        "source_evidence_files_sha256": evidence_hashes, "review_source_files_sha256": sources,
+        "source_evidence_files_sha256": evidence_hashes, "execution_mode": EXECUTION_MODE,
+        "anchored_experiment_sources": anchored, "review_dependencies": dependencies,
         "results": rows, "frozen_acceptance": final_acceptance,
         "limits": "SAME_RAW_CHAIN_REPLAY; MODEL_EVIDENCE_SELECTION_AND_SERVER_STATE_DERIVATION; NO_GENERAL_REASONING_CLAIM",
     }
@@ -358,7 +377,9 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
         "evaluation_mode": "OFFLINE_EXISTING_RAW_EVIDENCE_ONLY", "model_calls_added": 0,
         "runtime_reads": False, "network_calls": False, "original_results_preserved": True,
         "case_count": 12, "scenario_count": 13, "source_evidence_files_sha256": evidence_hashes,
-        "review_source_files_sha256": sources, "original_experiment_freeze_sha256": evidence_hashes["experiment-freeze.json"],
+        "execution_mode": EXECUTION_MODE, "anchored_experiment_sources": anchored,
+        "review_dependencies": dependencies,
+        "original_experiment_freeze_sha256": evidence_hashes["experiment-freeze.json"],
     }
     # All verdicts cite the bytes parsed. Reject source/evidence drift before
     # writing the new freeze or any successful review artifact.
@@ -367,10 +388,10 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
         _require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(experiment_dir.resolve())
                  and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
                  "SOURCE_EVIDENCE_CHANGED_DURING_REGRADE")
-    # The frozen files are immutable at the anchor commit; only the review code lives in the working tree.
-    for name in REVIEW_PATHS:
-        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == sources[name],
-                 "REVIEW_SOURCE_CHANGED_DURING_REGRADE")
+    # The frozen files are immutable at the anchor commit. What the regrade executes lives in the working
+    # tree, so it must be unchanged since the start; the files recorded are those loaded by publication.
+    _require(all(dependencies.get(name) == digest_ for name, digest_ in dependencies_at_start.items()),
+             "REVIEW_SOURCE_CHANGED_DURING_REGRADE")
     output_dir.mkdir(parents=True)
     _write_new(output_dir / "review-freeze.json", review_freeze)
     for row in rows:

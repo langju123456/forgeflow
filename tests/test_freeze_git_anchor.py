@@ -139,8 +139,7 @@ def test_shipped_anchor_matches_the_untouched_freeze_and_is_reachable_from_head(
     assert shipped["freeze_sha256"] == sha(raw)
     assert shipped["frozen_source_files_checked"] == len(json.loads(raw)["source_files_sha256"])
     result = review._source_hashes(json.loads(raw), sha(raw))
-    assert result == {**json.loads(raw)["source_files_sha256"], **{
-        name: sha((ROOT / name).read_bytes()) for name in ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")}}
+    assert result == json.loads(raw)["source_files_sha256"]  # only the anchored experiment sources
     ancestor = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", shipped["git_commit"], "HEAD"],
                               capture_output=True, check=False)
     assert ancestor.returncode == 0, "anchor commit is not in this repository's history"
