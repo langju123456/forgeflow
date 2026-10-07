@@ -11,6 +11,7 @@ import subprocess
 from pathlib import Path
 
 from .contracts import Principal, RunRequest, Scope
+from .fixture_family import RENEWED_VALID_UNTIL, cli_fixture
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = ROOT / ".runtime"
@@ -81,7 +82,7 @@ def initialize():
         "approval are separate.",
         roles={"hardware", "pm", "supervisor", "admin", "reviewer", "submitter"},
         classification=0,
-        valid_until="2026-11-05T00:00:00Z",
+        valid_until=RENEWED_VALID_UNTIL,
     )
     return {
         "scope": SCOPE.model_dump(),
@@ -121,6 +122,7 @@ def main():
     sub.add_parser("init")
     submit = sub.add_parser("submit")
     submit.add_argument("--fixture", choices=["pass", "blocked", "unknown", "timeout"], default="pass")
+    submit.add_argument("--legacy-fixtures", action="store_true", help="use the original fixtures, not the renewed -v2 copies")
     submit.add_argument("--key", required=True)
     for name in ("check", "show", "cancel", "recover"):
         cmd = sub.add_parser(name)
@@ -141,7 +143,7 @@ def main():
         owner = next(p for p in load_identities().values() if "admin" in p.roles)
         if args.command == "submit":
             output = store.submit(
-                owner, RunRequest(scope=SCOPE, fixture_id="aurora-" + args.fixture), args.key
+                owner, RunRequest(scope=SCOPE, fixture_id=cli_fixture(args.fixture, args.legacy_fixtures)), args.key
             )
         elif args.command == "show":
             output = store.get_run(owner, SCOPE, args.run_id)

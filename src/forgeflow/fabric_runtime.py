@@ -6,6 +6,7 @@ import secrets
 from .contracts import Principal
 from .evt_store import EVTBoundStore
 from .fabric_contract import FABRIC_SCOPE
+from .fixture_family import RENEWED_VALID_UNTIL
 from .local import RUNTIME, database_url
 
 
@@ -51,6 +52,6 @@ def initialize_fabric():
         "Local TEST_STAGE is a workflow simulation, not EVT certification or release authorization.",
         roles={"admin", "submitter", "supervisor", "hardware", "pm", "reviewer", "worker",
                "fabric_executor", "memory_writer"}, classification=0,
-        valid_until="2026-11-05T00:00:00Z")
+        valid_until=RENEWED_VALID_UNTIL)
     return {"scope": FABRIC_SCOPE.model_dump(), "identities": "TEST_DRIVER",
             "tokens_file": str(path), "external_writes": 0}

@@ -7,6 +7,7 @@ import json
 from .analysis_provider import OllamaProvider
 from .analysis_runtime import build_runtime
 from .contracts import DomainError, RunRequest
+from .fixture_family import cli_fixture
 from .local import SCOPE, load_identities, load_workflow
 
 
@@ -16,7 +17,7 @@ async def execute(args):
     source, workflow = build_runtime()
     caller = next(p for p in load_identities().values() if "admin" in p.roles)
     if args.command == "demo":
-        request = RunRequest(scope=SCOPE, fixture_id="aurora-" + args.fixture)
+        request = RunRequest(scope=SCOPE, fixture_id=cli_fixture(args.fixture, args.legacy_fixtures))
         run = source.submit(caller, request, "s2-parent:" + args.key)
         if run.get("assessment_json") is None:
             await load_workflow(source).check(SCOPE, run["id"])
@@ -50,6 +51,7 @@ def main():
     run.add_argument("--key", required=True)
     demo = sub.add_parser("demo")
     demo.add_argument("--fixture", choices=["pass", "blocked", "unknown", "timeout"], default="pass")
+    demo.add_argument("--legacy-fixtures", action="store_true", help="use the original fixtures, not the renewed -v2 copies")
     demo.add_argument("--key", required=True)
     for name in ("show", "events", "cancel", "recover"):
         command = sub.add_parser(name)

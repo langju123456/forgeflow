@@ -7,11 +7,12 @@ use the -v2 copies, which differ from the originals only in valid_until.
 import ast
 import json
 import sys
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import get_args
 
 import pytest
+from clock_contract import real_utcnow
 
 from forgeflow import contracts
 
@@ -45,7 +46,7 @@ def test_renewed_fixtures_do_not_expire_within_fourteen_days(name):
     manifest = json.loads((FIXTURES / f"aurora-{name}-v2.json").read_text())
     expiry = min(datetime.fromisoformat(metric["valid_until"].replace("Z", "+00:00"))
                  for metric in manifest["metrics"].values())
-    left = expiry - datetime.now(UTC)
+    left = expiry - real_utcnow()
     assert left >= timedelta(days=14), f"aurora-{name}-v2 expires {expiry:%Y-%m-%d}; renew it ({left.days} days left)"
 
 
@@ -132,3 +133,10 @@ def test_the_fabric_cli_submits_the_renewed_fixture_by_default(tmp_path, monkeyp
     monkeypatch.setattr(sys, "argv", ["fabric_cli", "submit", "--key", "k1"])
     fabric_cli.main()
     assert json.loads(capsys.readouterr().out)["output"]["request_json"]["fixture_id"] == "aurora-pass-v2"
+
+
+def test_the_derived_fixture_id_matches_the_one_the_frozen_s2c_path_uses():
+    from forgeflow import s2c_checks
+
+    assert family().DERIVED_FIXTURES == {s2c_checks.DERIVED_FIXTURE_ID}
+    assert family().template_for(s2c_checks.DERIVED_FIXTURE_ID) == "evt-check"

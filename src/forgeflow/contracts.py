@@ -68,7 +68,10 @@ def authorize(
 class RunRequest(StrictModel):
     scope: Scope
     stage: Literal["EVT"] = "EVT"
-    fixture_id: Literal["aurora-pass", "aurora-blocked", "aurora-unknown", "aurora-timeout"]
+    fixture_id: Literal[
+        "aurora-pass", "aurora-blocked", "aurora-unknown", "aurora-timeout",
+        "aurora-pass-v2", "aurora-blocked-v2", "aurora-unknown-v2", "aurora-timeout-v2",
+    ]
     fixture_version: Literal["v1"] = "v1"
     objective: str = Field(default="Assess Project Aurora EVT readiness", min_length=1, max_length=500)
 
