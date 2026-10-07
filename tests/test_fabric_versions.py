@@ -245,3 +245,25 @@ def test_another_tenant_cannot_read_or_supersede(db, monkeypatch):
         Principal(subject_id="x", kind="service", roles=frozenset({"fabric_executor"}), scopes=(other_scope,)),
         other_scope, approval["id"]))
     assert "FABRIC_APPROVAL_SUPERSEDED" not in kinds(db)
+
+
+def test_no_earlier_proposer_of_any_version_can_approve_the_current_one(db, monkeypatch):
+    """A creates v1, B renews it as v2, C renews it as v3: only someone outside A, B and C may approve v3."""
+    db = db()
+    report = review(db)
+    first = propose(db, report, "ISSUE")
+    renewer = {name: Principal(subject_id=name, kind="user", roles=frozenset({"admin", "supervisor", "reviewer"}),
+                               scopes=(FABRIC_SCOPE,)) for name in ("second-proposer", "third-proposer")}
+    monkeypatch.setattr(fabric_store_module, "adapter_hash", lambda: "1" * 64)
+    db.service.propose(renewer["second-proposer"], db.scope, report["id"], report["report_hash"], "renew-b", "ISSUE")
+    monkeypatch.setattr(fabric_store_module, "adapter_hash", lambda: "2" * 64)
+    third = db.service.propose(renewer["third-proposer"], db.scope, report["id"], report["report_hash"],
+                               "renew-c", "ISSUE")
+    assert third["id"] == first["id"] and len(read(db, third)["history"]) == 2
+    for who in (db.owner, renewer["second-proposer"], renewer["third-proposer"]):
+        reviewer = Principal(subject_id=who.subject_id, kind="user", roles=frozenset({"reviewer"}),
+                             scopes=(FABRIC_SCOPE,))
+        rejects("INDEPENDENT_REVIEW_REQUIRED", lambda reviewer=reviewer: db.service.decide(
+            reviewer, db.scope, third["id"], third["proposal_hash"], third["revision"], "APPROVED"))
+    decided = decide_new(db, third)
+    assert decided["approval"]["decision"] == "APPROVED" and decided["approval"]["reviewer"] == db.reviewer.subject_id
