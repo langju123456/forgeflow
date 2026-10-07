@@ -174,7 +174,7 @@ def test_entire_real_archive_replay_keeps_original_eight_faults_and_thirteen_den
     assert before == _hashes(original)
     assert len(list(output.glob("*.json"))) == 8
     frozen = json.loads((output / "review-freeze.json").read_bytes())
-    assert frozen["review_source_files_sha256"]["scripts/s2c_regrade.py"] == hashlib.sha256((ROOT / "scripts/s2c_regrade.py").read_bytes()).hexdigest()
+    assert frozen["review_dependencies"]["scripts/s2c_regrade.py"] == hashlib.sha256((ROOT / "scripts/s2c_regrade.py").read_bytes()).hexdigest()
     assert len([path for path in frozen["source_evidence_files_sha256"] if path.startswith("call-freezes/")]) == 20
 
 

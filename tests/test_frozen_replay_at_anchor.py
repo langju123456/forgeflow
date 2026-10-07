@@ -13,6 +13,7 @@ import os
 import subprocess
 import sys
 import tarfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
@@ -21,6 +22,8 @@ ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = "deliveries/2026-10-06/s2c-fixes/evidence"
 ANCHOR = ROOT / EVIDENCE / "freeze-git-anchor.json"
 ARCHIVED_DIRECTORIES = ("experiment-01", "regrade-01")
+CRITICAL_CASE = "test_entire_real_archive_replay_keeps_original_eight_faults_and_thirteen_denominator"
+EXPECTED_CASE_COUNT = 26  # tests/test_s2c_regrade.py at the anchor commit
 REVIEW_SCRIPTS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py", "scripts/s2c_evaluate.py")
 
 
@@ -59,13 +62,38 @@ def export(tmp_path_factory):
     return target
 
 
+def anchor_environment(export, base=None):
+    """Child environment for the replay: no inherited PYTEST_* (options, plugins, ...) and the export's code."""
+    source = os.environ if base is None else base
+    environment = {name: value for name, value in source.items() if not name.startswith("PYTEST_")}
+    environment.update(PYTHONPATH=str(export / "src"), PYTHONDONTWRITEBYTECODE="1")
+    return environment
+
+
+def run_anchor_regrade_tests(export):
+    """Run the anchor commit's own regrade tests and return {case id: outcome} read from a junit report."""
+    report = export / "anchor-regrade-junit.xml"
+    done = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-o", "addopts=",
+                           f"--junitxml={report}", "tests/test_s2c_regrade.py"], cwd=export,
+                          env=anchor_environment(export), capture_output=True, text=True, check=False, timeout=600)
+    assert report.is_file(), "\n".join(done.stdout.strip().splitlines()[-15:])
+    results = {}
+    for case in ET.parse(report).getroot().iter("testcase"):
+        outcome = ("failed" if case.find("failure") is not None else "error" if case.find("error") is not None
+                   else "skipped" if case.find("skipped") is not None else "passed")
+        results[f"{case.get('classname')}::{case.get('name')}"] = outcome
+    return results
+
+
+def assert_complete(results):
+    """Exactly the fixed anchor case set ran, and every case passed; nothing deselected, skipped or missing."""
+    assert {name: outcome for name, outcome in results.items() if outcome != "passed"} == {}
+    assert len(results) == EXPECTED_CASE_COUNT, f"{len(results)} cases ran, expected {EXPECTED_CASE_COUNT}"
+    assert any(CRITICAL_CASE in name for name in results), "the full archive replay did not run"
+
+
 def test_regrade_tests_pass_with_the_anchor_commits_own_code(export):
-    environment = {**os.environ, "PYTHONPATH": str(export / "src"), "PYTHONDONTWRITEBYTECODE": "1"}
-    done = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
-                           "tests/test_s2c_regrade.py"], cwd=export, env=environment,
-                          capture_output=True, text=True, check=False, timeout=600)
-    tail = "\n".join(done.stdout.strip().splitlines()[-15:])
-    assert done.returncode == 0 and " passed" in tail and "failed" not in tail, tail
+    assert_complete(run_anchor_regrade_tests(export))
 
 
 def test_archived_evidence_in_the_repository_is_byte_identical_to_the_anchor_commit(export):
