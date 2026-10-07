@@ -2,7 +2,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from uuid import uuid4
 
 import pytest
@@ -10,6 +10,7 @@ from sqlalchemy import inspect, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from forgeflow import contracts
 from forgeflow.analysis_store import AnalysisCall, AnalysisRun, AnalysisStore
 from forgeflow.contracts import DomainError, Principal, RunRequest, Scope, digest
 from forgeflow.grounded_contracts import QUESTION, render
@@ -436,7 +437,7 @@ def test_capture_commits_exact_reply_before_grading_and_survives_crash_recovery(
     # TEST_DRIVER crash: the worker vanishes after capture and before finish.
     with Session(store.engine) as session, session.begin():
         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
-        item.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
+        item.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
     recovered = analysis.recover(p, scope, row["id"])
     assert recovered["state"] == "OUTCOME_UNKNOWN"
     expect("ANALYSIS_CALL_TERMINAL", lambda: finish(env, row, lease, call, plan()))

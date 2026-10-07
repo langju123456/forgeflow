@@ -8,13 +8,14 @@ import asyncio
 import copy
 import json
 import shutil
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import httpx
 import pytest
 from sqlalchemy import select
 
+from forgeflow import contracts
 from forgeflow.analysis_context import SOP_CONTENT, SYNTHETIC_SCOPE, AnalysisContextBuilder
 from forgeflow.analysis_provider import MODEL, MODEL_DIGEST, OllamaProvider
 from forgeflow.analysis_store import AnalysisCall, AnalysisRun, AnalysisStore
@@ -342,7 +343,7 @@ async def test_process_interrupt_preserves_unknown_without_automatic_recovery_re
         ledger.recover(caller, scope, replay["id"])
     with ledger.store._tx() as session:
         row = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope)))
-        row.lease_expires_at = datetime.now(UTC) - timedelta(seconds=1)
+        row.lease_expires_at = contracts.utcnow() - timedelta(seconds=1)
     assert ledger.recover(caller, scope, replay["id"])["state"] == "OUTCOME_UNKNOWN"
 
 

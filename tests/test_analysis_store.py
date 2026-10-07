@@ -1,7 +1,7 @@
 """S2 durability/ACL/fault invariants. No provider, inference, or business effects."""
 
 from concurrent.futures import ThreadPoolExecutor
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from uuid import uuid4
 
 import pytest
@@ -9,6 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from forgeflow import contracts
 from forgeflow.analysis_store import AnalysisCall, AnalysisProviderSlot, AnalysisRun, AnalysisStore
 from forgeflow.contracts import DomainError, Principal, RunRequest, Scope
 from forgeflow.store import Document, Run, Store, filters
@@ -117,7 +118,7 @@ def expire(env, row, *, global_deadline=False):
         item = session.scalar(
             select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"])
         )
-        item.lease_expires_at = datetime.now(UTC) - timedelta(minutes=1)
+        item.lease_expires_at = contracts.utcnow() - timedelta(minutes=1)
         if global_deadline:
             item.deadline = item.lease_expires_at
 
@@ -542,7 +543,7 @@ def test_complete_cannot_skip_required_roles_and_phases(env):
 def test_db_deadline_and_expired_export_prevent_dispatch(env):
     _s, a, scope, p, _run_id, material = env
     row, lease = started(env)
-    expired = {**material, "export_grant_expires_at": (datetime.now(UTC) - timedelta(minutes=1)).isoformat()}
+    expired = {**material, "export_grant_expires_at": (contracts.utcnow() - timedelta(minutes=1)).isoformat()}
     error("ANALYSIS_DEADLINE", lambda: reserve(env, row, lease, material=expired))
     expire(env, row, global_deadline=True)
     error("STALE_ANALYSIS_LEASE", lambda: reserve(env, row, lease))
@@ -780,7 +781,7 @@ def test_locked_load_refreshes_orm_cache_after_claim_interleaving(env, monkeypat
                 lease_epoch=1,
                 lease_owner="claim-a",
                 lease_token="token-a",
-                lease_expires_at=datetime.now(UTC) + timedelta(seconds=120),
+                lease_expires_at=contracts.utcnow() + timedelta(seconds=120),
             )
             .execution_options(synchronize_session=False)
         )

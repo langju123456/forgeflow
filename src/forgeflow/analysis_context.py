@@ -10,11 +10,12 @@ from __future__ import annotations
 import copy
 import hashlib
 from dataclasses import asdict, dataclass, replace
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
 
 from sqlalchemy import select
 
+from . import contracts
 from .analysis_contracts import ContextProposal, RoleReport, parse_output, strict_json_object
 from .context import KnowledgeService, MemoryService
 from .contracts import DomainError, ExecutionResult, Principal, Scope, authorize, canonical, digest
@@ -586,10 +587,10 @@ class AnalysisContextBuilder:
             or run["snapshot_hash"] != digest(snapshot)
             or completed[0]["payload"].get("result_hash") != digest(result)
             or completed[0]["payload"].get("assessment_hash") != digest(assessment)
-            or digest(evaluate(manifest, result)) != digest(assessment)
+            or digest(evaluate(manifest, result, now=contracts.utcnow())) != digest(assessment)
         ):
             raise DomainError("SOURCE_CHANGED")
-        now = self.store._now(session) if session is not None else datetime.now(UTC)
+        now = self.store._now(session) if session is not None else contracts.utcnow()
         _fresh(snapshot.get("valid_until"), now)
         for metric in manifest.get("metrics", {}).values():
             _fresh(metric.get("valid_until"), now)

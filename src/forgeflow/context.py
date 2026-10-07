@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import re
 from collections import Counter, defaultdict
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Protocol
 
+from . import contracts
 from .contracts import ContextHit, DomainError, Principal, Scope, authorize
 
 
@@ -117,7 +118,7 @@ def _hits(
     kind: str,
     rows: list[dict],
 ) -> list[ContextHit]:
-    now = datetime.now(UTC)
+    now = contracts.utcnow()
     rows = _active_rows(rows, principal, scope, kind)
     groups: dict[str, list[dict]] = defaultdict(list)
     for row in rows:

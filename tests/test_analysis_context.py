@@ -6,13 +6,13 @@ import copy
 import hashlib
 import json
 from dataclasses import replace
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from forgeflow import context
+from forgeflow import context, contracts
 from forgeflow.analysis_context import (
     ANALYSIS_POLICY_HASH,
     PROFILE_ID,
@@ -194,7 +194,7 @@ def test_document_expiry_invalidates_existing_context(env):
                 *filters(DocumentVersion, scope), DocumentVersion.document_id == "aurora-evt-sop"
             )
         )
-        version.valid_until = datetime.now(UTC) - timedelta(days=1)
+        version.valid_until = contracts.utcnow() - timedelta(days=1)
     error("EVIDENCE_EXPIRED", lambda: builder.revalidate(bundle))
 
 

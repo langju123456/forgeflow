@@ -6,6 +6,9 @@ from test_sandbox import spec
 from forgeflow.contracts import Principal, Scope
 from forgeflow.mcp_bridge import MCPBridge
 
+# The stdio server is a subprocess that checks expires_at and lease_deadline against its own real clock.
+pytestmark = pytest.mark.real_clock
+
 
 def principal(role="hardware", scope=None):
     return Principal(subject_id=role, kind="agent", roles={role}, scopes=(scope or spec().scope,))

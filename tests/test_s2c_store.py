@@ -1,7 +1,7 @@
 """TEST_DRIVER persistence: statusless model replies, server-owned completion."""
 
 import copy
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from sqlalchemy import select
@@ -10,6 +10,7 @@ from test_grounded_store import authorized, catalog, expect, plan
 from test_grounded_store import env as old_environment
 from test_s2c_contracts import selection
 
+from forgeflow import contracts
 from forgeflow.analysis_store import AnalysisCall, AnalysisRun
 from forgeflow.contracts import DomainError, canonical, digest
 from forgeflow.grounded_store import GroundedStore, GroundingRecord, RawProviderReply
@@ -184,11 +185,11 @@ def test_current_revocation_cancellation_and_stale_lease_block_completion(env):
     expect("ANALYSIS_SOURCE_CHANGED", lambda: complete(env, row, lease, final, reauthorize=revoked))
     with Session(source.engine) as session, session.begin():
         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
-        item.lease_expires_at = datetime.now(UTC) - timedelta(seconds=1)
+        item.lease_expires_at = contracts.utcnow() - timedelta(seconds=1)
     expect("STALE_ANALYSIS_LEASE", lambda: complete(env, row, lease, final))
     with Session(source.engine) as session, session.begin():
         item = session.scalar(select(AnalysisRun).where(*filters(AnalysisRun, scope), AnalysisRun.id == row["id"]))
-        item.lease_expires_at = datetime.now(UTC) + timedelta(seconds=60)
+        item.lease_expires_at = contracts.utcnow() + timedelta(seconds=60)
     analysis.cancel(p, scope, row["id"])
     expect("ANALYSIS_CANCEL_REQUESTED", lambda: complete(env, row, lease, final))
 

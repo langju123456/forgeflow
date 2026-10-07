@@ -12,6 +12,7 @@ import copy
 from datetime import UTC, datetime
 from uuid import uuid4
 
+from . import contracts
 from .analysis_context import ANALYSIS_POLICY_HASH, PROFILE_ID
 from .analysis_contracts import compact_schema
 from .analysis_provider import MODEL_DIGEST
@@ -244,7 +245,7 @@ class AnalysisWorkflow:
         if bound > 3500:
             raise DomainError("INPUT_CONSERVATIVE_BOUND_EXCEEDED", status=422)
         material = self._material(active, *(sources or (bundle,)))
-        now = datetime.now(UTC)
+        now = contracts.utcnow()
         remaining = min(
             60.0,
             (_instant(lease["expires_at"]) - now).total_seconds(),

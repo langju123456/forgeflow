@@ -203,7 +203,7 @@ def test_synthetic_bound_clock_is_honored_but_non_synthetic_result_cannot_choose
     run, events = parent()
     run["snapshot_json"]["evaluation_clock"] = "2026-10-05T12:00:00Z"
     rebind_manifest(run, events, lambda manifest: None)
-    monkeypatch.setattr("forgeflow.domain_checks.utcnow", lambda: datetime(2027, 1, 1, tzinfo=UTC))
+    monkeypatch.setattr("forgeflow.contracts.utcnow", lambda: datetime(2027, 1, 1, tzinfo=UTC))
     assert checks(evaluate(run=run, events=events), "architect")["hardware_android_bom"]["status"] == "PASS"
     run["result_json"]["synthetic"] = False
     rebind_manifest(run, events, lambda manifest: None)

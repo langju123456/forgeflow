@@ -6,10 +6,13 @@ clock, so the shift is negative and a component that still reads the real clock 
 Importing this module fixes the session start; conftest.py imports it first.
 """
 
+import os
 import time
 from datetime import UTC, datetime, timedelta
 
-T0 = datetime(2026, 10, 5, 12, 0, 0, tzinfo=UTC)
+# FORGEFLOW_TEST_CLOCK_T0 (ISO 8601 with a zone, e.g. 2026-11-06T12:00:00+00:00) is a developer aid for
+# checking how the suite behaves on another date without changing the machine clock.
+T0 = datetime.fromisoformat(os.environ.get("FORGEFLOW_TEST_CLOCK_T0", "2026-10-05T12:00:00+00:00"))
 REAL_TIME = time.time  # captured before any patching
 REAL_AT_START = datetime.now(UTC)
 MONOTONIC_AT_START = time.monotonic()

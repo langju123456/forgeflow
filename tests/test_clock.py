@@ -12,6 +12,9 @@ from forgeflow.store import Store
 
 ROOT = Path(__file__).resolve().parents[1]
 CLOCK_FILES = {"clock_contract.py", "conftest.py"}
+# gate.py keeps a datetime.now default: it is pinned by preparation/s2/model-evaluation/freeze.json, so it
+# cannot change. Instead every call to gate.evaluate in the package must pass now= (checked below).
+PINNED_FILES = {"gate.py"}
 
 
 def close(first, second):
@@ -79,8 +82,18 @@ def _clock_reads(path, *, allow_definition=False):
 
 def test_package_code_reads_time_only_through_contracts_utcnow():
     offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
-                 for path in sorted((ROOT / "src/forgeflow").glob("*.py"))
+                 for path in sorted((ROOT / "src/forgeflow").glob("*.py")) if path.name not in PINNED_FILES
                  for line, what in _clock_reads(path, allow_definition=path.name == "contracts.py")]
+    assert offenders == []
+
+
+def test_every_gate_evaluation_in_the_package_passes_the_clock_explicitly():
+    offenders = []
+    for path in sorted((ROOT / "src/forgeflow").glob("*.py")):
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if (isinstance(node, ast.Call) and getattr(node.func, "id", None) == "evaluate"
+                    and "now" not in {keyword.arg for keyword in node.keywords}):
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno}")
     assert offenders == []
 
 

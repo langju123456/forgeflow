@@ -14,7 +14,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import DateTime, func, select
 from test_fabric_contract import offline_parent, refresh_bindings
 
-from forgeflow.contracts import DomainError, Principal, Scope, utcnow
+from forgeflow import contracts
+from forgeflow.contracts import DomainError, Principal, Scope
 from forgeflow.fabric_api import create_fabric_app
 from forgeflow.fabric_contract import FABRIC_SCOPE
 from forgeflow.fabric_runtime import FabricStore
@@ -63,7 +64,7 @@ def db(tmp_path):
                              roles=frozenset({"fabric_executor", "memory_writer", "hardware"}), scopes=(FABRIC_SCOPE,))
         source.ensure_project(FABRIC_SCOPE)
         run, events = offline_parent()
-        validity = (utcnow() + timedelta(days=1)).isoformat()
+        validity = (contracts.utcnow() + timedelta(days=1)).isoformat()
         run["snapshot_json"]["valid_until"] = validity
         run["assessment_json"]["status"] = hardware_status
         for reference in run["snapshot_json"]["documents"]:
@@ -136,7 +137,7 @@ def item(db, item_id):
 
 def advance_document(db):
     db.source.put_document(db.owner, db.scope, "aurora-evt-sop", "v2", DOC_CONTENT + " New version.",
-                           DOC_ROLES, 0, valid_until=(utcnow() + timedelta(days=1)).isoformat())
+                           DOC_ROLES, 0, valid_until=(contracts.utcnow() + timedelta(days=1)).isoformat())
 
 
 def test_review_and_core_prepare_do_not_execute_or_mint_hardware_only_approvals(db):
