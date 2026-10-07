@@ -2,6 +2,10 @@
 
 The archive contains real runtime ledger shapes. Every mutation is detached in
 memory or a temporary copy; original experiments and evaluator remain intact.
+
+These run on the working tree: they are regression tests that the current code can still reproduce
+the archived results, not a frozen replay. The frozen replay, which executes the anchor commit's own
+code, is tests/test_frozen_replay_at_anchor.py.
 """
 
 import copy
