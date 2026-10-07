@@ -1,0 +1,977 @@
+diff --git a/deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json b/deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json
+new file mode 100644
+index 0000000..5103afe
+--- /dev/null
++++ b/deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json
+@@ -0,0 +1,9 @@
++{
++  "basis": "All 50 frozen hashes were compared with the contents committed at git_commit before this record was written. The full default suite on that commit, run on 2026-10-06 in a separate review session (not archived), gave 824 passed and 13 skipped, including the two frozen-replay tests in tests/test_s2c_regrade.py.",
++  "freeze_file": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/experiment-freeze.json",
++  "freeze_sha256": "73c71cc8ca5297c1d2cecae875edc82a2ae5b705ba4418e78ca4eaf75d81f921",
++  "frozen_source_files_checked": 50,
++  "git_commit": "a185c622108779c85b308402568bf776af02eef3",
++  "reason": "The S2C experiment froze 50 source file hashes against the working tree, so any later fix to those files breaks the archive replay. The evidence was produced by the code in this commit, so the check now reads the files from it with git (ls-tree and cat-file), not from the working tree. The frozen file is unchanged and no successor hash is registered.",
++  "schema": "forgeflow-freeze-git-anchor-v1"
++}
+diff --git a/scripts/s2c_regrade.py b/scripts/s2c_regrade.py
+index 4f46cca..552d454 100644
+--- a/scripts/s2c_regrade.py
++++ b/scripts/s2c_regrade.py
+@@ -12,11 +12,16 @@ import argparse
+ import hashlib
+ import importlib.util
+ import json
++import re
++import subprocess
+ from datetime import UTC, datetime
+ from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ REVISION = "s2c-nested-binding-canonical-regrade-v1"
++REVIEW_PATHS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
++ANCHOR_SCHEMA = "forgeflow-freeze-git-anchor-v1"
++ANCHOR_PATH = ROOT / "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json"
+ MODEL_SCENARIOS = ("M01", "M01-blocked", "M02", "M03", "M04")
+ FAULT_SCENARIOS = tuple(f"M{index:02d}" for index in range(5, 13))
+ GRADE_FIELDS = ("raw_reply", "structure_valid", "semantic_valid", "codes", "claim_catalog",
+@@ -211,15 +216,46 @@ def _write_new(path, value):
+         handle.write("\n")
+ 
+ 
+-def _source_hashes(freeze):
++def _git(repo, *args):
++    try:
++        return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, timeout=30, check=False)
++    except (OSError, subprocess.TimeoutExpired) as error:
++        raise RuntimeError("FROZEN_GIT_HISTORY_UNAVAILABLE") from error
++
++
++def _anchored_source_bytes(repo, commit, name):
++    """Bytes of a frozen source file as committed at the anchor, never the working tree."""
++    _require(re.fullmatch(r"[0-9a-f]{40}", commit) is not None, "FROZEN_GIT_ANCHOR_INVALID")
++    _require(not name.startswith(("/", "-")) and ".." not in Path(name).parts, "FROZEN_SOURCE_PATH_INVALID")
++    listed = _git(repo, "ls-tree", "-z", commit, "--", name)
++    _require(listed.returncode == 0, "FROZEN_GIT_HISTORY_UNAVAILABLE")
++    meta, _, path = listed.stdout.rstrip(b"\0").decode().partition("\t")
++    _require(bool(meta), "FROZEN_SOURCE_NOT_IN_ANCHOR")
++    mode, kind, blob = (meta.split() + ["", "", ""])[:3]
++    _require(mode in {"100644", "100755"} and kind == "blob" and path == name,
++             "FROZEN_SOURCE_REGULAR_FILE_REQUIRED")
++    content = _git(repo, "cat-file", "blob", blob)
++    _require(content.returncode == 0, "FROZEN_GIT_HISTORY_UNAVAILABLE")
++    return content.stdout
++
++
++def _source_hashes(freeze, freeze_sha256, *, anchor_path=None, repo=None):
++    """Check the frozen hashes against the anchor commit; append-only anchor, frozen file untouched."""
++    anchor_path, repo = Path(anchor_path or ANCHOR_PATH), Path(repo or ROOT)
++    _require(anchor_path.is_file() and not anchor_path.is_symlink(), "FROZEN_GIT_ANCHOR_MISSING")
++    try:
++        anchor = json.loads(anchor_path.read_bytes())
++    except ValueError as error:
++        raise RuntimeError("FROZEN_GIT_ANCHOR_INVALID") from error
++    _require(isinstance(anchor, dict) and anchor.get("schema") == ANCHOR_SCHEMA
++             and isinstance(anchor.get("git_commit"), str) and isinstance(anchor.get("freeze_sha256"), str),
++             "FROZEN_GIT_ANCHOR_INVALID")
++    _require(anchor["freeze_sha256"] == freeze_sha256, "FROZEN_ANCHOR_FREEZE_MISMATCH")
+     source = dict(freeze["source_files_sha256"])
+     for name, expected in source.items():
+-        path = ROOT / name
+-        _require(path.resolve().is_relative_to(ROOT) and path.is_file() and not path.is_symlink(),
+-                 "FROZEN_SOURCE_REGULAR_FILE_REQUIRED")
+-        _require(hashlib.sha256(path.read_bytes()).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
+-    review_paths = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
+-    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in review_paths})
++        committed = _anchored_source_bytes(repo, anchor["git_commit"], name)
++        _require(hashlib.sha256(committed).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
++    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in REVIEW_PATHS})
+     return source
+ 
+ 
+@@ -243,7 +279,7 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
+     actual_files = {path.name for path in (experiment_dir / "raw-chains").iterdir()}
+     _require(actual_files == {sid + ".json" for sid in MODEL_SCENARIOS}, "ALL_FIVE_RAW_CHAINS_REQUIRED")
+     freeze = read_source(experiment_dir / "experiment-freeze.json")
+-    sources = _source_hashes(freeze)
++    sources = _source_hashes(freeze, evidence_hashes["experiment-freeze.json"])
+     integrity, scenarios = original.load_scenarios()
+     by_id = {case["scenario_id"]: case for case in scenarios}
+     _require(tuple(by_id) == MODEL_SCENARIOS + FAULT_SCENARIOS, "FROZEN_DENOMINATOR_CHANGED")
+@@ -331,8 +367,9 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
+         _require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(experiment_dir.resolve())
+                  and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
+                  "SOURCE_EVIDENCE_CHANGED_DURING_REGRADE")
+-    for name, expected in sources.items():
+-        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected,
++    # The frozen files are immutable at the anchor commit; only the review code lives in the working tree.
++    for name in REVIEW_PATHS:
++        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == sources[name],
+                  "REVIEW_SOURCE_CHANGED_DURING_REGRADE")
+     output_dir.mkdir(parents=True)
+     _write_new(output_dir / "review-freeze.json", review_freeze)
+diff --git a/src/forgeflow/evt_api.py b/src/forgeflow/evt_api.py
+index e5d281e..cafd50e 100644
+--- a/src/forgeflow/evt_api.py
++++ b/src/forgeflow/evt_api.py
+@@ -10,6 +10,7 @@ from .api import Decision
+ from .contracts import DomainError, Principal, Scope, StrictModel, authorize
+ from .evt_contract import DEFAULT_POLICY
+ from .evt_review import REVISION, EVTReviews
++from .evt_store import EVTBoundStore
+ from .prototype_api import create_prototype_app
+ 
+ 
+@@ -33,6 +34,9 @@ class AcceptanceDecision(StrictModel):
+ 
+ 
+ def create_evt_app(source, identities, factory, *, test_harness=False):
++    if not isinstance(source, EVTBoundStore):
++        # The legacy-approval gate and its audit live in the Store; never serve a store without them.
++        raise RuntimeError("EVT_BOUND_STORE_REQUIRED")
+     app = create_prototype_app(source, identities, factory, test_harness=test_harness)
+     app.title = "ForgeFlow bound synthetic EVT review prototype"
+     app.router.routes = [route for route in app.router.routes if getattr(route, "path", None) not in {
+@@ -99,10 +103,9 @@ def create_evt_app(source, identities, factory, *, test_harness=False):
+     @app.post("/approvals/{approval_id}/decision")
+     def legacy_decision(approval_id: str, body: Decision, principal: Principal = principal_dependency):
+         authorize(principal, body.scope, {"reviewer"})
+-        if body.decision == "APPROVED":
+-            raise DomainError("EVT_BOUND_APPROVAL_REQUIRED", status=409)
++        # The Store rejects APPROVED (409) and audits the attempt; REJECTED stays available.
+         return source.decide(principal, body.scope, approval_id, body.proposal_hash,
+-                             body.expected_run_revision, "REJECTED")
++                             body.expected_run_revision, body.decision)
+ 
+     return app
+ 
+diff --git a/src/forgeflow/evt_store.py b/src/forgeflow/evt_store.py
+new file mode 100644
+index 0000000..0522767
+--- /dev/null
++++ b/src/forgeflow/evt_store.py
+@@ -0,0 +1,61 @@
++"""The one Store that production entry points use: legacy hardware-only approvals are never granted.
++
++The hardware-only gate cannot authorize a stage change or business action; EVT acceptance and
++Fabric actions have their own bound approvals. The condition lives in ``legacy_approval_gate`` so
++the HTTP route and the Store cannot drift apart. Blocked attempts are audited in their own
++transaction, because the blocked operation itself rolls back.
++"""
++
++from sqlalchemy import select
++
++from .contracts import DomainError, authorize
++from .store import Action, Approval, Run, Store, filters
++
++BLOCKED_EVENT = "LEGACY_APPROVAL_BLOCKED"
++
++
++def legacy_approval_gate(decision):
++    """Raise for a hardware-only APPROVED decision; REJECTED stays available."""
++    if decision == "APPROVED":
++        raise DomainError("EVT_BOUND_APPROVAL_REQUIRED", status=409)
++
++
++class EVTBoundStore(Store):
++    def _audit_blocked(self, p, scope, run_id, approval_id, decision, entry):
++        with self._tx() as s:
++            approval = s.scalar(select(Approval).where(*filters(Approval, scope), Approval.id == approval_id))
++            if approval is None or approval.run_id != run_id:
++                return
++            run = self._get(s, Run, scope, run_id, lock=True)
++            self._run_acl(s, p, scope, run)
++            self._event(s, p, scope, run, BLOCKED_EVENT, {
++                "approval_id": approval.id, "kind": approval.kind, "decision": decision, "entry": entry})
++
++    def decide(self, p, scope, identifier, proposal_hash, expected_run_revision, decision):
++        authorize(p, scope, {"reviewer"})
++        if p.kind != "user":
++            raise DomainError("HUMAN_REVIEW_REQUIRED", status=403)
++        try:
++            legacy_approval_gate(decision)
++        except DomainError:
++            with self._tx() as s:
++                run_id = s.scalar(select(Approval.run_id).where(*filters(Approval, scope), Approval.id == identifier))
++            if run_id is not None:
++                self._audit_blocked(p, scope, run_id, identifier, decision, "decide")
++            raise
++        return super().decide(p, scope, identifier, proposal_hash, expected_run_revision, decision)
++
++    def dispatch_local(self, p, scope, identifier, action_id, owner, *, lease_token, epoch):
++        authorize(p, scope, {"worker"})
++        with self._tx() as s:
++            action = s.scalar(select(Action).where(
++                *filters(Action, scope), Action.id == action_id, Action.run_id == identifier))
++            blocked = (action.approval_id, action.status) if action is not None else None
++        # Only an APPROVED row can reach an effect; replays and other states keep their own errors.
++        if blocked is not None and blocked[1] == "APPROVED":
++            try:
++                legacy_approval_gate("APPROVED")
++            except DomainError:
++                self._audit_blocked(p, scope, identifier, blocked[0], "APPROVED", "dispatch_local")
++                raise
++        return super().dispatch_local(p, scope, identifier, action_id, owner, lease_token=lease_token, epoch=epoch)
+diff --git a/src/forgeflow/fabric_runtime.py b/src/forgeflow/fabric_runtime.py
+index c2381ec..646245d 100644
+--- a/src/forgeflow/fabric_runtime.py
++++ b/src/forgeflow/fabric_runtime.py
+@@ -4,12 +4,12 @@ import json
+ import secrets
+ 
+ from .contracts import Principal
++from .evt_store import EVTBoundStore
+ from .fabric_contract import FABRIC_SCOPE
+ from .local import RUNTIME, database_url
+-from .store import Store
+ 
+ 
+-class FabricStore(Store):
++class FabricStore(EVTBoundStore):
+     def _prepare(self, session, principal, scope, run, kind, parameters, project):
+         # This project uses the composite Fabric gate, never hardware-only actions.
+         if scope != FABRIC_SCOPE:
+diff --git a/src/forgeflow/fabric_store.py b/src/forgeflow/fabric_store.py
+index 97e337a..1d06b9c 100644
+--- a/src/forgeflow/fabric_store.py
++++ b/src/forgeflow/fabric_store.py
+@@ -14,9 +14,10 @@ from sqlalchemy.orm import Mapped, mapped_column
+ 
+ from .contracts import DomainError, authorize, digest
+ from .evt_review import key_check
++from .evt_store import EVTBoundStore
+ from .fabric_contract import FABRIC_SCOPE, REVISION, evaluate_fabric
+ from .sre_ops import event_chain_valid
+-from .store import SCOPE, Base, Event, Run, Scoped, Store, aware, filters, fk, uid, values, view
++from .store import SCOPE, Base, Event, Run, Scoped, aware, filters, fk, uid, values, view
+ 
+ FORWARD = {"TEST_STAGE", "ISSUE", "MEMORY_ACTIVATE"}
+ REVERSE = {"STAGE_REVERT": "TEST_STAGE", "ISSUE_RETRACT": "ISSUE", "MEMORY_REVOKE": "MEMORY_ACTIVATE"}
+@@ -108,7 +109,7 @@ def adapter_hash():
+     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+ 
+ 
+-class _TransactionStore(Store):
++class _TransactionStore(EVTBoundStore):
+     def __init__(self, source, session):
+         self.__dict__.update(source.__dict__)
+         self.session = session
+diff --git a/src/forgeflow/local.py b/src/forgeflow/local.py
+index 81645b2..fdb8755 100644
+--- a/src/forgeflow/local.py
++++ b/src/forgeflow/local.py
+@@ -28,9 +28,9 @@ def database_url() -> str:
+ 
+ 
+ def load_store():
+-    from .store import Store
++    from .evt_store import EVTBoundStore
+ 
+-    store = Store(database_url())
++    store = EVTBoundStore(database_url())
+     store.create_schema()
+     return store
+ 
+diff --git a/src/forgeflow/s2c_checks.py b/src/forgeflow/s2c_checks.py
+index 9254efb..f734708 100644
+--- a/src/forgeflow/s2c_checks.py
++++ b/src/forgeflow/s2c_checks.py
+@@ -37,6 +37,7 @@ from .contracts import (
+     authorize,
+     digest,
+ )
++from .evt_store import EVTBoundStore
+ from .gate import RULE_HASH, evaluate
+ from .grounded_context import FROZEN_CASES_SHA256, FROZEN_SCOPE, _read_cases, _scenario
+ from .policy import POLICY_HASH, execution_policy
+@@ -366,7 +367,7 @@ class S2CInputProvider:
+                 raise DomainError("DERIVED_CHECK_SCAN_UNCONFIRMED")
+ 
+ 
+-class _BoundCompletionStore(Store):
++class _BoundCompletionStore(EVTBoundStore):
+     def __init__(self, provider, principal, result, assessment, snapshot):
+         # Share the existing engine and transaction lock, never create a second DB.
+         self.__dict__.update(provider.store.__dict__)
+diff --git a/tests/clock_contract.py b/tests/clock_contract.py
+new file mode 100644
+index 0000000..21347c7
+--- /dev/null
++++ b/tests/clock_contract.py
+@@ -0,0 +1,25 @@
++"""Contract for the test clock, shared by conftest.py and the tests that check it.
++
++Every test runs on a clock that starts at T0 and then moves forward in real time (it is shifted, never
++frozen, so lease timeouts and event loops behave). T0 is in the past and equals the S2C frozen evaluation
++clock, so the shift is negative and a component that still reads the real clock is exposed immediately.
++Importing this module fixes the session start; conftest.py imports it first.
++"""
++
++import time
++from datetime import UTC, datetime, timedelta
++
++T0 = datetime(2026, 10, 5, 12, 0, 0, tzinfo=UTC)
++REAL_TIME = time.time  # captured before any patching
++REAL_AT_START = datetime.now(UTC)
++MONOTONIC_AT_START = time.monotonic()
++OFFSET = T0 - REAL_AT_START
++
++
++def real_utcnow():
++    return datetime.now(UTC)
++
++
++def expected_now():
++    """T0 plus the time elapsed in this session; what every shifted clock must show."""
++    return T0 + timedelta(seconds=time.monotonic() - MONOTONIC_AT_START)
+diff --git a/tests/test_clock.py b/tests/test_clock.py
+new file mode 100644
+index 0000000..97b894a
+--- /dev/null
++++ b/tests/test_clock.py
+@@ -0,0 +1,91 @@
++"""One shifted clock for the whole test session, and no way for new code to bypass it."""
++
++import ast
++import time
++from pathlib import Path
++
++import pytest
++from clock_contract import expected_now, real_utcnow
++
++from forgeflow import contracts
++from forgeflow.store import Store
++
++ROOT = Path(__file__).resolve().parents[1]
++CLOCK_FILES = {"clock_contract.py", "conftest.py"}
++
++
++def close(first, second):
++    return abs((first - second).total_seconds()) < 1
++
++
++def database_now(tmp_path):
++    store = Store(f"sqlite:///{tmp_path / 'clock.sqlite'}")
++    store.create_schema()
++    with store._tx() as session:
++        return store._now(session)
++
++
++def test_python_clock_is_the_session_shifted_clock():
++    assert close(contracts.utcnow(), expected_now())
++
++
++def test_database_clock_is_the_session_shifted_clock(tmp_path):
++    assert close(database_now(tmp_path), expected_now())
++
++
++def test_time_time_is_the_session_shifted_clock():
++    assert abs(time.time() - expected_now().timestamp()) < 1
++
++
++def test_the_three_clocks_agree_with_each_other(tmp_path):
++    python, database, wall = contracts.utcnow(), database_now(tmp_path), time.time()
++    assert close(python, database) and abs(wall - python.timestamp()) < 1
++
++
++def test_shifted_clock_keeps_moving():
++    first = contracts.utcnow()
++    time.sleep(0.05)
++    assert contracts.utcnow() > first
++
++
++@pytest.mark.real_clock
++def test_real_clock_marker_leaves_every_clock_real(tmp_path):
++    assert close(contracts.utcnow(), real_utcnow())
++    assert close(database_now(tmp_path), real_utcnow())
++    assert abs(time.time() - real_utcnow().timestamp()) < 1
++
++
++def _clock_reads(path, *, allow_definition=False):
++    tree = ast.parse(path.read_text(encoding="utf-8"))
++    exempt = set()
++    if allow_definition:
++        for node in ast.walk(tree):
++            if isinstance(node, ast.FunctionDef) and node.name == "utcnow":
++                exempt |= {id(child) for child in ast.walk(node)}
++    found = []
++    for node in ast.walk(tree):
++        if id(node) in exempt:
++            continue
++        if isinstance(node, ast.ImportFrom) and any(alias.name == "utcnow" for alias in node.names):
++            found.append((node.lineno, "imports utcnow by name"))
++        elif isinstance(node, ast.Name) and node.id == "utcnow":
++            found.append((node.lineno, "uses utcnow by name"))
++        elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
++              and node.func.attr in {"now", "utcnow"}
++              and getattr(node.func.value, "id", getattr(node.func.value, "attr", None)) == "datetime"):
++            found.append((node.lineno, "reads the datetime clock directly"))
++    return found
++
++
++def test_package_code_reads_time_only_through_contracts_utcnow():
++    offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
++                 for path in sorted((ROOT / "src/forgeflow").glob("*.py"))
++                 for line, what in _clock_reads(path, allow_definition=path.name == "contracts.py")]
++    assert offenders == []
++
++
++def test_tests_read_time_only_through_contracts_utcnow():
++    offenders = [f"{path.relative_to(ROOT)}:{line} {what}"
++                 for path in sorted((ROOT / "tests").glob("*.py")) if path.name not in CLOCK_FILES
++                 for line, what in _clock_reads(path)]
++    assert offenders == []
+diff --git a/tests/test_evt_review.py b/tests/test_evt_review.py
+index 4bfaf17..27f5b5c 100644
+--- a/tests/test_evt_review.py
++++ b/tests/test_evt_review.py
+@@ -16,8 +16,9 @@ from forgeflow.domain_store import DomainOperations
+ from forgeflow.evt_api import create_evt_app
+ from forgeflow.evt_contract import DEFAULT_POLICY, SOURCE_POLICY, UNRESOLVED_POLICY, EVTPolicies
+ from forgeflow.evt_review import EVTApproval, EVTReview, EVTReviews, approval_hash, technical_source
++from forgeflow.evt_store import EVTBoundStore
+ from forgeflow.sre_ops import SREOperations
+-from forgeflow.store import Artifact, Document, Event, Run, Step, Store, aware, values
++from forgeflow.store import Artifact, Document, Event, Run, Step, aware, values
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ 
+@@ -25,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
+ @pytest.fixture
+ def evt_db(tmp_path):
+     scope, run, events = archive("M01")
+-    source = Store("sqlite:///" + str(tmp_path / "evt.db"))
++    source = EVTBoundStore("sqlite:///" + str(tmp_path / "evt.db"))
+     source.create_schema()
+     owner = Principal(subject_id="evt-offline-owner", kind="user", roles=frozenset({"admin", "reviewer"}), scopes=(scope,))
+     source.ensure_project(scope)
+diff --git a/tests/test_freeze_git_anchor.py b/tests/test_freeze_git_anchor.py
+new file mode 100644
+index 0000000..03edeb4
+--- /dev/null
++++ b/tests/test_freeze_git_anchor.py
+@@ -0,0 +1,146 @@
++"""The frozen-source check reads the anchor commit with git and never the working tree.
++
++Negative cases use a throwaway git repository, so no archived evidence is touched.
++"""
++
++import hashlib
++import importlib.util
++import json
++import os
++import subprocess
++from pathlib import Path
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++FREEZE = ROOT / "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/experiment-freeze.json"
++SPEC = importlib.util.spec_from_file_location("s2c_regrade_anchor_tests", ROOT / "scripts/s2c_regrade.py")
++review = importlib.util.module_from_spec(SPEC)
++SPEC.loader.exec_module(review)
++CONTENT = b"committed bytes\n"
++CONTENT_SHA = hashlib.sha256(CONTENT).hexdigest()
++
++
++def sha(data):
++    return hashlib.sha256(data).hexdigest()
++
++
++def git(repo, *args):
++    done = subprocess.run(["git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@example.invalid", *args],
++                          capture_output=True, check=True)
++    return done.stdout.decode().strip()
++
++
++@pytest.fixture
++def repo(tmp_path):
++    folder = tmp_path / "repo"
++    folder.mkdir()
++    git(folder, "init", "-q")
++    (folder / "a.txt").write_bytes(CONTENT)
++    git(folder, "add", "a.txt")
++    git(folder, "commit", "-q", "-m", "frozen state")
++    return folder, git(folder, "rev-parse", "HEAD")
++
++
++def anchor(tmp_path, commit, freeze_sha, schema="forgeflow-freeze-git-anchor-v1"):
++    path = tmp_path / "anchor.json"
++    path.write_text(json.dumps({"schema": schema, "git_commit": commit, "freeze_sha256": freeze_sha}))
++    return path
++
++
++def freeze_of(expected):
++    freeze = {"source_files_sha256": {"a.txt": expected}}
++    return freeze, sha(json.dumps(freeze).encode())
++
++
++def check(tmp_path, repo_info, *, expected=CONTENT_SHA, commit=None, freeze_sha=None, repo=None, schema=None):
++    folder, head = repo_info
++    freeze, real_sha = freeze_of(expected)
++    path = anchor(tmp_path, commit or head, freeze_sha or real_sha, *([schema] if schema else []))
++    return review._source_hashes(freeze, real_sha, anchor_path=path, repo=repo or folder)
++
++
++def rejected(code, call):
++    with pytest.raises(RuntimeError) as raised:
++        call()
++    assert str(raised.value) == code
++
++
++def test_matching_commit_passes_even_after_the_working_tree_changes(tmp_path, repo):
++    (repo[0] / "a.txt").write_bytes(b"edited after the freeze\n")
++    result = check(tmp_path, repo)
++    assert result["a.txt"] == sha(CONTENT)
++
++
++def test_frozen_hash_that_differs_from_the_commit_content_fails(tmp_path, repo):
++    rejected("FROZEN_EXPERIMENT_SOURCE_CHANGED", lambda: check(tmp_path, repo, expected=sha(b"something else")))
++
++
++def test_anchor_to_a_commit_that_does_not_exist_fails_with_a_reason(tmp_path, repo):
++    rejected("FROZEN_GIT_HISTORY_UNAVAILABLE", lambda: check(tmp_path, repo, commit="0" * 40))
++
++
++def test_missing_git_history_fails_instead_of_silently_skipping(tmp_path, repo, monkeypatch):
++    bare = tmp_path / "not-a-repo"
++    bare.mkdir()
++    monkeypatch.setenv("GIT_CEILING_DIRECTORIES", str(tmp_path))
++    rejected("FROZEN_GIT_HISTORY_UNAVAILABLE", lambda: check(tmp_path, repo, repo=bare))
++
++
++def test_anchor_for_a_different_freeze_file_fails(tmp_path, repo):
++    rejected("FROZEN_ANCHOR_FREEZE_MISMATCH", lambda: check(tmp_path, repo, freeze_sha="f" * 64))
++
++
++@pytest.mark.parametrize("schema", ["something-else", None])
++def test_malformed_anchor_fails(tmp_path, repo, schema):
++    folder, head = repo
++    freeze, real_sha = freeze_of(sha(CONTENT))
++    path = anchor(tmp_path, head, real_sha, schema or "forgeflow-freeze-git-anchor-v1")
++    if schema is None:
++        path.write_text("{not json")
++    rejected("FROZEN_GIT_ANCHOR_INVALID", lambda: review._source_hashes(freeze, real_sha, anchor_path=path, repo=folder))
++
++
++def test_missing_anchor_file_fails(tmp_path, repo):
++    freeze, real_sha = freeze_of(sha(CONTENT))
++    rejected("FROZEN_GIT_ANCHOR_MISSING", lambda: review._source_hashes(
++        freeze, real_sha, anchor_path=tmp_path / "absent.json", repo=repo[0]))
++
++
++def test_commit_reference_must_be_a_full_hash(tmp_path, repo):
++    rejected("FROZEN_GIT_ANCHOR_INVALID", lambda: check(tmp_path, repo, commit="HEAD"))
++
++
++def test_file_absent_from_the_anchor_commit_fails(tmp_path, repo):
++    folder, head = repo
++    freeze = {"source_files_sha256": {"missing.txt": sha(CONTENT)}}
++    freeze_sha = sha(json.dumps(freeze).encode())
++    path = anchor(tmp_path, head, freeze_sha)
++    rejected("FROZEN_SOURCE_NOT_IN_ANCHOR",
++             lambda: review._source_hashes(freeze, freeze_sha, anchor_path=path, repo=folder))
++
++
++def test_symlink_in_the_anchor_commit_is_not_a_regular_file(tmp_path, repo):
++    folder, _ = repo
++    os.symlink("a.txt", folder / "link.txt")
++    git(folder, "add", "link.txt")
++    git(folder, "commit", "-q", "-m", "add symlink")
++    head = git(folder, "rev-parse", "HEAD")
++    freeze = {"source_files_sha256": {"link.txt": sha(b"a.txt")}}
++    freeze_sha = sha(json.dumps(freeze).encode())
++    path = anchor(tmp_path, head, freeze_sha)
++    rejected("FROZEN_SOURCE_REGULAR_FILE_REQUIRED",
++             lambda: review._source_hashes(freeze, freeze_sha, anchor_path=path, repo=folder))
++
++
++def test_shipped_anchor_matches_the_untouched_freeze_and_is_reachable_from_head():
++    shipped = json.loads(review.ANCHOR_PATH.read_bytes())
++    raw = FREEZE.read_bytes()
++    assert shipped["freeze_sha256"] == sha(raw)
++    assert shipped["frozen_source_files_checked"] == len(json.loads(raw)["source_files_sha256"])
++    result = review._source_hashes(json.loads(raw), sha(raw))
++    assert result == {**json.loads(raw)["source_files_sha256"], **{
++        name: sha((ROOT / name).read_bytes()) for name in ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")}}
++    ancestor = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", shipped["git_commit"], "HEAD"],
++                              capture_output=True, check=False)
++    assert ancestor.returncode == 0, "anchor commit is not in this repository's history"
+diff --git a/tests/test_frozen_replay_at_anchor.py b/tests/test_frozen_replay_at_anchor.py
+new file mode 100644
+index 0000000..312303e
+--- /dev/null
++++ b/tests/test_frozen_replay_at_anchor.py
+@@ -0,0 +1,112 @@
++"""Frozen replay: run the anchor commit's own code against the archived evidence in the repository.
++
++The tests in test_s2c_regrade.py run on the working tree, so they only show that the current code can
++still reproduce the archived results. This module exports the anchor commit with ``git archive`` and
++runs that commit's own regrade tests there, so editing any working-tree file (contracts.py, the
++evaluator, ...) cannot change what the replay executes. It fails, never skips, without git history.
++"""
++
++import hashlib
++import io
++import json
++import os
++import subprocess
++import sys
++import tarfile
++from pathlib import Path
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++EVIDENCE = "deliveries/2026-10-06/s2c-fixes/evidence"
++ANCHOR = ROOT / EVIDENCE / "freeze-git-anchor.json"
++ARCHIVED_DIRECTORIES = ("experiment-01", "regrade-01")
++REVIEW_SCRIPTS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py", "scripts/s2c_evaluate.py")
++
++
++def sha(data):
++    return hashlib.sha256(data).hexdigest()
++
++
++def export_anchor(repo, commit, target):
++    done = subprocess.run(["git", "-C", str(repo), "archive", "--format=tar", commit],
++                          capture_output=True, check=False)
++    if done.returncode != 0:
++        raise RuntimeError(f"FROZEN_GIT_HISTORY_UNAVAILABLE: cannot export {commit} from {repo}: "
++                           + done.stderr.decode(errors="replace").strip()[:200])
++    with tarfile.open(fileobj=io.BytesIO(done.stdout)) as archive:
++        archive.extractall(target, filter="data")
++
++
++def differences(expected, actual):
++    """Relative paths whose presence or bytes differ between two directory trees."""
++    def files(folder):
++        return {str(path.relative_to(folder)): sha(path.read_bytes())
++                for path in sorted(folder.rglob("*")) if path.is_file()}
++
++    left, right = files(expected), files(actual)
++    return sorted(name for name in left.keys() | right.keys() if left.get(name) != right.get(name))
++
++
++@pytest.fixture(scope="module")
++def export(tmp_path_factory):
++    commit = json.loads(ANCHOR.read_bytes())["git_commit"]
++    target = tmp_path_factory.mktemp("anchor-export")
++    try:
++        export_anchor(ROOT, commit, target)
++    except RuntimeError as error:
++        pytest.fail(str(error))
++    return target
++
++
++def test_regrade_tests_pass_with_the_anchor_commits_own_code(export):
++    environment = {**os.environ, "PYTHONPATH": str(export / "src"), "PYTHONDONTWRITEBYTECODE": "1"}
++    done = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
++                           "tests/test_s2c_regrade.py"], cwd=export, env=environment,
++                          capture_output=True, text=True, check=False, timeout=600)
++    tail = "\n".join(done.stdout.strip().splitlines()[-15:])
++    assert done.returncode == 0 and " passed" in tail and "failed" not in tail, tail
++
++
++def test_archived_evidence_in_the_repository_is_byte_identical_to_the_anchor_commit(export):
++    for name in ARCHIVED_DIRECTORIES:
++        assert differences(export / EVIDENCE / name, ROOT / EVIDENCE / name) == [], name
++
++
++def test_review_freeze_hashes_match_the_scripts_at_the_anchor_commit(export):
++    recorded = json.loads((ROOT / EVIDENCE / "regrade-01/review-freeze.json").read_bytes())["review_source_files_sha256"]
++    for name in REVIEW_SCRIPTS:
++        assert recorded[name] == sha((export / name).read_bytes()), name
++
++
++def test_frozen_source_hashes_match_the_anchor_commit_export(export):
++    frozen = json.loads((ROOT / EVIDENCE / "experiment-01/experiment-freeze.json").read_bytes())["source_files_sha256"]
++    assert [name for name, expected in frozen.items() if sha((export / name).read_bytes()) != expected] == []
++
++
++def test_one_changed_byte_or_missing_file_in_archived_evidence_is_detected(export, tmp_path):
++    copy = tmp_path / "experiment-01"
++    original = export / EVIDENCE / "experiment-01"
++    copy.mkdir()
++    for path in original.rglob("*"):
++        target = copy / path.relative_to(original)
++        if path.is_dir():
++            target.mkdir(parents=True, exist_ok=True)
++        else:
++            target.write_bytes(path.read_bytes())
++    assert differences(original, copy) == []
++    victim = copy / "experiment-freeze.json"
++    victim.write_bytes(victim.read_bytes() + b" ")
++    assert differences(original, copy) == ["experiment-freeze.json"]
++    (copy / "completion.json").unlink()
++    assert differences(original, copy) == ["completion.json", "experiment-freeze.json"]
++
++
++def test_export_without_git_history_fails_with_a_reason_instead_of_skipping(tmp_path, monkeypatch):
++    monkeypatch.setenv("GIT_CEILING_DIRECTORIES", str(tmp_path))
++    plain = tmp_path / "plain"
++    plain.mkdir()
++    with pytest.raises(RuntimeError, match="FROZEN_GIT_HISTORY_UNAVAILABLE"):
++        export_anchor(plain, "0" * 40, tmp_path / "out")
++    with pytest.raises(RuntimeError, match="FROZEN_GIT_HISTORY_UNAVAILABLE"):
++        export_anchor(ROOT, "0" * 40, tmp_path / "out2")
+diff --git a/tests/test_legacy_gate.py b/tests/test_legacy_gate.py
+new file mode 100644
+index 0000000..ea06f58
+--- /dev/null
++++ b/tests/test_legacy_gate.py
+@@ -0,0 +1,226 @@
++"""Legacy hardware-only approvals are blocked at the Store, not only at one HTTP route.
++
++Every production entry point obtains its store from ``forgeflow.local.load_store``.
++These tests drive the real CLI entry (``local.main``) and ``load_store()`` and never
++construct the gated store class themselves, so they prove the CLI really got it.
++"""
++
++import ast
++import json
++import sys
++from pathlib import Path
++
++import pytest
++from sqlalchemy import select
++from sqlalchemy.orm import Session
++
++from forgeflow import local
++from forgeflow.contracts import DomainError, Principal, RunRequest
++from forgeflow.store import Action, Approval, Event, Receipt, filters
++
++ROOT = Path(__file__).resolve().parents[1]
++SCOPE = local.SCOPE
++CODE = "EVT_BOUND_APPROVAL_REQUIRED"
++OWNER = Principal(subject_id="local-owner", kind="user", scopes=(SCOPE,),
++                  roles=frozenset({"submitter", "admin", "reviewer", "hardware", "pm"}))
++WORKER = Principal(subject_id="forgeflow-local-worker", kind="service", scopes=(SCOPE,),
++                   roles=frozenset({"worker", "memory_writer", "hardware"}))
++# Evaluation harnesses that need APPROVED on a private throwaway SQLite database.
++HARNESS_STORE_CONSTRUCTORS = {"scripts/s2b_evaluate.py", "preparation/s2/evaluation/evaluator.py"}
++LIVE_DATABASE_MARKERS = ("database_url", "FORGEFLOW_DATABASE_URL", ".runtime", "load_store", "dev.env", "postgres")
++
++
++@pytest.fixture
++def store(tmp_path, monkeypatch):
++    monkeypatch.setenv("FORGEFLOW_DATABASE_URL", f"sqlite:///{tmp_path / 'legacy-gate.sqlite'}")
++    monkeypatch.setattr(local, "load_identities", lambda: {"synthetic-test-token": OWNER})
++    return local.load_store()
++
++
++def checked_run(store):
++    run = store.submit(OWNER, RunRequest(scope=SCOPE, fixture_id="aurora-pass"), "legacy-gate")
++    claim = store.claim(WORKER, SCOPE, run["id"], "worker-a")
++    snapshot = {"policy_version": "1", "skill_version": "1", "rule_version": "1", "classification": 0,
++                "input_hash": "a" * 64, "documents": []}
++    result = {"status": "SUCCEEDED", "cleanup": "REMOVED", "artifacts": [], "stdout": "synthetic"}
++    return store.complete_check(WORKER, SCOPE, run["id"], claim["token"], claim["epoch"], result,
++                                {"status": "PASS", "evidence": []}, snapshot)
++
++
++def row(session, model, identifier):
++    return session.scalar(select(model).where(*filters(model, SCOPE), model.id == identifier))
++
++
++def cli(monkeypatch, capsys, *argv):
++    monkeypatch.setattr(sys, "argv", ["forgeflow.local", *argv])
++    local.main()
++    return json.loads(capsys.readouterr().out)
++
++
++def decide_args(store, run, decision):
++    approval = run["approvals"][0]
++    revision = store.get_run(OWNER, SCOPE, run["id"])["revision"]
++    return ["decide", approval["id"], approval["proposal_hash"], str(revision), "--decision", decision]
++
++
++def test_cli_approved_decision_is_blocked_and_leaves_everything_pending(store, monkeypatch, capsys):
++    run = checked_run(store)
++    with pytest.raises(DomainError) as raised:
++        cli(monkeypatch, capsys, *decide_args(store, run, "APPROVED"))
++    assert (raised.value.code, raised.value.status) == (CODE, 409)
++    state = store.get_run(OWNER, SCOPE, run["id"])
++    assert {row["decision"] for row in state["approvals"]} == {"PENDING"}
++    assert {row["status"] for row in state["actions"]} == {"WAITING_APPROVAL"}
++    assert state["revision"] == run["revision"]
++
++
++def test_cli_rejection_remains_available(store, monkeypatch, capsys):
++    run = checked_run(store)
++    output = cli(monkeypatch, capsys, *decide_args(store, run, "REJECTED"))
++    assert output["approval"]["decision"] == "REJECTED"
++
++
++def test_blocked_attempt_writes_one_audit_event_and_keeps_the_chain_valid(store, monkeypatch, capsys):
++    run = checked_run(store)
++    with pytest.raises(DomainError):
++        cli(monkeypatch, capsys, *decide_args(store, run, "APPROVED"))
++    events = [row for row in store.events(OWNER, SCOPE, run["id"]) if row["kind"] == "LEGACY_APPROVAL_BLOCKED"]
++    assert len(events) == 1
++    assert events[0]["actor"] == OWNER.subject_id
++    assert events[0]["payload"]["approval_id"] == run["approvals"][0]["id"]
++    assert events[0]["payload"]["decision"] == "APPROVED"
++    assert store.verify_events(OWNER, SCOPE, run["id"]) is True
++
++
++def test_row_approved_before_the_gate_cannot_be_dispatched(store):
++    run = checked_run(store)
++    action = next(row for row in run["actions"] if row["tool"] == "issues.create.local")
++    with Session(store.engine) as session, session.begin():
++        approval = row(session, Approval, action["approval_id"])
++        approval.decision, approval.reviewer = "APPROVED", "historical-reviewer"
++        row(session, Action, action["id"]).status = "APPROVED"
++    claim = store.claim(WORKER, SCOPE, run["id"], "local-dispatch")
++    with pytest.raises(DomainError) as raised:
++        store.dispatch_local(WORKER, SCOPE, run["id"], action["id"], "local-dispatch",
++                             lease_token=claim["token"], epoch=claim["epoch"])
++    assert raised.value.code == CODE
++    with Session(store.engine) as session:
++        assert session.scalars(select(Receipt).where(*filters(Receipt, SCOPE))).all() == []
++        assert row(session, Approval, action["approval_id"]).consumed_by_action is None
++        assert row(session, Action, action["id"]).status == "APPROVED"
++        kinds = [row.kind for row in session.scalars(select(Event).where(*filters(Event, SCOPE)))]
++    assert "LEGACY_APPROVAL_BLOCKED" in kinds
++
++
++def test_gate_condition_lives_in_one_function():
++    from forgeflow import evt_store
++
++    assert evt_store.legacy_approval_gate("REJECTED") is None
++    with pytest.raises(DomainError) as raised:
++        evt_store.legacy_approval_gate("APPROVED")
++    assert (raised.value.code, raised.value.status) == (CODE, 409)
++
++
++def http_client(store):
++    from fastapi.testclient import TestClient
++
++    from forgeflow.evt_api import create_evt_app
++
++    app = create_evt_app(store, {"synthetic-test-token": OWNER}, None, test_harness=True)
++    return TestClient(app), {"Authorization": "Bearer synthetic-test-token"}
++
++
++def decision_body(store, run, decision):
++    approval = run["approvals"][0]
++    return {"scope": SCOPE.model_dump(mode="json"), "proposal_hash": approval["proposal_hash"],
++            "expected_run_revision": store.get_run(OWNER, SCOPE, run["id"])["revision"], "decision": decision}
++
++
++def blocked_events(store, run_id):
++    return [row for row in store.events(OWNER, SCOPE, run_id) if row["kind"] == "LEGACY_APPROVAL_BLOCKED"]
++
++
++def test_http_approved_decision_returns_409_and_is_audited_by_the_store(store):
++    run = checked_run(store)
++    client, headers = http_client(store)
++    approval_id = run["approvals"][0]["id"]
++    response = client.post(f"/approvals/{approval_id}/decision", json=decision_body(store, run, "APPROVED"),
++                           headers=headers)
++    assert response.status_code == 409 and response.json()["code"] == CODE
++    events = blocked_events(store, run["id"])
++    assert len(events) == 1 and events[0]["payload"]["approval_id"] == approval_id
++    assert events[0]["payload"]["entry"] == "decide"
++    assert store.verify_events(OWNER, SCOPE, run["id"]) is True
++    assert {row["decision"] for row in store.get_run(OWNER, SCOPE, run["id"])["approvals"]} == {"PENDING"}
++
++
++def test_http_rejection_still_works_and_writes_no_block_event(store):
++    run = checked_run(store)
++    client, headers = http_client(store)
++    response = client.post(f"/approvals/{run['approvals'][0]['id']}/decision",
++                           json=decision_body(store, run, "REJECTED"), headers=headers)
++    assert response.status_code == 200 and response.json()["approval"]["decision"] == "REJECTED"
++    assert blocked_events(store, run["id"]) == []
++
++
++def test_http_approved_decision_for_an_unknown_approval_is_still_409_without_an_event(store):
++    run = checked_run(store)
++    client, headers = http_client(store)
++    body = {**decision_body(store, run, "APPROVED"), "proposal_hash": "0" * 64}
++    assert client.post("/approvals/historical-id/decision", json=body, headers=headers).status_code == 409
++    assert blocked_events(store, run["id"]) == []
++
++
++def test_evt_app_refuses_to_start_on_an_ungated_store(tmp_path):
++    from forgeflow.evt_api import create_evt_app
++    from forgeflow.store import Store
++
++    ungated = Store(f"sqlite:///{tmp_path / 'ungated.sqlite'}")
++    with pytest.raises(RuntimeError, match="EVT_BOUND_STORE_REQUIRED"):
++        create_evt_app(ungated, {}, None, test_harness=True)
++
++
++def test_load_store_returns_the_gated_implementation(store):
++    from forgeflow.evt_store import EVTBoundStore
++    from forgeflow.fabric_runtime import FabricStore
++
++    assert isinstance(store, EVTBoundStore)
++    assert issubclass(FabricStore, EVTBoundStore)
++
++
++def _store_uses(path):
++    tree = ast.parse(path.read_text(encoding="utf-8"))
++
++    def named(node):
++        return getattr(node, "id", None) == "Store" or getattr(node, "attr", None) == "Store"
++
++    calls = [node.lineno for node in ast.walk(tree) if isinstance(node, ast.Call) and named(node.func)]
++    subclasses = [(node.name, node.lineno) for node in ast.walk(tree)
++                  if isinstance(node, ast.ClassDef) and any(named(base) for base in node.bases)]
++    return calls, subclasses
++
++
++def test_no_package_module_builds_or_subclasses_the_ungated_base_store():
++    offenders = []
++    for path in sorted((ROOT / "src/forgeflow").glob("*.py")):
++        calls, subclasses = _store_uses(path)
++        if path.name == "evt_store.py":
++            continue  # the single module that is allowed to extend the base class
++        offenders += [f"{path.relative_to(ROOT)}:{line} Store(...)" for line in calls]
++        offenders += [f"{path.relative_to(ROOT)}:{line} class {name}(Store)" for name, line in subclasses]
++    assert offenders == []
++
++
++def test_only_the_two_known_evaluation_harnesses_build_the_base_store_outside_the_package():
++    found = set()
++    for folder in ("scripts", "preparation"):
++        for path in sorted((ROOT / folder).rglob("*.py")):
++            if "__pycache__" not in path.parts and _store_uses(path)[0]:
++                found.add(str(path.relative_to(ROOT)))
++    assert found == HARNESS_STORE_CONSTRUCTORS
++
++
++def test_whitelisted_harnesses_never_reach_the_live_database_or_runtime_credentials():
++    for name in HARNESS_STORE_CONSTRUCTORS:
++        text = (ROOT / name).read_text(encoding="utf-8")
++        assert [marker for marker in LIVE_DATABASE_MARKERS if marker in text] == [], name
+diff --git a/tests/test_s2c_regrade.py b/tests/test_s2c_regrade.py
+index 1e8b31c..c3512e9 100644
+--- a/tests/test_s2c_regrade.py
++++ b/tests/test_s2c_regrade.py
+@@ -2,6 +2,10 @@
+ 
+ The archive contains real runtime ledger shapes. Every mutation is detached in
+ memory or a temporary copy; original experiments and evaluator remain intact.
++
++These run on the working tree: they are regression tests that the current code can still reproduce
++the archived results, not a frozen replay. The frozen replay, which executes the anchor commit's own
++code, is tests/test_frozen_replay_at_anchor.py.
+ """
+ 
+ import copy
+@@ -227,3 +231,13 @@ def test_existing_output_never_changes_original_review(tmp_path):
+     with pytest.raises(RuntimeError, match="USE_NEW_REGRADE_DIRECTORY"):
+         review.review_experiment(ARCHIVE, tmp_path)
+     assert _hashes(tmp_path) == {"KEEP.txt": hashlib.sha256(b"immutable").hexdigest()}
++
++
++def test_working_tree_edits_to_frozen_files_do_not_break_the_replay(tmp_path, monkeypatch):
++    """Frozen files are read from the anchor commit; only the review code is checked in the working tree."""
++    original, output = tmp_path / "original", tmp_path / "new-review"
++    _copy_archive(original)
++    real = review._source_hashes
++    monkeypatch.setattr(review, "_source_hashes",
++                        lambda freeze, sha: {**real(freeze, sha), "src/forgeflow/local.py": "0" * 64})
++    assert review.review_experiment(original, output)["regraded_frozen_acceptance_counts"]["PASS"] == 13

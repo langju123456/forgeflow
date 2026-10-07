@@ -1,0 +1,63 @@
+{
+  "type": "READ_ONLY_TAKEOVER_REVIEW",
+  "created_at": "2026-10-07T13:30:42.701244+08:00",
+  "baseline": "a185c622108779c85b308402568bf776af02eef3",
+  "reviewed_head": "cbfcdaac1fbb3058b8b2ceb01c53f98dbb62f0f6",
+  "changed_files_reviewed": 31,
+  "targeted_tests_passed": 94,
+  "findings": {
+    "P1": 0,
+    "P2": 4
+  },
+  "source_files_unchanged_during_review": true,
+  "runtime_mutations": 0,
+  "new_model_calls": 0,
+  "new_sandbox_checks": 0,
+  "entries": [
+    {
+      "path": "deliveries/2026-10-07/code-review/REVIEW.md",
+      "bytes": 10547,
+      "sha256": "abaa83eb50e8719d59777b86aadb451b3f430db6401d0bafd4bbbccae2fb3761"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/clock-fixture-repro.json",
+      "bytes": 224,
+      "sha256": "29bc9b362aabe0c7a7382ce38bd33efed6a07134dad10bc96be37b30eb94a21d"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/committed.patch",
+      "bytes": 44913,
+      "sha256": "70cbb270f5840a8d181cb8be415d81e17c5df64d69164c324e62fe091138811b"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/focused-tests.xml",
+      "bytes": 12733,
+      "sha256": "7cc05dcaf928957ca459b465101377f69d1a81c5f0eb43d4f8df069c71e152b6"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/frozen-selector-repro.json",
+      "bytes": 357,
+      "sha256": "88d9a9ad88e3de2ed252127ffe28556830de6fb06197381b077ae7d35768dd52"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/inventory.json",
+      "bytes": 11095,
+      "sha256": "f258b8a65135dfcf3c06b3e552306eba033e0597706284b8a0a2633cf057124f"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/live-read-only.json",
+      "bytes": 1777,
+      "sha256": "350b1b24c50cbddd7174a1c465379aa58c896ba53039024c222b9584dd99057e"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/repro-probes.json",
+      "bytes": 2810,
+      "sha256": "ca18634e416de54716e6f2256cf40e75f1ad0378d559c787a52d2a0a4f680a3b"
+    },
+    {
+      "path": "deliveries/2026-10-07/code-review/evidence/uncommitted.patch",
+      "bytes": 20536,
+      "sha256": "520702e22b88dfdce9f215945ddaf607e74bd968e4788d0f65d354cfea0c928b"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "provenance": "ACTUAL_READ_ONLY_CURRENT_API",
+  "health": {
+    "identity": "DEV_ONLY",
+    "revision": "fabric-stable-technical-v1",
+    "process_id": 69967,
+    "mode": "LOCAL_SYNTHETIC_PROTOTYPE",
+    "fabric_scope": {
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "fabric_action_adapter": "LOCAL_SYNTHETIC_PARAMETER_BOUND_APPROVAL_REQUIRED",
+    "evt_review_contract": "ENFORCED_FOR_CURRENT_HTTP_ACCEPTANCE",
+    "default_policy": "synthetic-evt-apk-device-v1",
+    "hardware_only_approvals": "GRANTS_BLOCKED_REJECTION_ALLOWED",
+    "model_roles": [
+      "supervisor",
+      "pm"
+    ],
+    "deterministic_sops": [
+      "hardware",
+      "sre",
+      "architect",
+      "android"
+    ],
+    "android_build": "NOT_RUN_NO_ANDROID_TOOLCHAIN",
+    "android_device": "NOT_RUN_NO_ANDROID_DEVICE",
+    "full_evt_eligibility": false,
+    "evt_stage_transition_allowed": false,
+    "stage_action_adapter": "ISOLATED_LOCAL_TEST_STAGE_ONLY",
+    "issue_adapter": "LOCAL_DB_ONLY",
+    "memory_adapter": "ISOLATED_LOCAL_APPROVAL_REQUIRED",
+    "human_approval_required": true,
+    "automatic_business_actions": false
+  },
+  "process": "69967 Tue Oct  6 17:11:13 2026     /opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python -m forgeflow.fabric_api",
+  "reads": [
+    {
+      "path": "/fabric/reviews/ecbc1e1f-4920-4575-8015-4fba1144c41b",
+      "status": 409,
+      "error": "FABRIC_SOURCE_CHANGED"
+    },
+    {
+      "path": "/fabric/approvals/f85ef504-0f41-4a05-ac44-07f8c5e059d1",
+      "status": 409,
+      "error": "FABRIC_PROPOSAL_CHANGED"
+    }
+  ],
+  "mutations": 0,
+  "new_model_calls": 0,
+  "new_sandbox_checks": 0
+}

@@ -1,0 +1,14 @@
+{
+  "provenance": "OFFLINE_ANCHOR_TEST_SELECTION_PROBE",
+  "critical_archive_test_deselected": true,
+  "parent_assertion_accepted": true,
+  "child": [
+    {
+      "returncode": 0,
+      "stdout_tail": [
+        ".........................                                                [100%]",
+        "25 passed, 1 deselected in 7.22s"
+      ]
+    }
+  ]
+}

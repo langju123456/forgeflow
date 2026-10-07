@@ -1,0 +1,7 @@
+{
+  "provenance": "OFFLINE_EXISTING_SHARED_FIXTURE_CLOCK_SIMULATION",
+  "gate_default_date": "2026-11-06",
+  "contracts_clock": "2026-10-05T12:00:00Z",
+  "stored_assessment": "UNKNOWN",
+  "builder_error": "SOURCE_CHANGED"
+}
