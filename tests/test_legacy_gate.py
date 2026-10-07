@@ -112,14 +112,72 @@ def test_row_approved_before_the_gate_cannot_be_dispatched(store):
     assert "LEGACY_APPROVAL_BLOCKED" in kinds
 
 
-def test_http_route_and_store_use_one_shared_gate_function():
-    from forgeflow import evt_api, evt_store
+def test_gate_condition_lives_in_one_function():
+    from forgeflow import evt_store
 
-    assert evt_api.legacy_approval_gate is evt_store.legacy_approval_gate
     assert evt_store.legacy_approval_gate("REJECTED") is None
     with pytest.raises(DomainError) as raised:
         evt_store.legacy_approval_gate("APPROVED")
     assert (raised.value.code, raised.value.status) == (CODE, 409)
+
+
+def http_client(store):
+    from fastapi.testclient import TestClient
+
+    from forgeflow.evt_api import create_evt_app
+
+    app = create_evt_app(store, {"synthetic-test-token": OWNER}, None, test_harness=True)
+    return TestClient(app), {"Authorization": "Bearer synthetic-test-token"}
+
+
+def decision_body(store, run, decision):
+    approval = run["approvals"][0]
+    return {"scope": SCOPE.model_dump(mode="json"), "proposal_hash": approval["proposal_hash"],
+            "expected_run_revision": store.get_run(OWNER, SCOPE, run["id"])["revision"], "decision": decision}
+
+
+def blocked_events(store, run_id):
+    return [row for row in store.events(OWNER, SCOPE, run_id) if row["kind"] == "LEGACY_APPROVAL_BLOCKED"]
+
+
+def test_http_approved_decision_returns_409_and_is_audited_by_the_store(store):
+    run = checked_run(store)
+    client, headers = http_client(store)
+    approval_id = run["approvals"][0]["id"]
+    response = client.post(f"/approvals/{approval_id}/decision", json=decision_body(store, run, "APPROVED"),
+                           headers=headers)
+    assert response.status_code == 409 and response.json()["code"] == CODE
+    events = blocked_events(store, run["id"])
+    assert len(events) == 1 and events[0]["payload"]["approval_id"] == approval_id
+    assert events[0]["payload"]["entry"] == "decide"
+    assert store.verify_events(OWNER, SCOPE, run["id"]) is True
+    assert {row["decision"] for row in store.get_run(OWNER, SCOPE, run["id"])["approvals"]} == {"PENDING"}
+
+
+def test_http_rejection_still_works_and_writes_no_block_event(store):
+    run = checked_run(store)
+    client, headers = http_client(store)
+    response = client.post(f"/approvals/{run['approvals'][0]['id']}/decision",
+                           json=decision_body(store, run, "REJECTED"), headers=headers)
+    assert response.status_code == 200 and response.json()["approval"]["decision"] == "REJECTED"
+    assert blocked_events(store, run["id"]) == []
+
+
+def test_http_approved_decision_for_an_unknown_approval_is_still_409_without_an_event(store):
+    run = checked_run(store)
+    client, headers = http_client(store)
+    body = {**decision_body(store, run, "APPROVED"), "proposal_hash": "0" * 64}
+    assert client.post("/approvals/historical-id/decision", json=body, headers=headers).status_code == 409
+    assert blocked_events(store, run["id"]) == []
+
+
+def test_evt_app_refuses_to_start_on_an_ungated_store(tmp_path):
+    from forgeflow.evt_api import create_evt_app
+    from forgeflow.store import Store
+
+    ungated = Store(f"sqlite:///{tmp_path / 'ungated.sqlite'}")
+    with pytest.raises(RuntimeError, match="EVT_BOUND_STORE_REQUIRED"):
+        create_evt_app(ungated, {}, None, test_harness=True)
 
 
 def test_load_store_returns_the_gated_implementation(store):

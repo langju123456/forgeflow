@@ -16,8 +16,9 @@ from forgeflow.domain_store import DomainOperations
 from forgeflow.evt_api import create_evt_app
 from forgeflow.evt_contract import DEFAULT_POLICY, SOURCE_POLICY, UNRESOLVED_POLICY, EVTPolicies
 from forgeflow.evt_review import EVTApproval, EVTReview, EVTReviews, approval_hash, technical_source
+from forgeflow.evt_store import EVTBoundStore
 from forgeflow.sre_ops import SREOperations
-from forgeflow.store import Artifact, Document, Event, Run, Step, Store, aware, values
+from forgeflow.store import Artifact, Document, Event, Run, Step, aware, values
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 @pytest.fixture
 def evt_db(tmp_path):
     scope, run, events = archive("M01")
-    source = Store("sqlite:///" + str(tmp_path / "evt.db"))
+    source = EVTBoundStore("sqlite:///" + str(tmp_path / "evt.db"))
     source.create_schema()
     owner = Principal(subject_id="evt-offline-owner", kind="user", roles=frozenset({"admin", "reviewer"}), scopes=(scope,))
     source.ensure_project(scope)
