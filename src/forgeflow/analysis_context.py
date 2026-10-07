@@ -66,7 +66,9 @@ class ExportGrant:
     """Trusted configuration. Models cannot create or broaden this grant."""
 
     scope: Scope = SYNTHETIC_SCOPE
-    documents: tuple[SourceGrant, ...] = (SourceGrant("aurora-evt-sop", "v1", SOP_HASH),)
+    # v2 is the renewed SOP (same content, later expiry; see sop_renewal.py); v1 stays for history.
+    documents: tuple[SourceGrant, ...] = (
+        SourceGrant("aurora-evt-sop", "v1", SOP_HASH), SourceGrant("aurora-evt-sop", "v2", SOP_HASH))
     max_classification: int = 0
     profile_id: str = PROFILE_ID
     destination: str = "ollama-local-qwen3:8b"
