@@ -10,6 +10,7 @@ from .api import Decision
 from .contracts import DomainError, Principal, Scope, StrictModel, authorize
 from .evt_contract import DEFAULT_POLICY
 from .evt_review import REVISION, EVTReviews
+from .evt_store import EVTBoundStore
 from .prototype_api import create_prototype_app
 
 
@@ -33,6 +34,9 @@ class AcceptanceDecision(StrictModel):
 
 
 def create_evt_app(source, identities, factory, *, test_harness=False):
+    if not isinstance(source, EVTBoundStore):
+        # The legacy-approval gate and its audit live in the Store; never serve a store without them.
+        raise RuntimeError("EVT_BOUND_STORE_REQUIRED")
     app = create_prototype_app(source, identities, factory, test_harness=test_harness)
     app.title = "ForgeFlow bound synthetic EVT review prototype"
     app.router.routes = [route for route in app.router.routes if getattr(route, "path", None) not in {
@@ -99,10 +103,9 @@ def create_evt_app(source, identities, factory, *, test_harness=False):
     @app.post("/approvals/{approval_id}/decision")
     def legacy_decision(approval_id: str, body: Decision, principal: Principal = principal_dependency):
         authorize(principal, body.scope, {"reviewer"})
-        if body.decision == "APPROVED":
-            raise DomainError("EVT_BOUND_APPROVAL_REQUIRED", status=409)
+        # The Store rejects APPROVED (409) and audits the attempt; REJECTED stays available.
         return source.decide(principal, body.scope, approval_id, body.proposal_hash,
-                             body.expected_run_revision, "REJECTED")
+                             body.expected_run_revision, body.decision)
 
     return app
 

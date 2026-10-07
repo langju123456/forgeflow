@@ -14,9 +14,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from .contracts import DomainError, authorize, digest
 from .evt_review import key_check
+from .evt_store import EVTBoundStore
 from .fabric_contract import FABRIC_SCOPE, REVISION, evaluate_fabric
 from .sre_ops import event_chain_valid
-from .store import SCOPE, Base, Event, Run, Scoped, Store, aware, filters, fk, uid, values, view
+from .store import SCOPE, Base, Event, Run, Scoped, aware, filters, fk, uid, values, view
 
 FORWARD = {"TEST_STAGE", "ISSUE", "MEMORY_ACTIVATE"}
 REVERSE = {"STAGE_REVERT": "TEST_STAGE", "ISSUE_RETRACT": "ISSUE", "MEMORY_REVOKE": "MEMORY_ACTIVATE"}
@@ -108,7 +109,7 @@ def adapter_hash():
     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
-class _TransactionStore(Store):
+class _TransactionStore(EVTBoundStore):
     def __init__(self, source, session):
         self.__dict__.update(source.__dict__)
         self.session = session

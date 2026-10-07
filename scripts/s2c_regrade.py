@@ -12,11 +12,16 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
+import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVISION = "s2c-nested-binding-canonical-regrade-v1"
+REVIEW_PATHS = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
+ANCHOR_SCHEMA = "forgeflow-freeze-git-anchor-v1"
+ANCHOR_PATH = ROOT / "deliveries/2026-10-06/s2c-fixes/evidence/freeze-git-anchor.json"
 MODEL_SCENARIOS = ("M01", "M01-blocked", "M02", "M03", "M04")
 FAULT_SCENARIOS = tuple(f"M{index:02d}" for index in range(5, 13))
 GRADE_FIELDS = ("raw_reply", "structure_valid", "semantic_valid", "codes", "claim_catalog",
@@ -211,15 +216,46 @@ def _write_new(path, value):
         handle.write("\n")
 
 
-def _source_hashes(freeze):
+def _git(repo, *args):
+    try:
+        return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, timeout=30, check=False)
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise RuntimeError("FROZEN_GIT_HISTORY_UNAVAILABLE") from error
+
+
+def _anchored_source_bytes(repo, commit, name):
+    """Bytes of a frozen source file as committed at the anchor, never the working tree."""
+    _require(re.fullmatch(r"[0-9a-f]{40}", commit) is not None, "FROZEN_GIT_ANCHOR_INVALID")
+    _require(not name.startswith(("/", "-")) and ".." not in Path(name).parts, "FROZEN_SOURCE_PATH_INVALID")
+    listed = _git(repo, "ls-tree", "-z", commit, "--", name)
+    _require(listed.returncode == 0, "FROZEN_GIT_HISTORY_UNAVAILABLE")
+    meta, _, path = listed.stdout.rstrip(b"\0").decode().partition("\t")
+    _require(bool(meta), "FROZEN_SOURCE_NOT_IN_ANCHOR")
+    mode, kind, blob = (meta.split() + ["", "", ""])[:3]
+    _require(mode in {"100644", "100755"} and kind == "blob" and path == name,
+             "FROZEN_SOURCE_REGULAR_FILE_REQUIRED")
+    content = _git(repo, "cat-file", "blob", blob)
+    _require(content.returncode == 0, "FROZEN_GIT_HISTORY_UNAVAILABLE")
+    return content.stdout
+
+
+def _source_hashes(freeze, freeze_sha256, *, anchor_path=None, repo=None):
+    """Check the frozen hashes against the anchor commit; append-only anchor, frozen file untouched."""
+    anchor_path, repo = Path(anchor_path or ANCHOR_PATH), Path(repo or ROOT)
+    _require(anchor_path.is_file() and not anchor_path.is_symlink(), "FROZEN_GIT_ANCHOR_MISSING")
+    try:
+        anchor = json.loads(anchor_path.read_bytes())
+    except ValueError as error:
+        raise RuntimeError("FROZEN_GIT_ANCHOR_INVALID") from error
+    _require(isinstance(anchor, dict) and anchor.get("schema") == ANCHOR_SCHEMA
+             and isinstance(anchor.get("git_commit"), str) and isinstance(anchor.get("freeze_sha256"), str),
+             "FROZEN_GIT_ANCHOR_INVALID")
+    _require(anchor["freeze_sha256"] == freeze_sha256, "FROZEN_ANCHOR_FREEZE_MISMATCH")
     source = dict(freeze["source_files_sha256"])
     for name, expected in source.items():
-        path = ROOT / name
-        _require(path.resolve().is_relative_to(ROOT) and path.is_file() and not path.is_symlink(),
-                 "FROZEN_SOURCE_REGULAR_FILE_REQUIRED")
-        _require(hashlib.sha256(path.read_bytes()).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
-    review_paths = ("scripts/s2c_regrade.py", "scripts/s2c_typed_validate.py")
-    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in review_paths})
+        committed = _anchored_source_bytes(repo, anchor["git_commit"], name)
+        _require(hashlib.sha256(committed).hexdigest() == expected, "FROZEN_EXPERIMENT_SOURCE_CHANGED")
+    source.update({name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in REVIEW_PATHS})
     return source
 
 
@@ -243,7 +279,7 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
     actual_files = {path.name for path in (experiment_dir / "raw-chains").iterdir()}
     _require(actual_files == {sid + ".json" for sid in MODEL_SCENARIOS}, "ALL_FIVE_RAW_CHAINS_REQUIRED")
     freeze = read_source(experiment_dir / "experiment-freeze.json")
-    sources = _source_hashes(freeze)
+    sources = _source_hashes(freeze, evidence_hashes["experiment-freeze.json"])
     integrity, scenarios = original.load_scenarios()
     by_id = {case["scenario_id"]: case for case in scenarios}
     _require(tuple(by_id) == MODEL_SCENARIOS + FAULT_SCENARIOS, "FROZEN_DENOMINATOR_CHANGED")
@@ -331,8 +367,9 @@ def review_experiment(experiment_dir: Path, output_dir: Path):
         _require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(experiment_dir.resolve())
                  and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
                  "SOURCE_EVIDENCE_CHANGED_DURING_REGRADE")
-    for name, expected in sources.items():
-        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected,
+    # The frozen files are immutable at the anchor commit; only the review code lives in the working tree.
+    for name in REVIEW_PATHS:
+        _require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == sources[name],
                  "REVIEW_SOURCE_CHANGED_DURING_REGRADE")
     output_dir.mkdir(parents=True)
     _write_new(output_dir / "review-freeze.json", review_freeze)

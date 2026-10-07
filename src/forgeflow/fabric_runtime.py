@@ -4,12 +4,12 @@ import json
 import secrets
 
 from .contracts import Principal
+from .evt_store import EVTBoundStore
 from .fabric_contract import FABRIC_SCOPE
 from .local import RUNTIME, database_url
-from .store import Store
 
 
-class FabricStore(Store):
+class FabricStore(EVTBoundStore):
     def _prepare(self, session, principal, scope, run, kind, parameters, project):
         # This project uses the composite Fabric gate, never hardware-only actions.
         if scope != FABRIC_SCOPE:

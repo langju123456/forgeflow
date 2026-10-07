@@ -28,9 +28,9 @@ def database_url() -> str:
 
 
 def load_store():
-    from .store import Store
+    from .evt_store import EVTBoundStore
 
-    store = Store(database_url())
+    store = EVTBoundStore(database_url())
     store.create_schema()
     return store
 

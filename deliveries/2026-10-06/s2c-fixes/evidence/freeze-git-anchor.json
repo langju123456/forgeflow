@@ -1,0 +1,9 @@
+{
+  "basis": "All 50 frozen hashes were compared with the contents committed at git_commit before this record was written. The full default suite on that commit, run on 2026-10-06 in a separate review session (not archived), gave 824 passed and 13 skipped, including the two frozen-replay tests in tests/test_s2c_regrade.py.",
+  "freeze_file": "deliveries/2026-10-06/s2c-fixes/evidence/experiment-01/experiment-freeze.json",
+  "freeze_sha256": "73c71cc8ca5297c1d2cecae875edc82a2ae5b705ba4418e78ca4eaf75d81f921",
+  "frozen_source_files_checked": 50,
+  "git_commit": "38d84871bec1505382b8e1174cccd56eff52594f",
+  "reason": "The S2C experiment froze 50 source file hashes against the working tree, so any later fix to those files breaks the archive replay. The evidence was produced by the code in this commit, so the check now reads the files from it with git (ls-tree and cat-file), not from the working tree. The frozen file is unchanged and no successor hash is registered.",
+  "schema": "forgeflow-freeze-git-anchor-v1"
+}
