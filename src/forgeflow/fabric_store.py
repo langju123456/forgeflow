@@ -297,6 +297,15 @@ class FabricOperations:
             reasons.append("REVIEW_STALE")
         return reasons
 
+    def _proposers(self, session, scope, row):
+        """Everyone who created or renewed any version of this approval; none of them may decide it."""
+        people = {row.created_by, row.proposal.get("proposed_by")}
+        for version in session.scalars(select(FabricApprovalVersion).where(
+                *filters(FabricApprovalVersion, scope), FabricApprovalVersion.approval_id == row.id)):
+            checked(version)
+            people |= {version.superseded_by, version.proposal.get("proposed_by")}
+        return people - {None}
+
     def _supersede(self, session, p, scope, run, review, row, key, reasons, parameters):
         """Replace the current version of an unconsumed approval; the old one is kept and audited."""
         checked(row)
@@ -421,7 +430,7 @@ class FabricOperations:
             self.source._get(session, Run, scope, initial.run_id, lock=True)
             row = self.source._get(session, FabricApproval, scope, approval_id, lock=True)
             run, review = self._approval(session, p, scope, row, fresh=decision == "APPROVED")
-            if p.subject_id in {row.created_by, row.proposal.get("proposed_by")}:
+            if p.subject_id in self._proposers(session, scope, row):
                 raise DomainError("INDEPENDENT_REVIEW_REQUIRED", status=403)
             if proposal_hash != row.proposal_hash:
                 raise DomainError("PROPOSAL_HASH_MISMATCH")
