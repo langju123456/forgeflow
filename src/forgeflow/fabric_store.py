@@ -9,7 +9,7 @@ from contextlib import contextmanager
 from datetime import timedelta
 from pathlib import Path
 
-from sqlalchemy import JSON, DateTime, Integer, String, UniqueConstraint, select
+from sqlalchemy import JSON, DateTime, Integer, String, UniqueConstraint, func, select
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .contracts import DomainError, authorize, digest
@@ -58,6 +58,34 @@ class FabricApproval(Scoped, Base):
     decision_event_id: Mapped[str | None] = mapped_column(String(36))
     created_at: Mapped[object] = mapped_column(DateTime(timezone=True))
     expires_at: Mapped[object] = mapped_column(DateTime(timezone=True))
+    payload_hash: Mapped[str] = mapped_column(String(64))
+
+
+class FabricApprovalVersion(Scoped, Base):
+    """A superseded version of an approval: its proposal, decision and reviewer, kept unchanged.
+
+    The live approval row keeps its id and always holds the current version; earlier versions live here.
+    """
+    __tablename__ = "fabric_approval_versions"
+    __table_args__ = (fk("runs", local="run_id"), fk("fabric_approvals", local="approval_id"),
+                      fk("events", local="event_id"), UniqueConstraint(*SCOPE, "approval_id", "version"))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    run_id: Mapped[str] = mapped_column(String(36))
+    approval_id: Mapped[str] = mapped_column(String(36))
+    version: Mapped[int] = mapped_column(Integer)
+    review_id: Mapped[str] = mapped_column(String(36))
+    proposal: Mapped[dict] = mapped_column(JSON)
+    proposal_hash: Mapped[str] = mapped_column(String(64))
+    decision: Mapped[str] = mapped_column(String(16))
+    reviewer: Mapped[str | None] = mapped_column(String(128))
+    revision: Mapped[int] = mapped_column(Integer)
+    decision_event_id: Mapped[str | None] = mapped_column(String(36))
+    created_at: Mapped[object] = mapped_column(DateTime(timezone=True))
+    expires_at: Mapped[object] = mapped_column(DateTime(timezone=True))
+    superseded_by: Mapped[str] = mapped_column(String(128))
+    request_key: Mapped[str] = mapped_column(String(128))
+    reasons: Mapped[list] = mapped_column(JSON)
+    event_id: Mapped[str] = mapped_column(String(36))
     payload_hash: Mapped[str] = mapped_column(String(64))
 
 
@@ -125,6 +153,7 @@ class FabricOperations:
 
     def create_schema(self):
         Base.metadata.create_all(self.source.engine, tables=[FabricReview.__table__, FabricApproval.__table__,
+                                                          FabricApprovalVersion.__table__,
                                                           FabricReceipt.__table__, FabricItem.__table__])
 
     def _auth(self, p, scope, roles=None):
@@ -237,6 +266,66 @@ class FabricOperations:
         return {"item_id": item.id, "from_status": item.status, "expected_revision": item.revision,
                 "to_status": "RETRACTED" if kind == "ISSUE_RETRACT" else "REVOKED", "receipt_hash": receipt.payload_hash}
 
+    def _proposal(self, p, run, review, kind, target, parameters, *, version, supersedes):
+        return {"schema": "fabric-action-v1", "revision": REVISION, "scope": values(FABRIC_SCOPE),
+                "run_id": run.id, "review_id": review.id, "review_hash": review.report_hash,
+                "technical_hash": review.report_json["technical_hash"], "kind": kind,
+                "target_receipt_id": target, "parameters": parameters, "adapter_hash": adapter_hash(),
+                "approval_provenance": "TEST_DRIVER", "simulation": True, "full_evt_eligibility": False,
+                "external_writes": False, "compensation_allows_stale_technical_evidence": kind in REVERSE,
+                "proposed_by": p.subject_id, "version": version, "supersedes": supersedes}
+
+    def _stale_reasons(self, session, p, scope, row, now):
+        """Why an unconsumed proposal can no longer be approved or executed; empty when it is current."""
+        if row.decision == "REJECTED" or session.scalar(select(FabricReceipt.id).where(
+                *filters(FabricReceipt, scope), FabricReceipt.approval_id == row.id)):
+            return []  # a rejection is final and a consumed approval is history
+        reasons = []
+        if row.proposal.get("adapter_hash") != adapter_hash():
+            reasons.append("ADAPTER_CHANGED")
+        if now >= aware(row.expires_at):
+            reasons.append("EXPIRED")
+        review = self.source._get(session, FabricReview, scope, row.review_id)
+        try:
+            self._review(session, p, scope, review, fresh=row.kind in FORWARD)
+            if row.proposal.get("review_hash") != review.report_hash:
+                reasons.append("REVIEW_STALE")
+        except DomainError as error:
+            if error.code not in {"FABRIC_SOURCE_CHANGED", "EVIDENCE_EXPIRED", "SOURCE_CHANGED",
+                                  "FABRIC_EVIDENCE_REQUIRED"}:
+                raise
+            reasons.append("REVIEW_STALE")
+        return reasons
+
+    def _supersede(self, session, p, scope, run, review, row, key, reasons, parameters):
+        """Replace the current version of an unconsumed approval; the old one is kept and audited."""
+        checked(row)
+        if digest(row.proposal) != row.proposal_hash:
+            raise DomainError("FABRIC_RECORD_CHANGED")
+        number = session.scalar(select(func.count()).select_from(FabricApprovalVersion).where(
+            *filters(FabricApprovalVersion, scope), FabricApprovalVersion.approval_id == row.id)) + 1
+        proposal = self._proposal(p, run, review, row.kind, row.target_receipt_id, parameters,
+                                  version=number + 1, supersedes=row.proposal_hash)
+        event = self.source._event(session, p, scope, run, "FABRIC_APPROVAL_SUPERSEDED", {
+            "approval_id": row.id, "kind": row.kind, "version": number, "reasons": reasons,
+            "old_proposal_hash": row.proposal_hash, "new_proposal_hash": digest(proposal),
+            "old_adapter_hash": row.proposal.get("adapter_hash"), "new_adapter_hash": adapter_hash(),
+            "old_decision": row.decision, "provenance": "TEST_DRIVER"})
+        archive = FabricApprovalVersion(
+            **values(scope), id=uid(), run_id=row.run_id, approval_id=row.id, version=number,
+            review_id=row.review_id, proposal=row.proposal, proposal_hash=row.proposal_hash,
+            decision=row.decision, reviewer=row.reviewer, revision=row.revision,
+            decision_event_id=row.decision_event_id, created_at=row.created_at, expires_at=row.expires_at,
+            superseded_by=p.subject_id, request_key=key, reasons=reasons, event_id=event.id, payload_hash="")
+        seal(archive)
+        session.add(archive)
+        now = self.source._now(session)
+        row.review_id, row.proposal, row.proposal_hash = review.id, proposal, digest(proposal)
+        row.decision, row.reviewer, row.decision_event_id = "PENDING", None, None
+        row.revision, row.created_at, row.expires_at = row.revision + 1, now, now + timedelta(hours=1)
+        seal(row)
+        session.flush()
+
     def propose(self, p, scope, review_id, review_hash, key, kind, target_receipt_id=None):
         self._auth(p, scope, {"admin", "supervisor"})
         if p.kind != "user":
@@ -254,22 +343,32 @@ class FabricOperations:
                 raise DomainError("FABRIC_GATE_NOT_PASS")
             old = session.scalar(select(FabricApproval).where(*filters(FabricApproval, scope),
                 FabricApproval.created_by == p.subject_id, FabricApproval.idempotency_key == key))
-            if old:
-                checked(old)
-                if (old.review_id, old.kind, old.target_receipt_id) != (review_id, kind, target):
-                    raise DomainError("IDEMPOTENCY_CONFLICT")
-                return view(old)
             duplicate = session.scalar(select(FabricApproval).where(*filters(FabricApproval, scope),
-                FabricApproval.run_id == run.id, FabricApproval.kind == kind, FabricApproval.target_receipt_id == target))
-            if duplicate:
-                raise DomainError("FABRIC_ACTION_ALREADY_PROPOSED")
+                FabricApproval.run_id == run.id, FabricApproval.kind == kind,
+                FabricApproval.target_receipt_id == target))
+            existing = old or duplicate
+            if existing is not None:
+                checked(existing)
+                if existing.run_id != run.id or (existing.kind, existing.target_receipt_id) != (kind, target):
+                    raise DomainError("IDEMPOTENCY_CONFLICT")
+                renewed = session.scalar(select(FabricApprovalVersion.id).where(
+                    *filters(FabricApprovalVersion, scope), FabricApprovalVersion.approval_id == existing.id,
+                    FabricApprovalVersion.request_key == key,
+                    FabricApprovalVersion.superseded_by == p.subject_id))
+                if renewed and existing.review_id == review.id:
+                    return view(existing)  # this request already produced the current version
+                reasons = self._stale_reasons(session, p, scope, existing, self.source._now(session))
+                if not reasons:
+                    if old is not None:
+                        if old.review_id != review_id:
+                            raise DomainError("IDEMPOTENCY_CONFLICT")
+                        return view(old)
+                    raise DomainError("FABRIC_ACTION_ALREADY_PROPOSED")
+                parameters = self._parameters(session, p, scope, run, review, kind, target)
+                self._supersede(session, p, scope, run, review, existing, key, reasons, parameters)
+                return view(existing)
             parameters = self._parameters(session, p, scope, run, review, kind, target)
-            proposal = {"schema": "fabric-action-v1", "revision": REVISION, "scope": values(scope),
-                "run_id": run.id, "review_id": review.id, "review_hash": review.report_hash,
-                "technical_hash": review.report_json["technical_hash"], "kind": kind,
-                "target_receipt_id": target, "parameters": parameters, "adapter_hash": adapter_hash(),
-                "approval_provenance": "TEST_DRIVER", "simulation": True, "full_evt_eligibility": False,
-                "external_writes": False, "compensation_allows_stale_technical_evidence": kind in REVERSE}
+            proposal = self._proposal(p, run, review, kind, target, parameters, version=1, supersedes=None)
             now = self.source._now(session)
             row = FabricApproval(**values(scope), id=uid(), run_id=run.id, review_id=review.id, kind=kind,
                 target_receipt_id=target, created_by=p.subject_id, idempotency_key=key,
@@ -282,9 +381,10 @@ class FabricOperations:
             session.flush()
             return view(row)
 
-    def _approval(self, session, p, scope, row, *, fresh=True):
+    def _approval(self, session, p, scope, row, *, fresh=True, adapter=True):
+        """Verify an approval. adapter=False is for reading history: a code upgrade must not hide it."""
         checked(row)
-        if digest(row.proposal) != row.proposal_hash or row.proposal["adapter_hash"] != adapter_hash():
+        if digest(row.proposal) != row.proposal_hash or (adapter and row.proposal["adapter_hash"] != adapter_hash()):
             raise DomainError("FABRIC_PROPOSAL_CHANGED")
         review = self.source._get(session, FabricReview, scope, row.review_id)
         run = self._review(session, p, scope, review, fresh=fresh and row.kind in FORWARD)
@@ -296,8 +396,19 @@ class FabricOperations:
         self._auth(p, scope)
         with self.source._tx() as session:
             row = self.source._get(session, FabricApproval, scope, approval_id)
-            self._approval(session, p, scope, row)
-            return view(row)
+            self._approval(session, p, scope, row, fresh=False, adapter=False)
+            history = []
+            for version in session.scalars(select(FabricApprovalVersion).where(
+                    *filters(FabricApprovalVersion, scope), FabricApprovalVersion.approval_id == row.id
+                    ).order_by(FabricApprovalVersion.version)):
+                checked(version)
+                history.append({"version": version.version, "proposal_hash": version.proposal_hash,
+                                "review_id": version.review_id, "decision": version.decision,
+                                "reviewer": version.reviewer, "revision": version.revision,
+                                "superseded_by": version.superseded_by, "reasons": version.reasons,
+                                "event_id": version.event_id})
+            return {**view(row), "adapter_current": row.proposal["adapter_hash"] == adapter_hash(),
+                    "history": history}
 
     def decide(self, p, scope, approval_id, proposal_hash, expected_revision, decision):
         self._auth(p, scope, {"reviewer"})
@@ -310,7 +421,7 @@ class FabricOperations:
             self.source._get(session, Run, scope, initial.run_id, lock=True)
             row = self.source._get(session, FabricApproval, scope, approval_id, lock=True)
             run, review = self._approval(session, p, scope, row, fresh=decision == "APPROVED")
-            if p.subject_id == row.created_by:
+            if p.subject_id in {row.created_by, row.proposal.get("proposed_by")}:
                 raise DomainError("INDEPENDENT_REVIEW_REQUIRED", status=403)
             if proposal_hash != row.proposal_hash:
                 raise DomainError("PROPOSAL_HASH_MISMATCH")
@@ -344,7 +455,7 @@ class FabricOperations:
             initial = self.source._get(session, FabricApproval, scope, approval_id)
             self.source._get(session, Run, scope, initial.run_id, lock=True)
             row = self.source._get(session, FabricApproval, scope, approval_id, lock=True)
-            run, review = self._approval(session, p, scope, row, fresh=False)
+            run, review = self._approval(session, p, scope, row, fresh=False, adapter=False)
             receipt = session.scalar(select(FabricReceipt).where(*filters(FabricReceipt, scope), FabricReceipt.approval_id == row.id))
             if receipt:
                 receipt = self._receipt(session, p, scope, receipt.id, run.id)
@@ -428,7 +539,7 @@ class FabricOperations:
             for item in session.scalars(select(FabricItem).where(*filters(FabricItem, scope), FabricItem.id.in_(allowed))):
                 checked(item)
                 approval = self.source._get(session, FabricApproval, scope, item.approval_id)
-                self._approval(session, p, scope, approval)
+                self._approval(session, p, scope, approval, adapter=False)
                 candidate = _TransactionStore(self.source, session).cite(p, scope, "memory", item.memory_id)
                 now = self.source._now(session)
                 if (candidate["status"] not in {"CANDIDATE", "CONFIRMED"}
