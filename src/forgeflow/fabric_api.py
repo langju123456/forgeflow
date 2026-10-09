@@ -6,6 +6,7 @@ from typing import Literal
 from fastapi import Depends, Header
 from pydantic import Field
 
+from . import code_fingerprint
 from .contracts import DomainError, Principal, Scope, StrictModel
 from .evt_api import create_evt_app
 from .evt_contract import DEFAULT_POLICY
@@ -40,6 +41,7 @@ def create_fabric_app(source, identities, factory, *, test_harness=False):
                          {"/health", "/runs/{run_id}/report"}]
     service = FabricOperations(source)
     service.create_schema()
+    started_with = code_fingerprint.code_fingerprint()  # fixed now: a later edit on disk must show as drift
 
     def identity(authorization: str | None = Header(default=None)) -> Principal:
         token = authorization.removeprefix("Bearer ") if authorization else ""
@@ -67,7 +69,7 @@ def create_fabric_app(source, identities, factory, *, test_harness=False):
 
     @app.get("/health")
     def health():
-        return {"identity": "DEV_ONLY", "revision": REVISION, "process_id": os.getpid(),
+        return {"identity": "DEV_ONLY", "revision": REVISION, "process_id": os.getpid(), "code_fingerprint": started_with,
                 "mode": "LOCAL_SYNTHETIC_PROTOTYPE", "fabric_scope": FABRIC_SCOPE.model_dump(mode="json"),
                 "fabric_action_adapter": "LOCAL_SYNTHETIC_PARAMETER_BOUND_APPROVAL_REQUIRED",
                 "evt_review_contract": "ENFORCED_FOR_CURRENT_HTTP_ACCEPTANCE", "default_policy": DEFAULT_POLICY,
