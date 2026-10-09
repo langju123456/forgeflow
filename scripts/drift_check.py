@@ -17,6 +17,7 @@ import argparse
 import json
 import subprocess
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -48,15 +49,22 @@ def check_baseline_tag(repo, anchor_file):
 
 def fetch_health(url):
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))  # loopback only, never via a proxy
-    with opener.open(url, timeout=3) as response:
-        return json.loads(response.read())
+    try:
+        with opener.open(url, timeout=3) as response:
+            return json.loads(response.read())
+    except urllib.error.URLError as error:
+        if isinstance(error.reason, ConnectionRefusedError):
+            raise error.reason from None  # urllib wraps a refused connection; nothing is listening
+        raise
 
 
 def check_service(fetch, current):
     try:
         health = fetch(HEALTH_URL)
-    except (OSError, ValueError):
+    except ConnectionRefusedError:
         return result("service", "INFO", {"reason": "NOTHING_LISTENING_ON_8773"})
+    except (OSError, ValueError) as error:  # something listens (HTTP error, timeout, not JSON): cannot confirm
+        return result("service", "DRIFT", {"reason": "SERVICE_DID_NOT_ANSWER_PROPERLY", "error": type(error).__name__})
     running = health.get("code_fingerprint")
     if running is None:
         return result("service", "DRIFT", {"reason": "HEALTH_HAS_NO_CODE_FINGERPRINT",
