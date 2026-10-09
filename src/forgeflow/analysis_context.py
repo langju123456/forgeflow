@@ -15,7 +15,7 @@ from pathlib import Path
 
 from sqlalchemy import select
 
-from . import contracts
+from . import contracts, fixture_family
 from .analysis_contracts import ContextProposal, RoleReport, parse_output, strict_json_object
 from .context import KnowledgeService, MemoryService
 from .contracts import DomainError, ExecutionResult, Principal, Scope, authorize, canonical, digest
@@ -66,7 +66,9 @@ class ExportGrant:
     """Trusted configuration. Models cannot create or broaden this grant."""
 
     scope: Scope = SYNTHETIC_SCOPE
-    documents: tuple[SourceGrant, ...] = (SourceGrant("aurora-evt-sop", "v1", SOP_HASH),)
+    # v2 is the renewed SOP (same content, later expiry; see sop_renewal.py); v1 stays for history.
+    documents: tuple[SourceGrant, ...] = (
+        SourceGrant("aurora-evt-sop", "v1", SOP_HASH), SourceGrant("aurora-evt-sop", "v2", SOP_HASH))
     max_classification: int = 0
     profile_id: str = PROFILE_ID
     destination: str = "ollama-local-qwen3:8b"
@@ -242,7 +244,7 @@ def _mcp_projection(scope: Scope, run_id: str, run: dict) -> str:
             or [tool.get("name") for tool in tools] != ["sandbox.execute"]
         ):
             return "UNKNOWN"
-        template = "timeout" if run["request_json"]["fixture_id"] == "aurora-timeout" else "evt-check"
+        template = fixture_family.template_for(run["request_json"]["fixture_id"])
         if requests["tools/call"].get("params") != {
             "name": "sandbox.execute",
             "arguments": {
@@ -569,10 +571,10 @@ class AnalysisContextBuilder:
             raise DomainError("SYNTHETIC_SOURCE_REQUIRED")
         request = run["request_json"]
         fixture_id = request.get("fixture_id")
-        if fixture_id not in {"aurora-pass", "aurora-blocked", "aurora-unknown", "aurora-timeout"}:
+        if fixture_id not in fixture_family.FAMILY:
             raise DomainError("SYNTHETIC_SOURCE_REQUIRED")
         manifest = strict_json_object((self.fixture_root / f"{fixture_id}.json").read_text())
-        template = "timeout" if fixture_id == "aurora-timeout" else "evt-check"
+        template = fixture_family.template_for(fixture_id)
         if (
             manifest.get("synthetic") is not True
             or manifest.get("version") != "v1"

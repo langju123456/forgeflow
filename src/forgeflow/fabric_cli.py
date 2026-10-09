@@ -8,6 +8,7 @@ from .contracts import RunRequest
 from .fabric_contract import FABRIC_SCOPE
 from .fabric_runtime import initialize_fabric, load_fabric_identities, load_fabric_store
 from .fabric_store import FabricOperations
+from .fixture_family import cli_fixture
 from .local import load_workflow
 
 
@@ -18,6 +19,7 @@ def main():
     submit = sub.add_parser("submit")
     submit.add_argument("--key", required=True)
     submit.add_argument("--fixture", choices=["pass", "blocked", "unknown", "timeout"], default="pass")
+    submit.add_argument("--legacy-fixtures", action="store_true", help="use the original fixtures, not the renewed -v2 copies")
     for name in ("check", "run", "get", "approval", "execute"):
         sub.add_parser(name).add_argument("id")
     review = sub.add_parser("review")
@@ -51,7 +53,7 @@ def main():
         executor = next(p for p in principals if p.kind == "service")
         scope = FABRIC_SCOPE
         if args.command == "submit":
-            output = source.submit(owner, RunRequest(scope=scope, fixture_id="aurora-" + args.fixture), args.key)
+            output = source.submit(owner, RunRequest(scope=scope, fixture_id=cli_fixture(args.fixture, args.legacy_fixtures)), args.key)
         elif args.command == "check":
             output = asyncio.run(load_workflow(source).check(scope, args.id))
         elif args.command == "run":

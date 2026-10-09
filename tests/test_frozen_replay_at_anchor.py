@@ -92,6 +92,22 @@ def assert_complete(results):
     assert any(CRITICAL_CASE in name for name in results), "the full archive replay did not run"
 
 
+def imported_from(export, environment):
+    done = subprocess.run([sys.executable, "-c", "import forgeflow.store, pathlib; "
+                           "print(pathlib.Path(forgeflow.store.__file__).resolve())"],
+                          cwd=export, env=environment, capture_output=True, text=True, check=False, timeout=60)
+    assert done.returncode == 0, done.stderr[-300:]
+    return Path(done.stdout.strip())
+
+
+def test_the_child_process_imports_forgeflow_from_the_export_not_the_editable_install(export):
+    assert imported_from(export, anchor_environment(export)).is_relative_to((export / "src").resolve())
+    # Control: without PYTHONPATH the same child resolves the editable install of the working tree, so the
+    # assertion above really distinguishes the export from the working tree.
+    plain = {name: value for name, value in os.environ.items() if not name.startswith(("PYTEST_", "PYTHONPATH"))}
+    assert imported_from(export, plain).is_relative_to((ROOT / "src").resolve())
+
+
 def test_regrade_tests_pass_with_the_anchor_commits_own_code(export):
     assert_complete(run_anchor_regrade_tests(export))
 

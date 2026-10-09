@@ -12,7 +12,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from . import contracts
+from . import contracts, fixture_family
 from .contracts import DomainError, ExecutionResult, ExecutionSpec, Principal, Scope, digest
 from .gate import RULE_HASH, evaluate
 from .policy import POLICY_HASH, execution_policy
@@ -69,7 +69,7 @@ class Workflow:
             # ACL selection precedes scoring inside KnowledgeService.
             hits = self.knowledge.search(role, scope, "Aurora EVT", top_k=5)
             prior = self.memory.search(role, scope, "Aurora EVT", top_k=5)
-            template = "timeout" if request["fixture_id"] == "aurora-timeout" else "evt-check"
+            template = fixture_family.template_for(request["fixture_id"])
             source_hash = self.sandbox.template_hash(template)
             if "sandbox.execute" not in skill.allowed_tools:
                 raise DomainError("SKILL_TOOL_DENIED", "Activated skill has no execution grant", 403)
@@ -121,7 +121,7 @@ class Workflow:
                 for h in hits
                 if h.status == "CURRENT"
             ],
-            "valid_until": "2026-11-05T00:00:00Z",
+            "valid_until": fixture_family.evidence_valid_until(manifest),
         }
         transcript = {"status": "NOT_STARTED"}
         handle = ""
@@ -226,7 +226,7 @@ class Workflow:
         run = self.store.get_run(service, scope, run_id)
         snapshot = run.get("snapshot", run.get("snapshot_json", {}))
         request = run.get("request", run.get("request_json", {}))
-        template = "timeout" if request.get("fixture_id") == "aurora-timeout" else "evt-check"
+        template = fixture_family.template_for(request.get("fixture_id"))
         if any(
             snapshot.get(key) != value
             for key, value in {

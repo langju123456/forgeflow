@@ -16,6 +16,7 @@ from fastapi.testclient import TestClient
 
 from forgeflow.api import create_app
 from forgeflow.contracts import DomainError, ExecutionSpec, Principal, RunRequest, Scope, digest
+from forgeflow.fixture_family import RENEWED_VALID_UNTIL, cli_fixture
 from forgeflow.local import load_workflow
 from forgeflow.store import Store
 from forgeflow.templates import template_hash
@@ -47,7 +48,7 @@ def setup_chain():
         "Aurora EVT synthetic readiness SOP",
         roles={"hardware", "admin", "reviewer"},
         classification=0,
-        valid_until="2026-11-05T00:00:00Z",
+        valid_until=RENEWED_VALID_UNTIL,
     )
     client = TestClient(create_app(store, {"test-reviewer": human}, test_harness=True))
     return store, scope, human, client, load_workflow(store)
@@ -65,7 +66,7 @@ def setup_chain():
 def test_real_chain_with_scripted_reviewer(fixture, gate, execution):
     store, scope, human, client, workflow = setup_chain()
     headers = {"Authorization": "Bearer test-reviewer", "Idempotency-Key": "one-request"}
-    body = RunRequest(scope=scope, fixture_id="aurora-" + fixture).model_dump(mode="json")
+    body = RunRequest(scope=scope, fixture_id=cli_fixture(fixture)).model_dump(mode="json")
     submitted = client.post("/runs", json=body, headers=headers)
     assert submitted.status_code == 202
     run_id = submitted.json()["id"]
@@ -147,7 +148,7 @@ def test_real_chain_with_scripted_reviewer(fixture, gate, execution):
 
 def test_real_cancel_before_dispatch_has_no_receipt():
     store, scope, human, _, workflow = setup_chain()
-    run = store.submit(human, RunRequest(scope=scope, fixture_id="aurora-pass"), "cancel")
+    run = store.submit(human, RunRequest(scope=scope, fixture_id=cli_fixture("pass")), "cancel")
     report = asyncio.run(workflow.check(scope, run["id"]))
     approval = report["approvals"][0]
     store.decide(human, scope, approval["id"], approval["proposal_hash"], report["revision"], "APPROVED")
@@ -161,7 +162,7 @@ def test_real_database_cancel_mid_mcp_check_waits_for_resource_ack():
     from concurrent.futures import ThreadPoolExecutor
 
     store, scope, human, _, workflow = setup_chain()
-    run = store.submit(human, RunRequest(scope=scope, fixture_id="aurora-timeout"), "mid-check-cancel")
+    run = store.submit(human, RunRequest(scope=scope, fixture_id=cli_fixture("timeout")), "mid-check-cancel")
     with ThreadPoolExecutor(max_workers=1) as executor:
         future = executor.submit(lambda: asyncio.run(workflow.check(scope, run["id"])))
         deadline = time.monotonic() + 10
@@ -191,7 +192,7 @@ def test_real_database_cancel_mid_mcp_check_waits_for_resource_ack():
 
 def test_persisted_handle_paused_orphan_worker_kill_recovery_and_retry():
     store, scope, human, _, workflow = setup_chain()
-    run = store.submit(human, RunRequest(scope=scope, fixture_id="aurora-pass"), "worker-crash")
+    run = store.submit(human, RunRequest(scope=scope, fixture_id=cli_fixture("pass")), "worker-crash")
     service = workflow.service(scope)
     claim = store.claim(service, scope, run["id"], "crash-probe", ttl=4)
     provider = workflow.sandbox
