@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .contracts import Principal, RunRequest, Scope
 from .fixture_family import RENEWED_VALID_UNTIL, cli_fixture
+from .sop_renewal import seed_document_once
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = ROOT / ".runtime"
@@ -71,7 +72,8 @@ def initialize():
     (RUNTIME / "runtime.json").write_text(json.dumps(config) + "\n")
     store = load_store()
     store.ensure_project(SCOPE)
-    store.put_document(
+    seed_document_once(
+        store,
         owner,
         SCOPE,
         "aurora-evt-sop",
@@ -80,9 +82,9 @@ def initialize():
         "BOM revision A3; CI smoke true; thermal_peak_c <=70. Unknown evidence never passes. "
         "This example is not hardware certification. Technical assessment and human stage "
         "approval are separate.",
-        roles={"hardware", "pm", "supervisor", "admin", "reviewer", "submitter"},
-        classification=0,
-        valid_until=RENEWED_VALID_UNTIL,
+        {"hardware", "pm", "supervisor", "admin", "reviewer", "submitter"},
+        0,
+        RENEWED_VALID_UNTIL,
     )
     return {
         "scope": SCOPE.model_dump(),
