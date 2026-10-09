@@ -147,3 +147,15 @@ def test_the_report_fails_on_any_drift_and_passes_otherwise(drift, repo, capsys)
     (folder / "a.txt").write_text("edited\n")
     assert drift.main(quiet) == 1
     assert json.loads(capsys.readouterr().out)["status"] == "DRIFT"
+
+
+def test_a_real_refused_connection_is_reported_as_nothing_listening(drift):
+    import socket
+
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", 0))
+        port = probe.getsockname()[1]  # a free loopback port, closed again before the request
+    with pytest.raises(ConnectionRefusedError):
+        drift.fetch_health(f"http://127.0.0.1:{port}/health")
+    assert drift.check_service(lambda url: drift.fetch_health(f"http://127.0.0.1:{port}/health"),
+                               CURRENT)["status"] == "INFO"
