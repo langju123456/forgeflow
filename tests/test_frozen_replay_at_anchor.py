@@ -102,10 +102,11 @@ def imported_from(export, environment):
 
 def test_the_child_process_imports_forgeflow_from_the_export_not_the_editable_install(export):
     assert imported_from(export, anchor_environment(export)).is_relative_to((export / "src").resolve())
-    # Control: without PYTHONPATH the same child resolves the editable install of the working tree, so the
-    # assertion above really distinguishes the export from the working tree.
+    # Control: pointed at the working tree, the same child resolves the working tree, so the assertion above
+    # really distinguishes the export from it, whether this checkout is an editable install or on PYTHONPATH.
     plain = {name: value for name, value in os.environ.items() if not name.startswith(("PYTEST_", "PYTHONPATH"))}
-    assert imported_from(export, plain).is_relative_to((ROOT / "src").resolve())
+    working_tree = {**plain, "PYTHONPATH": str(ROOT / "src")}
+    assert imported_from(export, working_tree).is_relative_to((ROOT / "src").resolve())
 
 
 def test_regrade_tests_pass_with_the_anchor_commits_own_code(export):
