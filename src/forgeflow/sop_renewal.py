@@ -37,6 +37,16 @@ def _pending(session, store, scope, run):
     return items
 
 
+def seed_document_once(store, principal, scope, document_id, version, content, roles, classification, valid_until):
+    """Seed a document into a database that has none. An existing one is never touched: versions are immutable
+    and changing a live document is what renew() is for, with a plan first."""
+    with store._tx() as session:
+        exists = session.scalar(select(Document.id).where(*filters(Document, scope), Document.id == document_id))
+    if exists is None:
+        store.put_document(principal, scope, document_id, version, content, roles, classification,
+                           valid_until=valid_until)
+
+
 def renew(store, scope, document_id, *, valid_until, apply=False):
     requested = aware(valid_until)
     with store._tx() as session:
