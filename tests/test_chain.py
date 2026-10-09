@@ -93,3 +93,17 @@ def test_the_verification_report_checks_the_audit_chain_and_counts_what_happened
     assert report["event_kinds"].count("FABRIC_ACTION_PROPOSED") == 2 and report["review_matches"] is True
     with db.source._tx() as session:
         assert session.scalar(select(func.count()).select_from(Event).where(*filters(Event, db.scope))) > 0
+
+
+def test_the_original_aurora_project_has_a_digest_that_changes_when_anything_in_it_changes(db):
+    from forgeflow import local
+    from forgeflow.contracts import Principal, RunRequest
+
+    db = db()
+    before = chain.original_digest(db.source, local.SCOPE)
+    assert before == chain.original_digest(db.source, local.SCOPE)
+    owner = Principal(subject_id="aurora-owner", kind="user", roles=frozenset({"submitter"}), scopes=(local.SCOPE,))
+    db.source.submit(owner, RunRequest(scope=local.SCOPE, fixture_id="aurora-pass-v2"), "intrusion")
+    assert chain.original_digest(db.source, local.SCOPE) != before
+    start(db)  # the Fabric chain itself must not change the original project
+    assert chain.original_digest(db.source, local.SCOPE) == chain.original_digest(db.source, local.SCOPE)
