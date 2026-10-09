@@ -20,7 +20,7 @@ def main():
     submit.add_argument("--key", required=True)
     submit.add_argument("--fixture", choices=["pass", "blocked", "unknown", "timeout"], default="pass")
     submit.add_argument("--legacy-fixtures", action="store_true", help="use the original fixtures, not the renewed -v2 copies")
-    for name in ("check", "run", "get", "approval", "execute"):
+    for name in ("check", "run", "get", "approval", "execute", "explain"):
         sub.add_parser(name).add_argument("id")
     review = sub.add_parser("review")
     review.add_argument("run_id")
@@ -67,6 +67,8 @@ def main():
                                      args.kind, args.target_receipt)
         elif args.command == "approval":
             output = service.get_approval(reviewer, scope, args.id)
+        elif args.command == "explain":
+            output = service.explain(reviewer, scope, args.id)
         elif args.command == "decide":
             output = service.decide(reviewer, scope, args.approval_id, args.proposal_hash, args.revision, args.decision)
         elif args.command == "execute":

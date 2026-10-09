@@ -419,6 +419,53 @@ class FabricOperations:
             return {**view(row), "adapter_current": row.proposal["adapter_hash"] == adapter_hash(),
                     "history": history}
 
+    def explain(self, p, scope, approval_id):
+        """What a person needs to decide: the object, the version of its parameters and what would happen. Read only."""
+        shown = self.get_approval(p, scope, approval_id)
+        with self.source._tx() as session:
+            row = self.source._get(session, FabricApproval, scope, approval_id)
+            review = self.source._get(session, FabricReview, scope, row.review_id)
+            receipt = session.scalar(select(FabricReceipt).where(
+                *filters(FabricReceipt, scope), FabricReceipt.approval_id == row.id))
+            reasons = self._stale_reasons(session, p, scope, row, self.source._now(session))
+            proposers = sorted(self._proposers(session, scope, row))
+            proposal, params = row.proposal, row.proposal["parameters"]
+            effect = {"external_writes": proposal["external_writes"], "simulation": proposal["simulation"]}
+            if "to_stage" in params:
+                effect["stage"] = {"from": params["from_stage"], "to": params["to_stage"],
+                                   "stage_revision": [params["expected_revision"], params["expected_revision"] + 1]}
+            if row.kind == "ISSUE":
+                effect["creates"] = {"kind": "ISSUE", "status": "OPEN", "title": params["title"],
+                                     "remote_tracker": params["remote_tracker"]}
+            elif row.kind == "MEMORY_ACTIVATE":
+                effect["creates"] = {"kind": "MEMORY", "status": "ACTIVE", "underlying_status": "CANDIDATE",
+                                     "subject": params["subject"], "source_event_ids": params["source_event_ids"],
+                                     "confirms_evt": False}
+            elif "to_status" in params:
+                effect["item"] = {"id": params["item_id"], "from_status": params["from_status"],
+                                  "to_status": params["to_status"]}
+            if row.target_receipt_id:
+                effect["reverses_receipt"] = row.target_receipt_id
+            decidable = row.decision == "PENDING" and receipt is None and not reasons
+            return {
+                "approval": {"id": row.id, "kind": row.kind, "decision": row.decision, "revision": row.revision,
+                             "version": proposal.get("version", 1), "expires_at": aware(row.expires_at).isoformat(),
+                             "created_by": row.created_by, "adapter_current": shown["adapter_current"],
+                             "history_versions": len(shown["history"])},
+                "parameters": {"version": proposal.get("version", 1), "proposal_hash": row.proposal_hash,
+                               "review_hash": proposal["review_hash"], "technical_hash": proposal["technical_hash"],
+                               "values": params},
+                "if_executed": effect,
+                "after_decision": "RECORDS_THE_DECISION_ONLY_NOTHING_EXECUTES_UNTIL_THE_EXECUTOR_RUNS",
+                "independence": {"may_not_decide": proposers},
+                "gate": {"flow_gate": review.report_json["flow_gate"], "evt_gate": review.report_json["evt_gate"],
+                         "full_evt_eligibility": review.report_json["full_evt_eligibility"]},
+                "can_be_decided": {"now": decidable, "reasons": reasons,
+                                   "renew_with": "propose" if reasons else None},
+                "executed": {"receipt_id": receipt.id} if receipt else None,
+                "provenance": proposal["approval_provenance"],
+            }
+
     def decide(self, p, scope, approval_id, proposal_hash, expected_revision, decision):
         self._auth(p, scope, {"reviewer"})
         if p.kind != "user":
