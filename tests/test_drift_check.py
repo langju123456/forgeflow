@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import subprocess
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -83,9 +84,23 @@ def test_a_service_that_cannot_say_which_code_it_runs_is_drift(drift):
 
 def test_no_service_on_the_port_is_reported_but_is_not_drift(drift):
     def fetch(url):
-        raise ConnectionError("refused")
+        raise ConnectionRefusedError("refused")
 
     assert drift.check_service(fetch, CURRENT)["status"] == "INFO"
+
+
+@pytest.mark.parametrize("error", [
+    urllib.error.HTTPError("http://127.0.0.1:8773/health", 500, "boom", {}, None),
+    ValueError("not json"),
+    TimeoutError("no answer"),
+])
+def test_something_listening_that_does_not_answer_properly_is_drift_not_absence(drift, error):
+    def fetch(url):
+        raise error
+
+    result = drift.check_service(fetch, CURRENT)
+    assert result["status"] == "DRIFT" and result["detail"]["reason"] == "SERVICE_DID_NOT_ANSWER_PROPERLY"
+    assert result["detail"]["error"] == type(error).__name__
 
 
 def test_only_the_loopback_health_url_is_ever_requested(drift):
