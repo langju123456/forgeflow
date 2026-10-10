@@ -1,0 +1,54 @@
+{
+  "run_id": "1db80649-7767-4d70-b21b-4e79863eef2d",
+  "review_id": "75608497-178a-4678-97ad-acfdb4d9658e",
+  "report_hash": "ac5af79cfdff2691ef8efd6d919c1c6accb4600201254b9a3f52901a69fb885d",
+  "technical_hash": "973af6b259af38da8229a258a69cdf5c6076c208fae3cab5922397600476c503",
+  "flow_gate": "UNKNOWN",
+  "evt_gate": "UNKNOWN",
+  "proposals": {},
+  "refused": {
+    "TEST_STAGE": "FABRIC_GATE_NOT_PASS",
+    "ISSUE": "FABRIC_GATE_NOT_PASS"
+  },
+  "steps": [
+    {
+      "step": "submit",
+      "at": "2026-10-10T03:39:51.344560+00:00",
+      "run_id": "1db80649-7767-4d70-b21b-4e79863eef2d",
+      "fixture_id": "aurora-unknown-v2",
+      "same_key_returns_same_run": true
+    },
+    {
+      "step": "check",
+      "at": "2026-10-10T03:39:54.265797+00:00",
+      "status": "SUCCEEDED",
+      "cleanup": "REMOVED",
+      "assessment": "UNKNOWN",
+      "mcp_protocol": "2025-11-25",
+      "mcp_transport": "stdio",
+      "scanner_engine_executed": true
+    },
+    {
+      "step": "review",
+      "at": "2026-10-10T03:39:54.282337+00:00",
+      "review_id": "75608497-178a-4678-97ad-acfdb4d9658e",
+      "flow_gate": "UNKNOWN",
+      "evt_gate": "UNKNOWN",
+      "report_hash": "ac5af79cfdff2691ef8efd6d919c1c6accb4600201254b9a3f52901a69fb885d"
+    },
+    {
+      "step": "refused:TEST_STAGE",
+      "at": "2026-10-10T03:39:54.293188+00:00",
+      "code": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "step": "refused:ISSUE",
+      "at": "2026-10-10T03:39:54.303689+00:00",
+      "code": "FABRIC_GATE_NOT_PASS"
+    }
+  ],
+  "model": null,
+  "original_aurora_digest_before": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_digest_after": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_unchanged": true
+}

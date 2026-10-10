@@ -1,0 +1,54 @@
+{
+  "run_id": "7fc4345f-15e4-4f68-a370-8ac97a6acb0d",
+  "review_id": "b9fc405e-ca3e-464b-8789-64b7abed0799",
+  "report_hash": "ef702eccab86a34f120150a549d820fa7794aa199a7c232a26b2e2a7944ceb2b",
+  "technical_hash": "274b9a41308254d23f958c35dd5cca8ef711119e2fbf2c0e7071e2ab224af3ca",
+  "flow_gate": "BLOCKED",
+  "evt_gate": "BLOCKED",
+  "proposals": {},
+  "refused": {
+    "TEST_STAGE": "FABRIC_GATE_NOT_PASS",
+    "ISSUE": "FABRIC_GATE_NOT_PASS"
+  },
+  "steps": [
+    {
+      "step": "submit",
+      "at": "2026-10-10T03:39:54.984110+00:00",
+      "run_id": "7fc4345f-15e4-4f68-a370-8ac97a6acb0d",
+      "fixture_id": "aurora-timeout-v2",
+      "same_key_returns_same_run": true
+    },
+    {
+      "step": "check",
+      "at": "2026-10-10T03:39:59.610266+00:00",
+      "status": "TIMED_OUT",
+      "cleanup": "REMOVED",
+      "assessment": "UNKNOWN",
+      "mcp_protocol": "2025-11-25",
+      "mcp_transport": "stdio",
+      "scanner_engine_executed": true
+    },
+    {
+      "step": "review",
+      "at": "2026-10-10T03:39:59.624277+00:00",
+      "review_id": "b9fc405e-ca3e-464b-8789-64b7abed0799",
+      "flow_gate": "BLOCKED",
+      "evt_gate": "BLOCKED",
+      "report_hash": "ef702eccab86a34f120150a549d820fa7794aa199a7c232a26b2e2a7944ceb2b"
+    },
+    {
+      "step": "refused:TEST_STAGE",
+      "at": "2026-10-10T03:39:59.634708+00:00",
+      "code": "FABRIC_GATE_NOT_PASS"
+    },
+    {
+      "step": "refused:ISSUE",
+      "at": "2026-10-10T03:39:59.648147+00:00",
+      "code": "FABRIC_GATE_NOT_PASS"
+    }
+  ],
+  "model": null,
+  "original_aurora_digest_before": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_digest_after": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_unchanged": true
+}

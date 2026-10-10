@@ -1,0 +1,65 @@
+{
+  "note": "Chronological record of what a person asked for and what the system did, on the rehearsal database copy forgeflow_chain_rehearsal. Times are UTC. Decisions are made with the TEST identities, so the stored provenance stays TEST_DRIVER.",
+  "entries": [
+    {
+      "at": "2026-10-09T17:24Z",
+      "what": "start --analysis: submit, real Docker check over MCP, 4 local model calls, Gate review, two proposals (TEST_STAGE, ISSUE) PENDING",
+      "result": "flow_gate PASS, evt_gate UNKNOWN, original Aurora project digest unchanged"
+    },
+    {
+      "at": "2026-10-09T23:08Z",
+      "what": "explain showed both proposals EXPIRED (1 hour validity, 5.7 hours had passed); renewed with propose and the same keys",
+      "result": "same approval ids, version 2, revision 1, version 1 kept in the history with reason EXPIRED"
+    },
+    {
+      "at": "2026-10-10T03:25Z",
+      "what": "the user answered 批准 about 4 hours after the renewed proposals had expired (00:08Z); decide was attempted for TEST_STAGE and ISSUE with the version 2 hashes",
+      "result": "both refused with APPROVAL_EXPIRED; nothing recorded, nothing executed, both stayed PENDING. The raw tracebacks of these two attempts were deleted by mistake; this entry is the record. The proposals were renewed again and the user was asked to confirm again."
+    },
+    {
+      "at": "2026-10-10T03:27Z",
+      "what": "renewing again with the same keys did nothing: a defect in the F1 renewal found by this rehearsal (the request key that produced the current version short-circuited before staleness was checked)",
+      "result": "reproduced with a test, fixed (fix/renew-again), renewed again; the earlier same-key renewal attempt returned the expired version unchanged. Raw output of that attempt: renewal-v3-*.json files were deleted by mistake; this entry is the record."
+    },
+    {
+      "at": "2026-10-10T03:39Z",
+      "what": "the user confirmed 确认批准两项 for the version 3 proposals; decide TEST_STAGE and ISSUE (APPROVED) inside the validity window",
+      "result": "both recorded by fabric-test-reviewer, executed False. Raw output: decision-TEST_STAGE.json, decision-ISSUE.json"
+    },
+    {
+      "at": "2026-10-10T03:39Z",
+      "what": "crash-execute TEST_STAGE: child killed with SIGKILL after its effects and before commit, then recovery and replay on PostgreSQL",
+      "result": "no receipt after the kill; one receipt after recovery; the second execute replayed the same receipt; stage PROTOTYPE rev 2 to TEST_STAGE rev 3. crash-<approval>.json"
+    },
+    {
+      "at": "2026-10-10T03:40Z",
+      "what": "execute ISSUE twice",
+      "result": "first creates the local OPEN record, second replays the same receipt"
+    },
+    {
+      "at": "2026-10-10T03:41Z",
+      "what": "scenarios without approvals: fixture unknown and fixture timeout",
+      "result": "unknown: both actions refused FABRIC_GATE_NOT_PASS, no approval created; timeout: TIMED_OUT, cleanup REMOVED, Gate BLOCKED, both refused; no leftover sandbox containers"
+    },
+    {
+      "at": "2026-10-10T04:24Z",
+      "what": "the user answered ok to 批准 Memory; decide and execute MEMORY_ACTIVATE inside the validity window",
+      "result": "receipt 2ec418d4, replay returns the same receipt; one active Memory reference, underlying status CANDIDATE, confirms_evt false"
+    },
+    {
+      "at": "2026-10-10T04:24Z",
+      "what": "first attempt to propose the three compensations",
+      "result": "argument error in my shell loop (exit code 2 from argument parsing, nothing written); retried with explicit arguments"
+    },
+    {
+      "at": "2026-10-10T04:26Z",
+      "what": "the user answered 三项都批准 for the three compensations; decide and execute MEMORY_REVOKE, ISSUE_RETRACT, STAGE_REVERT inside the validity window, each executed twice",
+      "result": "receipts e2116b8f, 8533cf2f, 6816c5a1; each second execute replayed the same receipt; stage PROTOTYPE rev 4, Issue RETRACTED, Memory reference REVOKED (underlying status CANDIDATE), no active Memory"
+    },
+    {
+      "at": "2026-10-10T04:27Z",
+      "what": "final verification and a count of the live database",
+      "result": "audit chain valid, review still bound, original Aurora project digest unchanged, 6 approvals, 6 receipts; live database counts equal those taken when the copy was made"
+    }
+  ]
+}

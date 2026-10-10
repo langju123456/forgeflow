@@ -1,0 +1,75 @@
+{
+  "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+  "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+  "report_hash": "f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a",
+  "technical_hash": "9e6d6ba1be5e2de3b3c49c7b2e7a0e0236d84e3933d53b64a3e43a335f871a41",
+  "flow_gate": "PASS",
+  "evt_gate": "UNKNOWN",
+  "proposals": {
+    "TEST_STAGE": {
+      "approval_id": "ea1404d6-739b-4920-8199-ee78001ef770",
+      "proposal_hash": "da4608816b9fe9e806892926df9899cb081e72d6c75839fff2d2a514b1002f6f"
+    },
+    "ISSUE": {
+      "approval_id": "711f9e9c-a6dc-45fa-b249-de046228cae0",
+      "proposal_hash": "d2c2177a2fbf475c69adc657874a8bbb86e788c100d96a1d17431444759e11d0"
+    }
+  },
+  "refused": {},
+  "steps": [
+    {
+      "step": "submit",
+      "at": "2026-10-09T17:24:35.511018+00:00",
+      "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+      "fixture_id": "aurora-pass-v2",
+      "same_key_returns_same_run": true
+    },
+    {
+      "step": "check",
+      "at": "2026-10-09T17:24:39.574025+00:00",
+      "status": "SUCCEEDED",
+      "cleanup": "REMOVED",
+      "assessment": "PASS",
+      "mcp_protocol": "2025-11-25",
+      "mcp_transport": "stdio",
+      "scanner_engine_executed": true
+    },
+    {
+      "step": "analysis",
+      "at": "2026-10-09T17:26:01.787552+00:00",
+      "state": "COMPLETE",
+      "model_calls": 4,
+      "analysis_id": "d3b41b45-c07f-49e9-80f7-2d8eae889935"
+    },
+    {
+      "step": "review",
+      "at": "2026-10-09T17:26:01.815693+00:00",
+      "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+      "flow_gate": "PASS",
+      "evt_gate": "UNKNOWN",
+      "report_hash": "f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a"
+    },
+    {
+      "step": "propose:TEST_STAGE",
+      "at": "2026-10-09T17:26:01.844850+00:00",
+      "approval_id": "ea1404d6-739b-4920-8199-ee78001ef770",
+      "proposal_hash": "da4608816b9fe9e806892926df9899cb081e72d6c75839fff2d2a514b1002f6f",
+      "decision": "PENDING"
+    },
+    {
+      "step": "propose:ISSUE",
+      "at": "2026-10-09T17:26:01.868117+00:00",
+      "approval_id": "711f9e9c-a6dc-45fa-b249-de046228cae0",
+      "proposal_hash": "d2c2177a2fbf475c69adc657874a8bbb86e788c100d96a1d17431444759e11d0",
+      "decision": "PENDING"
+    }
+  ],
+  "model": {
+    "model": "qwen3:8b",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "status": "VERIFIED"
+  },
+  "original_aurora_digest_before": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_digest_after": "3c67763d778cbc0cd3383f0a0aa96e8148a7a62e9cbbb912cea5698673108007",
+  "original_aurora_unchanged": true
+}

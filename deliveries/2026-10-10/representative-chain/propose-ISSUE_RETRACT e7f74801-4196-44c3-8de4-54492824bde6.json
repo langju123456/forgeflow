@@ -1,0 +1,5 @@
+usage: fabric_cli.py propose [-h] --key KEY --kind
+                             {TEST_STAGE,ISSUE,MEMORY_ACTIVATE,STAGE_REVERT,ISSUE_RETRACT,MEMORY_REVOKE}
+                             [--target-receipt TARGET_RECEIPT]
+                             review_id review_hash
+fabric_cli.py propose: error: argument --kind: invalid choice: 'ISSUE_RETRACT e7f74801-4196-44c3-8de4-54492824bde6' (choose from TEST_STAGE, ISSUE, MEMORY_ACTIVATE, STAGE_REVERT, ISSUE_RETRACT, MEMORY_REVOKE)

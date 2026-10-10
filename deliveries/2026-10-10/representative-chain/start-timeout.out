@@ -1,0 +1,12 @@
+{
+  "state_file": "state-rehearsal-timeout.json",
+  "run_id": "7fc4345f-15e4-4f68-a370-8ac97a6acb0d",
+  "flow_gate": "BLOCKED",
+  "evt_gate": "BLOCKED",
+  "proposals": {},
+  "refused": {
+    "TEST_STAGE": "FABRIC_GATE_NOT_PASS",
+    "ISSUE": "FABRIC_GATE_NOT_PASS"
+  },
+  "original_aurora_unchanged": true
+}

@@ -1,0 +1,12 @@
+{
+  "state_file": "state-rehearsal-unknown.json",
+  "run_id": "1db80649-7767-4d70-b21b-4e79863eef2d",
+  "flow_gate": "UNKNOWN",
+  "evt_gate": "UNKNOWN",
+  "proposals": {},
+  "refused": {
+    "TEST_STAGE": "FABRIC_GATE_NOT_PASS",
+    "ISSUE": "FABRIC_GATE_NOT_PASS"
+  },
+  "original_aurora_unchanged": true
+}
