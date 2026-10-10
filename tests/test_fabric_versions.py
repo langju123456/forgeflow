@@ -267,3 +267,42 @@ def test_no_earlier_proposer_of_any_version_can_approve_the_current_one(db, monk
             reviewer, db.scope, third["id"], third["proposal_hash"], third["revision"], "APPROVED"))
     decided = decide_new(db, third)
     assert decided["approval"]["decision"] == "APPROVED" and decided["approval"]["reviewer"] == db.reviewer.subject_id
+
+
+def expire_now(db, approval):
+    with db.source._tx() as session:
+        row = db.source._get(session, FabricApproval, db.scope, approval["id"])
+        row.expires_at = contracts.utcnow() - timedelta(minutes=1)
+        seal(row)
+
+
+def test_a_version_that_expires_again_can_be_renewed_again_with_the_same_key(db):
+    """Found in the rehearsal: the second renewal with the same key returned the expired version unchanged."""
+    db = db()
+    report = review(db)
+    approval = propose(db, report, "ISSUE")
+    expire_now(db, approval)
+    second = propose(db, report, "ISSUE")  # same key as the first proposal
+    assert second["id"] == approval["id"] and second["revision"] == 1
+    expire_now(db, approval)
+    third = propose(db, report, "ISSUE")  # same key once more
+    assert third["revision"] == 2 and third["proposal_hash"] != second["proposal_hash"]
+    shown = read(db, third)
+    assert [item["reasons"] for item in shown["history"]] == [["EXPIRED"], ["EXPIRED"]]
+    assert shown["history"][1]["proposal_hash"] == second["proposal_hash"]
+    assert explain_ok(db, third)
+
+
+def explain_ok(db, approval):
+    return db.service.explain(db.reviewer, db.scope, approval["id"])["can_be_decided"]["now"] is True
+
+
+def test_a_current_version_requested_again_with_the_key_that_made_it_is_returned_unchanged(db):
+    db = db()
+    report = review(db)
+    approval = propose(db, report, "ISSUE")
+    expire_now(db, approval)
+    renewed = propose(db, report, "ISSUE", key="renew-1")
+    assert propose(db, report, "ISSUE", key="renew-1") == renewed
+    assert propose(db, report, "ISSUE") == renewed
+    assert len(read(db, renewed)["history"]) == 1
