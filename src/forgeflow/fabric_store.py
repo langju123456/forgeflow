@@ -364,10 +364,10 @@ class FabricOperations:
                     *filters(FabricApprovalVersion, scope), FabricApprovalVersion.approval_id == existing.id,
                     FabricApprovalVersion.request_key == key,
                     FabricApprovalVersion.superseded_by == p.subject_id))
-                if renewed and existing.review_id == review.id:
-                    return view(existing)  # this request already produced the current version
                 reasons = self._stale_reasons(session, p, scope, existing, self.source._now(session))
                 if not reasons:
+                    if renewed and existing.review_id == review.id:
+                        return view(existing)  # this request already produced the current version
                     if old is not None:
                         if old.review_id != review_id:
                             raise DomainError("IDEMPOTENCY_CONFLICT")
