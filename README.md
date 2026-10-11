@@ -15,14 +15,14 @@ ForgeFlow 是一个在本机运行的企业 Agent 运行时原型。演示场景
 
 所有研发数据都是合成的。没有生产部署，没有真实硬件认证，也没有接入 GitHub、Jira、飞书等外部系统。
 
-## 当前状态（2026-10-08）
+## 当前状态（2026-10-10）
 
 | 方面 | 状态 | 依据 |
 |---|---|---|
-| 默认测试（不需要 Docker、PostgreSQL、模型） | 945 项：932 通过，13 项实机测试默认跳过 | `pytest -q` |
-| 与系统时钟无关 | 把系统时钟伪造为 2026-11-06、2027-06-01 复跑，结果不变（到期提醒除外，见下文） | [审阅与修复记录](docs/19-review-and-fix-record.md) |
+| 默认测试（不需要 Docker、PostgreSQL、模型） | 1014 项：1001 通过，13 项实机测试默认跳过 | `pytest -q` |
+| 与系统时钟无关 | 在 2026-10-09 的版本上，把系统时钟伪造为 2026-11-06、2027-06-01 各复跑一次，结果不变（到期提醒除外，见下文）；之后的改动没有重做这项验证 | [审阅与修复记录](docs/19-review-and-fix-record.md) |
 | 冻结证据可重放 | S2C 实验的 26 个用例用锚定提交自己的代码重放 | `tests/test_frozen_replay_at_anchor.py` |
-| 实机链路（Docker + PostgreSQL + MCP） | 2026-10-06 跑通，当时是修复前的代码；当前代码待复跑 | `deliveries/2026-10-06/s3-fabric/evidence/` |
+| 实机链路（Docker + PostgreSQL + MCP） | 2026-10-10 在 PostgreSQL 库副本上用当前代码重跑：真实 MCP 与 Docker 检查，本机 qwen3:8b 的 4 次分析放在同一个父 run 上，6 个动作经人工逐个批准后执行并补偿，提交前被杀后恢复，UNKNOWN 与超时被拒；失败和意外一并留档 | [`deliveries/2026-10-10/`](deliveries/2026-10-10/DELIVERY.md) |
 | 本机模型分析（Ollama qwen3:8b） | 5 个真实模型场景各跑 1 次，共 20 次模型调用 | `deliveries/2026-10-06/s2c-fixes/evidence/` |
 | 冻结评测 | 13 项验收：修正评分器的一个记录展开错误后，用同一批原始调用链重评为 13/13，没有新增模型调用；评测范围只是证据选择和服务端状态推导 | `deliveries/2026-10-06/s2c-fixes/evidence/regrade-01/summary.json` |
 | 检索 | 只有词法检索：冻结评测集 37 个查询，macro Recall@5 = 78.38%（找到 29 个）；同义词和跨语言查询（各 4 个）全部漏检 | `preparation/s2/evaluation/RESULTS.md` |
@@ -82,7 +82,7 @@ python3.12 -m venv .venv
 .venv/bin/python -m pytest -q
 ```
 
-预期 `932 passed, 13 skipped`。跳过的 13 项是实机测试：7 项需要 Docker 和 PostgreSQL（用 `FORGEFLOW_LIVE=1` 开启），6 项需要固定版本的 Semgrep 扫描镜像（设置 `FORGEFLOW_SCANNER_IMAGE`）。沙箱、扫描器和模型在默认测试里用测试驱动代替；`tests/test_mcp_bridge.py` 会启动真实的 MCP stdio 服务进程。
+预期 `1001 passed, 13 skipped`。跳过的 13 项是实机测试：7 项需要 Docker 和 PostgreSQL（用 `FORGEFLOW_LIVE=1` 开启），6 项需要固定版本的 Semgrep 扫描镜像（设置 `FORGEFLOW_SCANNER_IMAGE`）。沙箱、扫描器和模型在默认测试里用测试驱动代替；`tests/test_mcp_bridge.py` 会启动真实的 MCP stdio 服务进程。
 
 ### 完整本地链路
 
