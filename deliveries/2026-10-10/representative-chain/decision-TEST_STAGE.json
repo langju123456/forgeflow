@@ -1,0 +1,56 @@
+{
+  "approval_provenance": "TEST_DRIVER",
+  "output": {
+    "approval": {
+      "id": "ea1404d6-739b-4920-8199-ee78001ef770",
+      "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+      "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+      "kind": "TEST_STAGE",
+      "target_receipt_id": "",
+      "created_by": "fabric-test-owner",
+      "idempotency_key": "chain-TEST_STAGE:rehearsal-1",
+      "proposal": {
+        "schema": "fabric-action-v1",
+        "revision": "fabric-stable-technical-v1",
+        "scope": {
+          "tenant_id": "synthetic-lab",
+          "workspace_id": "engineering",
+          "project_id": "aurora-fabric-e2e"
+        },
+        "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+        "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+        "review_hash": "f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a",
+        "technical_hash": "9e6d6ba1be5e2de3b3c49c7b2e7a0e0236d84e3933d53b64a3e43a335f871a41",
+        "kind": "TEST_STAGE",
+        "target_receipt_id": "",
+        "parameters": {
+          "from_stage": "PROTOTYPE",
+          "to_stage": "TEST_STAGE",
+          "expected_revision": 2
+        },
+        "adapter_hash": "bb30bc3e96980862ce82a6cd6f319df811fd4d674510df916857322d548e4aab",
+        "approval_provenance": "TEST_DRIVER",
+        "simulation": true,
+        "full_evt_eligibility": false,
+        "external_writes": false,
+        "compensation_allows_stale_technical_evidence": false,
+        "proposed_by": "fabric-test-owner",
+        "version": 3,
+        "supersedes": "12dcaf6ce732cff9ce5c98002dd1cff870048420bd332601dc23d887e423f5c8"
+      },
+      "proposal_hash": "d5063c57e166ef3b2da1c3e71fc3b64f676f4e7591270047c4029a5e5dd97096",
+      "decision": "APPROVED",
+      "reviewer": "fabric-test-reviewer",
+      "revision": 3,
+      "decision_event_id": "a523e209-e53a-4687-b650-5c29f8280249",
+      "created_at": "2026-10-10T03:30:16.955026+00:00",
+      "expires_at": "2026-10-10T04:30:16.955026+00:00",
+      "payload_hash": "dd76ba638fcb3c10aad20f33c1b23e2a89180fa6a8f459ed2528084d977247c8",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "replayed": false,
+    "executed": false
+  }
+}

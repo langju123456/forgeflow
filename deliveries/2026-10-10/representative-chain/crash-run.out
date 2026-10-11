@@ -1,0 +1,9 @@
+{
+  "child_exit_code": -9,
+  "killed_by_sigkill": true,
+  "receipt_after_kill": false,
+  "receipt_after_recovery": "df6cde3b-1b81-4acb-8a4e-9d2ab209e39a",
+  "recovery_replayed": false,
+  "second_execute_replayed": true,
+  "same_receipt": true
+}

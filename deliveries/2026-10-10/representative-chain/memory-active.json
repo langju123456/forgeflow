@@ -1,0 +1,170 @@
+{
+  "approval_provenance": "TEST_DRIVER",
+  "output": [
+    {
+      "reference": {
+        "id": "17292fea-c1a5-4e40-adfe-7fad7724e5fe",
+        "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+        "approval_id": "9a2348f4-ef06-4e2d-a3c1-6737a337c697",
+        "memory_id": "63556401-2855-44d1-ac06-9d0cdd5ff74d",
+        "kind": "MEMORY",
+        "status": "ACTIVE",
+        "revision": 0,
+        "body": {
+          "parameters": {
+            "subject": "Aurora synthetic local workflow",
+            "status": "APPROVED_REFERENCE",
+            "source_event_ids": [
+              "1003c0ee-0bd8-4f1d-b273-0e568b481fe0",
+              "de5791dc-39b3-4605-827e-59947aeebc6c",
+              "e920f31b-628b-4fee-9be9-be73b49785d1"
+            ],
+            "receipt_hashes": {
+              "df6cde3b-1b81-4acb-8a4e-9d2ab209e39a": "f0d5df7aad52b76729ea618bd2f86332c43b6326e285fe065c075460a19e88e5",
+              "e7f74801-4196-44c3-8de4-54492824bde6": "6a6e1fe67eab73f3059349d630071b35259c4f06de7d759785e57baf98a497f1"
+            }
+          },
+          "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+          "review_hash": "f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a",
+          "technical_hash": "9e6d6ba1be5e2de3b3c49c7b2e7a0e0236d84e3933d53b64a3e43a335f871a41",
+          "simulation": true,
+          "memory_source_hash": "e504da8bc841ca569a3c9f32450922587cc9fd9f0f6594a116f7fb026ba22828",
+          "source_event_ids": [
+            "1003c0ee-0bd8-4f1d-b273-0e568b481fe0",
+            "de5791dc-39b3-4605-827e-59947aeebc6c",
+            "e920f31b-628b-4fee-9be9-be73b49785d1"
+          ],
+          "source_event_hashes": {
+            "1003c0ee-0bd8-4f1d-b273-0e568b481fe0": "36e67041faaab2bb83e367d49fc3cf5502aa23cb1f3918852107a1c4180dd0a1",
+            "de5791dc-39b3-4605-827e-59947aeebc6c": "0bc6b8c8e5a0e485fd1b8dcdb85833ce38a48f7431258674213a05d989749b14",
+            "e920f31b-628b-4fee-9be9-be73b49785d1": "bdcd94b5f015d85785e0678ec358886ec2719e33035d55fd0b2128e08b1b066a"
+          }
+        },
+        "payload_hash": "f39cab364413d023df294c3889b9b37b7a589ff1b11a5b0ff0f82affbefa41e1",
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e"
+      },
+      "citation": {
+        "id": "63556401-2855-44d1-ac06-9d0cdd5ff74d",
+        "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+        "type": "episodic",
+        "subject": "Aurora synthetic local workflow",
+        "content": "Synthetic local Stage and Issue effects completed. EVT remains UNKNOWN; APK/device checks NOT_RUN. Review 20556aa4-43c3-4059-8b43-61af6685f2a6 hash f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a",
+        "source_hash": "e504da8bc841ca569a3c9f32450922587cc9fd9f0f6594a116f7fb026ba22828",
+        "dedup_hash": "f0250f3421ed675a5800eafe4ddcb522db99d47f67636724acbf72e89b0ed879",
+        "status": "CANDIDATE",
+        "classification": 0,
+        "roles": [
+          "admin",
+          "fabric_executor",
+          "hardware",
+          "memory_writer",
+          "pm",
+          "reviewer",
+          "submitter",
+          "supervisor",
+          "worker"
+        ],
+        "created_by": "fabric-test-executor",
+        "human_confirmed": false,
+        "valid_from": "2026-10-10T04:24:28.486013+00:00",
+        "valid_until": null,
+        "tenant_id": "synthetic-lab",
+        "workspace_id": "engineering",
+        "project_id": "aurora-fabric-e2e",
+        "version": "1",
+        "citation_id": "63556401-2855-44d1-ac06-9d0cdd5ff74d",
+        "subject_key": "Aurora synthetic local workflow",
+        "supersedes": null,
+        "sources": [
+          {
+            "id": "1003c0ee-0bd8-4f1d-b273-0e568b481fe0",
+            "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+            "step_id": null,
+            "sequence": 16,
+            "kind": "FABRIC_ACTION_EXECUTED",
+            "actor": "fabric-test-executor",
+            "payload": {
+              "receipt_id": "df6cde3b-1b81-4acb-8a4e-9d2ab209e39a",
+              "approval_id": "ea1404d6-739b-4920-8199-ee78001ef770",
+              "kind": "TEST_STAGE",
+              "proposal_hash": "d5063c57e166ef3b2da1c3e71fc3b64f676f4e7591270047c4029a5e5dd97096",
+              "effect_hash": "0da19e8f66a4cf5a6e93606baf5ff7c27074152c41b0eb8bb6f07cda23fae24c",
+              "transport": "IN_PROCESS",
+              "provenance": "TEST_DRIVER",
+              "external_writes": false
+            },
+            "payload_hash": "d2fd6d79c607cad9265809e42a5f4e5fac6ddfcce533ea3bb6b2d66e20c515f2",
+            "prev_hash": "4212a34a21390144ed5fdc6c66bf7bd1f52779f93013668481dddbcba444b72b",
+            "event_hash": "36e67041faaab2bb83e367d49fc3cf5502aa23cb1f3918852107a1c4180dd0a1",
+            "classification": 0,
+            "created_at": "2026-10-10T03:39:29.440768+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          {
+            "id": "de5791dc-39b3-4605-827e-59947aeebc6c",
+            "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+            "step_id": null,
+            "sequence": 7,
+            "kind": "FABRIC_REVIEW_COMPLETED",
+            "actor": "fabric-test-owner",
+            "payload": {
+              "review_id": "20556aa4-43c3-4059-8b43-61af6685f2a6",
+              "report_hash": "f2070b2c1cd0f179bdc96d8f57c914ae09a75d6c7f4c050983f2da0ad70e960a",
+              "technical_hash": "9e6d6ba1be5e2de3b3c49c7b2e7a0e0236d84e3933d53b64a3e43a335f871a41",
+              "flow_gate": "PASS",
+              "evt_gate": "UNKNOWN",
+              "transport": "IN_PROCESS"
+            },
+            "payload_hash": "6cc48bc2e8a158f770e9ca9dcb6818a2e1a282196707b9e68ff280d1bd0d592b",
+            "prev_hash": "0ab4eb150fe4d54775bcd9f6f5fd8ca29da2855646bf9d053785d3ede1c0397c",
+            "event_hash": "0bc6b8c8e5a0e485fd1b8dcdb85833ce38a48f7431258674213a05d989749b14",
+            "classification": 0,
+            "created_at": "2026-10-09T17:26:01.810977+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          },
+          {
+            "id": "e920f31b-628b-4fee-9be9-be73b49785d1",
+            "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+            "step_id": null,
+            "sequence": 17,
+            "kind": "FABRIC_ACTION_EXECUTED",
+            "actor": "fabric-test-executor",
+            "payload": {
+              "receipt_id": "e7f74801-4196-44c3-8de4-54492824bde6",
+              "approval_id": "711f9e9c-a6dc-45fa-b249-de046228cae0",
+              "kind": "ISSUE",
+              "proposal_hash": "7d66f5f08e1b943fb41064b5baea13ec1fc5bec5d94a2e5364fbcb000e1183a2",
+              "effect_hash": "43a01bb5484efdff8c4bc8b072c2a4d8a861593b8ca81e22a7415b10445993b8",
+              "transport": "IN_PROCESS",
+              "provenance": "TEST_DRIVER",
+              "external_writes": false
+            },
+            "payload_hash": "228882d5e2dd87b99f0bd0de5e2ec1496418cad0af0f93b2f3b2b66c72589e0d",
+            "prev_hash": "36e67041faaab2bb83e367d49fc3cf5502aa23cb1f3918852107a1c4180dd0a1",
+            "event_hash": "bdcd94b5f015d85785e0678ec358886ec2719e33035d55fd0b2128e08b1b066a",
+            "classification": 0,
+            "created_at": "2026-10-10T03:39:41.476176+00:00",
+            "tenant_id": "synthetic-lab",
+            "workspace_id": "engineering",
+            "project_id": "aurora-fabric-e2e"
+          }
+        ],
+        "source_event_ids": [
+          "1003c0ee-0bd8-4f1d-b273-0e568b481fe0",
+          "de5791dc-39b3-4605-827e-59947aeebc6c",
+          "e920f31b-628b-4fee-9be9-be73b49785d1"
+        ]
+      },
+      "reference_status": "ACTIVE",
+      "underlying_status": "CANDIDATE",
+      "approval_provenance": "TEST_DRIVER",
+      "confirms_evt": false
+    }
+  ]
+}

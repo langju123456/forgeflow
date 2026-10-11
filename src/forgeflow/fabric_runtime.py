@@ -1,5 +1,6 @@
 """Task-local test identities and an isolated project; no credential discovery."""
 
+import hashlib
 import json
 import secrets
 
@@ -9,6 +10,13 @@ from .fabric_contract import FABRIC_SCOPE
 from .fixture_family import RENEWED_VALID_UNTIL
 from .local import RUNTIME, database_url
 from .sop_renewal import seed_document_once
+
+# The Fabric project's own SOP text. The export grant for model analysis names exactly this hash.
+FABRIC_SOP_CONTENT = (
+    "Aurora EVT readiness synthetic SOP v1: boot_cycles >=100; boot_failures=0; "
+    "BOM revision A3; CI smoke true; thermal_peak_c <=70. Unknown evidence never passes. "
+    "Local TEST_STAGE is a workflow simulation, not EVT certification or release authorization.")
+FABRIC_SOP_HASH = hashlib.sha256(FABRIC_SOP_CONTENT.encode()).hexdigest()
 
 
 class FabricStore(EVTBoundStore):
@@ -47,10 +55,7 @@ def initialize_fabric():
     source = load_fabric_store()
     owner = next(p for p in load_fabric_identities().values() if "admin" in p.roles)
     source.ensure_project(FABRIC_SCOPE)
-    seed_document_once(source, owner, FABRIC_SCOPE, "aurora-evt-sop", "v1",
-        "Aurora EVT readiness synthetic SOP v1: boot_cycles >=100; boot_failures=0; "
-        "BOM revision A3; CI smoke true; thermal_peak_c <=70. Unknown evidence never passes. "
-        "Local TEST_STAGE is a workflow simulation, not EVT certification or release authorization.",
+    seed_document_once(source, owner, FABRIC_SCOPE, "aurora-evt-sop", "v1", FABRIC_SOP_CONTENT,
         {"admin", "submitter", "supervisor", "hardware", "pm", "reviewer", "worker",
          "fabric_executor", "memory_writer"}, 0, RENEWED_VALID_UNTIL)
     return {"scope": FABRIC_SCOPE.model_dump(), "identities": "TEST_DRIVER",

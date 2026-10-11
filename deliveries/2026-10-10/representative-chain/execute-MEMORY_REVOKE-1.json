@@ -1,0 +1,30 @@
+{
+  "approval_provenance": "TEST_DRIVER",
+  "output": {
+    "receipt": {
+      "id": "e2116b8f-aeb8-4511-a7dd-5049d01a09f0",
+      "run_id": "bf8c3e81-5d7b-4ef1-9ca6-207a6360624f",
+      "approval_id": "215205aa-4078-48ea-9836-ea5a1e801035",
+      "kind": "MEMORY_REVOKE",
+      "effect_json": {
+        "item_id": "17292fea-c1a5-4e40-adfe-7fad7724e5fe",
+        "before": {
+          "status": "ACTIVE",
+          "revision": 0
+        },
+        "after": {
+          "status": "REVOKED",
+          "revision": 1
+        },
+        "target_receipt_id": "2ec418d4-7e84-481c-81fc-0abfef22795d"
+      },
+      "event_id": "03eb834a-7153-469b-9a98-ecd5544645ae",
+      "executed_at": "2026-10-10T04:26:15.416389+00:00",
+      "payload_hash": "bcafa193220ebb5b83ac09f47012cf17def768ff3727bdf7c3865450442e76d8",
+      "tenant_id": "synthetic-lab",
+      "workspace_id": "engineering",
+      "project_id": "aurora-fabric-e2e"
+    },
+    "replayed": false
+  }
+}
