@@ -33,3 +33,6 @@ sources/IMG_0196.PNG
 .workbench/
 web/node_modules/
 web/dist/
+
+# Local agent tooling (isolated worktrees)
+.claude/
