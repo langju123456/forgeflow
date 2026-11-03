@@ -47,6 +47,21 @@ bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127
 - **本地服务**：`python -m forgeflow.workbench` 用 Fabric 测试同样的离线方式，从封存的 M01 归档派生一个 SQLite 数据库（重新绑定范围和文档引用、重建所有派生哈希，不重新执行检查程序），并提供三个固定的开发身份。仅绑定 127.0.0.1，DEV_ONLY。
 - **测试**：`tests/test_workbench.py`（列表、explain、未认证 401、越权范围 404、提案人不能审批、人不能执行、两个审阅人同时决定时后者 409）；`web/src/labels.test.ts`（队列状态和错误说明）。
 
+## 混合检索（词法 + 向量，RRF 融合）
+
+`forgeflow.retrieval.RankedKnowledgeService` 只替换知识检索的排序这一步：词法（原样）、向量（本机 Ollama 的 `bge-m3`，余弦相似度加固定下限）或两者用 RRF 融合。权限顺序不变：Store 先按角色、密级、scope 过滤，再排序，再逐条重新授权引用，所以嵌入模型只看得到调用者有权读的内容（测试逐题核对）。
+
+在同一冻结题集上（47 题，参数和判断规则跑之前已登记）：
+
+| | 词法 | 向量 | 混合 |
+|---|---|---|---|
+| 内容正例 Recall@5 | 73.33% | 86.67% | 93.33% |
+| 同义 / 跨中英文 | 0/4 / 0/4 | 3/4 / 3/4 | 3/4 / 3/4 |
+| 越权泄漏 | 0/47 | 0/47 | 0/47 |
+| 时延中位数 | 2.1 ms | 137.8 ms | 140.6 ms |
+
+向量单独会漏掉纯 ID 查询，融合后补回；剩下的漏检和“无答案”问题说明，能不能回答不能靠调相似度阈值决定。细节、漏检和限制见 [preparation/s2/evaluation/hybrid/RESULTS.md](preparation/s2/evaluation/hybrid/RESULTS.md)，复现用 `bash scripts/mac_retrieval_eval.sh`（需要本机 Ollama）。
+
 ## 架构
 
 ```mermaid
