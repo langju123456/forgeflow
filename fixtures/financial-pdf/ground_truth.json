@@ -1,0 +1,454 @@
+{
+  "schema": "forgeflow.financial-pdf-truth/v1",
+  "notice": "全部为虚构公司和合成数字，只用于测试 PDF 解析；不是任何真实公司的财务数据。Fictional company, synthetic numbers.",
+  "company": {
+    "name_zh": "澄川智造股份有限公司（虚构）",
+    "name_en": "Chengchuan Smart Manufacturing Co., Ltd. (fictional)"
+  },
+  "cell_grammar": {
+    "number": "decimal string in the printed unit, e.g. \"-627.62\"; printed with thousands separators and the table's negative_style (paren or minus)",
+    "percent": "decimal string ending in %, e.g. \"-3.1%\"",
+    "empty_marker": "\"—\" or \"-\" printed as is; expected kind empty",
+    "blank": "\"\" prints nothing; expected kind empty",
+    "text": "anything else, printed verbatim; expected kind text"
+  },
+  "sets": {
+    "base": "the layouts the parser was written against",
+    "stress": "added after the base set scored; patterns the parser was not written for (first-contact result recorded before any parser change; the parser was then fixed, so its later numbers are dev numbers)",
+    "heldout": "written after the stress fixes and run once (result kept in preparation/s3/pdf-ingest/runs/02-heldout-first-contact.json); the parser was then fixed for the two failures it showed, so this set is spent and its later numbers are dev numbers"
+  },
+  "documents": [
+    {
+      "file": "cc_annual_report_2025_zh.pdf",
+      "set": "base",
+      "lang": "zh",
+      "running_header": "澄川智造股份有限公司 2025 年年度报告（虚构数据，仅供测试）",
+      "footer": "第 {page} 页 / 共 {pages} 页",
+      "pages": [
+        {
+          "page": 1,
+          "blocks": [
+            {"type": "heading", "text": "第十节 财务报告", "size": 14},
+            {"type": "table", "table": "zh_income", "part": 0}
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {"type": "table", "table": "zh_balance", "part": 0}
+          ]
+        },
+        {
+          "page": 3,
+          "blocks": [
+            {"type": "table", "table": "zh_balance", "part": 1},
+            {"type": "table", "table": "zh_revenue_mix", "part": 0}
+          ]
+        },
+        {
+          "page": 4,
+          "blocks": [
+            {"type": "heading", "text": "第三节 管理层讨论与分析", "size": 14},
+            {"type": "heading", "text": "一、报告期内公司从事的主要业务", "size": 12},
+            {"type": "paragraph", "id": "zh_mdna_1", "text": "公司主要从事智能装备、精密零部件的研发、生产与销售，并提供配套技术服务。报告期内，公司实现营业收入128,456.32万元，同比增长14.38%；实现归属于上市公司股东的净利润15,598.11万元，同比增长25.13%。"},
+            {"type": "paragraph", "id": "zh_mdna_2", "text": "智能装备业务受益于下游新能源与半导体客户扩产，全年实现收入72,345.67万元，占营业收入的56.32%，同比增长18.15%。精密零部件业务收入41,234.56万元，同比增长6.37%，增速放缓主要系部分汽车客户订单延后。"},
+            {"type": "heading", "text": "二、核心竞争力与风险因素", "size": 12},
+            {"type": "paragraph", "id": "zh_mdna_3", "text": "公司持续加大研发投入，报告期研发费用9,012.73万元，同比增长21.28%，占营业收入的比例为7.02%。截至报告期末，公司拥有有效发明专利186项。"},
+            {"type": "paragraph", "id": "zh_mdna_4", "text": "风险方面，公司应收账款余额28,765.43万元，较上年末增长13.20%，若主要客户回款周期延长，可能对公司现金流产生不利影响。公司已对账龄较长的应收款项计提信用减值损失845.31万元。"}
+          ]
+        },
+        {
+          "page": 5,
+          "blocks": [
+            {"type": "scan", "id": "zh_scan_signature", "lines": ["INDEPENDENT AUDITOR'S REPORT", "SIGNATURE PAGE (SCANNED COPY)", "Engagement partner: ________________", "Date: 2026-03-28"]}
+          ]
+        }
+      ]
+    },
+    {
+      "file": "cc_form10k_2025_en.pdf",
+      "set": "base",
+      "lang": "en",
+      "running_header": "Chengchuan Smart Manufacturing (fictional) - FY2025 annual report excerpt",
+      "footer": "Page {page} of {pages}",
+      "pages": [
+        {
+          "page": 1,
+          "blocks": [
+            {"type": "heading", "text": "Item 7. Management's Discussion and Analysis", "size": 13},
+            {"type": "heading", "text": "Overview", "size": 11},
+            {"type": "paragraph", "id": "en_mdna_1", "text": "Chengchuan Smart Manufacturing designs and manufactures intelligent equipment and precision components for battery, semiconductor and automotive customers. Total revenue for fiscal 2025 was $176.5 million, an increase of 9.3% compared with fiscal 2024, driven primarily by higher product shipments to battery customers."},
+            {"type": "paragraph", "id": "en_mdna_2", "text": "Gross margin improved to 42.6% from 41.3% in the prior year as a result of a more favorable product mix and lower freight costs. Income from operations nearly doubled to $14.6 million."},
+            {"type": "heading", "text": "Results of Operations", "size": 11},
+            {"type": "paragraph", "id": "en_mdna_4", "text": "The following table sets forth our consolidated results of operations for the periods presented. Percentages that are not meaningful are shown as n/m."},
+            {"type": "table", "table": "en_ops", "part": 0}
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {"type": "table", "table": "en_ops", "part": 1},
+            {"type": "heading", "text": "Liquidity and Capital Resources", "size": 11},
+            {"type": "paragraph", "id": "en_mdna_3", "text": "As of December 31, 2025, we had cash and cash equivalents of $63.4 million. We believe that existing cash, together with cash generated from operations, will be sufficient to meet our working capital and capital expenditure needs for at least the next 12 months."}
+          ]
+        }
+      ]
+    },
+    {
+      "file": "cc_q3_2025_report_zh.pdf",
+      "set": "stress",
+      "lang": "zh",
+      "running_header": "澄川智造股份有限公司 2025 年第三季度报告（虚构数据，仅供测试）",
+      "footer": "第 {page} 页 / 共 {pages} 页",
+      "pages": [
+        {
+          "page": 1,
+          "blocks": [
+            {"type": "heading", "text": "第二节 公司简介和主要财务指标", "size": 14},
+            {"type": "table", "table": "zh_key_metrics", "part": 0},
+            {"type": "table", "table": "zh_cashflow", "part": 0}
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {"type": "table", "table": "zh_cashflow", "part": 1},
+            {"type": "table", "table": "zh_segment", "part": 0},
+            {"type": "heading", "text": "三、经营情况讨论", "size": 12},
+            {"type": "paragraph", "id": "zh_q3_1", "text": "境外收入29,690.89万元，毛利率33.72%，高于境内业务约1.1个百分点，主要来自东南亚电池客户的设备验收。"}
+          ]
+        }
+      ]
+    },
+    {
+      "file": "cc_interim_2025_hk_en.pdf",
+      "set": "heldout",
+      "lang": "en",
+      "running_header": "Chengchuan Smart Manufacturing (fictional) - 2025 Interim Report",
+      "footer": "- {page} -",
+      "pages": [
+        {
+          "page": 1,
+          "blocks": [
+            {"type": "heading", "text": "Interim Results", "size": 13},
+            {"type": "table", "table": "hk_fin_pos", "part": 0},
+            {"type": "table", "table": "hk_pl", "part": 0}
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {"type": "table", "table": "hk_pl", "part": 1},
+            {"type": "heading", "text": "Interim Dividend", "size": 11},
+            {"type": "paragraph", "id": "hk_div_1", "text": "The Board has resolved to declare an interim dividend of RMB0.20 per share for the six months ended 30 June 2025 (2024: RMB0.15 per share), payable on 26 September 2025."}
+          ]
+        }
+      ]
+    }
+  ],
+  "tables": {
+    "zh_income": {
+      "file": "cc_annual_report_2025_zh.pdf",
+      "style": "ruled",
+      "caption": "合并利润表",
+      "unit_line": "单位：万元",
+      "unit": {"label": "万元", "scale": "10000", "currency": "CNY"},
+      "negative_style": "paren",
+      "col_widths": [200, 55, 110, 110],
+      "header_rows": [["项目", "附注", "2025年度", "2024年度"]],
+      "column_keys": ["项目", "附注", "2025年度", "2024年度"],
+      "rows": [
+        {"label": "一、营业总收入", "cells": ["", "128456.32", "112309.87"]},
+        {"label": "其中：营业收入", "cells": ["五、41", "128456.32", "112309.87"]},
+        {"label": "二、营业总成本", "cells": ["", "109872.45", "97015.66"]},
+        {"label": "其中：营业成本", "cells": ["五、41", "86221.10", "77540.32"]},
+        {"label": "税金及附加", "cells": ["五、42", "1102.38", "968.15"]},
+        {"label": "销售费用", "cells": ["五、43", "6845.20", "6102.77"]},
+        {"label": "管理费用", "cells": ["五、44", "7318.66", "6655.09"]},
+        {"label": "研发费用", "cells": ["五、45", "9012.73", "7431.58"]},
+        {"label": "财务费用", "cells": ["五、46", "-627.62", "-1682.25"]},
+        {"label": "加：其他收益", "cells": ["五、47", "1206.44", "985.30"]},
+        {"label": "投资收益（损失以“－”号填列）", "cells": ["五、48", "532.18", "-215.40"], "negative_style": "minus", "wrap": 13},
+        {"label": "其中：对联营企业和合营企业的投资收益", "cells": ["", "318.92", "—"], "wrap": 13},
+        {"label": "信用减值损失", "cells": ["五、49", "-845.31", "-612.08"]},
+        {"label": "资产减值损失", "cells": ["五、50", "-1234.56", "-980.11"]},
+        {"label": "三、营业利润", "cells": ["", "18242.62", "14471.92"]},
+        {"label": "加：营业外收入", "cells": ["", "156.20", "98.75"]},
+        {"label": "减：营业外支出", "cells": ["", "88.41", "-"]},
+        {"label": "四、利润总额", "cells": ["", "18310.41", "14570.67"]},
+        {"label": "减：所得税费用", "cells": ["五、51", "2712.30", "2105.44"]},
+        {"label": "五、净利润", "cells": ["", "15598.11", "12465.23"]},
+        {"label": "基本每股收益（元/股）", "cells": ["", "0.85", "0.68"], "unit": {"label": "元", "scale": "1"}},
+        {"label": "稀释每股收益（元/股）", "cells": ["", "0.84", "0.68"], "unit": {"label": "元", "scale": "1"}}
+      ],
+      "parts": [{"page": 1, "rows": [0, 22]}]
+    },
+    "zh_balance": {
+      "file": "cc_annual_report_2025_zh.pdf",
+      "style": "ruled",
+      "caption": "合并资产负债表",
+      "continued_caption": "合并资产负债表（续）",
+      "unit_line": "单位：万元",
+      "unit": {"label": "万元", "scale": "10000", "currency": "CNY"},
+      "negative_style": "paren",
+      "col_widths": [200, 55, 110, 110],
+      "header_rows": [["项目", "附注", "2025年12月31日", "2024年12月31日"]],
+      "repeat_header": true,
+      "column_keys": ["项目", "附注", "2025年12月31日", "2024年12月31日"],
+      "rows": [
+        {"label": "流动资产：", "section": true, "cells": ["", "", ""]},
+        {"label": "货币资金", "cells": ["五、1", "45678.90", "38901.23"]},
+        {"label": "交易性金融资产", "cells": ["五、2", "5000.00", "—"]},
+        {"label": "应收票据", "cells": ["五、3", "1234.00", "2045.60"]},
+        {"label": "应收账款", "cells": ["五、4", "28765.43", "25410.88"]},
+        {"label": "预付款项", "cells": ["五、5", "1876.54", "1523.09"]},
+        {"label": "其他应收款", "cells": ["五、6", "654.32", "712.45"]},
+        {"label": "存货", "cells": ["五、7", "22345.67", "20118.90"]},
+        {"label": "其他流动资产", "cells": ["五、8", "1098.76", "1302.11"]},
+        {"label": "流动资产合计", "cells": ["", "106653.62", "90014.26"]},
+        {"label": "非流动资产：", "section": true, "cells": ["", "", ""]},
+        {"label": "长期股权投资", "cells": ["五、9", "6789.01", "6470.09"]},
+        {"label": "固定资产", "cells": ["五、10", "38456.78", "35210.44"]},
+        {"label": "在建工程", "cells": ["五、11", "4321.09", "6543.21"]},
+        {"label": "使用权资产", "cells": ["五、12", "1234.56", "1456.78"]},
+        {"label": "无形资产", "cells": ["五、13", "7890.12", "8012.34"]},
+        {"label": "商誉", "cells": ["五、14", "2100.00", "2100.00"]},
+        {"label": "递延所得税资产", "cells": ["五、15", "987.65", "876.54"]},
+        {"label": "非流动资产合计", "cells": ["", "61779.21", "60669.40"]},
+        {"label": "资产总计", "cells": ["", "168432.83", "150683.66"]},
+        {"label": "流动负债：", "section": true, "cells": ["", "", ""]},
+        {"label": "短期借款", "cells": ["五、16", "12000.00", "15000.00"]},
+        {"label": "应付票据", "cells": ["五、17", "3456.78", "2987.65"]},
+        {"label": "应付账款", "cells": ["五、18", "19876.54", "17654.32"]},
+        {"label": "合同负债", "cells": ["五、19", "4567.89", "3890.12"]},
+        {"label": "应付职工薪酬", "cells": ["五、20", "3210.98", "2876.54"]},
+        {"label": "应交税费", "cells": ["五、21", "1543.21", "1234.56"]},
+        {"label": "流动负债合计", "cells": ["", "44655.40", "43643.19"]},
+        {"label": "非流动负债：", "section": true, "cells": ["", "", ""]},
+        {"label": "长期借款", "cells": ["五、22", "8000.00", "10000.00"]},
+        {"label": "租赁负债", "cells": ["五、23", "987.65", "1123.45"]},
+        {"label": "非流动负债合计", "cells": ["", "8987.65", "11123.45"]},
+        {"label": "负债合计", "cells": ["", "53643.05", "54766.64"]},
+        {"label": "所有者权益：", "section": true, "cells": ["", "", ""]},
+        {"label": "股本", "cells": ["五、24", "18000.00", "18000.00"]},
+        {"label": "资本公积", "cells": ["五、25", "25678.90", "25678.90"]},
+        {"label": "其他综合收益", "cells": ["五、26", "-123.45", "-98.76"]},
+        {"label": "盈余公积", "cells": ["五、27", "6789.01", "5229.20"]},
+        {"label": "未分配利润", "cells": ["五、28", "64445.32", "47107.68"]},
+        {"label": "所有者权益合计", "cells": ["", "114789.78", "95917.02"]},
+        {"label": "负债和所有者权益总计", "cells": ["", "168432.83", "150683.66"]}
+      ],
+      "parts": [{"page": 2, "rows": [0, 20]}, {"page": 3, "rows": [20, 41]}]
+    },
+    "zh_revenue_mix": {
+      "file": "cc_annual_report_2025_zh.pdf",
+      "style": "ruled",
+      "caption": "营业收入构成",
+      "unit_line": "单位：万元",
+      "unit": {"label": "万元", "scale": "10000", "currency": "CNY"},
+      "negative_style": "paren",
+      "col_widths": [95, 80, 70, 80, 70, 80],
+      "header_rows": [
+        [{"text": "分产品", "rowspan": 2}, {"text": "2025年度", "colspan": 2}, null, {"text": "2024年度", "colspan": 2}, null, {"text": "同比增减", "rowspan": 2}],
+        [null, "金额", "占比", "金额", "占比", null]
+      ],
+      "column_keys": ["分产品", "2025年度 / 金额", "2025年度 / 占比", "2024年度 / 金额", "2024年度 / 占比", "同比增减"],
+      "rows": [
+        {"label": "智能装备", "cells": ["72345.67", "56.32%", "61234.56", "54.52%", "18.15%"]},
+        {"label": "精密零部件", "cells": ["41234.56", "32.10%", "38765.43", "34.52%", "6.37%"]},
+        {"label": "技术服务", "cells": ["14876.09", "11.58%", "12309.88", "10.96%", "20.85%"]},
+        {"label": "合计", "cells": ["128456.32", "100.00%", "112309.87", "100.00%", "14.38%"]}
+      ],
+      "parts": [{"page": 3, "rows": [0, 4]}]
+    },
+    "en_ops": {
+      "file": "cc_form10k_2025_en.pdf",
+      "style": "borderless",
+      "caption": "Consolidated Statements of Operations",
+      "unit_line": "(In thousands of U.S. dollars, except per share data)",
+      "unit": {"label": "thousand", "scale": "1000", "currency": "USD", "except_per_share": true},
+      "negative_style": "paren",
+      "col_widths": [230, 85, 85, 75],
+      "header_rows": [
+        ["", {"text": "Year Ended December 31,", "colspan": 2}, null, ""],
+        ["", "2025", "2024", "% Change"]
+      ],
+      "column_keys": ["", "Year Ended December 31, / 2025", "Year Ended December 31, / 2024", "% Change"],
+      "rows": [
+        {"label": "Revenue:", "section": true, "cells": ["", "", ""]},
+        {"label": "Product revenue", "cells": ["152340", "138912", "9.7%"], "dollar": true},
+        {"label": "Service revenue", "cells": ["24118", "22605", "6.7%"]},
+        {"label": "Total revenue", "cells": ["176458", "161517", "9.3%"]},
+        {"label": "Cost of revenue", "cells": ["101236", "94870", "6.7%"]},
+        {"label": "Gross profit", "cells": ["75222", "66647", "12.9%"]},
+        {"label": "Operating expenses:", "section": true, "cells": ["", "", ""]},
+        {"label": "Research and development", "cells": ["28415", "25108", "13.2%"]},
+        {"label": "Sales and marketing", "cells": ["19872", "18966", "4.8%"]},
+        {"label": "General and administrative", "cells": ["12304", "12698", "-3.1%"]},
+        {"label": "Restructuring charges", "cells": ["—", "2145", "n/m"]},
+        {"label": "Total operating expenses", "cells": ["60591", "58917", "2.8%"]},
+        {"label": "Income from operations", "cells": ["14631", "7730", "89.3%"]},
+        {"label": "Interest income", "cells": ["1842", "1205", "52.9%"]},
+        {"label": "Interest expense", "cells": ["-2316", "-2804", "-17.4%"]},
+        {"label": "Other income (expense), net", "cells": ["-418", "377", "n/m"]},
+        {"label": "Income before income taxes", "cells": ["13739", "6508", "111.1%"]},
+        {"label": "Provision for income taxes", "cells": ["2885", "1302", "121.6%"]},
+        {"label": "Net income", "cells": ["10854", "5206", "108.5%"], "dollar": true},
+        {"label": "Net income per share:", "section": true, "cells": ["", "", ""]},
+        {"label": "Basic", "cells": ["0.42", "0.20", ""], "dollar": true, "unit": {"label": "USD per share", "scale": "1"}},
+        {"label": "Diluted", "cells": ["0.41", "0.20", ""], "dollar": true, "unit": {"label": "USD per share", "scale": "1"}}
+      ],
+      "parts": [{"page": 1, "rows": [0, 13]}, {"page": 2, "rows": [13, 22]}]
+    },
+    "zh_key_metrics": {
+      "file": "cc_q3_2025_report_zh.pdf",
+      "style": "ruled",
+      "caption": "主要会计数据和财务指标",
+      "unit_line": "单位：万元",
+      "unit": {"label": "万元", "scale": "10000", "currency": "CNY"},
+      "negative_style": "paren",
+      "col_widths": [200, 95, 95, 85],
+      "header_rows": [["项目", "2025", "2024", "本年比上年增减(%)"]],
+      "column_keys": ["项目", "2025", "2024", "本年比上年增减(%)"],
+      "percent_columns": [3],
+      "rows": [
+        {"label": "营业收入", "cells": ["128456.32", "112309.87", "14.38"]},
+        {"label": "归属于上市公司股东的净利润", "cells": ["15598.11", "12465.23", "25.13"]},
+        {"label": "经营活动产生的现金流量净额", "cells": ["21345.67", "-3456.78", "不适用"]},
+        {"label": "基本每股收益（元/股）", "cells": ["0.85", "0.68", "25.00"], "unit": {"label": "元", "scale": "1"}},
+        {"label": "加权平均净资产收益率", "cells": ["14.76%", "13.52%", "增加1.24个百分点"]},
+        {"label": "总资产", "cells": ["168432.83", "150683.66", "11.78"]}
+      ],
+      "parts": [{"page": 1, "rows": [0, 6]}]
+    },
+    "zh_cashflow": {
+      "file": "cc_q3_2025_report_zh.pdf",
+      "style": "borderless",
+      "caption": "合并现金流量表（节选）",
+      "unit_line": "单位：元",
+      "unit": {"label": "元", "scale": "1", "currency": "CNY"},
+      "negative_style": "paren",
+      "col_widths": [245, 115, 115],
+      "header_rows": [["项目", "本期发生额", "上期发生额"]],
+      "column_keys": ["项目", "本期发生额", "上期发生额"],
+      "rows": [
+        {"label": "一、经营活动产生的现金流量：", "section": true, "cells": ["", ""]},
+        {"label": "销售商品、提供劳务收到的现金", "cells": ["1356789012.34", "1187654321.09"]},
+        {"label": "收到的税费返还", "cells": ["23456789.01", "19876543.21"]},
+        {"label": "购买商品、接受劳务支付的现金", "cells": ["987654321.98", "876543210.87"]},
+        {"label": "支付给职工以及为职工支付的现金", "cells": ["176543210.55", "160987654.32"]},
+        {"label": "经营活动产生的现金流量净额", "cells": ["213456789.12", "-34567812.66"]},
+        {"label": "二、投资活动产生的现金流量：", "section": true, "cells": ["", ""]},
+        {"label": "购建固定资产、无形资产和其他长期资产支付的现金", "cells": ["98765432.10", "123456789.00"]},
+        {"label": "投资活动产生的现金流量净额", "cells": ["-87654321.09", "-110987654.32"]},
+        {"label": "三、筹资活动产生的现金流量：", "section": true, "cells": ["", ""]},
+        {"label": "取得借款收到的现金", "cells": ["50000000.00", "80000000.00"]},
+        {"label": "偿还债务支付的现金", "cells": ["70000000.00", "45000000.00"]},
+        {"label": "筹资活动产生的现金流量净额", "cells": ["-26543210.98", "28765432.10"]},
+        {"label": "四、现金及现金等价物净增加额", "cells": ["99259257.05", "-116790034.88"]}
+      ],
+      "parts": [{"page": 1, "rows": [0, 7]}, {"page": 2, "rows": [7, 14]}]
+    },
+    "zh_segment": {
+      "file": "cc_q3_2025_report_zh.pdf",
+      "style": "ruled",
+      "caption": "分地区营业收入",
+      "unit_line": null,
+      "unit": {"label": "万元", "scale": "10000", "currency": "CNY", "declared_in": "column headers"},
+      "negative_style": "paren",
+      "col_widths": [120, 125, 125, 105],
+      "header_rows": [["地区", "营业收入（万元）", "营业成本（万元）", "毛利率(%)"]],
+      "column_keys": ["地区", "营业收入（万元）", "营业成本（万元）", "毛利率(%)"],
+      "percent_columns": [3],
+      "rows": [
+        {"label": "境内", "cells": ["98765.43", "66543.21", "32.62"]},
+        {"label": "境外", "cells": ["29690.89", "19677.89", "33.72"]},
+        {"label": "合计", "cells": ["128456.32", "86221.10", "32.88"]}
+      ],
+      "parts": [{"page": 2, "rows": [0, 3]}]
+    },
+    "hk_fin_pos": {
+      "file": "cc_interim_2025_hk_en.pdf",
+      "style": "ruled",
+      "caption": "Condensed Consolidated Statement of Financial Position",
+      "unit_line": "As at 30 June 2025 (RMB'000)",
+      "unit": {"label": "thousand", "scale": "1000", "currency": "CNY"},
+      "negative_style": "minus",
+      "col_widths": [205, 50, 110, 110],
+      "header_rows": [
+        [{"text": "", "rowspan": 2}, {"text": "Notes", "rowspan": 2}, "30 June 2025", "31 December 2024"],
+        [null, null, "(Unaudited)", "(Audited)"]
+      ],
+      "column_keys": ["", "Notes", "30 June 2025 / (Unaudited)", "31 December 2024 / (Audited)"],
+      "text_columns": [1],
+      "rows": [
+        {"label": "Non-current assets", "section": true, "cells": ["", "", ""]},
+        {"label": "Property, plant and equipment", "cells": ["11", "384568", "352104"]},
+        {"label": "Right-of-use assets", "cells": ["", "12346", "14568"]},
+        {"label": "Intangible assets", "cells": ["12", "78901", "80123"]},
+        {"label": "Total non-current assets", "cells": ["", "475815", "446795"]},
+        {"label": "Current assets", "section": true, "cells": ["", "", ""]},
+        {"label": "Inventories", "cells": ["13", "223457", "201189"]},
+        {"label": "Trade receivables", "cells": ["14", "287654", "254109"]},
+        {"label": "Derivative financial instruments", "cells": ["", "-1234", "2345"]},
+        {"label": "Cash and cash equivalents", "cells": ["", "456789", "389012"]},
+        {"label": "Total current assets", "cells": ["", "966666", "846655"]},
+        {"label": "Total assets", "cells": ["", "1442481", "1293450"]}
+      ],
+      "parts": [{"page": 1, "rows": [0, 12]}]
+    },
+    "hk_pl": {
+      "file": "cc_interim_2025_hk_en.pdf",
+      "style": "borderless",
+      "caption": "Condensed Consolidated Statement of Profit or Loss",
+      "continued_caption": "Condensed Consolidated Statement of Profit or Loss (continued)",
+      "unit_line": "For the six months ended 30 June (Amounts in RMB'000, except per share data)",
+      "unit": {"label": "thousand", "scale": "1000", "currency": "CNY", "except_per_share": true},
+      "negative_style": "paren",
+      "col_widths": [255, 50, 85, 85],
+      "header_rows": [["", "Notes", "2025", "2024"]],
+      "repeat_header": true,
+      "column_keys": ["", "Notes", "2025", "2024"],
+      "text_columns": [1],
+      "rows": [
+        {"label": "Revenue", "cells": ["4", "1284563", "1123099"]},
+        {"label": "Cost of sales", "cells": ["", "-862211", "-775403"]},
+        {"label": "Gross profit", "cells": ["", "422352", "347696"]},
+        {"label": "Other income and gains", "cells": ["5", "12064", "9853"]},
+        {"label": "Selling and distribution expenses", "cells": ["", "-68452", "-61028"]},
+        {"label": "Administrative expenses", "cells": ["", "-73187", "-66551"]},
+        {"label": "Research and development costs", "cells": ["", "-90127", "-74316"]},
+        {"label": "Finance costs", "cells": ["6", "-4321", "-5432"]},
+        {"label": "Profit before tax", "cells": ["7", "198329", "150222"]},
+        {"label": "Income tax expense", "cells": ["8", "-27123", "-21054"]},
+        {"label": "Profit for the period", "cells": ["", "171206", "129168"]},
+        {"label": "Earnings per share", "section": true, "cells": ["", "", ""]},
+        {"label": "Basic (RMB)", "cells": ["10", "0.85", "0.64"], "unit": {"label": "RMB per share", "scale": "1"}},
+        {"label": "Diluted (RMB)", "cells": ["10", "0.84", "0.64"], "unit": {"label": "RMB per share", "scale": "1"}}
+      ],
+      "parts": [{"page": 1, "rows": [0, 8]}, {"page": 2, "rows": [8, 14]}]
+    }
+  },
+  "not_stitched": [
+    {"from": "zh_income", "to": "zh_balance", "why": "page 1 ends with the income statement and page 2 starts with a new titled table of the same column layout"}
+  ],
+  "needs_ocr": [{"file": "cc_annual_report_2025_zh.pdf", "page": 5}],
+  "queries": [
+    {"query": "营业收入 2025年度", "target": "zh_income"},
+    {"query": "货币资金", "target": "zh_balance"},
+    {"query": "短期借款 应付账款", "target": "zh_balance"},
+    {"query": "研发费用", "target": "zh_income"},
+    {"query": "智能装备 占比", "target": "zh_revenue_mix"},
+    {"query": "Product revenue", "target": "en_ops"},
+    {"query": "Interest expense", "target": "en_ops"},
+    {"query": "gross margin favorable product mix", "target": "en_mdna_2"},
+    {"query": "cash equivalents working capital", "target": "en_mdna_3"},
+    {"query": "加权平均净资产收益率", "target": "zh_key_metrics"},
+    {"query": "收到的税费返还", "target": "zh_cashflow"},
+    {"query": "偿还债务支付的现金", "target": "zh_cashflow"},
+    {"query": "境外 毛利率", "target": "zh_segment"},
+    {"query": "Trade receivables", "target": "hk_fin_pos"},
+    {"query": "Income tax expense", "target": "hk_pl"},
+    {"query": "interim dividend per share", "target": "hk_div_1"}
+  ]
+}

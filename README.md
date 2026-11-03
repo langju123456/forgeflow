@@ -62,6 +62,20 @@ bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127
 
 向量单独会漏掉纯 ID 查询，融合后补回；剩下的漏检和“无答案”问题说明，能不能回答不能靠调相似度阈值决定。细节、漏检和限制见 [preparation/s2/evaluation/hybrid/RESULTS.md](preparation/s2/evaluation/hybrid/RESULTS.md)，复现用 `bash scripts/mac_retrieval_eval.sh`（需要本机 Ollama）。
 
+## 财报 PDF 解析
+
+```bash
+.venv/bin/pip install -e '.[dev,pdf,pdf-fixtures]'               # pdfplumber；reportlab/Pillow 只用于生成夹具
+.venv/bin/python -m forgeflow.pdf_ingest 年报.pdf --summary        # 打印每页状态、表格、单位和行 id
+.venv/bin/python preparation/s3/pdf-ingest/evaluate.py             # 生成合成 PDF、解析、写入 Store、检索并打分
+```
+
+`forgeflow.pdf_ingest` 把 PDF 拆成 Knowledge 行：正文按段落成块，表格按逻辑表成行（跨页的表拼成一张）。每行带 `file + page + bbox` 引用，引用写在内容第一行，所以 `source_hash` 也覆盖它；行上的 scope、roles、classification、valid_until 与现有 Knowledge 行一致，经 `Store.put_document` 写入，原有的检索前授权和精确版本引用检查不用改。表格同时保存结构化单元格（多级表头列名、行标签、分节、每格 bbox）：`(1,234)` 记为 -1234，`—` 记为空，百分比不乘单位，单位从“单位：万元”、`(In thousands…)`、`RMB'000`、列名或行标签“（元/股）”读取，原始字符串始终保留，解析不了的格标为 text/unparsed，不会丢。没有文字的图片页标 `NEEDS_OCR`，不产生行；OCR 不在范围内。
+
+实测（4 个合成 PDF、11 页，[RESULTS.md](preparation/s3/pdf-ingest/RESULTS.md)）：修复后三组的表格检出、数值单元格精确匹配（278/278）、跨页拼接（4/4）、bbox 引用和 OCR 标记都是满分，但这些夹具和解析器出自同一作者，不是真实年报基准。更有信息量的是首次接触：stress 组数值单元格 35/47、跨页拼接 0/1；heldout 组数值 46/46，但附注列 0/11（整数附注号被当成金额）。两组都已据此修过，现在没有未用过的留出集。
+
+限制：无框表靠“标签在左、数字右对齐”的启发式；行标签假定在第一列；页底有脚注的续表、隔页或列宽变化的续表不拼；混排页只按有无文字判断；结构化单元格只在 `IngestResult` 里，Store 只存带引用首行的文本；中文检索仍是 S1 词法打分。
+
 ## 架构
 
 ```mermaid

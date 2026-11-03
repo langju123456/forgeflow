@@ -15,6 +15,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<1", "ruff>=0.12,<1"]
+# Financial PDF ingestion (forgeflow.pdf_ingest); not needed by the runtime.
+pdf = ["pdfplumber>=0.11,<0.12"]
+# Synthetic fixture PDFs for its tests and evaluation (scripts/make_financial_pdfs.py).
+pdf-fixtures = ["reportlab>=4.2,<6", "pillow>=10.1"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/forgeflow"]

@@ -36,3 +36,6 @@ web/dist/
 
 # Local agent tooling (isolated worktrees)
 .claude/
+
+# Financial PDF fixtures are generated from fixtures/financial-pdf/ground_truth.json, not versioned
+fixtures/financial-pdf/generated/
