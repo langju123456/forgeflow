@@ -22,7 +22,13 @@ echo "[eval] python: $("$py" --version)"
 .venv-mac/bin/pip install -q -e .
 
 curl -fsS http://127.0.0.1:11434/api/version >/dev/null || { echo "[eval] starting ollama"; (ollama serve >/dev/null 2>&1 &); sleep 5; }
-ollama pull "$MODEL" 2>&1 | tail -1
+# Registry downloads through a desktop proxy sometimes drop mid-way ("unexpected EOF"); pull resumes.
+pulled=false
+for attempt in 1 2 3 4 5 6; do
+  if ollama pull "$MODEL" >/tmp/ollama-pull.log 2>&1; then pulled=true; break; fi
+  echo "[eval] pull attempt $attempt failed: $(tail -c 200 /tmp/ollama-pull.log | tr '\r' '\n' | tail -1)"; sleep 20
+done
+$pulled || { echo "[eval] could not pull $MODEL"; exit 1; }
 echo "[eval] model: $(ollama list | grep "^$MODEL" || true)"
 
 PYTHONDONTWRITEBYTECODE=1 .venv-mac/bin/python preparation/s2/evaluation/hybrid/run_modes.py --modes lexical vector hybrid
