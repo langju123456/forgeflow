@@ -1,0 +1,3739 @@
+{
+  "recorded_at": "2026-11-03T15:32:49.404719+00:00",
+  "status": "REAL_LEXICAL_SYNTHETIC",
+  "mode": "lexical",
+  "preregistered": {
+    "model": "bge-m3",
+    "min_similarity": 0.5,
+    "rrf_k": 60,
+    "top_k": 5
+  },
+  "embedder": "ollama/bge-m3",
+  "embedder_model_detail": {
+    "name": "bge-m3:latest",
+    "digest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+    "size": 1157672605,
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "bert",
+      "families": [
+        "bert"
+      ],
+      "parameter_size": "566.70M",
+      "quantization_level": "F16",
+      "context_length": 8192,
+      "embedding_length": 1024
+    }
+  },
+  "dataset_id": "aurora-lexical-heldout-v1",
+  "freeze_sha256": "4b31cf95cdd0b2fbe5b63f706d7fb5b5db3da0aa913ada875ebc120c5785c8f5",
+  "inputs_verified": {
+    "frozen_benchmark_files": {
+      "dataset.json": "2d559eb4a66bcfbe2202142426bff8cb69222c635c59ed51aefcec24b0509ee3",
+      "protocol.md": "adc405ce1e48b1df92272b5901f31e25f096afb38678c68295b685e93768e48b",
+      "evaluator.py": "e23898ac53600a372cacd4038c45347251a7f605785e6c65b774de6cd83b8fc8",
+      "run_baseline.py": "90567994d2670ef755bf1680fb67df9f111c3492efe915b5ce5f478c262f2201",
+      "write_dataset.py": "ea8d822826104bb2471f3438ef6601e74bc05350f1d299fdce19508c0f68bb89"
+    },
+    "s1_files_total": 95,
+    "s1_absent_from_clone": [
+      "sources/IMG_0194.PNG",
+      "sources/IMG_0195.PNG",
+      "sources/IMG_0196.PNG",
+      "sources/MANIFEST.md",
+      "sources/checksums.sha256",
+      "sources/redacted-transcription.md",
+      "sources/proposal-v1-delegated-original.md",
+      "sources/proposal-v2-upload-original.txt"
+    ],
+    "s1_changed_since_seal": [
+      ".gitignore",
+      "README.md",
+      "src/forgeflow/context.py",
+      "src/forgeflow/contracts.py",
+      "src/forgeflow/local.py",
+      "src/forgeflow/workflow.py",
+      "tests/test_mcp_bridge.py",
+      "tests/test_store.py",
+      "tests/test_workflow_live.py"
+    ]
+  },
+  "lexical_parity_with_sealed_run": {
+    "against": "preparation/s2/evaluation/runs/20261005T170825-lexical-v1-891375a5/questions.jsonl",
+    "questions": 47,
+    "differ": []
+  },
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "platform": "macOS-26.3.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "pydantic": "2.14.2",
+      "sqlalchemy": "2.1.6",
+      "httpx": "0.28.1"
+    },
+    "store": "ephemeral fresh SQLite; synthetic fixture principals",
+    "retriever": "RankedKnowledgeService(lexical); S1 ACL and citation checks; embeddings local only"
+  },
+  "metrics": {
+    "question_count": 47,
+    "positive_questions": 37,
+    "core_content_questions": 30,
+    "acl_control_questions": 7,
+    "paired_acl_controls_recovered": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "macro_recall_at_5": 0.7837837837837838,
+    "macro_mrr_at_5": 0.7837837837837838,
+    "core_content_recall_at_5": 0.7333333333333333,
+    "core_content_mrr_at_5": 0.7333333333333333,
+    "micro_relevant_retrieval": {
+      "numerator": 32,
+      "denominator": 40,
+      "rate": 0.8
+    },
+    "citation_resolves": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "citation_exact_authorized": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "returned_citation_current_usable": {
+      "numerator": 53,
+      "denominator": 58,
+      "rate": 0.9137931034482759
+    },
+    "returned_expected_source_status_correct": {
+      "numerator": 58,
+      "denominator": 58,
+      "rate": 1.0
+    },
+    "expected_status_gold_coverage": {
+      "numerator": 32,
+      "denominator": 40,
+      "rate": 0.8
+    },
+    "acl_negative_query_leak": {
+      "numerator": 0,
+      "denominator": 7,
+      "rate": 0.0
+    },
+    "adversarial_exposure_query_leak": {
+      "numerator": 0,
+      "denominator": 8,
+      "rate": 0.0
+    },
+    "all_query_leak": {
+      "numerator": 0,
+      "denominator": 47,
+      "rate": 0.0
+    },
+    "forbidden_candidate_rows": 0,
+    "forbidden_citation_rows": 0,
+    "forbidden_candidate_observation_rate": {
+      "numerator": 0,
+      "denominator": 3165,
+      "rate": 0.0
+    },
+    "forbidden_citation_observation_rate": {
+      "numerator": 0,
+      "denominator": 290,
+      "rate": 0.0
+    },
+    "unknown_returned_sources": 0,
+    "unanswerable_nonempty_context": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.3333333333333333
+    },
+    "unanswerable_empty_context": {
+      "numerator": 2,
+      "denominator": 3,
+      "rate": 0.6666666666666666
+    },
+    "required_conflict_flag_coverage": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+    },
+    "latency_search_including_service_citation": {
+      "n": 235,
+      "median_ms": 2.101833,
+      "p95_ms": 4.168625,
+      "max_ms": 6.102208
+    },
+    "stable_query_results": {
+      "numerator": 47,
+      "denominator": 47,
+      "rate": 1.0
+    },
+    "denial_expected_and_observed": {
+      "numerator": 3,
+      "denominator": 3,
+      "rate": 1.0
+    },
+    "retrieval_slices": {
+      "acl-control": {
+        "questions": 7,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "acl-decoy": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "chinese": {
+        "questions": 6,
+        "macro_recall_at_5": 0.6666666666666666,
+        "macro_mrr_at_5": 0.6666666666666666
+      },
+      "classification": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "conflict": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "cross-language": {
+        "questions": 4,
+        "macro_recall_at_5": 0.0,
+        "macro_mrr_at_5": 0
+      },
+      "english": {
+        "questions": 15,
+        "macro_recall_at_5": 0.6,
+        "macro_mrr_at_5": 0.6
+      },
+      "exact-id": {
+        "questions": 11,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "exact-token": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "expiry": {
+        "questions": 2,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "lexical": {
+        "questions": 14,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "project": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "role": {
+        "questions": 3,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "synonym": {
+        "questions": 4,
+        "macro_recall_at_5": 0.0,
+        "macro_mrr_at_5": 0
+      },
+      "tenant": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "version": {
+        "questions": 5,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      },
+      "workspace": {
+        "questions": 1,
+        "macro_recall_at_5": 1.0,
+        "macro_mrr_at_5": 1.0
+      }
+    },
+    "latency_slices": {
+      "positive": {
+        "n": 185,
+        "median_ms": 2.140375,
+        "p95_ms": 4.338125,
+        "max_ms": 6.102208
+      },
+      "acl_negative": {
+        "n": 35,
+        "median_ms": 1.793583,
+        "p95_ms": 2.211625,
+        "max_ms": 2.589708
+      },
+      "unanswerable": {
+        "n": 15,
+        "median_ms": 2.098958,
+        "p95_ms": 2.972167,
+        "max_ms": 2.972167
+      }
+    }
+  },
+  "slices": {
+    "synonym": {
+      "questions": 4,
+      "positives_fully_recalled": {
+        "numerator": 0,
+        "denominator": 4,
+        "rate": 0.0
+      },
+      "macro_recall_at_5": 0.0,
+      "nonempty_context": {
+        "numerator": 0,
+        "denominator": 4,
+        "rate": 0.0
+      }
+    },
+    "cross-language": {
+      "questions": 4,
+      "positives_fully_recalled": {
+        "numerator": 0,
+        "denominator": 4,
+        "rate": 0.0
+      },
+      "macro_recall_at_5": 0.0,
+      "nonempty_context": {
+        "numerator": 0,
+        "denominator": 4,
+        "rate": 0.0
+      }
+    },
+    "exact-token": {
+      "questions": 2,
+      "positives_fully_recalled": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "macro_recall_at_5": 1.0,
+      "nonempty_context": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    },
+    "chinese": {
+      "questions": 7,
+      "positives_fully_recalled": {
+        "numerator": 4,
+        "denominator": 6,
+        "rate": 0.6666666666666666
+      },
+      "macro_recall_at_5": 0.6666666666666666,
+      "nonempty_context": {
+        "numerator": 4,
+        "denominator": 7,
+        "rate": 0.5714285714285714
+      }
+    },
+    "english": {
+      "questions": 17,
+      "positives_fully_recalled": {
+        "numerator": 9,
+        "denominator": 15,
+        "rate": 0.6
+      },
+      "macro_recall_at_5": 0.6,
+      "nonempty_context": {
+        "numerator": 10,
+        "denominator": 17,
+        "rate": 0.5882352941176471
+      }
+    },
+    "unanswerable": {
+      "questions": 3,
+      "positives_fully_recalled": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "macro_recall_at_5": null,
+      "nonempty_context": {
+        "numerator": 1,
+        "denominator": 3,
+        "rate": 0.3333333333333333
+      }
+    },
+    "acl-negative": {
+      "questions": 7,
+      "positives_fully_recalled": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "macro_recall_at_5": null,
+      "nonempty_context": {
+        "numerator": 1,
+        "denominator": 7,
+        "rate": 0.14285714285714285
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": "Q01",
+      "query": "minimum required boot cycles",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.650542,
+        2.580458,
+        2.701,
+        2.776291,
+        2.648709
+      ]
+    },
+    {
+      "id": "Q02",
+      "query": "thermal peak",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "content": "THERMAL-REPORT-2026 current revision reports thermal peak 68 Celsius for build B7.",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 2,
+        "relevant_total": 2
+      },
+      "citation_checks": [
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 2,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 10,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.627666,
+        2.395959,
+        2.376875,
+        2.435167,
+        2.647833
+      ]
+    },
+    {
+      "id": "Q03",
+      "query": "BOM revision A3",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical",
+        "version"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "approval-rules",
+          "version": "v1",
+          "content": "Human stage approval is separate from technical PASS. Approval binds immutable parameters, policy, source versions and stage revision.",
+          "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "content": "THERMAL-REPORT-2026 current revision reports thermal peak 68 Celsius for build B7.",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "approval-rules",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.618833,
+        2.674958,
+        2.724542,
+        2.595917,
+        2.724792
+      ]
+    },
+    {
+      "id": "Q04",
+      "query": "CI smoke",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "ci-smoke",
+          "version": "v1",
+          "source_hash": "3acbd14e221b1420998d190c371339f4ffdfd67ccaf049bb9aa829206ed174d0",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "ci-smoke",
+          "version": "v1",
+          "content": "Android CI smoke must succeed. Failed build validation blocks the synthetic gate.",
+          "source_hash": "3acbd14e221b1420998d190c371339f4ffdfd67ccaf049bb9aa829206ed174d0",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "ci-smoke",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.101833,
+        2.044083,
+        2.059291,
+        2.252625,
+        2.103375
+      ]
+    },
+    {
+      "id": "Q05",
+      "query": "rollback bundle",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "sre-rollback",
+          "version": "v1",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "sre-rollback",
+          "version": "v1",
+          "content": "Rollback uses a signed rollback bundle. Pause the deployment, then restore the previous image.",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "sre-rollback",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.053584,
+        2.167,
+        2.280292,
+        2.085875,
+        2.048041
+      ]
+    },
+    {
+      "id": "Q06",
+      "query": "fastboot flash",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "android-flashing",
+          "version": "v1",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "android-flashing",
+          "version": "v1",
+          "content": "Use fastboot flash only with an approved firmware manifest. Verify the image signature before writing.",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "android-flashing",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.211041,
+        2.342417,
+        1.966666,
+        1.976541,
+        2.072084
+      ]
+    },
+    {
+      "id": "Q07",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "content": "EVT entry follows PROTOTYPE. A completed run does not alone advance the project stage.",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 25,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        3.336125,
+        3.242417,
+        3.31575,
+        3.160708,
+        3.3735
+      ]
+    },
+    {
+      "id": "Q08",
+      "query": "npi-bom",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id",
+        "version"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.074583,
+        1.999292,
+        2.114833,
+        2.247792,
+        1.988959
+      ]
+    },
+    {
+      "id": "Q09",
+      "query": "thermal-budget",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "content": "THERMAL-REPORT-2026 current revision reports thermal peak 68 Celsius for build B7.",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 10,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.484834,
+        3.242167,
+        2.280625,
+        2.299208,
+        2.444458
+      ]
+    },
+    {
+      "id": "Q10",
+      "query": "approval-rules",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "approval-rules",
+          "version": "v1",
+          "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "approval-rules",
+          "version": "v1",
+          "content": "Human stage approval is separate from technical PASS. Approval binds immutable parameters, policy, source versions and stage revision.",
+          "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "approval-rules",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.059917,
+        2.020708,
+        2.253708,
+        2.427125,
+        2.10475
+      ]
+    },
+    {
+      "id": "Q11",
+      "query": "startup endurance",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.786875,
+        1.84825,
+        2.195709,
+        1.6775,
+        1.715584
+      ]
+    },
+    {
+      "id": "Q12",
+      "query": "heat ceiling",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.881583,
+        2.065083,
+        1.971375,
+        1.840208,
+        1.838584
+      ]
+    },
+    {
+      "id": "Q13",
+      "query": "parts catalogue",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.831916,
+        2.113041,
+        1.911375,
+        1.776542,
+        1.902666
+      ]
+    },
+    {
+      "id": "Q14",
+      "query": "backout instructions",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "synonym"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "sre-rollback",
+          "version": "v1",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.110208,
+        1.752958,
+        1.783833,
+        1.819417,
+        1.950916
+      ]
+    },
+    {
+      "id": "Q15",
+      "query": "发布",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "zh-release",
+          "version": "v1",
+          "content": "发布 检查清单：验证负责人、回滚材料、交付版本以及审核记录。技术检查与人工批准分别记录。",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "zh-release",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.177083,
+        2.128291,
+        6.102208,
+        2.573292,
+        2.279375
+      ]
+    },
+    {
+      "id": "Q16",
+      "query": "老化",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-aging",
+          "version": "v1",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "zh-aging",
+          "version": "v1",
+          "content": "老化 测试：重复上电并记录失败次数，标注测试样本、硬件批次和观测时间。",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "zh-aging",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.497541,
+        2.129083,
+        2.458709,
+        2.546125,
+        2.140375
+      ]
+    },
+    {
+      "id": "Q17",
+      "query": "项目排期",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-schedule",
+          "version": "v1",
+          "source_hash": "dce23a144ff2fba5d0cad1ade3ee9af9dce51e751b92711a66a95ee9b1b783c8",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "pm-schedule",
+          "version": "v1",
+          "content": "项目排期 应标注项目经理、责任人、里程碑与依赖关系；未解决风险必须记录。",
+          "source_hash": "dce23a144ff2fba5d0cad1ade3ee9af9dce51e751b92711a66a95ee9b1b783c8",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "pm-schedule",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 45,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 9,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.373,
+        1.533292,
+        1.578,
+        1.863667,
+        1.455541
+      ]
+    },
+    {
+      "id": "Q18",
+      "query": "权限",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-permissions",
+          "version": "v1",
+          "source_hash": "2ac4918589857e8356e7825f74b3a0c2867b1c7ff852cf1f6eadb78f1d3c81b4",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "zh-permissions",
+          "version": "v1",
+          "content": "权限 检查：先验证租户、工作区、项目、角色与密级，再读取资料；猜测标识不能获得访问。",
+          "source_hash": "2ac4918589857e8356e7825f74b3a0c2867b1c7ff852cf1f6eadb78f1d3c81b4",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "zh-permissions",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.113542,
+        2.179833,
+        2.75225,
+        2.060917,
+        2.128208
+      ]
+    },
+    {
+      "id": "Q19",
+      "query": "怎么刷入固件",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "cross-language"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "android-flashing",
+          "version": "v1",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        3.028334,
+        1.98375,
+        1.837208,
+        1.977125,
+        2.768458
+      ]
+    },
+    {
+      "id": "Q20",
+      "query": "最高允许温度",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "chinese",
+        "cross-language"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.798292,
+        1.752333,
+        1.827042,
+        2.628916,
+        1.889917
+      ]
+    },
+    {
+      "id": "Q21",
+      "query": "release checklist",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "cross-language"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.797208,
+        1.962375,
+        2.641542,
+        2.088292,
+        1.884792
+      ]
+    },
+    {
+      "id": "Q22",
+      "query": "burn-in test",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "english",
+        "cross-language"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-aging",
+          "version": "v1",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": 0.0,
+        "reciprocal_rank_at_5": 0,
+        "relevant_found": 0,
+        "relevant_total": 1
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.902166,
+        2.370958,
+        1.819458,
+        1.797916,
+        2.06675
+      ]
+    },
+    {
+      "id": "Q23",
+      "query": "bill of materials",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        3.00275,
+        2.171958,
+        2.319375,
+        3.299292,
+        2.161292
+      ]
+    },
+    {
+      "id": "Q24",
+      "query": "Which current BOM replaces A2?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "english"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "classification": 0,
+          "status": "EXPIRED"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": false,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 25,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        4.395875,
+        4.197792,
+        4.346292,
+        4.338125,
+        4.441291
+      ]
+    },
+    {
+      "id": "Q25",
+      "query": "THERMAL-REPORT-2026",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "version",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "content": "THERMAL-REPORT-2026 current revision reports thermal peak 68 Celsius for build B7.",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "classification": 0,
+          "status": "EXPIRED"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": false,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.97225,
+        3.651167,
+        3.655291,
+        2.908667,
+        4.168625
+      ]
+    },
+    {
+      "id": "Q26",
+      "query": "Labnote boot current measurements",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "conflict",
+        "english"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "content": "Bill of materials BOM revision A3 is the current fixture. It supersedes earlier A2.",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "classification": 0,
+          "status": "EXPIRED"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 2,
+        "relevant_total": 2
+      },
+      "citation_checks": [
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "npi-bom",
+          "version": "v2",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": false,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 2,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 25,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": true,
+      "conflict_flag_correct": false,
+      "stable": true,
+      "latency_ms": [
+        4.4535,
+        4.529958,
+        4.970416,
+        3.596583,
+        4.979583
+      ]
+    },
+    {
+      "id": "Q27",
+      "query": "Which labnote records contradict boot count?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "conflict",
+        "english"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 60 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "6c9830c39c4e90542d681c7fdd551a4ef9a3175aa6b7a839da7c4acf4845282c",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "content": "Labnote current boot measurement: Aurora completed 100 cycles with zero failures. The subject is build B7 boot count.",
+          "source_hash": "f97e98a1358437231edd182f85e7eef683450b01b30f24659292ed5f3790147f",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 2,
+        "relevant_total": 2
+      },
+      "citation_checks": [
+        {
+          "id": "labnote-boot-fail",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "labnote-boot-pass",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 2,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": true,
+      "conflict_flag_correct": false,
+      "stable": true,
+      "latency_ms": [
+        3.260833,
+        3.768,
+        2.889792,
+        3.42275,
+        2.914541
+      ]
+    },
+    {
+      "id": "Q28",
+      "query": "rf-archive",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "expiry",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "rf-archive",
+          "version": "v1",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "status": "EXPIRED"
+        }
+      ],
+      "hits": [
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "classification": 0,
+          "status": "EXPIRED"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": false,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.813333,
+        2.313,
+        2.184791,
+        2.324084,
+        2.652666
+      ]
+    },
+    {
+      "id": "Q29",
+      "query": "obsolete calibration chamber",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "expiry",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "rf-archive",
+          "version": "v1",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "status": "EXPIRED"
+        }
+      ],
+      "hits": [
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "content": "Radio-frequency RF chamber report uses obsolete calibration. This archived chamber measurement is not current evidence.",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "classification": 0,
+          "status": "EXPIRED"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "rf-archive",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": false,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.173459,
+        2.318916,
+        2.822208,
+        2.106333,
+        2.383375
+      ]
+    },
+    {
+      "id": "Q30",
+      "query": "quantum lidar actuator",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.075083,
+        2.184625,
+        1.863875,
+        1.958417,
+        1.888666
+      ]
+    },
+    {
+      "id": "Q31",
+      "query": "EVT antenna accreditation",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "content": "EVT entry follows PROTOTYPE. A completed run does not alone advance the project stage.",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.956042,
+        2.856083,
+        2.972167,
+        2.875917,
+        2.921209
+      ]
+    },
+    {
+      "id": "Q32",
+      "query": "无线充电技术",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "chinese"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.098958,
+        1.770375,
+        1.766375,
+        1.874333,
+        2.220458
+      ]
+    },
+    {
+      "id": "Q33",
+      "query": "pm-risk",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.91825,
+        1.897792,
+        1.864917,
+        2.118792,
+        1.806167
+      ]
+    },
+    {
+      "id": "Q34",
+      "query": "pm-risk",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-risk",
+          "version": "v1",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "pm-risk",
+          "version": "v1",
+          "content": "Supplier risk mitigation uses a contingency schedule and an alternate source. PM-only synthetic planning note.",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "private-canary",
+          "version": "v1",
+          "content": "NEVER-APPROVED-P1 synthetic token belongs to a PM-only note. It grants no tool or approval authority.",
+          "source_hash": "ba7930271113fdb76cf284ed1b21931a0b25287215fe69f8ff94042dac13d8a6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "pm-risk",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "private-canary",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 45,
+      "citation_row_observations": 10,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 9,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.715084,
+        1.783042,
+        1.891083,
+        2.081791,
+        1.716875
+      ]
+    },
+    {
+      "id": "Q35",
+      "query": "restricted-cost",
+      "principal": "hw-high",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "classification",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "restricted-cost",
+          "version": "v1",
+          "source_hash": "ac99f9ab8a999e1fdbfbdecad6de6e5de01831bc5058b19156520ec43174e240",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "restricted-cost",
+          "version": "v1",
+          "content": "Restricted synthetic supplier cost table: component price is 42 units. This is a fake classroom record.",
+          "source_hash": "ac99f9ab8a999e1fdbfbdecad6de6e5de01831bc5058b19156520ec43174e240",
+          "classification": 2,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "restricted-cost",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 90,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 18,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.450125,
+        2.68,
+        2.21775,
+        2.237125,
+        5.529833
+      ]
+    },
+    {
+      "id": "Q36",
+      "query": "restricted-cost",
+      "principal": "hw-low",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "classification",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.961625,
+        2.098125,
+        2.185208,
+        1.908959,
+        1.793583
+      ]
+    },
+    {
+      "id": "Q37",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "aurora-b",
+      "tags": [
+        "acl-negative",
+        "tenant",
+        "exact-id"
+      ],
+      "expected_denial": true,
+      "error": {
+        "code": "NOT_FOUND",
+        "status": 404
+      },
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 0,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 0,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.007166,
+        0.002833,
+        0.001959,
+        0.001417,
+        0.00125
+      ]
+    },
+    {
+      "id": "Q38",
+      "query": "evt-boot",
+      "principal": "hw-b",
+      "scope": "aurora-b",
+      "tags": [
+        "acl-control",
+        "tenant",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-b",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 5,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 1,
+      "hit_origin_scopes": [
+        "aurora-b"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.698584,
+        0.659292,
+        0.623291,
+        0.956791,
+        0.653875
+      ]
+    },
+    {
+      "id": "Q39",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "orion-a",
+      "tags": [
+        "acl-negative",
+        "project",
+        "exact-id"
+      ],
+      "expected_denial": true,
+      "error": {
+        "code": "NOT_FOUND",
+        "status": 404
+      },
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 0,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 0,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.004666,
+        0.001625,
+        0.001208,
+        0.001417,
+        0.001167
+      ]
+    },
+    {
+      "id": "Q40",
+      "query": "evt-boot",
+      "principal": "hw-orion",
+      "scope": "orion-a",
+      "tags": [
+        "acl-control",
+        "project",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "orion-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 5,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 1,
+      "hit_origin_scopes": [
+        "orion-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.576333,
+        0.548958,
+        0.585916,
+        0.570541,
+        0.587125
+      ]
+    },
+    {
+      "id": "Q41",
+      "query": "evt-boot",
+      "principal": "hw-a",
+      "scope": "ops-a",
+      "tags": [
+        "acl-negative",
+        "workspace",
+        "exact-id"
+      ],
+      "expected_denial": true,
+      "error": {
+        "code": "NOT_FOUND",
+        "status": 404
+      },
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 0,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 0,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.002667,
+        0.001667,
+        0.00125,
+        0.001125,
+        0.00125
+      ]
+    },
+    {
+      "id": "Q42",
+      "query": "evt-boot",
+      "principal": "hw-ops",
+      "scope": "ops-a",
+      "tags": [
+        "acl-control",
+        "workspace",
+        "exact-id"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "ops-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 5,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 1,
+      "hit_origin_scopes": [
+        "ops-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        0.595625,
+        0.583625,
+        0.710833,
+        0.65025,
+        0.613917
+      ]
+    },
+    {
+      "id": "Q43",
+      "query": "supplier risk mitigation",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 0,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.11625,
+        1.750208,
+        1.762958,
+        1.850917,
+        2.211625
+      ]
+    },
+    {
+      "id": "Q44",
+      "query": "supplier risk mitigation",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-risk",
+          "version": "v1",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "pm-risk",
+          "version": "v1",
+          "content": "Supplier risk mitigation uses a contingency schedule and an alternate source. PM-only synthetic planning note.",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "pm-risk",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 45,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 9,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.491125,
+        1.413792,
+        1.391208,
+        1.450708,
+        1.937709
+      ]
+    },
+    {
+      "id": "Q45",
+      "query": "EVT entry",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-decoy",
+        "classification",
+        "lexical"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-entry",
+          "version": "v1",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "content": "EVT entry follows PROTOTYPE. A completed run does not alone advance the project stage.",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "content": "EVT boot cycles minimum 100. Boot failures must be zero. Required evidence carries observed_at and valid_until.",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "classification": 0,
+          "status": "CURRENT"
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "content": "EVT thermal peak maximum 70 Celsius. A current laboratory measurement must identify the build.",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "evt-entry",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "evt-boot",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        },
+        {
+          "id": "thermal-budget",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 15,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a",
+        "aurora-a",
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.666125,
+        2.708417,
+        3.288167,
+        2.624541,
+        2.693416
+      ]
+    },
+    {
+      "id": "Q46",
+      "query": "NEVER-APPROVED-P1",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "role",
+        "exact-token"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [],
+      "hits": [
+        {
+          "id": "android-flashing",
+          "version": "v1",
+          "content": "Use fastboot flash only with an approved firmware manifest. Verify the image signature before writing.",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": null,
+        "reciprocal_rank_at_5": null,
+        "relevant_found": 0,
+        "relevant_total": 0
+      },
+      "citation_checks": [
+        {
+          "id": "android-flashing",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 0,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 80,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 16,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        2.196667,
+        2.100167,
+        2.210792,
+        2.589708,
+        2.086
+      ]
+    },
+    {
+      "id": "Q47",
+      "query": "NEVER-APPROVED-P1",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-control",
+        "role",
+        "exact-token"
+      ],
+      "expected_denial": false,
+      "error": null,
+      "denial_correct": true,
+      "gold": [
+        {
+          "scope": "aurora-a",
+          "id": "private-canary",
+          "version": "v1",
+          "source_hash": "ba7930271113fdb76cf284ed1b21931a0b25287215fe69f8ff94042dac13d8a6",
+          "status": "CURRENT"
+        }
+      ],
+      "hits": [
+        {
+          "id": "private-canary",
+          "version": "v1",
+          "content": "NEVER-APPROVED-P1 synthetic token belongs to a PM-only note. It grants no tool or approval authority.",
+          "source_hash": "ba7930271113fdb76cf284ed1b21931a0b25287215fe69f8ff94042dac13d8a6",
+          "classification": 0,
+          "status": "CURRENT"
+        }
+      ],
+      "metrics": {
+        "recall_at_5": 1.0,
+        "reciprocal_rank_at_5": 1.0,
+        "relevant_found": 1,
+        "relevant_total": 1
+      },
+      "citation_checks": [
+        {
+          "id": "private-canary",
+          "version": "v1",
+          "resolves": true,
+          "exact_authorized": true,
+          "current_usable": true,
+          "status_correct": true
+        }
+      ],
+      "gold_status_correct": 1,
+      "forbidden_candidate_rows": 0,
+      "forbidden_citation_rows": 0,
+      "candidate_row_observations": 45,
+      "citation_row_observations": 5,
+      "unknown_returned_sources": 0,
+      "leak": false,
+      "candidate_count_observed_first_repetition": 9,
+      "hit_origin_scopes": [
+        "aurora-a"
+      ],
+      "conflict_required": false,
+      "conflict_flag_correct": null,
+      "stable": true,
+      "latency_ms": [
+        1.46675,
+        1.517292,
+        1.49525,
+        1.702542,
+        1.400125
+      ]
+    }
+  ],
+  "texts_sent_to_embedder": 0,
+  "benchmark_and_present_s1_unchanged_after": true
+}
