@@ -28,3 +28,8 @@ fabric-identities.json
 sources/IMG_0194.PNG
 sources/IMG_0195.PNG
 sources/IMG_0196.PNG
+
+# Review workbench: seeded local database and the frontend build
+.workbench/
+web/node_modules/
+web/dist/

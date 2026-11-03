@@ -32,6 +32,21 @@ ForgeFlow 是一个在本机运行的企业 Agent 运行时原型。演示场景
 
 各阶段的测试数量口径不同，不能相加。
 
+## 审阅工作台（React + FastAPI）
+
+审批流程原来只能用命令行和 HTTP 调用走。审阅工作台把它做成一个页面：提案人生成评审、提出动作；审阅人看清这个动作会做什么、绑定了哪些哈希、门禁状态、谁不能审批，然后批准或拒绝；执行器执行已批准的动作并写入回执。页面上可以切换三种身份，各自能做什么完全由服务端决定，页面只负责把服务端的结论讲清楚。
+
+```bash
+bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127.0.0.1:8780/workbench/
+```
+
+![审阅人看到的审批详情](docs/images/workbench-review.png)
+
+- **前端**：`web/`，React 18 + TypeScript + Vite，没有 UI 库。每次操作后从服务端重新读取状态，不在前端推断；每次写请求带新的 Idempotency-Key；审批时提交审阅人看到的 `proposal_hash` 和 `expected_revision`，参数变了或别人先决定了，服务端返回 409，页面给出原因和下一步。
+- **后端新增**（只读）：`GET /fabric/reviews`、`GET /fabric/approvals`（队列）、`GET /fabric/approvals/{id}/explain`（审批人需要知道的全部，原来只有命令行能看）。权限、范围和记录完整性检查与原有接口相同。
+- **本地服务**：`python -m forgeflow.workbench` 用 Fabric 测试同样的离线方式，从封存的 M01 归档派生一个 SQLite 数据库（重新绑定范围和文档引用、重建所有派生哈希，不重新执行检查程序），并提供三个固定的开发身份。仅绑定 127.0.0.1，DEV_ONLY。
+- **测试**：`tests/test_workbench.py`（列表、explain、未认证 401、越权范围 404、提案人不能审批、人不能执行、两个审阅人同时决定时后者 409）；`web/src/labels.test.ts`（队列状态和错误说明）。
+
 ## 架构
 
 ```mermaid

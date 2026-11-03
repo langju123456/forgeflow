@@ -576,6 +576,42 @@ class FabricOperations:
         return {"item_id": item.id, "memory_id": memory_id, "before": None,
                 "after": {"status": item.status, "revision": item.revision}, "item_hash": item.payload_hash}
 
+    def list_reviews(self, p, scope):
+        """Review summaries for the workbench queue. Read only; each row is integrity-checked."""
+        self._auth(p, scope)
+        with self.source._tx() as session:
+            rows = []
+            for row in session.scalars(select(FabricReview).where(*filters(FabricReview, scope))):
+                checked(row)
+                self._source(session, p, scope, row.run_id, fresh=False)
+                report = row.report_json
+                rows.append({"id": row.id, "run_id": row.run_id, "fixture_id": row.fixture_id,
+                             "created_by": row.created_by, "report_hash": row.report_hash,
+                             "flow_gate": report["flow_gate"], "evt_gate": report["evt_gate"]})
+            return sorted(rows, key=lambda r: (r["run_id"], r["id"]))
+
+    def list_approvals(self, p, scope):
+        """Approval summaries for the workbench queue: what is waiting, decided or executed. Read only.
+
+        Details and the decision context come from explain(); this list never decides anything.
+        """
+        self._auth(p, scope)
+        with self.source._tx() as session:
+            executed = {row.approval_id: row.id for row in session.scalars(
+                select(FabricReceipt).where(*filters(FabricReceipt, scope)))}
+            rows = []
+            for row in session.scalars(select(FabricApproval).where(*filters(FabricApproval, scope))):
+                checked(row)
+                self._source(session, p, scope, row.run_id, fresh=False)
+                rows.append({"id": row.id, "run_id": row.run_id, "review_id": row.review_id, "kind": row.kind,
+                             "decision": row.decision, "revision": row.revision, "created_by": row.created_by,
+                             "reviewer": row.reviewer, "proposal_hash": row.proposal_hash,
+                             "target_receipt_id": row.target_receipt_id or None,
+                             "created_at": aware(row.created_at).isoformat(),
+                             "expires_at": aware(row.expires_at).isoformat(),
+                             "receipt_id": executed.get(row.id)})
+            return sorted(rows, key=lambda r: r["created_at"], reverse=True)
+
     def memory(self, p, scope, query=""):
         self._auth(p, scope)
         if not isinstance(query, str) or len(query) > 500:

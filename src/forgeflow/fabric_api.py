@@ -96,6 +96,18 @@ def create_fabric_app(source, identities, factory, *, test_harness=False):
         return service.propose(principal, body.scope, review_id, body.review_hash, idempotency_key,
                                body.kind, target_receipt_id=body.target_receipt_id)
 
+    @app.get("/fabric/reviews")
+    def list_reviews(scope: Scope = scope_dependency, principal: Principal = principal_dependency):
+        return service.list_reviews(principal, scope)
+
+    @app.get("/fabric/approvals")
+    def list_approvals(scope: Scope = scope_dependency, principal: Principal = principal_dependency):
+        return service.list_approvals(principal, scope)
+
+    @app.get("/fabric/approvals/{approval_id}/explain")
+    def explain(approval_id: str, scope: Scope = scope_dependency, principal: Principal = principal_dependency):
+        return service.explain(principal, scope, approval_id)
+
     @app.get("/fabric/approvals/{approval_id}")
     def get_approval(approval_id: str, scope: Scope = scope_dependency, principal: Principal = principal_dependency):
         return service.get_approval(principal, scope, approval_id)
