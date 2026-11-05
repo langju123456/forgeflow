@@ -1,7 +1,7 @@
 # 可回答性判断：新留出题集
 
 `heldout.json` 是给“检索之后判断能不能回答”这一步用的新题集，32 题，写好并记下哈希（`freeze.json`）之后才第一次让模型看这个语料。
-登记、结果和运行脚本在同目录：[PREREGISTRATION.md](PREREGISTRATION.md)、`RESULTS.md`（跑完后才有）、`run_eval.py`。
+登记、结果和运行脚本在同目录：[PREREGISTRATION.md](PREREGISTRATION.md)、[RESULTS.md](RESULTS.md)、`run_eval.py`。
 
 ## 怎么做的
 

@@ -62,6 +62,21 @@ bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127
 
 向量单独会漏掉纯 ID 查询，融合后补回；剩下的漏检和“无答案”问题说明，能不能回答不能靠调相似度阈值决定。细节、漏检和限制见 [preparation/s2/evaluation/hybrid/RESULTS.md](preparation/s2/evaluation/hybrid/RESULTS.md)，复现用 `bash scripts/mac_retrieval_eval.sh`（需要本机 Ollama）。
 
+## 可回答性判断（检索之后：结果里有没有真正回答问题的那条）
+
+`forgeflow.answerability` 接在混合检索之后：S1 的权限和引用检查跑完，才把返回给这个调用者的结果交给本机 `qwen3:8b`（Ollama，关闭思考，温度 0，严格 JSON），逐条判断“是否回答了问题”并要求引用原文，引文不逐字出现在那一条里就不算。它只能删、不能加或改；一条都不剩就明确返回“知识库里没有答案”；模型输出不合格或连接失败就返回空并标 `GATE_ERROR`，不冒充“没有答案”。纯 ID 查询（如 `evt-boot`）不调用模型。测试用假模型逐条核对：引文核对、不会多出条目、空结果、判断步骤只看得到调用者有权读的内容、只连本机地址。
+
+新写了 32 题留出集（与代码同一作者，跑之前冻结，判断规则先登记）：
+
+| | 混合 | 混合 + 判断 |
+|---|---|---|
+| 有答案题 gold 找回（18 题） | 18/18 | 18/18 |
+| 无答案题正确为空（12 题，都贴近真实文档的话题） | 0/12 | 7/12 |
+| 越权泄漏 | 0/32 | 0/32 |
+| 端到端时延中位数（M4 MacBook Air） | 138.5 ms | 6065.7 ms |
+
+登记的三条规则都满足，判断步骤成为默认候选。但放行的 5 道无答案题都是“引文真实、答非所问”（问 B8 给了 B7 的数）；在已经用过的冻结 47 题上，它把正例找回从 35/37 降到 31/37（短关键词、需要跨段比较、把实测峰值当成上限）。细节、逐题判断和限制见 [preparation/s3/answerability/RESULTS.md](preparation/s3/answerability/RESULTS.md)，复现用 `bash scripts/mac_answerability_eval.sh`（需要本机 Ollama）。
+
 ## 财报 PDF 解析
 
 ```bash
