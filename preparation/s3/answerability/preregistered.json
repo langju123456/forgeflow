@@ -1,0 +1,44 @@
+{
+  "version": "answerability-eval-v1",
+  "modes": [
+    "hybrid",
+    "hybrid+answerability"
+  ],
+  "retrieval": {
+    "ranker": "hybrid RRF",
+    "embedder": "bge-m3",
+    "min_similarity": 0.5,
+    "rrf_k": 60,
+    "top_k": 5
+  },
+  "model": {
+    "name": "qwen3:8b",
+    "digest_observed_in_transport_check": "500a1f067a9f",
+    "max_tokens": 512,
+    "settings": {
+      "endpoint": "/v1/chat/completions",
+      "model": "qwen3:8b",
+      "temperature": 0,
+      "seed": 0,
+      "reasoning_effort": "none",
+      "max_tokens": 512,
+      "response_format": "json_schema (strict)"
+    }
+  },
+  "prompt_version": "answerability-v1",
+  "prompt_sha256": "423bb48b0d3d7ab87f3cb438efc9b7de0aa248450db57a371a05b1f0a9098457",
+  "min_quote_chars": 6,
+  "repetitions": {
+    "hybrid": 5,
+    "hybrid+answerability": 2
+  },
+  "primary_set": "heldout",
+  "exploratory_set": "frozen47",
+  "decision_rule": {
+    "acl": "evaluator leaks, forbidden candidate/citation rows, audit-store forbidden rows/citations, gate inputs not readable by the caller, and gate outputs not from retrieval are all 0 on both sets and both modes",
+    "min_unanswerable_gain_questions": 4,
+    "max_answerable_drop_questions": 1,
+    "gate_error_counts_as_wrong": true,
+    "primary_set_only_for_recall_and_unanswerable": true
+  }
+}
