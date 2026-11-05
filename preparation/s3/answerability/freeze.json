@@ -1,0 +1,18 @@
+{
+  "set_id": "aurora-answerability-heldout-v1",
+  "recorded_at": "2026-11-05T03:15:23.541780+00:00",
+  "files": {
+    "heldout.json": "094eb18ca155882a317854a51e488925b4bf478e887785ee9e039e102a757275",
+    "write_heldout.py": "6edd592e8716536b46988979182f62c4b7b9218b8b4dee5f4ac51f648f59b0f5"
+  },
+  "corpus": {
+    "path": "preparation/s2/evaluation/dataset.json",
+    "sha256": "2d559eb4a66bcfbe2202142426bff8cb69222c635c59ed51aefcec24b0509ee3",
+    "dataset_id": "aurora-lexical-heldout-v1"
+  },
+  "questions": 32,
+  "answerable": 18,
+  "unanswerable": 12,
+  "acl_negative": 2,
+  "instruction": "Frozen before any model call on this corpus. Do not edit; a revision is a new versioned set and the old results stay."
+}

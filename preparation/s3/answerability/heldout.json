@@ -1,0 +1,649 @@
+{
+  "id": "aurora-answerability-heldout-v1",
+  "corpus": {
+    "path": "preparation/s2/evaluation/dataset.json",
+    "sha256": "2d559eb4a66bcfbe2202142426bff8cb69222c635c59ed51aefcec24b0509ee3",
+    "dataset_id": "aurora-lexical-heldout-v1"
+  },
+  "authoring": "Written by the same author as the answerability code, before any model call on the corpus. Gold assigned from the document text alone, without running retrieval or the model.",
+  "relevance_policy": "Answerable: the gold document states the asked fact, rule or procedure; any one gold source in the final result counts. Unanswerable: no document readable by the principal states it, although a document on the same topic exists. ACL-negative: the only answering document is unreadable by the principal, so the correct result is empty.",
+  "top_k": 5,
+  "questions": [
+    {
+      "id": "H01",
+      "query": "How many power-on cycles does EVT require at minimum?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H02",
+      "query": "EVT 阶段至少要完成多少次开机循环？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-boot",
+          "version": "v1",
+          "source_hash": "8026b6dec116b6427470769f45f3db8f8ffa556d16e1dae95b1ed42c470f90b6",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H03",
+      "query": "What is the highest temperature allowed during EVT?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-budget",
+          "version": "v1",
+          "source_hash": "ed60725b7e3c30a32464d9b32cd376c8ec7075257e032d1c03158101ef6fef93",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H04",
+      "query": "现在有效的物料清单是哪个版本？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language",
+        "version"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "npi-bom",
+          "version": "v2",
+          "source_hash": "0289fbff7a1b367c09a6271bd193280dfba874c8a71b86dab95ef8db7afec28b",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H05",
+      "query": "What happens if build validation in continuous integration fails?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "ci-smoke",
+          "version": "v1",
+          "source_hash": "3acbd14e221b1420998d190c371339f4ffdfd67ccaf049bb9aa829206ed174d0",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H06",
+      "query": "如何把一次部署回退到之前的版本？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "sre-rollback",
+          "version": "v1",
+          "source_hash": "68d89f93c7d39103f197aee789851092b8b0351c6111268bd8172a50be20e84f",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H07",
+      "query": "What must be checked before writing a firmware image to the device?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "android-flashing",
+          "version": "v1",
+          "source_hash": "0ba5346a9b741e751e7da217a91bfe12fcd75c1eb76a37db4b6a2c53acf6a128",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H08",
+      "query": "Does finishing an EVT run by itself move the project to the next stage?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "evt-entry",
+          "version": "v1",
+          "source_hash": "49846b7497743ca5ae87f0b34cf876f2fde42702a66de6e0d5c5c832ac0f4bf8",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H09",
+      "query": "技术检查通过和人工批准是一回事吗？",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "approval-rules",
+          "version": "v1",
+          "source_hash": "d5394896ed2d7e55926c0336bc5f84a72bbb3a229205ea1f65f52e07c2e829f9",
+          "status": "CURRENT"
+        },
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H10",
+      "query": "When does a memory entry count as a confirmed decision?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "memory-policy",
+          "version": "v1",
+          "source_hash": "b3d5cdc00abef43aeb291334816b63bd492da08a0dc30162e57029f4bee5a095",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H11",
+      "query": "What items does the release checklist require verifying?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-release",
+          "version": "v1",
+          "source_hash": "b6b402fcf7aa7821c5dac7d6cba161035ce184ef8446251207c8733f356d7266",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H12",
+      "query": "What has to be recorded during repeated power-cycling aging tests?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-aging",
+          "version": "v1",
+          "source_hash": "fbab0a6db6ef1a757de608cf0863c3e07d9bc6e4c53b69b5c4c0bd442863aa07",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H13",
+      "query": "What should a project schedule list?",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-schedule",
+          "version": "v1",
+          "source_hash": "dce23a144ff2fba5d0cad1ade3ee9af9dce51e751b92711a66a95ee9b1b783c8",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H14",
+      "query": "Which checks happen before anyone can read the documents?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "cross-language"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "zh-permissions",
+          "version": "v1",
+          "source_hash": "2ac4918589857e8356e7825f74b3a0c2867b1c7ff852cf1f6eadb78f1d3c81b4",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H15",
+      "query": "热测试报告当前版本记录的峰值温度是多少？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language",
+        "version"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "thermal-report-2026",
+          "version": "v2",
+          "source_hash": "99e8383828eb975d3aab4b61a6fe63124e5d4ce71d8b3193a663c5f4b5de5dc4",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H16",
+      "query": "How much does the component cost in the restricted supplier table?",
+      "principal": "hw-high",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase",
+        "classification"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "restricted-cost",
+          "version": "v1",
+          "source_hash": "ac99f9ab8a999e1fdbfbdecad6de6e5de01831bc5058b19156520ec43174e240",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "H32"
+    },
+    {
+      "id": "H17",
+      "query": "Can the archived RF chamber measurement be used as current evidence?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "english",
+        "paraphrase",
+        "expiry"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "rf-archive",
+          "version": "v1",
+          "source_hash": "927dfd7d5e47dc99ee66577f791c2ab7b15eaeb8189bb10c0ac38939d56b8ae8",
+          "status": "EXPIRED"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H18",
+      "query": "供应商风险有什么缓解措施？",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "answerable",
+        "chinese",
+        "cross-language",
+        "role"
+      ],
+      "relevant": [
+        {
+          "scope": "aurora-a",
+          "id": "pm-risk",
+          "version": "v1",
+          "source_hash": "d5db1d0170c3bd56607f7467495257726ef079e6ec7fca28d4e20b6faf45a387",
+          "status": "CURRENT"
+        }
+      ],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "H31"
+    },
+    {
+      "id": "H19",
+      "query": "What is the maximum allowed humidity during EVT?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H20",
+      "query": "How many battery charge cycles must EVT pass?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H21",
+      "query": "Who is allowed to sign the rollback bundle?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H22",
+      "query": "Which BOM revision came before A2?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H23",
+      "query": "What thermal peak did build B8 reach?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H24",
+      "query": "EVT 跌落测试的高度要求是多少？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "chinese",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H25",
+      "query": "How long does an Android CI smoke run take?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H26",
+      "query": "发布审核需要几个人签字？",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "chinese",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H27",
+      "query": "Which supplier is the alternate source in the supplier risk plan?",
+      "principal": "pm-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H28",
+      "query": "老化测试需要持续多少小时？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "chinese",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H29",
+      "query": "What fastboot command unlocks the bootloader?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H30",
+      "query": "Which reviewer approved build B7 for DVT?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "unanswerable",
+        "english",
+        "near-topic"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": null
+    },
+    {
+      "id": "H31",
+      "query": "供应商风险有什么缓解措施？",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "chinese",
+        "role"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "H18"
+    },
+    {
+      "id": "H32",
+      "query": "How much does the component cost in the restricted supplier table?",
+      "principal": "hw-a",
+      "scope": "aurora-a",
+      "tags": [
+        "acl-negative",
+        "english",
+        "classification"
+      ],
+      "relevant": [],
+      "expected_denial": false,
+      "conflict_required": false,
+      "counterpart": "H16"
+    }
+  ]
+}
