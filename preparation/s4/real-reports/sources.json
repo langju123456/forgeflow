@@ -1,0 +1,17 @@
+{
+  "note": "Public annual reports used as real-world input. The PDFs are not committed; fetch them with scripts/fetch_real_reports.sh and they are checked against these hashes. Downloaded 2026-11-06 from the listed official sources.",
+  "reports": [
+    {"key": "moutai_2025_annual_zh", "company": "贵州茅台酒股份有限公司 (600519.SH)", "document": "2025 年年度报告", "language": "zh", "pages": 143,
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225114741.PDF", "source": "巨潮资讯网 cninfo（证监会指定披露网站）",
+     "bytes": 1082847, "sha256": "474905deeaf0f875fc0a1b097a626c0c7852c427faadc5d7fc7816cbf45ea288"},
+    {"key": "catl_2025_annual_zh", "company": "宁德时代新能源科技股份有限公司 (300750.SZ)", "document": "2025 年年度报告", "language": "zh", "pages": 232,
+     "url": "https://static.cninfo.com.cn/finalpage/2026-03-10/1225002214.PDF", "source": "巨潮资讯网 cninfo",
+     "bytes": 2043710, "sha256": "c15272977147dee7e6935a38ea0e4fd6855370aabb106f54cfe20f7cf6048ec9"},
+    {"key": "tencent_2025_annual_en", "company": "Tencent Holdings Limited (0700.HK)", "document": "Annual Report 2025", "language": "en", "pages": 282,
+     "url": "https://static.www.tencent.com/uploads/2026/04/09/62d786fcf3d3c8cb7e54791ee95439ac.pdf", "source": "Tencent investor relations",
+     "bytes": 3999857, "sha256": "2a7547168077c3d9994af673125e77612e8656bc0f17ad189371d7e4088f4e98"},
+    {"key": "apple_fy2025_10k_en", "company": "Apple Inc. (AAPL)", "document": "Form 10-K, fiscal year ended September 27, 2025", "language": "en", "pages": 80,
+     "url": "https://s2.q4cdn.com/470004039/files/doc_earnings/2025/q4/filing/10K-Q4-2025-as-filed.pdf", "source": "Apple investor relations",
+     "bytes": 1858048, "sha256": "3eb270b22acb7d8d8e9c32a43dc221dec3345f8e4bca02755fdbc1ee16c823de"}
+  ]
+}

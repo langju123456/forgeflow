@@ -128,6 +128,8 @@ _ZH_CURRENCY = {"美元": "USD", "港元": "HKD", "欧元": "EUR"}
 _ZH_UNIT = re.compile(r"(?:金额)?单位\s*[:：]\s*(?P<cur>人民币|港币)?\s*(?P<mult>百万|千|万|亿)?\s*"
                       r"(?P<ccy>美元|港元|欧元|元)")
 _EN_UNIT = re.compile(r"\bin\s+(?P<unit>thousand|million|billion)s?\b", re.I)
+# "RMB’Million" column headers (Tencent 2025 annual report), "RMB million", "US$ million", "HK$ billion".
+_EN_CUR_UNIT = re.compile(r"(?:RMB|HK\$|US\$|USD|HKD)\s*['’]?\s*(?P<unit>thousand|million|billion)s?\b", re.I)
 _EN_000 = re.compile(r"(?P<cur>RMB|USD|US\$|HK\$|\$)\s*['’]\s*000\b")
 _EXCEPT_PER_SHARE = re.compile(r"except\s+(?:for\s+)?(?:share\s+and\s+)?per[\s-]share", re.I)
 _INLINE_UNIT = re.compile(r"[(（]\s*(?P<unit>百万元|千元|万元|亿元|元)(?:\s*/\s*股)?\s*[)）]")
@@ -155,7 +157,7 @@ def detect_unit(text: str) -> Unit | None:
         currency = _ZH_CURRENCY.get(ccy) or ("HKD" if match.group("cur") == "港币" else "CNY")
         return Unit(multiplier + ccy, Decimal(_ZH_MULTIPLIERS[multiplier]), currency, match.group(0))
     per_share = bool(_EXCEPT_PER_SHARE.search(normalised))
-    match = _EN_UNIT.search(normalised)
+    match = _EN_UNIT.search(normalised) or _EN_CUR_UNIT.search(normalised)
     if match:
         word = match.group("unit").lower()
         return Unit(word, Decimal(_EN_SCALES[word]), _en_currency(normalised), match.group(0), per_share)
@@ -390,6 +392,85 @@ def _column_keys(header_rows: list[list[str]], width: int) -> list[str]:
     return keys
 
 
+def _blank(text: str | None) -> bool:
+    return text is None or not text.strip()
+
+
+_YEAR_HEADER = re.compile(r"^(?:FY\s*)?(?:19|20)\d{2}\s*(?:年\s*(?:度|末)?)?$", re.IGNORECASE)
+
+
+def _numeric(text: str | None) -> bool:
+    """A body value; a bare year such as 2025, 2025年 or 2025 年度 is a header, not a number."""
+    return (not _blank(text) and parse_number(text).kind in {"number", "percent"}
+            and not _YEAR_HEADER.match(text.strip()))
+
+
+def _normalise_grid(texts: list[list[str | None]], grid: list[list[Any]]) -> tuple[list[list[str | None]], list[list[Any]]]:
+    """Undo three ways a ruled grid misrepresents a financial table (seen first on CATL's 2025 annual report).
+
+    1. Spacer columns: rectangles drawn for padding become columns that are blank in every row. Dropped.
+    2. Split header and value columns: the year sits in its own grid column next to the column holding that
+       year's numbers. A column with text only in the header band is merged into an adjacent column that has
+       text only below it.
+    3. Wrapped labels: a long row label continues on a grid row whose other cells are all merged (None);
+       that line is appended to the label above instead of becoming a row of its own.
+    """
+    width = max(len(r) for r in texts)
+    texts = [list(r) + [None] * (width - len(r)) for r in texts]
+    grid = [list(r) + [None] * (width - len(r)) for r in grid]
+    keep = [j for j in range(width) if any(not _blank(r[j]) for r in texts)]
+    if len(keep) < 2:
+        return texts, grid
+    texts = [[r[j] for j in keep] for r in texts]
+    grid = [[r[j] for j in keep] for r in grid]
+    width = len(keep)
+    numeric_rows = [i for i, r in enumerate(texts) if any(_numeric(t) for t in r[1:])]
+    band = numeric_rows[0] if numeric_rows else len(texts)
+    if 0 < band < len(texts):
+        # Rows without any number (the header band, and sub-headers such as "项目 | 2025 年末 | ..." halfway down
+        # CATL's key-figures table) carry headers; rows with numbers carry values.
+        numeric = set(numeric_rows)
+        wordy = [i for i in range(len(texts)) if i not in numeric]
+
+        def header_only(j: int) -> bool:
+            return (any(not _blank(texts[i][j]) for i in wordy if i < band)
+                    and all(_blank(texts[i][j]) for i in numeric))
+
+        def value_only(j: int) -> bool:
+            return (all(_blank(texts[i][j]) for i in wordy if i < band)
+                    and any(not _blank(texts[i][j]) for i in numeric))
+
+        drop: set[int] = set()
+        for j in range(1, width):
+            if j in drop or not header_only(j):
+                continue
+            target = next((k for k in (j - 1, j + 1) if 0 < k < width and k not in drop and value_only(k)), None)
+            if target is None:
+                continue
+            for i in wordy:
+                if _blank(texts[i][target]):
+                    texts[i][target], grid[i][target] = texts[i][j], grid[i][j]
+            drop.add(j)
+        if drop:
+            texts = [[t for j, t in enumerate(r) if j not in drop] for r in texts]
+            grid = [[c for j, c in enumerate(r) if j not in drop] for r in grid]
+    merged_texts: list[list[str | None]] = []
+    merged_grid: list[list[Any]] = []
+    for i, row in enumerate(texts):
+        continuation = (i > band and merged_texts and not _blank(row[0]) and all(t is None for t in row[1:])
+                        and any(not _blank(t) for t in merged_texts[-1][1:]))
+        if continuation:
+            merged_texts[-1][0] = join_lines([merged_texts[-1][0] or "", row[0] or ""])
+            above, below = merged_grid[-1][0], grid[i][0]
+            if above is not None and below is not None:
+                merged_grid[-1][0] = (min(above[0], below[0]), min(above[1], below[1]),
+                                      max(above[2], below[2]), max(above[3], below[3]))
+            continue
+        merged_texts.append(list(row))
+        merged_grid.append(list(grid[i]))
+    return merged_texts, merged_grid
+
+
 def _ruled_tables(page: Any, number: int) -> list[_Table]:
     settings = {"vertical_strategy": "lines", "horizontal_strategy": "lines", "snap_tolerance": 3,
                 "join_tolerance": 3, "intersection_tolerance": 3}
@@ -398,6 +479,9 @@ def _ruled_tables(page: Any, number: int) -> list[_Table]:
         grid = [list(row.cells) for row in found.rows]
         texts = [[None if c is None else join_lines(c.split("\n")) for c in row] for row in found.extract()]
         if len(grid) < 2 or max(len(r) for r in grid) < 2:
+            continue
+        texts, grid = _normalise_grid(texts, grid)
+        if max(len(r) for r in grid) < 2:
             continue
         width = max(len(r) for r in grid)
         bounds = []
@@ -448,6 +532,12 @@ def _ruled_tables(page: Any, number: int) -> list[_Table]:
             section = bool(label) and not any(c["raw"].strip() for c in row_cells)
             rows.append(_Row(label, row_cells, _round_bbox(_union(boxes)), number, section,
                              _round_bbox(cells[i][0]) if cells[i][0] else None))
+        body = [r for r in rows if not r.section]
+        crammed = [r for r in rows if r.section and len(re.findall(r"\d[\d,]*\.?\d*", r.label)) >= 2]
+        if len(crammed) > max(2, len(body)):
+            # Horizontal rules but no column rules (Apple's 10-K statements): the "grid" is one cell per line,
+            # with the numbers inside the label. Not a table of cells; leave the lines to the borderless pass.
+            continue
         tables.append(_Table(number, "ruled", _round_bbox(found.bbox), [[h or "" for h in r] for r in header],
                              _column_keys(header, width), bounds, rows))
     return tables
@@ -528,11 +618,14 @@ def _borderless_tables(lines: list[_Line], number: int) -> list[_Table]:
         pending: list[_Line] = []
         k = start - 1
         reference = block[0]
-        while k >= 0 and len(headers) < 3:
+        while k >= 0 and len(headers) < 4:
             line = free[k]
-            if line.used or reference.top - line.bottom > 2.0 * max(reference.size, line.size):
+            # 3.2 line heights: Tencent's statements leave a blank line between the header band and the first row.
+            if line.used or reference.top - line.bottom > 3.2 * max(reference.size, line.size):
                 break  # never take a line that an earlier table on this page already owns
-            if all(s["x0"] >= zone - 5 for s in line.segments) or _label_header(line, zone):
+            # Headers are centred over their column, so a wide one ("RMB'Million", "31 December") starts up to
+            # ~25pt left of the numbers below it (Tencent 2025 annual report); a label line starts at the margin.
+            if all(s["x0"] >= zone - 30 for s in line.segments) or _label_header(line, zone):
                 headers.insert(0, line)
                 block = pending + block
                 pending = []
@@ -590,8 +683,17 @@ def _borderless_tables(lines: list[_Line], number: int) -> list[_Table]:
                     row_cells[c]["bbox"] = _round_bbox(_union([row_cells[c]["bbox"], _seg_box(segment)]))
                 else:
                     row_cells[c] = {"raw": segment["text"], "merged": False, "bbox": _round_bbox(_seg_box(segment))}
-            rows.append(_Row(label_segment["text"].strip(), row_cells, _round_bbox(line.bbox), number,
-                             label_bbox=_round_bbox(_seg_box(label_segment))))
+            label, label_box = label_segment["text"].strip(), _round_bbox(_seg_box(label_segment))
+            previous = rows[-1] if rows else None
+            if (previous is not None and previous.section and re.match(r"[a-z(]", label)
+                    and not previous.label.rstrip().endswith((":", "：")) and previous.bbox is not None
+                    and line.top - previous.bbox[3] < 1.5 * line.size):
+                # An English label wrapped onto the line with the numbers ("Non-IFRS profit attributable to" /
+                # "equity holders of the Company | 259,626", Tencent 2025): one row, not a section and a row.
+                rows.pop()
+                label = previous.label + " " + label
+                label_box = _round_bbox(_union([previous.label_bbox or previous.bbox, label_box]))
+            rows.append(_Row(label, row_cells, _round_bbox(line.bbox), number, label_bbox=label_box))
         everything = headers + block
         for line in everything:
             line.used = True

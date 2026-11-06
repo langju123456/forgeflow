@@ -1,0 +1,31 @@
+{
+  "note": "Table facts checked against the page text with pdftotext before looking at the ingester's output for these pages (except Moutai p6, which was inspected first). Each fact: the printed value must appear as one parsed cell in a table on that page, in the row whose label contains `row` and a column whose key contains `col` (empty = any value column).",
+  "facts": [
+    {"doc": "moutai_2025_annual_zh", "page": 6, "row": "营业收入", "col": "2025", "raw": "168,838,102,514.79", "unit": "元", "scale": "1"},
+    {"doc": "moutai_2025_annual_zh", "page": 6, "row": "基本每股收益", "col": "2025", "raw": "65.66"},
+    {"doc": "moutai_2025_annual_zh", "page": 6, "row": "经营活动产生的现金流量净额", "col": "2025", "raw": "61,522,204,989.35"},
+    {"doc": "moutai_2025_annual_zh", "page": 7, "row": "营业收入", "col": "第一季度", "raw": "50,600,957,885.78"},
+    {"doc": "moutai_2025_annual_zh", "page": 10, "row": "茅台酒", "col": "营业收入", "raw": "146,499,906,480.49"},
+    {"doc": "moutai_2025_annual_zh", "page": 10, "row": "茅台酒", "col": "毛利率", "raw": "93.53"},
+    {"doc": "moutai_2025_annual_zh", "page": 17, "row": "国外", "col": "经销商数量", "raw": "126"},
+    {"doc": "moutai_2025_annual_zh", "page": 17, "row": "i 茅台", "col": "本期销售收入", "raw": "1,303,141.15", "unit": "万元", "scale": "10000"},
+    {"doc": "moutai_2025_annual_zh", "page": 31, "row": "在职员工的数量合计", "col": "", "raw": "34,992"},
+    {"doc": "catl_2025_annual_zh", "page": 11, "row": "营业收入", "col": "2025", "raw": "423,701,834", "unit": "千元", "scale": "1000"},
+    {"doc": "catl_2025_annual_zh", "page": 11, "row": "归属于上市公司股东的净利润", "col": "2025", "raw": "72,201,282"},
+    {"doc": "catl_2025_annual_zh", "page": 11, "row": "资产总额", "col": "2025", "raw": "974,827,544"},
+    {"doc": "catl_2025_annual_zh", "page": 11, "row": "基本每股收益", "col": "2025", "raw": "16.14"},
+    {"doc": "catl_2025_annual_zh", "page": 30, "row": "研发投入金额", "col": "2025", "raw": "22,146,581"},
+    {"doc": "catl_2025_annual_zh", "page": 29, "row": "研发人员数量", "col": "2025", "raw": "22,901"},
+    {"doc": "tencent_2025_annual_en", "page": 4, "row": "Revenues", "col": "2025", "raw": "751,766", "scale": "1000000"},
+    {"doc": "tencent_2025_annual_en", "page": 4, "row": "Profit attributable to equity holders of the Company", "col": "2025", "raw": "224,842"},
+    {"doc": "tencent_2025_annual_en", "page": 4, "row": "Non-IFRS profit attributable", "col": "2025", "raw": "259,626"},
+    {"doc": "tencent_2025_annual_en", "page": 9, "row": "Marketing Services", "col": "2025", "raw": "144,973"},
+    {"doc": "tencent_2025_annual_en", "page": 9, "row": "VAS", "col": "2025", "raw": "369,281"},
+    {"doc": "tencent_2025_annual_en", "page": 5, "row": "Combined MAU of Weixin and WeChat", "col": "31 December 2025", "raw": "1,418"},
+    {"doc": "apple_fy2025_10k_en", "page": 26, "row": "iPhone", "col": "2025", "raw": "209,586", "scale": "1000000"},
+    {"doc": "apple_fy2025_10k_en", "page": 26, "row": "Total net sales", "col": "2025", "raw": "416,161"},
+    {"doc": "apple_fy2025_10k_en", "page": 25, "row": "Greater China", "col": "2025", "raw": "64,377"},
+    {"doc": "apple_fy2025_10k_en", "page": 27, "row": "Research and development", "col": "2025", "raw": "34,550"},
+    {"doc": "apple_fy2025_10k_en", "page": 32, "row": "Services", "col": "2025", "raw": "109,158"}
+  ]
+}

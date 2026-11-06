@@ -1,0 +1,562 @@
+{
+  "measured_at": "2026-11-06T04:19:17.926147+00:00",
+  "sets": {
+    "table_probe": {
+      "passed": "26/26",
+      "counts": {
+        "OK": 26
+      },
+      "results": [
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 6,
+          "row": "营业收入",
+          "col": "2025",
+          "raw": "168,838,102,514.79",
+          "unit": "元",
+          "scale": "1",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p6-t1",
+          "column": "2025年"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 6,
+          "row": "基本每股收益",
+          "col": "2025",
+          "raw": "65.66",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p6-t2",
+          "column": "2025年",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 6,
+          "row": "经营活动产生的现金流量净额",
+          "col": "2025",
+          "raw": "61,522,204,989.35",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p6-t1",
+          "column": "2025年",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 7,
+          "row": "营业收入",
+          "col": "第一季度",
+          "raw": "50,600,957,885.78",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p7-t1",
+          "column": "第一季度（1-3月份）",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 10,
+          "row": "茅台酒",
+          "col": "营业收入",
+          "raw": "146,499,906,480.49",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p10-t1",
+          "column": "主营业务分行业情况 / 营业收入",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 10,
+          "row": "茅台酒",
+          "col": "毛利率",
+          "raw": "93.53",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p10-t1",
+          "column": "主营业务分行业情况 / 毛利率（%）",
+          "unit": "%",
+          "scale": "0.01"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 17,
+          "row": "国外",
+          "col": "经销商数量",
+          "raw": "126",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p17-t3",
+          "column": "报告期末经销商数量",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 17,
+          "row": "i 茅台",
+          "col": "本期销售收入",
+          "raw": "1,303,141.15",
+          "unit": "万元",
+          "scale": "10000",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p17-t4",
+          "column": "本期销售收入"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 31,
+          "row": "在职员工的数量合计",
+          "col": "",
+          "raw": "34,992",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p31-t2",
+          "column": "",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 11,
+          "row": "营业收入",
+          "col": "2025",
+          "raw": "423,701,834",
+          "unit": "千元",
+          "scale": "1000",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p11-t1",
+          "column": "2025年"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 11,
+          "row": "归属于上市公司股东的净利润",
+          "col": "2025",
+          "raw": "72,201,282",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p11-t1",
+          "column": "2025年",
+          "unit": "千元",
+          "scale": "1000"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 11,
+          "row": "资产总额",
+          "col": "2025",
+          "raw": "974,827,544",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p11-t1",
+          "column": "2025年",
+          "unit": "千元",
+          "scale": "1000"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 11,
+          "row": "基本每股收益",
+          "col": "2025",
+          "raw": "16.14",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p11-t1",
+          "column": "2025年",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 30,
+          "row": "研发投入金额",
+          "col": "2025",
+          "raw": "22,146,581",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p30-t2",
+          "column": "2025年",
+          "unit": "千元",
+          "scale": "1000"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 29,
+          "row": "研发人员数量",
+          "col": "2025",
+          "raw": "22,901",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p29-t3",
+          "column": "2025年",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 4,
+          "row": "Revenues",
+          "col": "2025",
+          "raw": "751,766",
+          "scale": "1000000",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p4-t1",
+          "column": "2025 / RMB’Million",
+          "unit": "million"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 4,
+          "row": "Profit attributable to equity holders of the Company",
+          "col": "2025",
+          "raw": "224,842",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p4-t1",
+          "column": "2025 / RMB’Million",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 4,
+          "row": "Non-IFRS profit attributable",
+          "col": "2025",
+          "raw": "259,626",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p4-t1",
+          "column": "2025 / RMB’Million",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 9,
+          "row": "Marketing Services",
+          "col": "2025",
+          "raw": "144,973",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p9-t1",
+          "column": "2025",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 9,
+          "row": "VAS",
+          "col": "2025",
+          "raw": "369,281",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p9-t1",
+          "column": "2025",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 5,
+          "row": "Combined MAU of Weixin and WeChat",
+          "col": "31 December 2025",
+          "raw": "1,418",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p5-t1",
+          "column": "As at / 31 December / 2025",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 26,
+          "row": "iPhone",
+          "col": "2025",
+          "raw": "209,586",
+          "scale": "1000000",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p26-t1",
+          "column": "2025",
+          "unit": "million"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 26,
+          "row": "Total net sales",
+          "col": "2025",
+          "raw": "416,161",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p26-t1",
+          "column": "2025",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 25,
+          "row": "Greater China",
+          "col": "2025",
+          "raw": "64,377",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p25-t1",
+          "column": "2025",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 27,
+          "row": "Research and development",
+          "col": "2025",
+          "raw": "34,550",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p27-t2",
+          "column": "2025",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 32,
+          "row": "Services",
+          "col": "2025",
+          "raw": "109,158",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p32-t1",
+          "column": "September 27, / 2025",
+          "unit": null,
+          "scale": "1"
+        }
+      ]
+    },
+    "table_probe_heldout": {
+      "passed": "13/16",
+      "counts": {
+        "OK": 13,
+        "WRONG_COLUMN": 3
+      },
+      "results": [
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 14,
+          "row": "货币资金",
+          "col": "本期期末数",
+          "raw": "51,690,610,946.50",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p14-t1",
+          "column": "本期期末数",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 56,
+          "row": "货币资金",
+          "col": "2025",
+          "raw": "51,690,610,946.50",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p56-t1",
+          "column": "2025年12月31日 / 流动资产：",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 61,
+          "row": "营业总收入",
+          "col": "2025",
+          "raw": "172,054,171,890.91",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p61-t2",
+          "column": "2025年度",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "moutai_2025_annual_zh",
+          "page": 61,
+          "row": "其中：营业收入",
+          "col": "2025",
+          "raw": "168,838,102,514.79",
+          "status": "OK",
+          "table": "moutai_2025_annual_zh#p61-t2",
+          "column": "2025年度",
+          "unit": "元",
+          "scale": "1"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 111,
+          "row": "货币资金",
+          "col": "期末余额",
+          "raw": "333,512,927",
+          "unit": "千元",
+          "scale": "1000",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p111-t1",
+          "column": "期末余额"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 112,
+          "row": "资产总计",
+          "col": "期末余额",
+          "raw": "974,827,544",
+          "status": "WRONG_COLUMN",
+          "table": "catl_2025_annual_zh#p112-t1",
+          "label": "资产总计",
+          "cells": [
+            [
+              "",
+              "974,827,544"
+            ],
+            [
+              "",
+              "786,658,123"
+            ]
+          ]
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 116,
+          "row": "营业总收入",
+          "col": "2025",
+          "raw": "423,701,834",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p116-t2",
+          "column": "2025年度",
+          "unit": "千元",
+          "scale": "1000"
+        },
+        {
+          "doc": "catl_2025_annual_zh",
+          "page": 116,
+          "row": "研发费用",
+          "col": "2025",
+          "raw": "22,146,581",
+          "status": "OK",
+          "table": "catl_2025_annual_zh#p116-t2",
+          "column": "2025年度",
+          "unit": "千元",
+          "scale": "1000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 25,
+          "row": "Cash and cash equivalents",
+          "col": "31 December",
+          "raw": "141,041",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p25-t1",
+          "column": "Audited / 31 December / 2025 / (RMB in millions)",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 8,
+          "row": "Gross profit",
+          "col": "2025",
+          "raw": "422,593",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p8-t1",
+          "column": "Year ended 31 December / 2025 / (RMB in millions)",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 8,
+          "row": "Cost of revenues",
+          "col": "2025",
+          "raw": "-329,173",
+          "status": "OK",
+          "table": "tencent_2025_annual_en#p8-t1",
+          "column": "Year ended 31 December / 2025 / (RMB in millions)",
+          "unit": "million",
+          "scale": "1000000"
+        },
+        {
+          "doc": "tencent_2025_annual_en",
+          "page": 4,
+          "row": "Total assets",
+          "col": "2025",
+          "raw": "2,038,986",
+          "status": "WRONG_COLUMN",
+          "table": "tencent_2025_annual_en#p4-t2",
+          "label": "Total assets",
+          "cells": [
+            [
+              "",
+              "1,612,364"
+            ],
+            [
+              "",
+              "1,578,131"
+            ],
+            [
+              "",
+              "1,577,246"
+            ],
+            [
+              "",
+              "1,780,995"
+            ],
+            [
+              "",
+              "2,038,986"
+            ]
+          ]
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 25,
+          "row": "Americas",
+          "col": "2025",
+          "raw": "178,353",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p25-t1",
+          "column": "2025",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 25,
+          "row": "Europe",
+          "col": "2025",
+          "raw": "111,032",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p25-t1",
+          "column": "2025",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 32,
+          "row": "Products",
+          "col": "2025",
+          "raw": "307,003",
+          "status": "OK",
+          "table": "apple_fy2025_10k_en#p32-t1",
+          "column": "September 27, / 2025",
+          "unit": null,
+          "scale": "1"
+        },
+        {
+          "doc": "apple_fy2025_10k_en",
+          "page": 34,
+          "row": "Total assets",
+          "col": "2025",
+          "raw": "359,241",
+          "status": "WRONG_COLUMN",
+          "table": "apple_fy2025_10k_en#p34-t2",
+          "label": "Total assets",
+          "cells": [
+            [
+              "",
+              "$ 359,241"
+            ],
+            [
+              "",
+              "$ 364,980"
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

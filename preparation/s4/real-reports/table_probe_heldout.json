@@ -1,0 +1,21 @@
+{
+  "note": "Held-out table facts: written from the page text (pdftotext) on pages whose ingester output was not inspected, before any parser change. Same matching rule as table_probe.json. Used only to measure, never to tune.",
+  "facts": [
+    {"doc": "moutai_2025_annual_zh", "page": 14, "row": "货币资金", "col": "本期期末数", "raw": "51,690,610,946.50"},
+    {"doc": "moutai_2025_annual_zh", "page": 56, "row": "货币资金", "col": "2025", "raw": "51,690,610,946.50"},
+    {"doc": "moutai_2025_annual_zh", "page": 61, "row": "营业总收入", "col": "2025", "raw": "172,054,171,890.91"},
+    {"doc": "moutai_2025_annual_zh", "page": 61, "row": "其中：营业收入", "col": "2025", "raw": "168,838,102,514.79"},
+    {"doc": "catl_2025_annual_zh", "page": 111, "row": "货币资金", "col": "期末余额", "raw": "333,512,927", "unit": "千元", "scale": "1000"},
+    {"doc": "catl_2025_annual_zh", "page": 112, "row": "资产总计", "col": "期末余额", "raw": "974,827,544"},
+    {"doc": "catl_2025_annual_zh", "page": 116, "row": "营业总收入", "col": "2025", "raw": "423,701,834"},
+    {"doc": "catl_2025_annual_zh", "page": 116, "row": "研发费用", "col": "2025", "raw": "22,146,581"},
+    {"doc": "tencent_2025_annual_en", "page": 25, "row": "Cash and cash equivalents", "col": "31 December", "raw": "141,041"},
+    {"doc": "tencent_2025_annual_en", "page": 8, "row": "Gross profit", "col": "2025", "raw": "422,593"},
+    {"doc": "tencent_2025_annual_en", "page": 8, "row": "Cost of revenues", "col": "2025", "raw": "-329,173"},
+    {"doc": "tencent_2025_annual_en", "page": 4, "row": "Total assets", "col": "2025", "raw": "2,038,986"},
+    {"doc": "apple_fy2025_10k_en", "page": 25, "row": "Americas", "col": "2025", "raw": "178,353"},
+    {"doc": "apple_fy2025_10k_en", "page": 25, "row": "Europe", "col": "2025", "raw": "111,032"},
+    {"doc": "apple_fy2025_10k_en", "page": 32, "row": "Products", "col": "2025", "raw": "307,003"},
+    {"doc": "apple_fy2025_10k_en", "page": 34, "row": "Total assets", "col": "2025", "raw": "359,241"}
+  ]
+}
