@@ -1,0 +1,103 @@
+{
+  "version": "real-reports-qa-v1",
+  "questions": {
+    "path": "preparation/s4/real-reports/questions.json",
+    "sha256": "68f83bf6ca3979ce2d2e359d2167b0f4e1ddbbbf81bd60d63233c020dafbec2a",
+    "frozen_in_commit": "33bd43cebb54cfc67cc6e52f476d1f89f3ab328a",
+    "count": 40,
+    "answerable": 28,
+    "absent": 12,
+    "answerable_cross_language": 8
+  },
+  "sources": {
+    "path": "preparation/s4/real-reports/sources.json",
+    "sha256": "e69cd9b127a8778c12f71aaf303b4401c9f5ba77be338df9b0cb3a6a545f2942"
+  },
+  "scopes": {
+    "finreports-2025": {"tenant_id": "s4-real", "workspace_id": "annual-reports", "project_id": "finreports-2025"},
+    "board-restricted": {"tenant_id": "s4-real", "workspace_id": "annual-reports", "project_id": "board-restricted"}
+  },
+  "corpus": {"scope": "finreports-2025", "roles": ["finance"], "classification": 1, "max_chunk_chars": 900},
+  "principals": [
+    {"subject_id": "report-admin", "kind": "user", "roles": ["admin", "board", "finance"],
+     "scopes": ["finreports-2025", "board-restricted"], "clearance": 3},
+    {"subject_id": "finance-analyst", "kind": "agent", "roles": ["finance"], "scopes": ["finreports-2025"],
+     "clearance": 1},
+    {"subject_id": "marketing-agent", "kind": "agent", "roles": ["marketing"], "scopes": ["finreports-2025"],
+     "clearance": 3}
+  ],
+  "admin": "report-admin",
+  "asker": "finance-analyst",
+  "permission_checks": {
+    "restricted_copies": [
+      {"key": "board-only-copy-moutai_2025_annual_zh", "source": "moutai_2025_annual_zh", "check": "role",
+       "scope": "finreports-2025", "roles": ["board"], "classification": 1,
+       "why": "same scope as the corpus, identical text, role the analyst lacks: if role filtering failed, its rows would tie with the real Moutai rows and surface"},
+      {"key": "other-project-copy-apple_fy2025_10k_en", "source": "apple_fy2025_10k_en", "check": "scope",
+       "scope": "board-restricted", "roles": ["finance"], "classification": 1,
+       "why": "role the analyst has, project the analyst is not in"}
+    ],
+    "extra_questions": [
+      {"id": "X01", "check": "role", "principal": "marketing-agent", "scope": "finreports-2025", "lang": "zh",
+       "query": "贵州茅台 2025 年的营业收入是多少？",
+       "expect": "no rows, no hits, no model call, found = false: the asker has neither finance nor board"},
+      {"id": "X02", "check": "scope", "principal": "finance-analyst", "scope": "board-restricted", "lang": "en",
+       "query": "What were Apple's total net sales in fiscal 2025?",
+       "expect": "NOT_FOUND before any row is read, no model call, found = false: the asker is not in that project"}
+    ],
+    "markers": ["board-only-copy-", "other-project-copy-"]
+  },
+  "retrieval": {
+    "ranker": "hybrid RRF",
+    "embedder": "bge-m3",
+    "min_similarity": 0.5,
+    "rrf_k": 60,
+    "top_k": 5,
+    "embed_batch": 16,
+    "warmup_query": "annual report",
+    "shared_across_modes": true
+  },
+  "model": {
+    "weights": "qwen3:8b",
+    "served_as": "forgeflow-qwen3-8b-ctx16k",
+    "modelfile": "FROM qwen3:8b\nPARAMETER num_ctx 16384\n",
+    "num_ctx": 16384,
+    "ids_observed_before_registration": {"qwen3:8b": "500a1f067a9f", "bge-m3:latest": "790764642607"},
+    "why_served_as": "mac-bridge job 20261106-042807-ollama-ctx-check: qwen3:8b loads with context 4096 on this Mac; a ~7k-token prompt came back as prompt_tokens 2050 and the system instruction was ignored, and options.num_ctx is ignored on /v1/chat/completions",
+    "max_tokens": 512,
+    "settings": {
+      "endpoint": "/v1/chat/completions",
+      "model": "forgeflow-qwen3-8b-ctx16k",
+      "temperature": 0,
+      "seed": 0,
+      "reasoning_effort": "none",
+      "max_tokens": 512,
+      "response_format": "json_schema (strict)"
+    }
+  },
+  "prompts": {
+    "answerability": {"version": "answerability-v1",
+                      "sha256": "423bb48b0d3d7ab87f3cb438efc9b7de0aa248450db57a371a05b1f0a9098457"},
+    "cited_answer": {"version": "cited-answer-v1",
+                     "sha256": "1575ef9bf525e9659c0a50e144630141aa8713cc11774ce6bad66af6935ee1f5"}
+  },
+  "modes": ["hybrid", "hybrid+answerability"],
+  "call_order_per_question": ["retrieval", "answer(hybrid hits)", "gate(hybrid hits)", "answer(kept hits)"],
+  "repetitions": 1,
+  "scoring": {
+    "page_recall_at_5": "answerable: a top-5 hybrid hit whose source line names <doc>.pdf and a page in `pages`; split by question language equal to / different from the document language",
+    "answerable_correct": "found = true, the answer matches an `accept` form, and at least one citation is a hit on a gold page of the gold doc",
+    "accept_pure_number": "decimal equality with a whole numeric token of the answer, thousands separators removed",
+    "accept_with_unit": "spaces and thousands separators removed, case folded, substring not starting right after a digit or a decimal point",
+    "absent_correct": "found = false and no ANSWER_ERROR / GATE_ERROR",
+    "figure": "a numeric token other than a bare four-digit year 1900-2099",
+    "wrong_but_confident": "found = true with a figure: answerable and no accept form matched; absent, any figure",
+    "errors_count_as_wrong": true
+  },
+  "decision_rule": {
+    "permissions": "every leak counter is 0 in both modes and both extra questions pass",
+    "min_absent_gain_questions": 3,
+    "max_answerable_drop_questions": 2,
+    "otherwise": "gate stays off by default; reported as measured"
+  }
+}
