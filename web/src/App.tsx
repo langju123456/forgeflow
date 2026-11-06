@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { Api, isApiError, loadConfig } from "./api";
 import { ExplainPanel } from "./components/ExplainPanel";
 import { IdentitySwitch } from "./components/IdentitySwitch";
 import { Queue } from "./components/Queue";
+import { ReportDesk } from "./components/ReportDesk";
 import { ReviewPanel } from "./components/ReviewPanel";
 import { explainError } from "./labels";
 import type { ApiError, ApprovalSummary, Explain, ReviewSummary, WorkbenchConfig } from "./types";
 
 export type Notice = { tone: "ok" | "error"; title: string; detail?: string };
 
-export function App() {
+function ReviewWorkbench({ tabs }: { tabs: ReactNode }) {
   const [config, setConfig] = useState<WorkbenchConfig | null>(null);
   const [bootError, setBootError] = useState<string | null>(null);
   const [token, setToken] = useState("dev-proposer");
@@ -81,7 +83,7 @@ export function App() {
     [refresh, loadExplain],
   );
 
-  if (bootError) return <div className="boot">{bootError}</div>;
+  if (bootError) return <div className="shell"><header className="topbar">{tabs}</header><div className="boot">{bootError}</div></div>;
   if (!config || !api) return <div className="boot">正在连接本地服务…</div>;
 
   return (
@@ -92,6 +94,7 @@ export function App() {
           <span className="brand-sub">审阅工作台</span>
           <span className="dev-badge" title="本地合成数据，开发身份">DEV_ONLY · 合成数据</span>
         </div>
+        {tabs}
         <IdentitySwitch identities={config.identities} token={token} onChange={setToken} />
       </header>
 
@@ -133,6 +136,44 @@ export function App() {
           />
         </section>
       </main>
+    </div>
+  );
+}
+
+type View = "review" | "reports";
+
+function Tabs({ view, onChange }: { view: View; onChange: (view: View) => void }) {
+  return (
+    <nav className="tabs" aria-label="页面">
+      <button className={`tab${view === "review" ? " on" : ""}`} onClick={() => onChange("review")}>
+        审阅工作台
+      </button>
+      <button className={`tab${view === "reports" ? " on" : ""}`} onClick={() => onChange("reports")}>
+        年报问答
+      </button>
+    </nav>
+  );
+}
+
+export function App() {
+  const [view, setView] = useState<View>(() => (window.location.hash === "#reports" ? "reports" : "review"));
+  const go = (next: View) => {
+    setView(next);
+    window.history.replaceState(null, "", next === "reports" ? "#reports" : "#review");
+  };
+  const tabs = <Tabs view={view} onChange={go} />;
+  if (view === "review") return <ReviewWorkbench tabs={tabs} />;
+  return (
+    <div className="shell">
+      <header className="topbar">
+        <div className="brand">
+          <span className="brand-name">ForgeFlow</span>
+          <span className="brand-sub">年报问答</span>
+          <span className="dev-badge" title="本机运行，公开年报">DEV_ONLY · 本机 · 公开年报</span>
+        </div>
+        {tabs}
+      </header>
+      <ReportDesk />
     </div>
   );
 }

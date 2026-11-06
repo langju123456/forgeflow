@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import threading
 from datetime import timedelta
 from pathlib import Path
 
@@ -145,7 +146,7 @@ def seed(database: Path) -> tuple[FabricStore, str]:
     return source, run["id"]
 
 
-def create_workbench_app(source, run_id: str):
+def create_workbench_app(source, run_id: str, desk=None):
     from fastapi.responses import RedirectResponse
     from fastapi.staticfiles import StaticFiles
 
@@ -165,6 +166,11 @@ def create_workbench_app(source, run_id: str):
     def root():
         return RedirectResponse("/workbench/")
 
+    if desk is not None:
+        from .report_desk import mount_report_desk
+
+        mount_report_desk(app, desk)
+
     if WEB_DIST.exists():
         app.mount("/workbench", StaticFiles(directory=WEB_DIST, html=True), name="workbench")
     return app
@@ -176,12 +182,24 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--db", default=str(ROOT / ".workbench" / "workbench.db"))
     parser.add_argument("--port", type=int, default=8780)
+    parser.add_argument("--reports", default=str(Path.home() / "code" / "finreports"),
+                        help="folder with the public annual-report PDFs for the 年报问答 page")
     args = parser.parse_args(argv)
     source, run_id = seed(Path(args.db))
+    desk = None
+    try:
+        import pdfplumber  # noqa: F401 - the report desk needs the pdf extra
+
+        from .report_desk import ReportDesk, default_answerer
+
+        desk = ReportDesk(Path(args.reports), Path(args.db).parent / "reports", answerer=default_answerer())
+        threading.Thread(target=desk.load, name="report-desk-load", daemon=True).start()
+    except ImportError:
+        print("年报问答 is off: install the pdf extra (pip install -e '.[pdf]').")
     if not WEB_DIST.exists():
         print("web/dist is missing: run `npm ci && npm run build` in web/ first (the API still starts).")
     print(f"ForgeFlow review workbench: http://127.0.0.1:{args.port}/workbench/  (run {run_id})")
-    uvicorn.run(create_workbench_app(source, run_id), host="127.0.0.1", port=args.port)
+    uvicorn.run(create_workbench_app(source, run_id, desk), host="127.0.0.1", port=args.port)
 
 
 if __name__ == "__main__":
