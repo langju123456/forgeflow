@@ -32,7 +32,8 @@ export function ReportDesk() {
   const [info, setInfo] = useState<DeskInfo | null>(null);
   const [offline, setOffline] = useState(false);
   const [question, setQuestion] = useState("");
-  const [gate, setGate] = useState(true);
+  // Off by default: on the real annual reports the gate did not meet its pre-registered bar (absent 7/12 -> 8/12).
+  const [gate, setGate] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AskResult | null>(null);
@@ -118,7 +119,7 @@ export function ReportDesk() {
               <dd>
                 <label className="toggle">
                   <input type="checkbox" checked={gate} disabled={!info.gate_available} onChange={(e) => setGate(e.target.checked)} />
-                  {info.gate_available ? (gate ? "开：只留下原文写明答案的段落" : "关：检索结果直接交给回答") : "不可用（本机没有 qwen3）"}
+                  {info.gate_available ? (gate ? "开：只留下原文写明答案的段落（每题多约 27 秒）" : "关：检索结果直接交给回答") : "不可用（本机没有 qwen3）"}
                 </label>
               </dd>
             </div>

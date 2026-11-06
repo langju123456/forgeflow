@@ -4,7 +4,7 @@ Wiring only; each decision lives in the module it calls:
 
     PDF ─ pdf_ingest (rows with file/page/bbox citations) ─ Store (S1 roles, classification, scope)
         ─ RankedKnowledgeService (hybrid if the local Ollama serves bge-m3, otherwise lexical)
-        ─ AnswerabilityGate (optional: keep only hits that state the answer, with a quoted span)
+        ─ AnswerabilityGate (optional, off by default: keep only hits that state the answer, with a quoted span)
         ─ cited answer (local model; may only cite hits it was given)
 
 The desk reads PDFs from a local folder (default ``~/code/finreports``) and checks each against the sha256 in
@@ -44,16 +44,33 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def ollama_models(base_url: str = OLLAMA) -> set[str]:
-    """Names of local models, or an empty set when no Ollama server answers."""
+def ollama_tags(base_url: str = OLLAMA) -> set[str]:
+    """Full names of local models (``qwen3:8b``, ``bge-m3:latest``), or an empty set when no Ollama server answers."""
     import httpx
 
     try:
         with httpx.Client(timeout=3, trust_env=False) as client:
             tags = client.get(f"{base_url}/api/tags").json().get("models", [])
-        return {m.get("name", "").split(":")[0] for m in tags}
-    except (httpx.HTTPError, ValueError):
+        return {str(m.get("name", "")) for m in tags}
+    except (httpx.HTTPError, ValueError, AttributeError):
         return set()
+
+
+def ollama_models(base_url: str = OLLAMA) -> set[str]:
+    """Model names without their tag, or an empty set when no Ollama server answers."""
+    return {name.split(":")[0] for name in ollama_tags(base_url)}
+
+
+def pick_chat_model(listed: set[str]) -> str | None:
+    """The chat model for the gate: the 16k-context tag first, plain ``qwen3:8b`` only as a fallback.
+
+    Ollama loads ``qwen3:8b`` with a 4096-token context and silently truncates longer prompts; real annual-report
+    prompts reach about 7k tokens (preparation/s4/real-reports/RESULTS.md), so the gate uses the same model list
+    as ``cited_answer.default_answerer``.
+    """
+    from .cited_answer import PREFERRED_MODELS
+
+    return next((m for m in PREFERRED_MODELS if m in listed or f"{m}:latest" in listed), None)
 
 
 class ReportDesk:
@@ -135,7 +152,8 @@ class ReportDesk:
             lexical_ranker,
         )
 
-        models = ollama_models(self.ollama_url)
+        listed = ollama_tags(self.ollama_url)
+        models = {name.split(":")[0] for name in listed}
         if "bge-m3" not in models:
             self.mode = "lexical"
             self.service = RankedKnowledgeService(self.store, lexical_ranker)
@@ -145,10 +163,11 @@ class ReportDesk:
         self._warm(vector, rows)
         self.mode = "hybrid"
         self.service = RankedKnowledgeService(self.store, HybridRanker(vector, k=60))
-        if "qwen3" in models:
+        chat = pick_chat_model(listed)
+        if chat is not None:
             from .answerability import AnswerabilityGate, OllamaChatModel
 
-            self.gate = AnswerabilityGate(OllamaChatModel(base_url=self.ollama_url))
+            self.gate = AnswerabilityGate(OllamaChatModel(chat, base_url=self.ollama_url, timeout=300))
 
     def _warm(self, vector: Any, rows: list[dict]) -> None:
         """Embed every row once, in batches, and keep the vectors on disk keyed by content hash."""
@@ -186,7 +205,13 @@ class ReportDesk:
                 "kind": row.get("kind"), "page": first.get("page"), "bbox": first.get("bbox"),
                 "snippet": body[:600]}
 
-    def ask(self, question: str, *, gate: bool = True, top_k: int = 5) -> dict:
+    def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
+        """Retrieve, optionally run the answerability gate, then answer from what is left.
+
+        The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
+        but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
+        was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
+        """
         if self.service is None:
             raise DomainError("DESK_NOT_READY", self.status.get("detail") or "Reports are still loading", 503)
         question = question.strip()
@@ -263,7 +288,7 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
                 "answer_available": desk.answerer is not None}
 
     @app.post("/reports/ask")
-    def ask(question: str = Body(..., embed=True), gate: bool = Body(True, embed=True)):
+    def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True)):
         try:
             return desk.ask(question, gate=gate)
         except DomainError as error:

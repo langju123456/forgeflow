@@ -101,3 +101,41 @@ def test_http_routes(desk):
     assert image.status_code == 200 and image.headers["content-type"] == "image/png"
     assert client.get("/reports/absent_report/pages/1.png").status_code == 404
     assert client.post("/reports/ask", json={"question": "  "}).status_code == 422
+
+
+class CountingGate:
+    def __init__(self):
+        self.calls = 0
+
+    def check(self, question, hits):
+        from types import SimpleNamespace
+
+        self.calls += 1
+        return SimpleNamespace(status="SUPPORTED", kept=list(hits[:1]))
+
+
+def test_the_gate_runs_only_when_asked_for(desk):
+    # Off by default: on the real reports it missed its pre-registered bar (preparation/s4/real-reports/RESULTS.md).
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    saved, desk.gate = desk.gate, CountingGate()
+    try:
+        assert desk.ask("total net sales")["gate"] == "OFF" and desk.gate.calls == 0
+        app = FastAPI()
+        mount_report_desk(app, desk)
+        client = TestClient(app)
+        assert client.post("/reports/ask", json={"question": "total net sales"}).json()["gate"] == "OFF"
+        assert desk.gate.calls == 0
+        gated = client.post("/reports/ask", json={"question": "total net sales", "gate": True}).json()
+        assert gated["gate"] == "SUPPORTED" and desk.gate.calls == 1 and len(gated["kept"]) == 1
+    finally:
+        desk.gate = saved
+
+
+def test_the_gate_uses_the_long_context_model_when_it_is_installed():
+    from forgeflow.report_desk import pick_chat_model
+
+    assert pick_chat_model({"qwen3:8b", "forgeflow-qwen3-8b-ctx16k:latest", "bge-m3:latest"}) == "forgeflow-qwen3-8b-ctx16k"
+    assert pick_chat_model({"qwen3:8b", "bge-m3:latest"}) == "qwen3:8b"
+    assert pick_chat_model({"bge-m3:latest"}) is None
