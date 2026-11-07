@@ -133,6 +133,47 @@ def test_the_gate_runs_only_when_asked_for(desk):
         desk.gate = saved
 
 
+class ScriptedChatModel:
+    """Stands in for the local model only; the gate itself is the real AnswerabilityGate."""
+
+    model_id = "test/scripted"
+
+    def complete(self, messages, schema):
+        import re
+
+        text = messages[-1]["content"]
+        last = max(int(n) for n in re.findall(r"^\[(\d+)\] ", text, flags=re.M))
+        quote = re.search(rf"^\[{last}\] (.+)$", text, flags=re.M).group(1)
+        return json.dumps({"verdicts": [{"passage": n, "answers": n == last, "quote": quote if n == last else ""}
+                                        for n in range(1, last + 1)]})
+
+
+def test_the_real_gate_keeps_exactly_the_hits_it_supported(desk):
+    # The real gate reports kept hits as positions (AnswerabilityResult.kept) and the hits themselves in .hits.
+    # A hand-written double with a different shape let the desk read .kept as hits and fail only in real use.
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from forgeflow.answerability import AnswerabilityGate
+    from forgeflow.report_desk import ANALYST, SCOPE
+
+    saved, desk.gate = desk.gate, AnswerabilityGate(ScriptedChatModel())
+    try:
+        hits = desk.service.search(ANALYST, SCOPE, "total net sales", 5)
+        assert hits, "the fixture report must return something for this question"
+        result = desk.ask("total net sales", gate=True)
+        assert result["gate"] == "SUPPORTED"
+        assert [c["id"] for c in result["kept"]] == [hits[-1].id]
+        assert [c["id"] for c in result["dropped"]] == [h.id for h in hits[:-1]]
+        assert desk.answerer.seen[-1] == [hits[-1].id]  # the answer step only sees what the gate kept
+        app = FastAPI()
+        mount_report_desk(app, desk)
+        response = TestClient(app).post("/reports/ask", json={"question": "total net sales", "gate": True})
+        assert response.status_code == 200 and [c["id"] for c in response.json()["kept"]] == [hits[-1].id]
+    finally:
+        desk.gate = saved
+
+
 def test_the_gate_uses_the_long_context_model_when_it_is_installed():
     from forgeflow.report_desk import pick_chat_model
 
