@@ -111,7 +111,8 @@ class CountingGate:
         from types import SimpleNamespace
 
         self.calls += 1
-        return SimpleNamespace(status="SUPPORTED", kept=list(hits[:1]))
+        # Same shape as AnswerabilityResult: positions in .kept, the kept hits themselves in .hits.
+        return SimpleNamespace(status="SUPPORTED", kept=(0,), hits=tuple(hits[:1]))
 
 
 def test_the_gate_runs_only_when_asked_for(desk):
