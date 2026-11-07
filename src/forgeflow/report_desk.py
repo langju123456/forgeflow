@@ -227,8 +227,9 @@ class ReportDesk:
             result = self.gate.check(question, hits)
             timings["gate_ms"] = round((time.perf_counter() - started) * 1000, 1)
             gate_status = result.status
-            kept_ids = {h.id for h in result.kept}
-            kept = [h for h in hits if h.id in kept_ids]
+            # AnswerabilityResult.kept holds positions; .hits holds the kept hits themselves, in retrieval order.
+            kept = list(result.hits)
+            kept_ids = {h.id for h in kept}
             dropped = [h for h in hits if h.id not in kept_ids]
         answer: dict[str, Any] = {"found": False, "answer": "", "citations": []}
         if kept and self.answerer is not None:
