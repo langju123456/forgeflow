@@ -205,12 +205,12 @@ class ReportDesk:
                 "kind": row.get("kind"), "page": first.get("page"), "bbox": first.get("bbox"),
                 "snippet": body[:600]}
 
-    def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
-        """Retrieve, optionally run the answerability gate, then answer from what is left.
+    def evidence(self, question: str, *, gate: bool = False, top_k: int = 5,
+                 principal: Principal = ANALYST) -> dict:
+        """Retrieval and the optional gate, without the answer step: what the desk service's gRPC server returns.
 
-        The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
-        but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
-        was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
+        ``ask`` is this plus the cited answer in the same process; the desk service (forgeflow.desk_service) runs
+        the answer step in a separate worker, so both paths share exactly this evidence step.
         """
         if self.service is None:
             raise DomainError("DESK_NOT_READY", self.status.get("detail") or "Reports are still loading", 503)
@@ -219,7 +219,7 @@ class ReportDesk:
             raise DomainError("QUERY_REQUIRED", "Ask a question", 422)
         timings: dict[str, float] = {}
         started = time.perf_counter()
-        hits = self.service.search(ANALYST, SCOPE, question, top_k)
+        hits = self.service.search(principal, SCOPE, question, top_k)
         timings["retrieval_ms"] = round((time.perf_counter() - started) * 1000, 1)
         kept, dropped, gate_status = list(hits), [], "OFF"
         if gate and self.gate is not None and hits:
@@ -231,6 +231,28 @@ class ReportDesk:
             kept = list(result.hits)
             kept_ids = {h.id for h in kept}
             dropped = [h for h in hits if h.id not in kept_ids]
+        return {"question": question, "hits": list(hits), "kept": kept, "dropped": dropped,
+                "gate": gate_status, "timings": timings}
+
+    def index_version(self) -> str:
+        """Fingerprint of what retrieval can return: every loaded row's content hash plus the ranking mode.
+
+        A cached answer is only valid for the index it was computed on; the desk service puts this in its cache
+        key, so re-ingesting a report or switching lexical/hybrid never serves an answer from the old index.
+        """
+        material = {"mode": self.mode, "rows": sorted(r["source_hash"] for r in self._row_index.values())}
+        return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
+
+    def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
+        """Retrieve, optionally run the answerability gate, then answer from what is left.
+
+        The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
+        but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
+        was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
+        """
+        found = self.evidence(question, gate=gate, top_k=top_k)
+        question, hits, kept, dropped = found["question"], found["hits"], found["kept"], found["dropped"]
+        gate_status, timings = found["gate"], found["timings"]
         answer: dict[str, Any] = {"found": False, "answer": "", "citations": []}
         if kept and self.answerer is not None:
             started = time.perf_counter()
