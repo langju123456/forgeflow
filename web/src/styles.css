@@ -183,3 +183,14 @@ dd { margin: 0; overflow-wrap: anywhere; }
   .desk { padding: 12px 16px; }
   .ask { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Desk service: job progress and the streaming draft. */
+.job-strip { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.job-step { font-size: 12.5px; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--rule); color: var(--muted); }
+.job-step.done { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); }
+.job-step.now { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); animation: pulse 1.2s ease-in-out infinite; }
+.answer.draft .answer-text { color: var(--muted); }
+.caret { display: inline-block; width: 7px; height: 1.1em; margin-left: 2px; vertical-align: text-bottom; background: var(--accent); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes pulse { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .job-step.now, .caret { animation: none; } }
