@@ -39,3 +39,4 @@ web/dist/
 
 # Financial PDF fixtures are generated from fixtures/financial-pdf/ground_truth.json, not versioned
 fixtures/financial-pdf/generated/
+.desk-service/
