@@ -118,4 +118,4 @@ bash scripts/desk_service.sh        # Docker 起 Redis 和 RabbitMQ，再起检�
 - 检索服务是单实例；它挂了，worker 等到截止时间后进重试，重试用完任务失败。多实例要在 gRPC 客户端做负载均衡，并保证各实例的索引版本一致。
 - Redis 没开持久化：重启后缓存和进行中的任务记录都会丢；RabbitMQ 里的持久化消息不丢，worker 会重新处理它们。
 - 网关在 `SET NX` 之后、发布成功之前崩溃，`inflight` 标记会留到过期（`job_ttl_s`，默认 1 小时）；这段时间里同一个问题会合并到一个永远不会被处理的任务上，读者等到 SSE 的最长时长才断开。修法是给合并加一个“任务排队超过 N 秒仍是 queued 就重新发布”的检查，还没做。
-- 真实模型只跑过一次冒烟运行（1 个 worker，见 `preparation/s5/desk-service/RESULTS.md`）：等待主要花在 prefill（首字前占 68%–95%），流式输出只缩短最后几秒；多 worker 下的吞吐没测。
+- 真实模型只跑过一次冒烟运行（1 个 worker，见 `preparation/s5/desk-service/RESULTS.md`）：等待主要花在 prefill（首字前占 68%–91%），流式输出只缩短最后几秒；多 worker 下的吞吐没测。

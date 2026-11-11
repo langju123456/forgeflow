@@ -121,7 +121,7 @@ bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127
 bash scripts/desk_service.sh        # Docker 起 Redis 和 RabbitMQ，再起检索服务、2 个 worker、网关：http://127.0.0.1:8790/
 ```
 
-用替身模型实测的服务层行为（[RESULTS.md](preparation/s5/desk-service/RESULTS.md)）：缓存命中中位数 41.9 ms、不调模型；20 个相同问题同时提交只调 1 次模型；模型同时处理的请求数等于 worker × prefetch；worker 在回答中途被 SIGKILL 后任务由另一个 worker 完成；队列满时多出的请求得到 429。设计取舍、每一层不做会怎么坏、测试清单见 [docs/20](docs/20-desk-service.md)。端到端测试 15 项需要本机 Redis 和 RabbitMQ（`FORGEFLOW_SERVICE_LIVE=1`）。在 Mac 上用真实年报和本机 qwen3:8b 跑过一次冒烟运行：四道题都给出带页码的回答，端到端 15–65 秒，其中 68%–95% 花在第一个字出现之前（长上下文的 prefill），缓存命中 28 ms，三个同时到的相同问题只调一次模型（同一份 RESULTS.md）。
+用替身模型实测的服务层行为（[RESULTS.md](preparation/s5/desk-service/RESULTS.md)）：缓存命中中位数 41.9 ms、不调模型；20 个相同问题同时提交只调 1 次模型；模型同时处理的请求数等于 worker × prefetch；worker 在回答中途被 SIGKILL 后任务由另一个 worker 完成；队列满时多出的请求得到 429。设计取舍、每一层不做会怎么坏、测试清单见 [docs/20](docs/20-desk-service.md)。端到端测试 15 项需要本机 Redis 和 RabbitMQ（`FORGEFLOW_SERVICE_LIVE=1`）。在 Mac 上用真实年报和本机 qwen3:8b 跑过一次冒烟运行：四道题都给出带页码的回答，端到端 15–65 秒，其中 68%–91% 花在第一个字出现之前（长上下文的 prefill），缓存命中 28 ms，三个同时到的相同问题只调一次模型（同一份 RESULTS.md）。
 
 ![流式草稿：证据已经检索到，回答正在生成，还没核对](docs/images/desk-service-streaming.png)
 
