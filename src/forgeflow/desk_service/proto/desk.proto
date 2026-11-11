@@ -1,0 +1,82 @@
+// Internal contract between the desk-service workers and the retrieval server.
+//
+// The retrieval server is the only process that holds the annual-report index (parsed rows, embeddings,
+// the Store with its ACL). Workers are stateless and many; they call Search over gRPC with a deadline.
+// The caller's identity travels in metadata ("x-forgeflow-subject"), never in the request body, and the
+// server maps it to a Principal it knows; an unknown subject gets PERMISSION_DENIED.
+//
+// Regenerate the Python modules after editing (see forgeflow/desk_service/proto/__init__.py).
+
+syntax = "proto3";
+
+package forgeflow.desk.v1;
+
+service ReportRetrieval {
+  // Retrieval (+ the optional answerability gate) for one question: the evidence step only, no answer.
+  rpc Search(SearchRequest) returns (SearchReply);
+  // Readiness, ranking mode and the index fingerprint that answer caches are keyed on.
+  rpc Info(InfoRequest) returns (InfoReply);
+  // A PDF page rendered as PNG with the cited region highlighted (the UI's evidence viewer).
+  rpc PageImage(PageImageRequest) returns (PageImageReply);
+}
+
+message SearchRequest {
+  string question = 1;
+  bool gate = 2;
+  uint32 top_k = 3;
+}
+
+// Where a hit sits in its PDF; page = 0 and an empty bbox mean "unknown".
+message Citation {
+  string id = 1;
+  string doc = 2;
+  string company = 3;
+  string kind = 4;
+  int32 page = 5;
+  repeated double bbox = 6;
+  string snippet = 7;
+}
+
+// A hit the answer step may read and cite: the full row content plus its citation.
+message Hit {
+  string id = 1;
+  string version = 2;
+  string content = 3;
+  string source_hash = 4;
+  int32 classification = 5;
+  string status = 6;
+  Citation citation = 7;
+}
+
+message SearchReply {
+  repeated Hit kept = 1;
+  repeated Citation dropped = 2;
+  string gate_status = 3;
+  string mode = 4;
+  string index_version = 5;
+  double retrieval_ms = 6;
+  double gate_ms = 7;
+}
+
+message InfoRequest {}
+
+message InfoReply {
+  string state = 1;
+  string detail = 2;
+  string mode = 3;
+  string index_version = 4;
+  bool gate_available = 5;
+  uint32 rows = 6;
+  // The report catalogue as JSON (file paths removed); a display list, not part of any decision.
+  string reports_json = 7;
+}
+
+message PageImageRequest {
+  string doc = 1;
+  int32 page = 2;
+  repeated double bbox = 3;
+}
+
+message PageImageReply {
+  bytes png = 1;
+}

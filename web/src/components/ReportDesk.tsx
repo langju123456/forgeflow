@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { desk, ms, snippetLines, STATE_TEXT } from "../reports";
-import type { AskResult, Citation, DeskInfo } from "../reports";
+import { desk, ms, snippetLines, STAGES, stageIndex, STATE_TEXT, WITHDRAWN_TEXT } from "../reports";
+import type { AskResult, Citation, DeskInfo, JobProgress } from "../reports";
 
 // Example questions are deliberately not from the evaluation set in preparation/s4/real-reports/questions.json.
 const EXAMPLES = [
@@ -28,6 +28,22 @@ function CitationCard({ c, active, onOpen }: { c: Citation; active: boolean; onO
   );
 }
 
+/** The job's path through the service: 排队 → 检索 → 生成 → 核对完成, with the attempt number when it was retried. */
+function JobStrip({ progress }: { progress: JobProgress }) {
+  const at = stageIndex(progress.stage);
+  return (
+    <div className="job-strip" aria-label="进度">
+      {STAGES.map((stage, i) => (
+        <span key={stage.key} className={`job-step${i < at ? " done" : ""}${i === at ? " now" : ""}`}>
+          {stage.label}
+        </span>
+      ))}
+      {progress.attempt > 1 && <span className="chip chip-PENDING">第 {progress.attempt} 次尝试</span>}
+      {progress.state === "joined" && <span className="chip chip-APPROVED">同一个问题正在回答，已合并</span>}
+    </div>
+  );
+}
+
 export function ReportDesk() {
   const [info, setInfo] = useState<DeskInfo | null>(null);
   const [offline, setOffline] = useState(false);
@@ -38,6 +54,8 @@ export function ReportDesk() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AskResult | null>(null);
   const [open, setOpen] = useState<Citation | null>(null);
+  const [progress, setProgress] = useState<JobProgress | null>(null);
+  const [lastDraft, setLastDraft] = useState("");
 
   useEffect(() => {
     let stop = false;
@@ -66,9 +84,20 @@ export function ReportDesk() {
     setBusy(true);
     setError(null);
     setOpen(null);
+    setResult(null);
+    setProgress(null);
+    setLastDraft("");
     try {
-      const answer = await desk.ask(text, gate);
+      let draft = "";
+      const answer = info?.service
+        ? await desk.askStream(text, gate, (p) => {
+            draft = p.draft;
+            setProgress(p);
+            if (p.kept.length) setOpen((current) => current ?? p.kept[0]);
+          })
+        : await desk.ask(text, gate);
       setResult(answer);
+      setLastDraft(draft);
       setOpen(answer.citations[0] ?? answer.kept[0] ?? null);
     } catch (e) {
       setResult(null);
@@ -128,6 +157,14 @@ export function ReportDesk() {
               <dd>{info.answer_available ? "本机模型生成，只能引用给它的段落" : "只显示证据（本机没有可用的回答模型）"}</dd>
             </div>
           </dl>
+          {info.service && info.queue && (
+            <div className="kv">
+              <dt>服务</dt>
+              <dd>
+                队列 {info.queue.waiting}/{info.queue.max} · {info.queue.workers} 个 worker · {info.model}
+              </dd>
+            </div>
+          )}
           <p className="hint">全部在你电脑上运行，年报和问题不会发给外部模型。</p>
         </section>
       </aside>
@@ -162,6 +199,35 @@ export function ReportDesk() {
 
         {error && <div className="notice notice-error"><strong>没有完成</strong><span>{error}</span></div>}
 
+        {busy && progress && (
+          <div className="desk-grid">
+            <section className="card">
+              <JobStrip progress={progress} />
+              {progress.stage === "retrying" && <p className="hint">依赖暂时不可用，稍后自动重试：{progress.retryReason}</p>}
+              {progress.draft ? (
+                <div className="answer draft">
+                  <p className="eyebrow">草稿 · 生成中，还没核对引用</p>
+                  <p className="answer-text">
+                    {progress.draft}
+                    <span className="caret" />
+                  </p>
+                </div>
+              ) : (
+                <p className="hint">{progress.stage === "queued" ? "等待 worker…" : progress.stage === "retrieving" ? "检索中…" : "等待模型输出第一个字…"}</p>
+              )}
+              {progress.kept.length > 0 && <h3 className="section-title">检索到的证据</h3>}
+              <div className="evidence-list">
+                {progress.kept.map((c) => (
+                  <CitationCard key={c.id} c={c} active={open?.id === c.id} onOpen={setOpen} />
+                ))}
+              </div>
+            </section>
+            <section className="card page-view">
+              {pageUrl ? <img src={pageUrl} alt={`${open?.company} 第 ${open?.page} 页`} /> : <p className="empty">证据出来后可以在这里看原页。</p>}
+            </section>
+          </div>
+        )}
+
         {result && (
           <div className="desk-grid">
             <section className="card">
@@ -180,16 +246,29 @@ export function ReportDesk() {
               ) : (
                 <div className="answer none">
                   <p className="eyebrow">回答</p>
+                  {lastDraft && result.status && WITHDRAWN_TEXT[result.status] && (
+                    <p className="hint">生成过草稿“{lastDraft.slice(0, 60)}{lastDraft.length > 60 ? "…" : ""}”：{WITHDRAWN_TEXT[result.status]}</p>
+                  )}
                   <p className="answer-text">
                     {result.kept.length && !info.answer_available
                       ? "下面是检索到的证据；本机没有回答模型，所以不生成回答。"
-                      : "年报里没有找到能回答这个问题的内容。"}
+                      : result.status === "UNSUPPORTED" || result.status === "ANSWER_ERROR"
+                        ? "没有能展示的回答。"
+                        : "年报里没有找到能回答这个问题的内容。"}
                   </p>
                   {result.dropped.length > 0 && <p className="hint">检索到 {result.dropped.length} 段相关内容，但核对后都没有写明答案，见下方“相关但不能回答”。</p>}
                 </div>
               )}
               <p className="timing mono dim">
-                检索 {ms(result.timings.retrieval_ms)} · 核对 {ms(result.timings.gate_ms)} · 回答 {ms(result.timings.answer_ms)} · {result.mode === "hybrid" ? "混合检索" : "词面检索"}
+                {result.cached
+                  ? "缓存命中，没有调用模型；以下是第一次回答时的耗时 · "
+                  : result.timings.queue_ms !== undefined
+                    ? `排队 ${ms(result.timings.queue_ms)} · `
+                    : ""}
+                检索 {ms(result.timings.retrieval_ms)} · 核对 {ms(result.timings.gate_ms)} ·
+                {result.timings.first_token_ms !== undefined ? ` 首字 ${ms(result.timings.first_token_ms)} ·` : ""} 回答{" "}
+                {ms(result.timings.answer_ms)} · {result.mode === "hybrid" ? "混合检索" : "词面检索"}
+                {result.attempt && result.attempt > 1 ? ` · 第 ${result.attempt} 次尝试完成` : ""}
               </p>
 
               {evidence.length > 0 && <h3 className="section-title">证据</h3>}
