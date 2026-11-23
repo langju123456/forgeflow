@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "case_id": "apple-services-growth-contribution-dev",
+  "base_commit": "b74c8bb439658d1530a762391e13ae1861bd8968",
+  "inputs": [
+    {
+      "file": "apple-review-v1.json",
+      "sha256": "842addce2a746d50a5359007cea0372df2a2412ae4cc847ad52e4715261957cc"
+    },
+    {
+      "file": "apple-review-v2.json",
+      "sha256": "85e9ab9c7f8417b9b8b4a14abb29f53c8e5e7b28c4b537b15dbafefad6676a23"
+    }
+  ],
+  "runs": [
+    {
+      "case_name": "公开年报已保存的 v1 与 v2",
+      "kind": "public-dev",
+      "model_calls_per_strategy": 0,
+      "external_cost": 0,
+      "text": {
+        "removed": [
+          "Apple FY2025，服务收入增速为13.51%（12,989 / 96,169）",
+          "服务对公司收入增量的贡献为51.70%（12,989 / 25,126）"
+        ],
+        "added": [
+          "Apple FY2025，服务对公司收入增量的贡献为51.70%（12,989 / 25,126）"
+        ]
+      },
+      "json": [
+        {
+          "path": "/evidence/answer",
+          "before": "Apple FY2025，服务收入增速为13.51%（12,989 / 96,169）；服务对公司收入增量的贡献为51.70%（12,989 / 25,126）。金额单位为百万美元。",
+          "after": "Apple FY2025，服务对公司收入增量的贡献为51.70%（12,989 / 25,126）。金额单位为百万美元。"
+        },
+        {
+          "path": "/evidence/calculation/operations/0/denominator",
+          "before": 96169,
+          "after": 25126
+        },
+        {
+          "path": "/evidence/calculation/operations/0/formula",
+          "before": "服务收入增量 / 上期服务收入",
+          "after": "服务收入增量 / 公司收入增量"
+        },
+        {
+          "path": "/evidence/calculation/operations/0/metric",
+          "before": "服务收入增速",
+          "after": "服务对公司收入增量的贡献"
+        },
+        {
+          "path": "/evidence/calculation/operations/0/percent",
+          "before": "13.51",
+          "after": "51.70"
+        },
+        {
+          "path": "/evidence/calculation/operations/1/denominator",
+          "before": 25126,
+          "after": null
+        },
+        {
+          "path": "/evidence/calculation/operations/1/formula",
+          "before": "服务收入增量 / 公司收入增量",
+          "after": null
+        },
+        {
+          "path": "/evidence/calculation/operations/1/metric",
+          "before": "服务对公司收入增量的贡献",
+          "after": null
+        },
+        {
+          "path": "/evidence/calculation/operations/1/numerator",
+          "before": 12989,
+          "after": null
+        },
+        {
+          "path": "/evidence/calculation/operations/1/percent",
+          "before": "51.70",
+          "after": null
+        },
+        {
+          "path": "/evidence/question",
+          "before": "Apple FY2025 服务收入增速和增长贡献",
+          "after": "Apple FY2025 服务收入增长贡献"
+        },
+        {
+          "path": "/evidence/request_id",
+          "before": "7537b10920c54bafb83c910c213cb1ba",
+          "after": "38d39251f3444889b8001c5e4ad15e35"
+        },
+        {
+          "path": "/evidence/run_id",
+          "before": "7537b10920c54bafb83c910c213cb1ba",
+          "after": "38d39251f3444889b8001c5e4ad15e35"
+        },
+        {
+          "path": "/evidence/timings/retrieval_ms",
+          "before": 125.2,
+          "after": 120.3
+        },
+        {
+          "path": "/note",
+          "before": "经营分析会：服务收入同比增长多少，拉动公司收入增量多少？",
+          "after": "按审阅意见仅保留贡献。分母取全公司收入增量，金额单位为百万美元。"
+        },
+        {
+          "path": "/parent_digest",
+          "before": null,
+          "after": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913"
+        },
+        {
+          "path": "/saved_at",
+          "before": "2026-11-23T15:04:00.516707+00:00",
+          "after": "2026-11-23T15:04:00.652358+00:00"
+        },
+        {
+          "path": "/version",
+          "before": 1,
+          "after": 2
+        }
+      ],
+      "review": {
+        "changes": [
+          {
+            "group": "正文",
+            "label": "研究问题",
+            "before": "Apple FY2025 服务收入增速和增长贡献",
+            "after": "Apple FY2025 服务收入增长贡献",
+            "status": "改动"
+          },
+          {
+            "group": "正文",
+            "label": "工具结论",
+            "before": "Apple FY2025，服务收入增速为13.51%（12,989 / 96,169）；服务对公司收入增量的贡献为51.70%（12,989 / 25,126）。金额单位为百万美元。",
+            "after": "Apple FY2025，服务对公司收入增量的贡献为51.70%（12,989 / 25,126）。金额单位为百万美元。",
+            "status": "改动"
+          },
+          {
+            "group": "正文",
+            "label": "研究员说明",
+            "before": "经营分析会：服务收入同比增长多少，拉动公司收入增量多少？",
+            "after": "按审阅意见仅保留贡献。分母取全公司收入增量，金额单位为百万美元。",
+            "status": "改动"
+          },
+          {
+            "group": "指标",
+            "label": "服务收入增速",
+            "before": "13.51% · FY2025 / FY2024\n服务收入增量 / 上期服务收入\n分子 12,989 · 分母 96,169（百万美元）",
+            "after": null,
+            "status": "移除"
+          }
+        ],
+        "retained_metrics": [
+          {
+            "group": "指标",
+            "label": "服务对公司收入增量的贡献",
+            "before": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "after": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "status": "保留"
+          }
+        ]
+      }
+    },
+    {
+      "case_name": "保留显示值，仅扰动分母",
+      "kind": "synthetic",
+      "model_calls_per_strategy": 0,
+      "external_cost": 0,
+      "text": {
+        "removed": [],
+        "added": []
+      },
+      "json": [
+        {
+          "path": "/evidence/calculation/operations/0/denominator",
+          "before": 25126,
+          "after": 25127
+        },
+        {
+          "path": "/version",
+          "before": 2,
+          "after": 3
+        }
+      ],
+      "review": {
+        "changes": [
+          {
+            "group": "指标",
+            "label": "服务对公司收入增量的贡献",
+            "before": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "after": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,127（百万美元）",
+            "status": "改动"
+          }
+        ],
+        "retained_metrics": []
+      }
+    },
+    {
+      "case_name": "保留结论，仅移动原表定位",
+      "kind": "synthetic",
+      "model_calls_per_strategy": 0,
+      "external_cost": 0,
+      "text": {
+        "removed": [],
+        "added": []
+      },
+      "json": [
+        {
+          "path": "/evidence/citations/0/bbox/0",
+          "before": 52.1,
+          "after": 53.1
+        },
+        {
+          "path": "/version",
+          "before": 2,
+          "after": 3
+        }
+      ],
+      "review": {
+        "changes": [
+          {
+            "group": "来源",
+            "label": "原表位置 · apple_fy2025_10k_en#p26-t1",
+            "before": "apple_fy2025_10k_en\nApple Inc. (AAPL)\ntable\nPDF 指纹前缀 3eb270b22acb7d8d\n第 26 页\n坐标 52.1, 76.6, 558.8, 170.1\n原格版本 3eb270b22acb7d8d\nSHA-256 fb0eaeb0edefa7c67ef44a33688c43837316e9795673e97de2f9ed4e01469979",
+            "after": "apple_fy2025_10k_en\nApple Inc. (AAPL)\ntable\nPDF 指纹前缀 3eb270b22acb7d8d\n第 26 页\n坐标 53.1, 76.6, 558.8, 170.1\n原格版本 3eb270b22acb7d8d\nSHA-256 fb0eaeb0edefa7c67ef44a33688c43837316e9795673e97de2f9ed4e01469979",
+            "status": "改动"
+          }
+        ],
+        "retained_metrics": [
+          {
+            "group": "指标",
+            "label": "服务对公司收入增量的贡献",
+            "before": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "after": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "status": "保留"
+          }
+        ]
+      }
+    },
+    {
+      "case_name": "重新执行相同内容",
+      "kind": "synthetic",
+      "model_calls_per_strategy": 0,
+      "external_cost": 0,
+      "text": {
+        "removed": [],
+        "added": []
+      },
+      "json": [
+        {
+          "path": "/evidence/run_id",
+          "before": "38d39251f3444889b8001c5e4ad15e35",
+          "after": "derived-run"
+        },
+        {
+          "path": "/version",
+          "before": 2,
+          "after": 3
+        }
+      ],
+      "review": {
+        "changes": [],
+        "retained_metrics": [
+          {
+            "group": "指标",
+            "label": "服务对公司收入增量的贡献",
+            "before": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "after": "51.70% · FY2025 / FY2024\n服务收入增量 / 公司收入增量\n分子 12,989 · 分母 25,126（百万美元）",
+            "status": "保留"
+          }
+        ]
+      }
+    }
+  ]
+}

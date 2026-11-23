@@ -15,6 +15,7 @@ export default defineConfig({
       "/health": api,
       "/workbench-config": api,
       "/reports": api,
+      "/research": api,
     },
   },
   test: { environment: "node" },

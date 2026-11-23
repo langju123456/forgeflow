@@ -8,7 +8,7 @@
 |---|---|---|
 |指定期间查数|年报问答真实入口查全年，保留期间、单位、引用；无法证实进入待核|已完成公开开发用例，仍需盲测。[决策与实验](../preparation/annual-report-workbench/DECISION-001.md)|
 |两期变化和分部贡献|同一组事实切换分母，记录公式、版本和百分点；Apple 案例交叉检查|指定问题的真实查表、公式和引用已打通。改问“只保留增长贡献”后可以保存新版。[增速与贡献对照](../preparation/annual-report-workbench/DECISION-002.md)|
-|可修改的研究任务|研究员中途改变口径，看见受影响的表格、句子和新旧差异；从断点继续|已支持退回意见、再查、增订、历史版下载与重开恢复。逐项差异视图和多指标整份报告待做|
+|可修改的研究任务|研究员中途改变口径，看见受影响的表格、句子和新旧差异；从断点继续|已支持退回意见、再查、增订、可见版本逐项对照、历史版下载与重开恢复。[真实改稿与三种对照方法](../preparation/annual-report-workbench/DECISION-005.md)。多指标整份报告待做|
 |可追溯的事实与检索|原格、表头、单位和跨页出处；受权后词法、向量、RRF；按增益试 Docling 与重排|已有页级检索与解析，单元格持久化和回归待做|
 |审阅和交付|分离研究员和审阅人，批准绑定稿件摘要，幂等导出和可查回执|本机两种真实角色已接入独立持久库。可下载 [HTML](../preparation/annual-report-workbench/apple-review-v2.html) 和 [JSON](../preparation/annual-report-workbench/apple-review-v2.json)。[审批取舍与证据](../preparation/annual-report-workbench/DECISION-004.md)|
 |工作流与性能|复用 FastAPI、队列、Redis、gRPC、SSE，测冷启动、热索引、缓存、P95 和成功任务成本；按需对照 LangGraph、并行工具、多 Agent、OTLP|已有问答服务；整任务尚待验证|
@@ -28,6 +28,8 @@ ForgeFlow 拥有产品执行、权限、审批、业务状态及交付回执。H
 2. 首次用 `python -m forgeflow.research_store author analyst` 和 `python -m forgeflow.research_store reviewer reviewer` 分别登记本机身份。各命令只在终端显示一次新凭证，供对应操作者保存。私有目录由程序创建。研究员在“研究稿与审阅”登录，查询 Apple FY2025 服务收入增速和增长贡献，保存说明并指派审阅人。匿名查表须在登录后重新运行才能入稿。
 3. 在另一个浏览器窗口用审阅人凭证登录，打开已送审稿，点第 26、39 页原表，写明要保留的分母并退回。研究员刷新，重新询问 Apple FY2025 服务收入增长贡献，保存新版后再次送审。审阅人批准，研究员登记本地交付，下载证据清单与阅读稿。刷新后重新登录可找回每个版本及回执。
 4. 公开开发样例可用 `PYTHONPATH=src python scripts/research_review_dev.py ~/code/finreports /tmp/forgeflow-review-evidence` 复跑。默认重新解析真实 Apple PDF，也可用 `--cache` 指向已有解析缓存。交付物含输入、原格引用、来源 PDF 指纹、工具及索引版本、查询和生产 run、作者、审阅人、前版摘要和本机回执。同步来源暂存最近 128 次已认证查表结果，入稿许可有效一小时，过期可重新查表。已保存版本独立于检索缓存。
+
+查看修订时，在研究稿详情点击“与第 … 版对照”。表格先列出移除、变更及保留的指标，再列出有变化的文字、原格或来源。基准是当前账号可见的最近一次较早版本；作者两次送审之间的私稿只对作者可见。
 
 **证据边界。** 数值工具运行于真实 PDF；公开案例由开发脚本控制两个本机角色。配对评测及独立终态判分分别由 EvidenceLoop 和 HorizonBench 承担。交付回执记录本机登记，第三方签收另行确认。常规问答仍支持原有本地模型，本轮两个结构化年报任务实际模型调用均为零。
 

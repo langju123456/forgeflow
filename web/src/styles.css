@@ -213,3 +213,11 @@ dd { margin: 0; overflow-wrap: anywhere; }
 .research article { border-top: 1px solid var(--rule); margin-top: .9rem; }
 .research pre { white-space: pre-wrap; font: inherit; color: var(--muted); }
 .research code, .research pre { overflow-wrap: anywhere; }
+.revision-comparison { margin: .8rem 0; border-block: 1px solid var(--rule); padding: .6rem 0; }
+.revision-comparison h4 { margin: .4rem 0; }
+.revision-scroll { overflow-x: auto; }
+.revision-comparison table { border-collapse: collapse; width: 100%; min-width: 28rem; table-layout: fixed; }
+.revision-comparison :is(td, th) { text-align: left; vertical-align: top; padding: .45rem; border-bottom: 1px solid var(--rule); }
+.revision-comparison th:first-child { width: 23%; }
+.revision-comparison :is(td, th, dd) { white-space: pre-line; overflow-wrap: anywhere; }
+.revision-comparison dd { margin: .15rem 0 .7rem; }
