@@ -30,6 +30,7 @@ from typing import Any
 
 import grpc
 
+from .. import annual_cash
 from ..analysis_provider import ProviderInvalid
 from ..cited_answer import ANSWER_SCHEMA, CitedAnswerer, build_messages, prompt_sha256
 from ..contracts import ContextHit
@@ -150,6 +151,9 @@ class Worker:
 
     async def _answer(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
                       timings: dict[str, float]) -> dict[str, Any]:
+        period_answer = annual_cash.answer_from_period(question, hits)
+        if period_answer is not None:
+            return period_answer
         if not hits:  # nothing to cite: "not in the reports" without calling the model
             return CitedAnswerer(_Replay(self.model.model_id, None)).answer(question, hits)
         extractor = AnswerFieldExtractor()

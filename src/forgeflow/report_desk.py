@@ -24,6 +24,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from . import annual_cash
 from .contracts import DomainError, Principal, Scope
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -191,7 +192,7 @@ class ReportDesk:
         self.status["embedded"] = len(rows)
 
     # ------------------------------------------------------------------ asking
-    def citation(self, hit: Any) -> dict:
+    def citation(self, hit: Any, question: str = "") -> dict:
         from .pdf_ingest import parse_source_line
 
         place = parse_source_line(hit.content) or {}
@@ -200,6 +201,10 @@ class ReportDesk:
         report = next((r for r in self.reports if hit.id.startswith(r["key"])), None)
         pages = place.get("pages") or []
         first = pages[0] if pages else {}
+        year = annual_cash.requested_year(question)
+        cell = annual_cash.read_cell(hit.id, hit.content, year) if year else None
+        if cell:
+            body = f"{annual_cash.METRIC} · {year}年年度列 · 人民币千元\n原格 {cell.raw}\n{body}"
         return {"id": hit.id, "doc": report["key"] if report else None,
                 "company": report["company"] if report else None,
                 "kind": row.get("kind"), "page": first.get("page"), "bbox": first.get("bbox"),
@@ -219,10 +224,23 @@ class ReportDesk:
             raise DomainError("QUERY_REQUIRED", "Ask a question", 422)
         timings: dict[str, float] = {}
         started = time.perf_counter()
-        hits = self.service.search(principal, SCOPE, question, top_k)
+        service = self.service
+        year = annual_cash.requested_year(question)
+        if year:
+            from .retrieval import RankedKnowledgeService
+
+            service = RankedKnowledgeService(self.store, annual_cash.annual_ranker)
+        # A conflicting answer needs two separately authorized links, even for one requested answer.
+        limit = 2 if year and type(top_k) is int and top_k == 1 else top_k
+        hits = service.search(principal, SCOPE, question, limit)
         timings["retrieval_ms"] = round((time.perf_counter() - started) * 1000, 1)
         kept, dropped, gate_status = list(hits), [], "OFF"
-        if gate and self.gate is not None and hits:
+        if year:
+            if annual_cash.differing_values(hits, year):
+                gate_status, kept, dropped = "ANNUAL_CONFLICT", [], list(hits)
+            else:
+                gate_status, kept = "ANNUAL_COLUMN", kept[:top_k]
+        elif gate and self.gate is not None and hits:
             started = time.perf_counter()
             result = self.gate.check(question, hits)
             timings["gate_ms"] = round((time.perf_counter() - started) * 1000, 1)
@@ -240,7 +258,7 @@ class ReportDesk:
         A cached answer is only valid for the index it was computed on; the desk service puts this in its cache
         key, so re-ingesting a report or switching lexical/hybrid never serves an answer from the old index.
         """
-        material = {"mode": self.mode, "rows": sorted(r["source_hash"] for r in self._row_index.values())}
+        material = {"mode": self.mode, "annual_lookup": annual_cash.VERSION, "rows": sorted(r["source_hash"] for r in self._row_index.values())}
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
 
     def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
@@ -254,17 +272,21 @@ class ReportDesk:
         question, hits, kept, dropped = found["question"], found["hits"], found["kept"], found["dropped"]
         gate_status, timings = found["gate"], found["timings"]
         answer: dict[str, Any] = {"found": False, "answer": "", "citations": []}
-        if kept and self.answerer is not None:
+        period_answer = annual_cash.answer_from_period(question, kept)
+        if period_answer is not None:
+            answer = period_answer
+        elif kept and self.answerer is not None:
             started = time.perf_counter()
             answer = self.answerer(question, kept)
             timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
         by_id = {h.id: h for h in hits}
         return {
             "question": question, "mode": self.mode, "gate": gate_status,
+            "status": answer.get("status"),
             "found": bool(answer.get("found")) and bool(answer.get("citations")),
             "answer": answer.get("answer", ""),
-            "citations": [self.citation(by_id[c]) for c in answer.get("citations", []) if c in by_id],
-            "kept": [self.citation(h) for h in kept], "dropped": [self.citation(h) for h in dropped],
+            "citations": [self.citation(by_id[c], question) for c in answer.get("citations", []) if c in by_id],
+            "kept": [self.citation(h, question) for h in kept], "dropped": [self.citation(h, question) for h in dropped],
             "answerer": answer.get("model") or ("none" if self.answerer is None else "local"),
             "timings": timings,
         }

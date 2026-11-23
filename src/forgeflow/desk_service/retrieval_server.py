@@ -80,9 +80,9 @@ class RetrievalServicer(desk_pb2_grpc.ReportRetrievalServicer):
         for hit in found["kept"]:
             kept.append(desk_pb2.Hit(id=hit.id, version=hit.version, content=hit.content,
                                      source_hash=hit.source_hash, classification=hit.classification,
-                                     status=hit.status, citation=_citation(self.desk.citation(hit))))
+                                     status=hit.status, citation=_citation(self.desk.citation(hit, request.question))))
         timings = found["timings"]
-        return desk_pb2.SearchReply(kept=kept, dropped=[_citation(self.desk.citation(h)) for h in found["dropped"]],
+        return desk_pb2.SearchReply(kept=kept, dropped=[_citation(self.desk.citation(h, request.question)) for h in found["dropped"]],
                                     gate_status=found["gate"], mode=self.desk.mode,
                                     index_version=self.desk.index_version(),
                                     retrieval_ms=timings.get("retrieval_ms", 0.0), gate_ms=timings.get("gate_ms", 0.0))

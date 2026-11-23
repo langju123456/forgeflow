@@ -98,7 +98,7 @@ export function ReportDesk() {
         : await desk.ask(text, gate);
       setResult(answer);
       setLastDraft(draft);
-      setOpen(answer.citations[0] ?? answer.kept[0] ?? null);
+      setOpen(answer.citations[0] ?? answer.kept[0] ?? answer.dropped[0] ?? null);
     } catch (e) {
       setResult(null);
       setError(String((e as Error).message ?? e));
@@ -233,7 +233,7 @@ export function ReportDesk() {
             <section className="card">
               {result.found ? (
                 <div className="answer">
-                  <p className="eyebrow">回答 · 带页码引用</p>
+                  <p className="eyebrow">{result.gate === "ANNUAL_COLUMN" ? "年度原表核对" : "回答 · 带页码引用"}</p>
                   <p className="answer-text">{result.answer}</p>
                   <div className="cites">
                     {result.citations.map((c) => (
@@ -250,13 +250,13 @@ export function ReportDesk() {
                     <p className="hint">生成过草稿“{lastDraft.slice(0, 60)}{lastDraft.length > 60 ? "…" : ""}”：{WITHDRAWN_TEXT[result.status]}</p>
                   )}
                   <p className="answer-text">
-                    {result.kept.length && !info.answer_available
+                    {result.status === "PERIOD_UNVERIFIED" ? result.answer : result.kept.length && !info.answer_available
                       ? "下面是检索到的证据；本机没有回答模型，所以不生成回答。"
                       : result.status === "UNSUPPORTED" || result.status === "ANSWER_ERROR"
                         ? "没有能展示的回答。"
                         : "年报里没有找到能回答这个问题的内容。"}
                   </p>
-                  {result.dropped.length > 0 && <p className="hint">检索到 {result.dropped.length} 段相关内容，但核对后都没有写明答案，见下方“相关但不能回答”。</p>}
+                  {result.gate === "ANNUAL_CONFLICT" ? <p className="hint">年度列披露的金额不一致，请打开下方原表逐项核对。</p> : result.dropped.length > 0 && <p className="hint">检索到 {result.dropped.length} 段相关内容，但核对后都没有写明答案，见下方“相关但不能回答”。</p>}
                 </div>
               )}
               <p className="timing mono dim">
@@ -279,7 +279,7 @@ export function ReportDesk() {
               </div>
               {result.dropped.length > 0 && (
                 <>
-                  <h3 className="section-title">相关但不能回答</h3>
+                  <h3 className="section-title">{result.gate === "ANNUAL_CONFLICT" ? "有冲突的年度原格" : "相关但不能回答"}</h3>
                   <div className="evidence-list muted">
                     {result.dropped.map((c) => (
                       <CitationCard key={c.id} c={c} active={open?.id === c.id} onOpen={setOpen} />
