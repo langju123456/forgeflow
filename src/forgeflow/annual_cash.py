@@ -54,30 +54,6 @@ def read_cell(identifier: str, content: str, year: str) -> CashCell | None:
     return matches[0] if len(matches) == 1 else None
 
 
-def annual_ranker(question: str, rows: list[dict]) -> list[tuple[float, dict]]:
-    """Called by RankedKnowledgeService after the existing scope/role filter."""
-    year = requested_year(question)
-    if not year:
-        return []
-    first_by_value = {}
-    repeated = []
-    for row in sorted(rows, key=lambda item: item["id"]):
-        cell = read_cell(row["id"], row["content"], year)
-        if cell:
-            key = cell.raw.replace(",", "")
-            if key not in first_by_value:
-                first_by_value[key] = (1.0, row)
-            else:
-                repeated.append((1.0, row))
-    # Preserve a witness of each distinct value ahead of same-value duplicates.
-    return [*first_by_value.values(), *repeated]
-
-
-def differing_values(hits: Sequence[ContextHit], year: str) -> bool:
-    cells = (read_cell(h.id, h.content, year) for h in hits)
-    return len({c.raw.replace(",", "") for c in cells if c}) > 1
-
-
 def answer_from_period(question: str, hits: Sequence[ContextHit]) -> dict | None:
     year = requested_year(question)
     if not year:

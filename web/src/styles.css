@@ -194,3 +194,8 @@ dd { margin: 0; overflow-wrap: anywhere; }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes pulse { 50% { opacity: 0.55; } }
 @media (prefers-reduced-motion: reduce) { .job-step.now, .caret { animation: none; } }
+
+.fact-table { border-collapse: collapse; margin: 12px 0; width: 100%; font-variant-numeric: tabular-nums; }
+.fact-table caption { text-align: left; margin-bottom: 4px; }
+.fact-table th, .fact-table td { text-align: right; border-bottom: 1px solid var(--rule); padding: 6px; }
+.fact-table th:first-child { text-align: left; }

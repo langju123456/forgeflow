@@ -52,6 +52,7 @@ export type AskResult = {
   cached?: boolean;
   attempt?: number;
   rejected_citations?: string[];
+  calculation?: { periods: number[]; unit: string; services: number[]; total_sales: number[] };
 };
 
 /** What the page shows while a service job runs; rebuilt from the job's events. */

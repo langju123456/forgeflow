@@ -30,7 +30,7 @@ from typing import Any
 
 import grpc
 
-from .. import annual_cash
+from .. import report_lookup
 from ..analysis_provider import ProviderInvalid
 from ..cited_answer import ANSWER_SCHEMA, CitedAnswerer, build_messages, prompt_sha256
 from ..contracts import ContextHit
@@ -139,6 +139,7 @@ class Worker:
             "answer": answered.get("answer", ""),
             "citations": [by_id[c] for c in answered.get("citations", []) if c in by_id],
             "kept": kept, "dropped": dropped, "answerer": answered.get("model") or "none",
+            **({"calculation": answered["calculation"]} if "calculation" in answered else {}),
             "status": answered["status"], "timings": timings, "index_version": reply.index_version,
             "rejected_citations": answered.get("rejected_citations", []),
         }
@@ -151,9 +152,9 @@ class Worker:
 
     async def _answer(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
                       timings: dict[str, float]) -> dict[str, Any]:
-        period_answer = annual_cash.answer_from_period(question, hits)
-        if period_answer is not None:
-            return period_answer
+        lookup = report_lookup.for_question(question)
+        if lookup:
+            return lookup.answer(question, hits)
         if not hits:  # nothing to cite: "not in the reports" without calling the model
             return CitedAnswerer(_Replay(self.model.model_id, None)).answer(question, hits)
         extractor = AnswerFieldExtractor()

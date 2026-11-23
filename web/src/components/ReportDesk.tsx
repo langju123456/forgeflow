@@ -6,6 +6,7 @@ import type { AskResult, Citation, DeskInfo, JobProgress } from "../reports";
 const EXAMPLES = [
   "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
   "茅台 2025 年直销渠道的营业收入是多少？",
+  "Apple FY2025 服务收入增速和增长贡献",
   "What was Apple's products gross margin percentage in fiscal 2025?",
   "腾讯 2025 年的毛利是多少？",
   "茅台 2025 年在日本的销售收入是多少？",
@@ -154,7 +155,7 @@ export function ReportDesk() {
             </div>
             <div className="kv">
               <dt>回答</dt>
-              <dd>{info.answer_available ? "本机模型生成，只能引用给它的段落" : "只显示证据（本机没有可用的回答模型）"}</dd>
+              <dd>{info.answer_available ? "本机模型生成，只能引用给它的段落" : "年度查数与计算可用；其他问题显示检索证据"}</dd>
             </div>
           </dl>
           {info.service && info.queue && (
@@ -233,8 +234,18 @@ export function ReportDesk() {
             <section className="card">
               {result.found ? (
                 <div className="answer">
-                  <p className="eyebrow">{result.gate === "ANNUAL_COLUMN" ? "年度原表核对" : "回答 · 带页码引用"}</p>
+                  <p className="eyebrow">{result.gate === "ANNUAL_COLUMN" ? "年度原表核对" : result.calculation ? "两期经营分析" : "回答 · 带页码引用"}</p>
                   <p className="answer-text">{result.answer}</p>
+                  {result.calculation && (
+                    <table className="fact-table" aria-label="计算依据">
+                      <caption>源表金额（{result.calculation.unit}）</caption>
+                      <thead><tr><th>指标</th>{result.calculation.periods.map((y) => <th key={y}>FY{y}</th>)}</tr></thead>
+                      <tbody>
+                        <tr><th scope="row">服务收入</th>{result.calculation.services.map((n, i) => <td key={i}>{n.toLocaleString("en-US")}</td>)}</tr>
+                        <tr><th scope="row">公司总收入</th>{result.calculation.total_sales.map((n, i) => <td key={i}>{n.toLocaleString("en-US")}</td>)}</tr>
+                      </tbody>
+                    </table>
+                  )}
                   <div className="cites">
                     {result.citations.map((c) => (
                       <button key={c.id} className="cite" onClick={() => setOpen(c)}>
@@ -267,7 +278,7 @@ export function ReportDesk() {
                     : ""}
                 检索 {ms(result.timings.retrieval_ms)} · 核对 {ms(result.timings.gate_ms)} ·
                 {result.timings.first_token_ms !== undefined ? ` 首字 ${ms(result.timings.first_token_ms)} ·` : ""} 回答{" "}
-                {ms(result.timings.answer_ms)} · {result.mode === "hybrid" ? "混合检索" : "词面检索"}
+                {ms(result.timings.answer_ms)} · {["ANNUAL_COLUMN", "ANNUAL_CONFLICT", "SALES_CALCULATION"].includes(result.gate) ? "年度表格查数" : result.mode === "hybrid" ? "混合检索" : "词面检索"}
                 {result.attempt && result.attempt > 1 ? ` · 第 ${result.attempt} 次尝试完成` : ""}
               </p>
 
