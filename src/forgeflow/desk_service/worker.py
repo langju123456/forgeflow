@@ -34,6 +34,7 @@ from .. import report_lookup
 from ..analysis_provider import ProviderInvalid
 from ..cited_answer import ANSWER_SCHEMA, CitedAnswerer, build_messages, prompt_sha256
 from ..contracts import ContextHit
+from ..pdf_ingest import parse_source_line
 from . import keys
 from .events import AnswerFieldExtractor, emit
 from .model import ModelUnavailable, StreamingChatModel
@@ -122,7 +123,8 @@ class Worker:
             if error.code() in TRANSIENT_GRPC:
                 raise Transient(f"retrieval {error.code().name}: {error.details()}") from error
             raise Final(f"RETRIEVAL_{error.code().name}", error.details() or "") from error
-        kept = [_citation(h.citation) for h in reply.kept]
+        kept = [{**_citation(h.citation), "row_version": h.version, "source_hash": h.source_hash,
+                 "file_prefix": (parse_source_line(h.content) or {}).get("file_sha256_prefix")} for h in reply.kept]
         dropped = [_citation(c) for c in reply.dropped]
         timings = {"retrieval_ms": round(reply.retrieval_ms, 1)}
         if reply.gate_ms:
@@ -134,7 +136,7 @@ class Worker:
         answered = await self._answer(job_id, question, hits, attempt, timings)
         by_id = {h.id: c for h, c in zip(reply.kept, kept, strict=True)}
         result = {
-            "question": question, "mode": reply.mode, "gate": reply.gate_status,
+            "run_id": job_id, "question": question, "mode": reply.mode, "gate": reply.gate_status,
             "found": bool(answered.get("found")) and bool(answered.get("citations")),
             "answer": answered.get("answer", ""),
             "citations": [by_id[c] for c in answered.get("citations", []) if c in by_id],

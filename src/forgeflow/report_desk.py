@@ -20,9 +20,11 @@ import json
 import pickle
 import threading
 import time
+from collections import OrderedDict
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 from . import annual_cash, apple_sales, report_lookup
 from .contracts import DomainError, Principal, Scope
@@ -101,7 +103,7 @@ class ReportDesk:
             state = "missing"
             if path.exists():
                 state = "ok" if _sha256(path) == source["sha256"] else "changed"
-            out.append({**{k: source[k] for k in ("key", "company", "document", "language", "pages", "url")},
+            out.append({**{k: source[k] for k in ("key", "company", "document", "language", "pages", "url", "sha256")},
                         "state": state, "path": str(path)})
         return out
 
@@ -216,7 +218,8 @@ class ReportDesk:
         return {"id": hit.id, "doc": report["key"] if report else None,
                 "company": report["company"] if report else None,
                 "kind": row.get("kind"), "page": first.get("page"), "bbox": first.get("bbox"),
-                "snippet": body[:600]}
+                "snippet": body[:600], "file_prefix": place.get("file_sha256_prefix"),
+                "source_hash": hit.source_hash, "row_version": hit.version}
 
     def evidence(self, question: str, *, gate: bool = False, top_k: int = 5,
                  principal: Principal = ANALYST) -> dict:
@@ -266,7 +269,9 @@ class ReportDesk:
         A cached answer is only valid for the index it was computed on; the desk service puts this in its cache
         key, so re-ingesting a report or switching lexical/hybrid never serves an answer from the old index.
         """
-        material = {"mode": self.mode, "annual_lookup": [annual_cash.VERSION, apple_sales.VERSION], "rows": sorted(r["source_hash"] for r in self._row_index.values())}
+        material = {"mode": self.mode, "source_metadata_version": 1,
+                    "annual_lookup": [annual_cash.VERSION, apple_sales.VERSION],
+                    "rows": sorted(r["source_hash"] for r in self._row_index.values())}
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
 
     def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
@@ -329,8 +334,23 @@ def default_answerer() -> Callable[[str, list[Any]], dict] | None:
 
 def mount_report_desk(app: Any, desk: ReportDesk) -> None:
     """Add /reports routes to a FastAPI app. DEV_ONLY: one fixed analyst identity, local files only."""
-    from fastapi import Body, HTTPException
+    from fastapi import Body, Depends, HTTPException
     from fastapi.responses import Response
+
+    from . import research_api
+
+    recent: OrderedDict[str, dict] = OrderedDict()
+    recent_lock = threading.Lock()
+
+    async def resolve(run_id):
+        with recent_lock:
+            result = recent.get(run_id)
+        if result is None:
+            raise DomainError("RUN_EXPIRED", "请重新运行该查表问题，然后保存。", 409)
+        return research_api.fact_record(result, desk.reports, "sync")
+
+    research_api.mount(app, resolve, "sync")
+    author_dep = Depends(research_api.optional_author)
 
     def fail(error: DomainError):
         raise HTTPException(status_code=error.status, detail={"code": error.code, "message": error.message})
@@ -342,9 +362,18 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
                 "answer_available": desk.answerer is not None}
 
     @app.post("/reports/ask")
-    def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True)):
+    def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
+            actor=author_dep):
         try:
-            return desk.ask(question, gate=gate)
+            result = desk.ask(question, gate=gate)
+            if actor and result.get("found") and report_lookup.for_question(question):
+                result.update(run_id=uuid4().hex, index_version=desk.index_version())
+                with recent_lock:
+                    recent[result["run_id"]] = result
+                    if len(recent) > 128:
+                        recent.popitem(last=False)
+                result = {**result, "research_grant": research_api.store.grant_source(actor, result["run_id"], "sync")}
+            return result
         except DomainError as error:
             fail(error)
 

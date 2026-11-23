@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "case_id": "apple-services-growth-contribution-dev",
+  "split": "public-dev",
+  "draft_id": "f904f2e1a97441909d31e1971da0e386",
+  "versions": [
+    {
+      "version": 1,
+      "revision_digest": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+      "run_id": "7537b10920c54bafb83c910c213cb1ba"
+    },
+    {
+      "version": 2,
+      "revision_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": "38d39251f3444889b8001c5e4ad15e35"
+    }
+  ],
+  "roles": {
+    "dev-author": "scripted local author",
+    "dev-reviewer": "scripted local reviewer"
+  },
+  "tool": "apple-services-v1",
+  "model": null,
+  "external_cost": 0,
+  "driver": "real FastAPI ASGI + SQLite, scripted roles, verified public PDF",
+  "parse": "reused local parser output",
+  "calls": [
+    {
+      "seq": 1,
+      "path": "/reports/ask",
+      "actor": "dev-author",
+      "params": {
+        "question": "Apple FY2025 服务收入增速和增长贡献"
+      },
+      "http": 200,
+      "result_digest": null,
+      "run_id": "7537b10920c54bafb83c910c213cb1ba",
+      "elapsed_ms": 130.43
+    },
+    {
+      "seq": 2,
+      "path": "/research/drafts",
+      "actor": "dev-author",
+      "params": {
+        "note": "经营分析会：服务收入同比增长多少，拉动公司收入增量多少？",
+        "source_run_id": "7537b10920c54bafb83c910c213cb1ba"
+      },
+      "http": 200,
+      "result_digest": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+      "run_id": null,
+      "elapsed_ms": 2.96
+    },
+    {
+      "seq": 3,
+      "path": "/research/drafts",
+      "actor": "dev-author",
+      "params": {
+        "note": "经营分析会：服务收入同比增长多少，拉动公司收入增量多少？",
+        "source_run_id": "7537b10920c54bafb83c910c213cb1ba"
+      },
+      "http": 200,
+      "result_digest": "5eaf51f0a23408a3a8d1fa6ac9d1737b054c156324a154a61c028915c96e8742",
+      "run_id": null,
+      "elapsed_ms": 2.17
+    },
+    {
+      "seq": 4,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+        "action": "submit",
+        "reviewer": "dev-reviewer"
+      },
+      "http": 200,
+      "result_digest": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+      "run_id": null,
+      "elapsed_ms": 1.92
+    },
+    {
+      "seq": 5,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+        "action": "approve"
+      },
+      "http": 403,
+      "result_digest": null,
+      "run_id": null,
+      "elapsed_ms": 0.91
+    },
+    {
+      "seq": 6,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-reviewer",
+      "params": {
+        "expected": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+        "action": "return",
+        "memo": "会议只要增量贡献，请保留分母及原页。"
+      },
+      "http": 200,
+      "result_digest": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+      "run_id": null,
+      "elapsed_ms": 1.65
+    },
+    {
+      "seq": 7,
+      "path": "/reports/ask",
+      "actor": "dev-author",
+      "params": {
+        "question": "Apple FY2025 服务收入增长贡献"
+      },
+      "http": 200,
+      "result_digest": null,
+      "run_id": "38d39251f3444889b8001c5e4ad15e35",
+      "elapsed_ms": 123.35
+    },
+    {
+      "seq": 8,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/revisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+        "note": "按审阅意见仅保留贡献。分母取全公司收入增量，金额单位为百万美元。",
+        "source_run_id": "38d39251f3444889b8001c5e4ad15e35"
+      },
+      "http": 200,
+      "result_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": null,
+      "elapsed_ms": 2.52
+    },
+    {
+      "seq": 9,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+        "action": "submit",
+        "reviewer": "dev-reviewer"
+      },
+      "http": 200,
+      "result_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": null,
+      "elapsed_ms": 1.93
+    },
+    {
+      "seq": 10,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-reviewer",
+      "params": {
+        "expected": "7981396eff303253099a6250b52c43d58026f1ce82301b3919c55c46ccb3d913",
+        "action": "approve"
+      },
+      "http": 409,
+      "result_digest": null,
+      "run_id": null,
+      "elapsed_ms": 1.13
+    },
+    {
+      "seq": 11,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-reviewer",
+      "params": {
+        "expected": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+        "action": "approve"
+      },
+      "http": 200,
+      "result_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": null,
+      "elapsed_ms": 1.68
+    },
+    {
+      "seq": 12,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+        "action": "deliver"
+      },
+      "http": 200,
+      "result_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": null,
+      "elapsed_ms": 1.73
+    },
+    {
+      "seq": 13,
+      "path": "/research/drafts/f904f2e1a97441909d31e1971da0e386/decisions",
+      "actor": "dev-author",
+      "params": {
+        "expected": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+        "action": "deliver"
+      },
+      "http": 200,
+      "result_digest": "04e775dccd87ab65dfaeeab756a33221ee49e418f046fbd4e81b8309555b4e85",
+      "run_id": null,
+      "elapsed_ms": 1.29
+    }
+  ],
+  "tool_run_ids": [
+    "7537b10920c54bafb83c910c213cb1ba",
+    "38d39251f3444889b8001c5e4ad15e35"
+  ],
+  "format_comparison": {
+    "text": {
+      "utf8_bytes": 165,
+      "has_question": false,
+      "has_full_pdf_sha": false,
+      "has_all_four_amounts": false,
+      "has_revision_digest": false,
+      "model_calls": 0
+    },
+    "html": {
+      "utf8_bytes": 2864,
+      "has_question": true,
+      "has_full_pdf_sha": true,
+      "has_all_four_amounts": true,
+      "has_revision_digest": true,
+      "model_calls": 0
+    },
+    "json": {
+      "utf8_bytes": 3869,
+      "has_question": true,
+      "has_full_pdf_sha": true,
+      "has_all_four_amounts": true,
+      "has_revision_digest": true,
+      "model_calls": 0
+    }
+  },
+  "approval_comparison": {
+    "原版": {
+      "document_id": true,
+      "version_number": true,
+      "content_digest": true,
+      "assigned_reviewer_head_state": true
+    },
+    "同稿新版": {
+      "document_id": true,
+      "version_number": false,
+      "content_digest": false,
+      "assigned_reviewer_head_state": false
+    },
+    "另一份第一版": {
+      "document_id": false,
+      "version_number": true,
+      "content_digest": false,
+      "assigned_reviewer_head_state": false
+    },
+    "作者操作": {
+      "document_id": true,
+      "version_number": true,
+      "content_digest": true,
+      "assigned_reviewer_head_state": false
+    },
+    "尚未送审": {
+      "document_id": true,
+      "version_number": true,
+      "content_digest": true,
+      "assigned_reviewer_head_state": false
+    }
+  },
+  "artifact_refs": [
+    {
+      "file": "apple-review-v1.json",
+      "sha256": "842addce2a746d50a5359007cea0372df2a2412ae4cc847ad52e4715261957cc",
+      "bytes": 4389
+    },
+    {
+      "file": "apple-review-v2.json",
+      "sha256": "85e9ab9c7f8417b9b8b4a14abb29f53c8e5e7b28c4b537b15dbafefad6676a23",
+      "bytes": 4503
+    },
+    {
+      "file": "apple-review-v2.html",
+      "sha256": "1735ebcca0dfc9bb3619fe59b248b1e5202ddd75383b718d3b66ed70677e1a5f",
+      "bytes": 2938
+    }
+  ],
+  "same_bytes_on_restart": true,
+  "local_receipt": "322d02dc087252c9de3d22c698f604bfa2762d914ccb6fc0ed73d19141481bf8",
+  "model_calls": 0
+}

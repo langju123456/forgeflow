@@ -199,3 +199,17 @@ dd { margin: 0; overflow-wrap: anywhere; }
 .fact-table caption { text-align: left; margin-bottom: 4px; }
 .fact-table th, .fact-table td { text-align: right; border-bottom: 1px solid var(--rule); padding: 6px; }
 .fact-table th:first-child { text-align: left; }
+
+.research { margin-top: 1rem; }
+.research fieldset { border: 0; padding: 0; min-width: 0; }
+.research label { display: grid; gap: .3rem; margin: .8rem 0 .4rem; }
+.research :is(input, textarea) { box-sizing: border-box; width: min(100%, 36rem); padding: .5rem; font: inherit; }
+.research button { margin: .2rem .4rem .2rem 0; border: 1px solid var(--rule); border-radius: .4rem;
+  padding: .35rem .65rem; background: var(--paper, white); color: inherit; font: inherit; cursor: pointer; }
+.research button:disabled { opacity: .55; cursor: default; }
+.research button:enabled:hover { border-color: var(--accent); }
+.research summary, .research a { color: var(--accent); }
+.research details { margin: .3rem 0 .6rem; }
+.research article { border-top: 1px solid var(--rule); margin-top: .9rem; }
+.research pre { white-space: pre-wrap; font: inherit; color: var(--muted); }
+.research code, .research pre { overflow-wrap: anywhere; }

@@ -9,6 +9,7 @@ export type ReportInfo = {
   language: "zh" | "en";
   pages: number;
   url: string;
+  sha256?: string;
   state: "ok" | "missing" | "changed";
   rows?: number;
   tables?: number;
@@ -38,6 +39,9 @@ export type Citation = {
 };
 
 export type AskResult = {
+  run_id?: string;
+  request_id?: string;
+  research_grant?: string;
   question: string;
   mode: string;
   gate: string;
@@ -94,12 +98,12 @@ async function info(): Promise<DeskInfo> {
  * arrive over SSE. EventSource reconnects by itself and resumes with Last-Event-ID, so a dropped connection
  * loses no events. A draft is only a draft: the final event replaces it with the checked answer.
  */
-async function askStream(question: string, gate: boolean, onProgress: (p: JobProgress) => void): Promise<AskResult> {
+async function askStream(question: string, gate: boolean, onProgress: (p: JobProgress) => void, token?: string): Promise<AskResult> {
   const accepted = await fetch("/v2/reports/ask", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(token ? {Authorization: "Bearer " + token} : {}) },
     body: JSON.stringify({ question, gate }),
-  }).then((r) => json<{ job_id: string; state: JobProgress["state"]; events: string }>(r));
+  }).then((r) => json<{ job_id: string; state: JobProgress["state"]; events: string; research_grant?: string }>(r));
   const progress: JobProgress = {
     state: accepted.state, stage: "queued", attempt: 0, draft: "", kept: [], retryReason: null,
     startedAt: performance.now(), firstTokenAt: null,
@@ -126,7 +130,7 @@ async function askStream(question: string, gate: boolean, onProgress: (p: JobPro
     source.addEventListener("final", (e) => {
       source.close();
       push({ stage: "done" });
-      resolve(data(e) as AskResult);
+      resolve({ ...(data(e) as AskResult), request_id: accepted.job_id, research_grant: accepted.research_grant });
     });
     source.addEventListener("error", (e) => {
       const raw = (e as MessageEvent).data;
@@ -142,10 +146,10 @@ export const desk = {
   info,
   isService: () => serviceMode,
   askStream,
-  ask: (question: string, gate: boolean) =>
+  ask: (question: string, gate: boolean, token?: string) =>
     fetch("/reports/ask", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(token ? {Authorization: "Bearer " + token} : {}) },
       body: JSON.stringify({ question, gate }),
     }).then((r) => json<AskResult>(r)),
   pageUrl: (c: Citation) =>

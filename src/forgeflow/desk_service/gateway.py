@@ -28,9 +28,10 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 import grpc
-from fastapi import Body, HTTPException, Request
+from fastapi import Body, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 
+from .. import report_lookup
 from ..cited_answer import prompt_sha256
 from . import keys
 from .config import DeskConfig
@@ -194,13 +195,31 @@ def mount_desk_gateway(app: Any, gateway_factory) -> None:
     FastAPI reads these handlers' annotations from this module's globals (``from __future__ import annotations``
     turns them into strings), which is why Body, Request and the responses are imported at module level.
     """
+    from .. import research_api
+    from ..contracts import DomainError
+
+    async def resolve(run_id):
+        gateway = gateway_factory()
+        job = await gateway.job(run_id)
+        if not job or job.get("status") != "done":
+            raise DomainError("RUN_EXPIRED", "找不到已完成的任务，请重新运行查询。", 409)
+        catalogue = await gateway.info()
+        return research_api.fact_record(job["result"], catalogue["reports"], "service") | {"request_id": run_id}
+
+    research_api.mount(app, resolve, "service")
+    author_dep = Depends(research_api.optional_author)
+
     @app.post("/v2/reports/ask")
-    async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True)):
+    async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
+                  actor=author_dep):
         status, body = await gateway_factory().ask(question, gate)
         if status >= 400:
             headers = {"Retry-After": "5"} if status in {429, 503} else None
             return JSONResponse({"detail": body}, status_code=status, headers=headers)
-        return JSONResponse(body, status_code=status)
+        if actor and report_lookup.for_question(question):
+            grant = research_api.call(research_api.store.grant_source, actor, body["job_id"], "service")
+            body = {**body, "research_grant": grant}
+        return JSONResponse(body, status_code=status, headers={"Cache-Control": "no-store"})
 
     @app.get("/v2/jobs/{job_id}")
     async def job(job_id: str):

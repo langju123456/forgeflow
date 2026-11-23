@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ResearchDesk } from "./ResearchDesk";
 import { desk, ms, snippetLines, STAGES, stageIndex, STATE_TEXT, WITHDRAWN_TEXT } from "../reports";
 import type { AskResult, Citation, DeskInfo, JobProgress } from "../reports";
 
@@ -57,6 +58,14 @@ export function ReportDesk() {
   const [open, setOpen] = useState<Citation | null>(null);
   const [progress, setProgress] = useState<JobProgress | null>(null);
   const [lastDraft, setLastDraft] = useState("");
+  const [researchToken, setResearchToken] = useState<string>();
+  const identityEpoch = useRef(0);
+
+  function switchIdentity(token?: string) {
+    identityEpoch.current += 1;
+    setResearchToken(token); setResult(null); setProgress(null); setOpen(null);
+    setQuestion(""); setLastDraft(""); setError(null); setBusy(false);
+  }
 
   useEffect(() => {
     let stop = false;
@@ -81,6 +90,7 @@ export function ReportDesk() {
 
   const ask = async (text: string) => {
     if (!text.trim() || !ready) return;
+    const epoch = identityEpoch.current;
     setQuestion(text);
     setBusy(true);
     setError(null);
@@ -92,19 +102,22 @@ export function ReportDesk() {
       let draft = "";
       const answer = info?.service
         ? await desk.askStream(text, gate, (p) => {
+            if (epoch !== identityEpoch.current) return;
             draft = p.draft;
             setProgress(p);
             if (p.kept.length) setOpen((current) => current ?? p.kept[0]);
-          })
-        : await desk.ask(text, gate);
+          }, researchToken)
+        : await desk.ask(text, gate, researchToken);
+      if (epoch !== identityEpoch.current) return;
       setResult(answer);
       setLastDraft(draft);
       setOpen(answer.citations[0] ?? answer.kept[0] ?? answer.dropped[0] ?? null);
     } catch (e) {
+      if (epoch !== identityEpoch.current) return;
       setResult(null);
       setError(String((e as Error).message ?? e));
     } finally {
-      setBusy(false);
+      if (epoch === identityEpoch.current) setBusy(false);
     }
   };
 
@@ -313,6 +326,7 @@ export function ReportDesk() {
             </section>
           </div>
         )}
+        <ResearchDesk result={result} info={info} onIdentity={switchIdentity} />
       </section>
     </main>
   );
