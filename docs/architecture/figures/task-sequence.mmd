@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant U as 分析师
+  participant F as ForgeFlow
+  participant H as 独立环境/收件端
+  participant E as EvidenceLoop
+  U->>F: 公司、期间、问题和完成标准
+  F->>F: 取证 → 选式 → 计算 → 保存版本
+  F-->>U: 展示原表、公式与稿件
+  U->>F: 修改口径，审阅指定版本
+  F->>H: 同一动作键 + payload digest
+  H->>H: 原子记录收件
+  Note over F,H: 故障：响应丢失，客户端中断
+  F->>H: 恢复后查询原动作键
+  H-->>F: 已收到的版本与 digest
+  F->>F: 对账完成，避免重复交付
+  H->>E: 独立终态与分项证据
+  F->>E: 同一 run 的轨迹与产物
+  E-->>U: 旧版与候选版差异和发布建议

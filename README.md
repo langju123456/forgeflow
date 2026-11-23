@@ -1,5 +1,15 @@
 # ForgeFlow
 
+<!-- ARCHITECTURE-RESEARCH-20261123 -->
+## 架构、模块职责与研究报告
+
+[中文架构说明](docs/architecture/README.zh.md) · [可编辑总图](docs/architecture/figures/overall.mmd)
+
+![三项目总架构](docs/architecture/figures/overall.svg)
+
+实线为已有实现或离线记录接入，虚线为目标链路。文档固定到 2026-11-23 的代码快照，完整同一 run 业务联调尚待验收。
+<!-- /ARCHITECTURE-RESEARCH-20261123 -->
+
 [企业年报研究工作台的实施进度、验收与证据](docs/annual-report-workbench.md)
 
 **English summary.** ForgeFlow is a local, evidence-first prototype of the control plane an enterprise agent needs before it is allowed to act: durable runs with fenced leases, MCP tool calls into a locked-down Docker sandbox, permission filtering before retrieval, deterministic stage-gate rules, bounded local-LLM analysis whose output is data rather than authority, approvals bound to evidence hashes, and crash-safe action receipts. The scenario is a synthetic hardware EVT readiness review. Everything runs on one machine against synthetic data; it is not a production system and is not connected to real hardware, trackers or office tools. The rest of this page is in Chinese.
