@@ -34,10 +34,9 @@ def scene(tmp_path, monkeypatch):
     d.store.put_document(LOADER, SCOPE, annual_cash.DOCUMENT + "#p11-t1", "v1", text, ["finance"], 1)
     app = FastAPI()
     mount_report_desk(app, d)
-    client = TestClient(app, client=("127.0.0.1", 40000))
-    result = client.post("/reports/ask", headers=users["a"], json={"question": Q}).json()
-    yield client, users, d, result
-    client.close()
+    with TestClient(app, client=("127.0.0.1", 40000)) as client:
+        result = client.post("/reports/ask", headers=users["a"], json={"question": Q}).json()
+        yield client, users, d, result
 
 
 def test_private_revision_flow_and_restart(scene):
@@ -155,3 +154,88 @@ def test_metric_patch_preserves_other_checked_apple_fact_and_marks_the_rechecked
         with pytest.raises(research_api.DomainError) as exc:
             research_api.merge_metric_update(base, {**incoming, key: value})
         assert exc.value.code == "METRIC_PATCH_UNAVAILABLE"
+
+
+@pytest.mark.parametrize("failure,code", [("process", 503), ("protocol", 502)])
+def test_mcp_failure_never_creates_source_grant(scene, monkeypatch, failure, code):
+    from forgeflow.report_plugin import ReportProcessError, ReportProtocolError
+    client, users, _, _ = scene
+    with sqlite3.connect(research_store.root_path() / "research.sqlite3") as connection:
+        before = connection.execute("SELECT count(*) FROM source_request").fetchone()[0]
+    error = ReportProcessError if failure == "process" else ReportProtocolError
+    monkeypatch.setattr(client.app.state.report_runtime, "call", AsyncMock(side_effect=error("injected")))
+    response = client.post("/reports/ask", headers=users["a"], json={"question": Q})
+    assert response.status_code == code and "research_grant" not in response.json()
+    with sqlite3.connect(research_store.root_path() / "research.sqlite3") as connection:
+        assert connection.execute("SELECT count(*) FROM source_request").fetchone()[0] == before
+
+
+@pytest.mark.parametrize("field", ["answer", "source_hash", "row_version", "page", "denied_hook", "missing_trace"])
+def test_tampered_trace_or_outward_result_cannot_become_evidence(scene, field):
+    _, _, desk, original = scene
+    result = deepcopy(original)
+    if field == "answer":
+        result["answer"] = "forged"
+    elif field in {"source_hash", "row_version"}:
+        result["citations"][0][field] = "forged"
+    elif field == "page":
+        result["citations"][0]["page"] = 999
+    elif field == "denied_hook":
+        result["tool_trace"]["events"][0]["status"] = "denied"
+    else:
+        result.pop("tool_trace")
+    with pytest.raises(research_api.DomainError) as error:
+        research_api.fact_record(result, desk.reports, "sync")
+    assert error.value.code == "SOURCE_CHANGED"
+
+
+def test_service_delays_grant_until_verified_completion_and_requester(scene):
+    from types import SimpleNamespace
+
+    from forgeflow.desk_service.gateway import mount_desk_gateway
+    c, users, desk, answer = scene
+    proxy = AsyncMock()
+    proxy.config = SimpleNamespace(job_ttl_s=3600)
+    proxy.ask.return_value = 202, {"job_id": "queued-job", "state": "queued"}
+    proxy.job.return_value = {"status": "queued"}
+    proxy.info.return_value = {"reports": desk.reports}
+    members = set()
+    async def add(key, subject):
+        members.add((key, subject))
+    async def has(key, subject):
+        return (key, subject) in members
+    proxy.redis.sadd.side_effect = add
+    proxy.redis.sismember.side_effect = has
+    app = FastAPI()
+    mount_desk_gateway(app, lambda: proxy)
+    def count():
+        with sqlite3.connect(research_store.root_path() / "research.sqlite3") as connection:
+            return connection.execute("SELECT count(*) FROM source_request").fetchone()[0]
+    before = count()
+    path = "/v2/jobs/queued-job/research-grant"
+    with TestClient(app, client=("127.0.0.1", 41001)) as gateway:
+        queued = gateway.post("/v2/reports/ask", headers=users["a"], json={"question": Q})
+        assert queued.status_code == 202 and queued.json()["research_grant_pending"]
+        assert "research_grant" not in queued.json() and count() == before
+        assert gateway.post(path, headers=users["a"]).status_code == 409
+        assert gateway.post(path, headers=users["b"]).status_code == 404
+        assert gateway.post(path, headers=users["r"]).status_code == 403
+        assert gateway.post(path).status_code == 401
+        assert count() == before
+        proxy.job.return_value = {"status": "failed"}
+        assert gateway.post(path, headers=users["a"]).status_code == 409
+        bad = deepcopy(answer)
+        bad["tool_trace"]["events"][0]["status"] = "denied"
+        proxy.job.return_value = {"status": "done", "result": bad}
+        assert gateway.post(path, headers=users["a"]).status_code == 409
+        cached_bad = gateway.post("/v2/reports/ask", headers=users["a"], json={"question": Q}).json()
+        assert "research_grant" not in cached_bad and cached_bad["research_grant_error"]
+        assert count() == before
+        proxy.job.return_value = {"status": "done", "result": answer}
+        granted = gateway.post(path, headers=users["a"])
+        assert granted.status_code == 200 and granted.headers["cache-control"] == "no-store"
+        assert count() == before + 1
+        assert gateway.post("/research/drafts", headers=users["a"],
+                            json={"grant_id": granted.json()["research_grant"]}).status_code == 200
+        assert gateway.get(path, headers=users["a"]).status_code == 405
+        assert count() == before + 1

@@ -104,6 +104,7 @@ class Worker:
         self.clock = clock
         self.channel: Any = None
         self._tasks: set[asyncio.Task] = set()
+        self._report_runtime = None
 
     # ------------------------------------------------------------------ one job
     async def process(self, job: dict[str, Any], attempt: int) -> dict[str, Any]:
@@ -133,7 +134,25 @@ class Worker:
                                                      "mode": reply.mode, "timings": timings},
                    attempt=attempt, ttl_s=self.config.job_ttl_s)
         hits = [_hit(h) for h in reply.kept]
-        answered = await self._answer(job_id, question, hits, attempt, timings)
+        tool_trace = None
+        if report_lookup.for_question(question):
+            from ..report_plugin import ReportProcessError, ReportProtocolError, ReportRuntime
+            from ..report_plugin import run as run_report_tool
+
+            tool_hits = [{"id": h.id, "version": h.version, "content": h.content,
+                          "source_hash": h.source_hash, "classification": h.classification, "status": h.status}
+                         for h in hits]
+            self._report_runtime = self._report_runtime or ReportRuntime()
+            try:
+                answered, tool_trace = await run_report_tool(
+                    question, tool_hits, index_version=reply.index_version, run_id=job_id, attempt=attempt,
+                    journal_dir=self.config.work_dir, runtime=self._report_runtime)
+            except ReportProcessError as exc:
+                raise Transient("annual-report plugin unavailable") from exc
+            except ReportProtocolError as exc:
+                raise Final("REPORT_TOOL_PROTOCOL", "annual-report tool result rejected") from exc
+        else:
+            answered = await self._answer(job_id, question, hits, attempt, timings)
         by_id = {h.id: c for h, c in zip(reply.kept, kept, strict=True)}
         result = {
             "run_id": job_id, "question": question, "mode": reply.mode, "gate": reply.gate_status,
@@ -145,6 +164,9 @@ class Worker:
             "status": answered["status"], "timings": timings, "index_version": reply.index_version,
             "rejected_citations": answered.get("rejected_citations", []),
         }
+        if tool_trace is not None:
+            result["tool_trace"] = tool_trace
+            result["answerer"] = answered.get("tool_version", "report-plugin-v1")
         if reply.index_version != job["index_version"]:
             # The index changed between enqueue and now: cache under the key of the index actually used.
             result["cache_key"] = keys.cache_key(
@@ -265,7 +287,22 @@ class Worker:
             routing_key=queue)
 
     # ------------------------------------------------------------------ loop
+    async def close(self) -> None:
+        if self._report_runtime is not None:
+            await self._report_runtime.close()
+            self._report_runtime = None
+
     async def run(self, stop: asyncio.Event | None = None) -> None:
+        try:
+            await self._consume(stop)
+        finally:
+            for task in list(self._tasks):
+                task.cancel()
+            if self._tasks:
+                await asyncio.gather(*list(self._tasks), return_exceptions=True)
+            await self.close()
+
+    async def _consume(self, stop: asyncio.Event | None = None) -> None:
         import aio_pika
 
         stop = stop or asyncio.Event()

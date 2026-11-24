@@ -269,7 +269,9 @@ class ReportDesk:
         A cached answer is only valid for the index it was computed on; the desk service puts this in its cache
         key, so re-ingesting a report or switching lexical/hybrid never serves an answer from the old index.
         """
-        material = {"mode": self.mode, "source_metadata_version": 1,
+        from .report_plugin import RUNTIME_VERSION
+
+        material = {"mode": self.mode, "source_metadata_version": 1, "report_runtime": RUNTIME_VERSION,
                     "annual_lookup": [annual_cash.VERSION, apple_sales.VERSION],
                     "rows": sorted(r["source_hash"] for r in self._row_index.values())}
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
@@ -282,8 +284,7 @@ class ReportDesk:
         was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
         """
         found = self.evidence(question, gate=gate, top_k=top_k)
-        question, hits, kept, dropped = found["question"], found["hits"], found["kept"], found["dropped"]
-        gate_status, timings = found["gate"], found["timings"]
+        question, kept, timings = found["question"], found["kept"], found["timings"]
         answer: dict[str, Any] = {"found": False, "answer": "", "citations": []}
         lookup = report_lookup.for_question(question)
         if lookup:
@@ -292,18 +293,26 @@ class ReportDesk:
             started = time.perf_counter()
             answer = self.answerer(question, kept)
             timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
-        by_id = {h.id: h for h in hits}
-        return {
-            "question": question, "mode": self.mode, "gate": gate_status,
-            "status": answer.get("status"),
+        return self.assemble(found, answer)
+
+    def assemble(self, found: dict, answer: dict, *, run_id=None, index_version=None, tool_trace=None) -> dict:
+        """Map only independently retrieved row IDs back to citation objects."""
+        question, hits = found["question"], found["hits"]
+        by_id = {hit.id: hit for hit in hits}
+        result = {
+            "question": question, "mode": self.mode, "gate": found["gate"], "status": answer.get("status"),
             **({"calculation": answer["calculation"]} if "calculation" in answer else {}),
             "found": bool(answer.get("found")) and bool(answer.get("citations")),
             "answer": answer.get("answer", ""),
             "citations": [self.citation(by_id[c], question) for c in answer.get("citations", []) if c in by_id],
-            "kept": [self.citation(h, question) for h in kept], "dropped": [self.citation(h, question) for h in dropped],
-            "answerer": answer.get("model") or ("none" if self.answerer is None else "local"),
-            "timings": timings,
+            "kept": [self.citation(h, question) for h in found["kept"]],
+            "dropped": [self.citation(h, question) for h in found["dropped"]],
+            "answerer": answer.get("tool_version") or answer.get("model") or ("none" if self.answerer is None else "local"),
+            "timings": found["timings"],
         }
+        if tool_trace is not None:
+            result.update(run_id=run_id, index_version=index_version, tool_trace=tool_trace)
+        return result
 
     def page_png(self, key: str, page: int, box: list[float] | None, resolution: int = 110) -> bytes:
         import pdfplumber
@@ -334,10 +343,14 @@ def default_answerer() -> Callable[[str, list[Any]], dict] | None:
 
 def mount_report_desk(app: Any, desk: ReportDesk) -> None:
     """Add /reports routes to a FastAPI app. DEV_ONLY: one fixed analyst identity, local files only."""
+    import asyncio
+
     from fastapi import Body, Depends, HTTPException
     from fastapi.responses import Response
 
     from . import research_api
+    from .report_plugin import ReportProcessError, ReportProtocolError, ReportRuntime
+    from .report_plugin import run as run_report_tool
 
     recent: OrderedDict[str, dict] = OrderedDict()
     recent_lock = threading.Lock()
@@ -350,6 +363,9 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
         return research_api.fact_record(result, desk.reports, "sync")
 
     research_api.mount(app, resolve, "sync")
+    runtime = ReportRuntime()
+    app.state.report_runtime = runtime
+    app.router.on_shutdown.append(runtime.close)
     author_dep = Depends(research_api.optional_author)
 
     def fail(error: DomainError):
@@ -362,18 +378,32 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
                 "answer_available": desk.answerer is not None}
 
     @app.post("/reports/ask")
-    def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
-            actor=author_dep):
+    async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True), actor=author_dep):
         try:
-            result = desk.ask(question, gate=gate)
+            if report_lookup.for_question(question):
+                found = await asyncio.to_thread(desk.evidence, question, gate=gate)
+                run_id, index_version = uuid4().hex, desk.index_version()
+                started = time.perf_counter()
+                answer, trace = await run_report_tool(
+                    found["question"], [h.model_dump() for h in found["kept"]], run_id=run_id,
+                    index_version=index_version, journal_dir=desk.work_dir, runtime=runtime)
+                found["timings"]["tool_ms"] = round((time.perf_counter() - started) * 1000, 1)
+                result = desk.assemble(found, answer, run_id=run_id, index_version=index_version, tool_trace=trace)
+            else:
+                result = await asyncio.to_thread(desk.ask, question, gate=gate)
             if actor and result.get("found") and report_lookup.for_question(question):
-                result.update(run_id=uuid4().hex, index_version=desk.index_version())
+                # Revalidate outward/trace agreement before creating a source grant.
+                research_api.fact_record(result, desk.reports, "sync")
                 with recent_lock:
                     recent[result["run_id"]] = result
                     if len(recent) > 128:
                         recent.popitem(last=False)
                 result = {**result, "research_grant": research_api.store.grant_source(actor, result["run_id"], "sync")}
             return result
+        except ReportProcessError:
+            raise HTTPException(503, detail={"code": "REPORT_TOOL_PROCESS", "message": "查表工具暂时不可用，请稍后重试。"}) from None
+        except ReportProtocolError:
+            raise HTTPException(502, detail={"code": "REPORT_TOOL_PROTOCOL", "message": "工具结果未通过校验，未生成入稿许可。"}) from None
         except DomainError as error:
             fail(error)
 

@@ -42,6 +42,7 @@ export type AskResult = {
   run_id?: string;
   request_id?: string;
   research_grant?: string;
+  research_grant_error?: string;
   question: string;
   mode: string;
   gate: string;
@@ -103,7 +104,8 @@ async function askStream(question: string, gate: boolean, onProgress: (p: JobPro
     method: "POST",
     headers: { "Content-Type": "application/json", ...(token ? {Authorization: "Bearer " + token} : {}) },
     body: JSON.stringify({ question, gate }),
-  }).then((r) => json<{ job_id: string; state: JobProgress["state"]; events: string; research_grant?: string }>(r));
+  }).then((r) => json<{ job_id: string; state: JobProgress["state"]; events: string; research_grant?: string;
+    research_grant_pending?: boolean; research_grant_error?: string }>(r));
   const progress: JobProgress = {
     state: accepted.state, stage: "queued", attempt: 0, draft: "", kept: [], retryReason: null,
     startedAt: performance.now(), firstTokenAt: null,
@@ -115,6 +117,7 @@ async function askStream(question: string, gate: boolean, onProgress: (p: JobPro
   push({});
   return new Promise<AskResult>((resolve, reject) => {
     const source = new EventSource(accepted.events);
+    let finalReceived = false;
     const data = (e: Event) => JSON.parse((e as MessageEvent).data);
     source.addEventListener("started", (e) => {
       const d = data(e);
@@ -127,10 +130,24 @@ async function askStream(question: string, gate: boolean, onProgress: (p: JobPro
       push({ draft: progress.draft + data(e).text });
     });
     source.addEventListener("retrying", (e) => push({ stage: "retrying", retryReason: data(e).reason }));
-    source.addEventListener("final", (e) => {
+    source.addEventListener("final", async (e) => {
+      if (finalReceived) return;
+      finalReceived = true;
       source.close();
       push({ stage: "done" });
-      resolve({ ...(data(e) as AskResult), request_id: accepted.job_id, research_grant: accepted.research_grant });
+      const result = { ...(data(e) as AskResult), request_id: accepted.job_id,
+        research_grant: accepted.research_grant, research_grant_error: accepted.research_grant_error };
+      if (token && accepted.research_grant_pending && !result.research_grant) {
+        try {
+          const grant = await fetch(`/v2/jobs/${encodeURIComponent(accepted.job_id)}/research-grant`, {
+            method: "POST", headers: { Authorization: "Bearer " + token },
+          }).then((r) => json<{research_grant: string}>(r));
+          result.research_grant = grant.research_grant;
+        } catch (error) {
+          result.research_grant_error = error instanceof Error ? error.message : "暂时无法入稿，请重新查询。";
+        }
+      }
+      resolve(result);
     });
     source.addEventListener("error", (e) => {
       const raw = (e as MessageEvent).data;

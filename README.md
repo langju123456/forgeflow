@@ -6,6 +6,8 @@
 
 [工作台与架构](docs/annual-report-workbench.md) · [局部修订](preparation/annual-report-workbench/DECISION-006-multi-metric-scoped-recheck.md) · [性能结果与边界](preparation/annual-report-workbench/DECISION-007-local-performance-boundary.md)
 
+[Manus 模块接入架构与复现](docs/manus-runtime-integration.md)：正常年报查询与服务 worker 调用固定 MCP 工具；调用轨迹绑定审批导出；固定只读 PTY 校验与 EvidenceLoop 原生评测接入。
+
 下方保留企业受控执行与早期合成硬件场景的实现和验收记录。
 
 

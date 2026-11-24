@@ -47,3 +47,7 @@ def job(job_id: str) -> str:
 
 def events(job_id: str) -> str:
     return f"{PREFIX}:events:{job_id}"
+
+
+def research_requesters(job_id: str) -> str:
+    return f"{PREFIX}:research-requesters:{job_id}"

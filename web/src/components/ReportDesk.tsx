@@ -249,6 +249,7 @@ export function ReportDesk() {
                 <div className="answer">
                   <p className="eyebrow">{result.gate === "ANNUAL_COLUMN" ? "年度原表核对" : result.calculation ? "两期经营分析" : "回答 · 带页码引用"}</p>
                   <p className="answer-text">{result.answer}</p>
+                  {result.research_grant_error && <p role="status">入稿未就绪：{result.research_grant_error}</p>}
                   {result.calculation && (
                     <table className="fact-table" aria-label="计算依据">
                       <caption>源表金额（{result.calculation.unit}）</caption>

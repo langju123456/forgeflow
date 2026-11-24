@@ -208,6 +208,7 @@ def mount_desk_gateway(app: Any, gateway_factory) -> None:
 
     research_api.mount(app, resolve, "service")
     author_dep = Depends(research_api.optional_author)
+    identity_dep = Depends(research_api.identity)
 
     @app.post("/v2/reports/ask")
     async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
@@ -217,9 +218,33 @@ def mount_desk_gateway(app: Any, gateway_factory) -> None:
             headers = {"Retry-After": "5"} if status in {429, 503} else None
             return JSONResponse({"detail": body}, status_code=status, headers=headers)
         if actor and report_lookup.for_question(question):
-            grant = research_api.call(research_api.store.grant_source, actor, body["job_id"], "service")
-            body = {**body, "research_grant": grant}
+            gateway = gateway_factory()
+            intent_key = keys.research_requesters(body["job_id"])
+            await gateway.redis.sadd(intent_key, actor["subject"])
+            await gateway.redis.expire(intent_key, gateway.config.job_ttl_s)
+            job = await gateway.job(body["job_id"])
+            body = {**body, "research_grant_pending": True}
+            if job and job.get("status") == "done":
+                try:
+                    await resolve(body["job_id"])
+                    grant = research_api.call(research_api.store.grant_source, actor, body["job_id"], "service")
+                    body.update(research_grant=grant, research_grant_pending=False)
+                except DomainError:
+                    body.update(research_grant_pending=False, research_grant_error="结果未通过入稿校验，请重新查询。")
         return JSONResponse(body, status_code=status, headers={"Cache-Control": "no-store"})
+
+    @app.post("/v2/jobs/{job_id}/research-grant")
+    async def research_grant(job_id: str, actor=identity_dep):
+        research_api.call(research_api.store.role_is, actor, "author")
+        gateway = gateway_factory()
+        if not await gateway.redis.sismember(keys.research_requesters(job_id), actor["subject"]):
+            raise HTTPException(404, detail={"code": "NOT_FOUND", "message": "查询已过期或不属于当前研究员。"})
+        try:
+            await resolve(job_id)
+        except DomainError as error:
+            raise HTTPException(error.status, detail={"code": error.code, "message": str(error)}) from error
+        grant = research_api.call(research_api.store.grant_source, actor, job_id, "service")
+        return JSONResponse({"job_id": job_id, "research_grant": grant}, headers={"Cache-Control": "no-store"})
 
     @app.get("/v2/jobs/{job_id}")
     async def job(job_id: str):

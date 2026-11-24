@@ -13,6 +13,7 @@ from pydantic import Field
 from . import annual_cash, apple_sales
 from . import research_store as store
 from .contracts import DomainError, StrictModel, canonical, digest
+from .pdf_ingest import parse_source_line
 
 Short = Annotated[str, Field(min_length=1, max_length=128)]
 Head = Annotated[str, Field(pattern="^[0-9a-f]{64}$")]
@@ -44,14 +45,51 @@ def fact_record(result, reports, transport):
         raise DomainError("UNVERIFIED", "只能保存已核年度原格或已核收入计算。", 422)
     report = next((r for r in reports if r["key"] == spec[1] and r["state"] == "ok"), None)
     citations = result.get("citations") or []
-    if not report or not citations or not result.get("run_id") or not result.get("index_version"):
-        raise DomainError("SOURCE_CHANGED", "来源版本不完整，请重新查询已校验的年报。", 409)
+    trace = result.get("tool_trace")
+    try:
+        from .report_plugin import ReportProtocolError, validate_input, validate_result
+        from .report_trace import TOOL_NAME, TRACE_VERSION, call_input
+
+        if (not report or not citations or not result.get("run_id") or not result.get("index_version")
+                or not isinstance(trace, dict) or trace.get("schema_version") != TRACE_VERSION
+                or trace.get("producer") != {"name": "forgeflow.report_plugin", "version": "v1"}
+                or trace.get("terminal_state") != "success" or trace.get("run_id") != result["run_id"]
+                or trace.get("index_version") != result["index_version"]):
+            raise ValueError("trace identity mismatch")
+        events = trace["events"]
+        call_id = trace["result"]["call_id"]
+        if (not events or any(e.get("event_id") != f"{trace['trace_id']}:{i}"
+                              or e.get("seq") != i or e.get("call_id") != call_id or e.get("tool") != TOOL_NAME
+                              or e.get("status") != "ok"
+                              for i, e in enumerate(events, 1))
+                or [e.get("kind") for e in events] != ["hook_decision", "tool_call", "tool_result"]):
+            raise ValueError("trace event chain mismatch")
+        call = call_input(call_id, trace["request"]["question"], trace["index_version"], trace["request"]["hits"])
+        validate_input(call)
+        checked = validate_result(trace["result"], call)
+        if (trace["request"]["input_sha256"] != checked["input_sha256"]
+                or events[1].get("arguments", {}).get("input_sha256") != checked["input_sha256"]
+                or events[2].get("result", {}).get("output_sha256") != checked["output_sha256"]
+                or call["question"] != result["question"] or checked["answer"] != result["answer"]
+                or checked.get("calculation") != result.get("calculation")
+                or checked["tool_version"] != result["answerer"]
+                or checked["citations"] != [c["id"] for c in citations]):
+            raise ValueError("outward result differs from tool trace")
+    except (KeyError, TypeError, ValueError, IndexError, ReportProtocolError) as exc:
+        raise DomainError("SOURCE_CHANGED", "工具轨迹与结果不一致，请重新查询已校验的年报。", 409) from exc
     sha = report.get("sha256", "")
     if not re.fullmatch("[a-f0-9]{64}", sha):
         raise DomainError("SOURCE_CHANGED", "缺少年报完整指纹。", 409)
     for citation in citations:
+        hit = next((h for h in call["hits"] if h["id"] == citation.get("id")), None)
+        location = re.fullmatch(rf"{re.escape(spec[1])}#p(\d+)-.+", citation.get("id", ""))
+        source = parse_source_line(hit["content"]) if hit else None
         if (citation.get("doc") != spec[1] or citation.get("file_prefix") != sha[:16] or
-                not citation.get("source_hash") or not citation.get("row_version") or not citation.get("page")):
+                not hit or citation.get("source_hash") != hit["source_hash"] or
+                citation.get("row_version") != hit["version"] or not location or
+                citation.get("page") != int(location.group(1)) or
+                (source and (source["file_sha256_prefix"] != sha[:16] or
+                             citation["page"] not in [p["page"] for p in source["pages"]]))):
             raise DomainError("SOURCE_CHANGED", "原格与当前年报指纹不一致，请重新查询。", 409)
     return {"schema_version": "forgeflow.research.evidence.v1", "case_id": spec[0], "split": "public-dev",
             "run_id": result["run_id"], "question": result["question"], "answer": result["answer"],
@@ -60,7 +98,7 @@ def fact_record(result, reports, transport):
             "index_version": result["index_version"], "transport": transport, "model": None, "model_calls": 0,
             "external_cost": 0, "timings": result["timings"], "cached": bool(result.get("cached")),
             "attempt": result.get("attempt"), "source_scope": "local/reports/annual-reports",
-            "checks": {"gate": result["gate"], "state": result["status"]}}
+            "checks": {"gate": result["gate"], "state": result["status"]}, "tool_trace": trace}
 
 
 def merge_metric_update(previous, incoming):

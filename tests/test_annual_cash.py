@@ -101,13 +101,15 @@ async def test_worker_delivers_checked_grpc_citations_in_final_event(desk, confl
     message.body = json.dumps(job).encode()
     try:
         async with grpc.aio.insecure_channel(f"127.0.0.1:{port}") as channel:
-            worker = Worker(DeskConfig(), redis, desk_pb2_grpc.ReportRetrievalStub(channel),
+            worker = Worker(DeskConfig(work_dir=str(desk.work_dir)), redis, desk_pb2_grpc.ReportRetrievalStub(channel),
                             SimpleNamespace(model=job["model"]))
             await worker.handle(message)
         message.ack.assert_awaited_once()
         events = [call.args[1] for call in redis.xadd.await_args_list]
         assert events[-1]["type"] == "final"
         result = json.loads(events[-1]["data"])
+        assert result["tool_trace"]["terminal_state"] == "success"
+        assert result["tool_trace"]["events"][-1]["result"]["receipt"]["transport"] == "stdio"
         assert result["gate"] == ("ANNUAL_CONFLICT" if conflict else "ANNUAL_COLUMN")
         assert result["found"] is not conflict
         if conflict:
@@ -116,4 +118,6 @@ async def test_worker_delivers_checked_grpc_citations_in_final_event(desk, confl
             assert result["citations"] == result["kept"]
             assert result["citations"][0]["id"] == f"{cash.DOCUMENT}#p11-t1"
     finally:
+        if "worker" in locals():
+            await worker.close()
         server.stop(0).wait()
