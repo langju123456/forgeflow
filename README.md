@@ -1,5 +1,14 @@
 # ForgeFlow
 
+## 当前年报工作台（2026-11-24）
+
+最新切片：双指标稿件的局部重查、重新审批与导出，以及四份真实年报、6,425段内容的本机性能基准。空解析缓存加载38.9秒，复用解析缓存9.8秒；三请求词面并发未提速。组件结果不含模型/HTTP服务容量，也不是生产SLA。
+
+[工作台与架构](docs/annual-report-workbench.md) · [局部修订](preparation/annual-report-workbench/DECISION-006-multi-metric-scoped-recheck.md) · [性能结果与边界](preparation/annual-report-workbench/DECISION-007-local-performance-boundary.md)
+
+下方保留企业受控执行与早期合成硬件场景的实现和验收记录。
+
+
 [企业年报研究工作台的实施进度、验收与证据](docs/annual-report-workbench.md)
 
 **English summary.** ForgeFlow is a local, evidence-first prototype of the control plane an enterprise agent needs before it is allowed to act: durable runs with fenced leases, MCP tool calls into a locked-down Docker sandbox, permission filtering before retrieval, deterministic stage-gate rules, bounded local-LLM analysis whose output is data rather than authority, approvals bound to evidence hashes, and crash-safe action receipts. The scenario is a synthetic hardware EVT readiness review. Everything runs on one machine against synthetic data; it is not a production system and is not connected to real hardware, trackers or office tools. The rest of this page is in Chinese.
