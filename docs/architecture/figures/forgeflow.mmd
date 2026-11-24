@@ -1,0 +1,14 @@
+flowchart TB
+  UI["ReportDesk / FastAPI<br/>接收公司、期间与问题"] --> Q["查询路由 / 工作者<br/>队列、重试、运行事件"]
+  PDF["PDF 与来源清单"] --> ING["pdf_ingest<br/>页、表、行、bbox、SHA"]
+  ING --> RET["retrieval / gRPC<br/>权限过滤与混合检索"]
+  Q --> RET
+  RET --> G["按任务选择回答路径"]
+  G --> C["annual_cash / apple_sales<br/>期间与单位检查、确定性计算"]
+  G --> L["cited_answer / answerability<br/>本地模型回答与引用约束"]
+  C --> EV["结果 + 公式 + 原表定位"]
+  L --> EV
+  EV --> UI
+  EV -. "在途：不可变 evidence" .-> D["研究稿版本与事件<br/>目标模块，未纳入冻结代码"]
+  D -. "目标验收链" .-> A["退回 / 批准 / 交付<br/>目标审阅界面"]
+  A -. "待同 run 联通" .-> V["HorizonBench 终态核验"]
