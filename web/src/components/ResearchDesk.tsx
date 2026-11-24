@@ -28,6 +28,7 @@ function Changes({ comparison, draft }: { comparison: Comparison; draft: Draft }
   const changed = comparison.rows.filter((r) => r.status !== "保留");
   const retained = comparison.rows.filter((r) => r.status === "保留");
   const sourceChanged = changed.some((r) => r.group === "来源");
+  const rechecked = changed.filter((r) => r.label.startsWith("本次复核 · ")).map((r) => r.label.replace("本次复核 · ", ""));
   const pages = [...new Set(draft.payload.evidence.citations.map((c) => c.page).filter((p) => p !== null))];
   const visible = [...changed.filter((r) => r.group === "指标"), ...retained.filter((r) => r.group === "指标"),
     ...changed.filter((r) => r.group !== "指标")];
@@ -37,6 +38,7 @@ function Changes({ comparison, draft }: { comparison: Comparison; draft: Draft }
     {comparison.lastReturn && <p>上次退回意见　{comparison.lastReturn}</p>}
     <p>{sourceChanged ? "来源或原格摘录有变化，请核对本版原表。" : "来源与原格摘录一致。"}
       {pages.length > 0 && " 本版引用第 " + pages.join("、") + " 页。"}</p>
+    {rechecked.length > 0 && <p>受影响指标与结论　{rechecked.join("、")}已由本次查表复核；其余标为“保留”的指标和结论未被这次局部修改替换。</p>}
     {!changed.length && <p>两版的正文、财务指标、原格和来源一致。</p>}
     {visible.length > 0 && <div className="revision-scroll"><table aria-label="字段对照">
       <thead><tr><th scope="col">字段</th><th scope="col">第 {comparison.version} 版</th><th scope="col">第 {draft.version} 版</th></tr></thead>
@@ -123,6 +125,7 @@ function Session({ token, user, initial, result, info, logout }: { token: string
         {!from && <p>请先用当前身份查询年度现金流或 Apple 服务收入，再保存本次结果。</p>}
         <button disabled={!from} onClick={() => void act(() => change("drafts", { grant_id: from, note }))}>用本次查表新建稿件</button>
         {draft && draft.state !== "submitted" && <button disabled={!from} onClick={() => void act(() => change("drafts/" + draft.id + "/revisions", { expected: draft.head, grant_id: from, note }))}>用本次查表保存新版</button>}
+        {draft && draft.state !== "submitted" && draft.payload.evidence.tool_version === "apple-services-v1" && <button disabled={!from} onClick={() => void act(() => change("drafts/" + draft.id + "/revisions", { expected: draft.head, grant_id: from, note, preserve_existing_metrics: true }))}>复核本次指标并保留其余指标</button>}
       </div>}
       {draft && <article aria-label="研究稿详情">
         <h3>第 {draft.version} 版 · {states[draft.state]}</h3>

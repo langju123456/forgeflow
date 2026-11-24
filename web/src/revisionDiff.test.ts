@@ -58,6 +58,17 @@ describe("公开 Apple 修订", () => {
     expect(metric?.before).toContain("FY2025 / FY2024");
     expect(metric?.after).toContain("FY2024 / FY2023");
   });
+  it("局部复核即使数值未变，也标出被重新核对的指标而保留其他指标", () => {
+    const newer = structuredClone(old);
+    newer.version++;
+    newer.evidence.metric_updates = {
+      "服务对公司收入增量的贡献": { run_id: "fresh-run", tool_version: "apple-services-v1", citation_ids: ["page-39"] },
+    };
+    const rows = compareRevisions(old, newer);
+    expect(rows.find((r) => r.label === "本次复核 · 服务对公司收入增量的贡献")).toMatchObject({ status: "新增" });
+    expect(rows.find((r) => r.label === "服务收入增速")?.status).toBe("保留");
+    expect(rows.find((r) => r.label === "服务对公司收入增量的贡献")?.status).toBe("保留");
+  });
   it("只选当前身份可见的较早版本，不能混用其他稿件", () => {
     const events = [1, 3, 1, 3].map((version) => ({ version, digest: "digest-" + version }));
     expect(priorVisibleVersion(events, 3)).toEqual(events[0]);

@@ -162,6 +162,21 @@ def get_draft(actor, draft_id):
         return view(db, actor, draft_id)
 
 
+def current_evidence(actor, draft_id, expected):
+    """Return the exact parent evidence for a scoped revision before saving it.
+
+    ``save`` repeats the head check inside its write transaction.  This read only
+    chooses which already-archived metrics may be retained; it never turns a
+    stale parent into a valid write.
+    """
+    with connection() as db:
+        row = _visible(db, actor, draft_id)
+        _expect(row, expected)
+        payload = db.execute("SELECT payload FROM revision WHERE draft=? AND version=?",
+                             (draft_id, row["version"])).fetchone()
+        return json.loads(payload["payload"])["evidence"]
+
+
 def _event(db, row, kind, subject, memo=""):
     db.execute("INSERT INTO event(draft,version,kind,actor,memo,at,digest) VALUES(?,?,?,?,?,?,?)",
                (row["id"], row["version"], kind, subject, memo, contracts.utcnow().isoformat(), row["head"]))

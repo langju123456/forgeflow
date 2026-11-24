@@ -1,13 +1,14 @@
 """Role and revision invariants against HTTP, SQLite, and the real typed lookup on a synthetic two-row store."""
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
+from copy import deepcopy
 from unittest.mock import AsyncMock
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from forgeflow import annual_cash, research_store
+from forgeflow import annual_cash, apple_sales, research_api, research_store
 from forgeflow.contracts import digest
 from forgeflow.evt_store import EVTBoundStore
 from forgeflow.report_desk import LOADER, SCOPE, ReportDesk, mount_report_desk
@@ -115,3 +116,42 @@ def test_source_binding_and_cached_service_run(scene):
         assert gateway.post("/research/drafts", headers=u["a"], json={"grant_id": grant}).status_code == 422
     desk.reports[0]["sha256"] = "0" * 64
     assert c.post("/research/drafts", headers=u["a"], json={"grant_id": result["research_grant"]}).status_code == 409
+
+
+def test_metric_patch_preserves_other_checked_apple_fact_and_marks_the_rechecked_conclusion():
+    base = {"tool_version": apple_sales.VERSION, "run_id": "run-before", "source": {"sha256": "a" * 64},
+            "citations": [{"id": "page-26"}], "calculation": {"periods": [2025, 2024], "unit": "百万美元",
+            "services": [109158, 96169], "total_sales": [416161, 391035], "operations": [
+                {"metric": "服务收入增速", "formula": "服务收入增量 / 上期服务收入", "numerator": 12989,
+                 "denominator": 96169, "percent": "13.51"},
+                {"metric": "服务对公司收入增量的贡献", "formula": "服务收入增量 / 公司收入增量", "numerator": 12989,
+                 "denominator": 25126, "percent": "51.70"}]}}
+    incoming = {**base, "run_id": "run-after", "citations": [{"id": "page-39"}], "calculation":
+                {**base["calculation"], "operations": [base["calculation"]["operations"][1]]}}
+    patched = research_api.merge_metric_update(base, incoming)
+    assert [op["metric"] for op in patched["calculation"]["operations"]] == ["服务收入增速", "服务对公司收入增量的贡献"]
+    assert patched["metric_updates"] == {"服务对公司收入增量的贡献": {"run_id": "run-after",
+        "tool_version": apple_sales.VERSION, "citation_ids": ["page-39"]}}
+    assert {citation["id"] for citation in patched["citations"]} == {"page-26", "page-39"}
+    assert "服务收入增速为13.51%" in patched["answer"] and "贡献为51.70%" in patched["answer"]
+    next_query = {**incoming, "run_id": "run-third", "calculation":
+                  {**base["calculation"], "operations": [base["calculation"]["operations"][0]]}}
+    third = research_api.merge_metric_update(patched, next_query)
+    assert third["metric_updates"]["服务对公司收入增量的贡献"]["run_id"] == "run-after"
+    assert third["metric_updates"]["服务收入增速"]["run_id"] == "run-third"
+    assert third["metric_patch"]["prior_run_id"] == "run-after"
+    assert "服务收入增速" not in patched["metric_updates"]
+    assert "metric_updates" not in base
+
+    for key, value in (("periods", [2024, 2023]), ("unit", "千美元"),
+                       ("services", [1, 2]), ("total_sales", [3, 4]),
+                       ("operations", []), ("operations", [{"metric": "未经批准的第三指标"}])):
+        changed = deepcopy(incoming)
+        changed["calculation"][key] = value
+        with pytest.raises(research_api.DomainError) as exc:
+            research_api.merge_metric_update(base, changed)
+        assert exc.value.code == "METRIC_PATCH_UNAVAILABLE"
+    for key, value in (("source", {"sha256": "b" * 64}), ("tool_version", "foreign-tool")):
+        with pytest.raises(research_api.DomainError) as exc:
+            research_api.merge_metric_update(base, {**incoming, key: value})
+        assert exc.value.code == "METRIC_PATCH_UNAVAILABLE"

@@ -25,6 +25,7 @@ class NewDraft(StrictModel):
 
 class Revision(NewDraft):
     expected: Head
+    preserve_existing_metrics: bool = False
 
 
 class Decision(StrictModel):
@@ -60,6 +61,43 @@ def fact_record(result, reports, transport):
             "external_cost": 0, "timings": result["timings"], "cached": bool(result.get("cached")),
             "attempt": result.get("attempt"), "source_scope": "local/reports/annual-reports",
             "checks": {"gate": result["gate"], "state": result["status"]}}
+
+
+def merge_metric_update(previous, incoming):
+    """Keep checked facts outside a newly queried Apple metric's narrow scope.
+
+    A patch is intentionally limited to the same PDF fingerprint, periods,
+    unit, and calculation family.  It replaces only metrics returned by the
+    fresh typed tool and records which conclusion was rechecked.  This is not
+    a free-form editor and cannot carry an old approval forward: the resulting
+    full evidence object gets a new revision digest in ``store.save``.
+    """
+    before = previous.get("calculation") or {}
+    after = incoming.get("calculation") or {}
+    required = ("periods", "unit", "services", "total_sales", "operations")
+    if (previous.get("tool_version") != apple_sales.VERSION or incoming.get("tool_version") != apple_sales.VERSION
+            or any(before.get(key) != after.get(key) for key in required[:-1])
+            or previous.get("source") != incoming.get("source")):
+        raise DomainError("METRIC_PATCH_UNAVAILABLE", "只能在同一份 Apple 年报、同一期间内复核结构化指标。", 422)
+    old_ops = before.get("operations") or []
+    new_ops = after.get("operations") or []
+    if not old_ops or not new_ops:
+        raise DomainError("METRIC_PATCH_UNAVAILABLE", "本稿没有可保留的结构化指标。", 422)
+    replacement = {op.get("metric"): op for op in new_ops}
+    if any(not name for name in replacement) or not set(replacement) <= {op.get("metric") for op in old_ops}:
+        raise DomainError("METRIC_PATCH_UNAVAILABLE", "本次查表的指标不属于当前完整研究稿。", 422)
+    operations = [replacement.get(op["metric"], op) for op in old_ops]
+    citations = {c["id"]: c for c in previous.get("citations", [])}
+    citations.update({c["id"]: c for c in incoming.get("citations", [])})
+    calculation = {**before, "operations": operations}
+    refreshed = sorted(replacement)
+    return {**previous, "answer": apple_sales.describe(calculation), "calculation": calculation,
+            "metric_updates": {**previous.get("metric_updates", {}), **{name: {"run_id": incoming["run_id"], "tool_version": incoming["tool_version"],
+                                        "citation_ids": [c["id"] for c in incoming["citations"]]}
+                               for name in refreshed}},
+            "citations": list(citations.values()), "metric_patch": {"refreshed": refreshed,
+            "prior_run_id": previous.get("metric_patch", {}).get("run_id", previous["run_id"]),
+            "run_id": incoming["run_id"]}}
 
 
 def archive(actor, draft_id, version):
@@ -156,7 +194,11 @@ def mount(app, resolve, transport):
 
     @app.post("/research/drafts/{draft_id}/revisions")
     async def revise(draft_id: str, body: Revision, actor=actor_dep):
-        return private(call(store.save, actor, await source(actor, body.grant_id), body.note,
+        incoming = await source(actor, body.grant_id)
+        evidence = incoming
+        if body.preserve_existing_metrics:
+            evidence = merge_metric_update(call(store.current_evidence, actor, draft_id, body.expected), incoming)
+        return private(call(store.save, actor, evidence, body.note,
                             draft_id=draft_id, expected=body.expected))
 
     @app.post("/research/drafts/{draft_id}/decisions")

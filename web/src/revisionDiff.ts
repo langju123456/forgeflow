@@ -1,6 +1,7 @@
 import type { Citation } from "./reports";
 
 type Operation = { metric: string; formula: string; numerator: number; denominator: number; percent: string | null };
+type MetricUpdate = { run_id: string; tool_version: string; citation_ids: string[] };
 
 export type ResearchRevision = {
   draft_id: string;
@@ -8,9 +9,11 @@ export type ResearchRevision = {
   note: string;
   evidence: {
     question: string; answer: string; run_id: string;
+    tool_version?: string;
     citations: (Citation & { source_hash: string; row_version: string; file_prefix: string })[];
     source: { key: string; document: string; sha256: string; url: string };
     calculation?: { periods: number[]; services: number[]; total_sales: number[]; unit: string; operations: Operation[] } | null;
+    metric_updates?: Record<string, MetricUpdate>;
   };
 };
 
@@ -43,6 +46,10 @@ function fields(revision: ResearchRevision) {
         value + " · " + periods, op.formula,
         "分子 " + op.numerator.toLocaleString("en-US") + " · 分母 " + op.denominator.toLocaleString("en-US") + "（" + calc.unit + "）",
       ].join("\n"));
+    }
+    for (const [metric, update] of Object.entries(evidence.metric_updates ?? {})) {
+      add("recheck:" + metric, "指标", "本次复核 · " + metric,
+        ["查表运行 " + update.run_id, "工具 " + update.tool_version, "原格 " + update.citation_ids.join("、")].join("\n"));
     }
   }
   const src = evidence.source;
