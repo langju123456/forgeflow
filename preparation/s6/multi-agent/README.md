@@ -49,6 +49,19 @@ bash scripts/mac_multi_agent_eval.sh            # 4. 开发集 + 留出题；也
 4. **冻结**（`freeze`）：全部题都是“已核对”、构成与登记一致，才写出 `heldout.json` 和 `heldout-freeze.json`（哈希、核对人、时间）。两个文件提交之后，运行脚本才接受这批题；
    改过一个字节、少一道题的核对标记，都不跑。
 
+## 确认题（修订 2）
+
+留出题上的结论刚好踩在门槛上，按 [PREREGISTRATION.md 的修订 2](PREREGISTRATION.md#修订) 另写了一批确认题，登记在 [confirm-registered.json](confirm-registered.json)。
+流程和留出题一样，文件名换成 `confirm-*`，命令加 `confirm-` 前缀：
+
+```bash
+bash scripts/mac_multi_agent_eval.sh confirm-draft    # 初标确认题、生成核对清单并提交草稿
+bash scripts/mac_multi_agent_eval.sh confirm-freeze   # 取 confirm-review.json 冻结并提交
+bash scripts/mac_multi_agent_eval.sh confirm          # 四组只在确认题上跑一次（mac-bridge 超时 240 分钟）
+```
+
+运行脚本要求 `pins.json` 与留出题运行时完全相同，确认题也只正式跑一次；报告里 `sets.confirm.confirmation` 给出 B 是否再次满足四条。
+
 ## 这份证据有多强
 
 - 候选题、初标规则和被测代码出自同一作者。人工核对的是“题目问的是不是这一格、数字和页码对不对”，不是题目选得有没有代表性。

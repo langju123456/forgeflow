@@ -178,6 +178,43 @@ def test_in_the_repository_the_held_out_set_is_not_runnable_before_it_is_frozen(
             run_arms.load_heldout()
 
 
+def test_the_confirmation_set_is_registered_on_top_of_the_held_out_one_with_its_prompts_and_composition():
+    confirm = run_arms.CONFIRM  # revision 2: its own file; preregistered.json itself is unchanged
+    assert confirm["builds_on"]["sha256"] == s4.sha256(S6 / "preregistered.json") and "confirm" not in run_arms.PREREG["sets"]
+    held_out_runs = run_arms.earlier_real_runs(S6 / "runs", "heldout")
+    assert len(held_out_runs) == 1  # the prompts are the ones the held-out run used, and still the current ones
+    assert json.loads(Path(held_out_runs[0]).read_text())["registration"]["pins_sha256"] == confirm["pins_sha256"]
+    assert s4.sha256(run_arms.PINS) == confirm["pins_sha256"]
+    keys = ("count", "answerable", "absent", "answerable_cross_language", "per_report")
+    assert {k: confirm["set"][k] for k in keys} == {k: run_arms.PREREG["sets"]["heldout"][k] for k in keys}
+    assert confirm["rule"]["arm"] == "plan_verify"
+    assert wh.registered_sets()["confirm"] == run_arms.registered_sets()["confirm"] == confirm["set"]
+
+
+def test_the_confirmation_candidates_ask_nothing_an_earlier_set_asks_and_can_fill_the_composition():
+    reports = {r["key"]: r for r in json.loads(wh.SOURCES.read_text())["reports"]}
+    asked = wh.asked_before("confirm")
+    assert len(asked) == 80  # the development set and the frozen held-out set
+    wh.check_candidates(wh.CONFIRM_CANDIDATES, reports, asked)
+    held_out = {q["id"] for q in json.loads(wh.FROZEN.read_text())["questions"]}
+    assert not held_out & {c.id for c in wh.CONFIRM_CANDIDATES}
+    for c in wh.CONFIRM_CANDIDATES:
+        if c.id in wh._WRITTEN:  # written for the held-out list, before any result: same question
+            assert c.query == wh._WRITTEN[c.id].query and c.note in {wh._WRITTEN[c.id].note, wh.REWRITTEN}
+        else:
+            assert c.kind == "absent" or c.note == wh.LATE
+    per = run_arms.CONFIRM["set"]["per_report"]
+    for key, report in reports.items():
+        own = [c for c in wh.CONFIRM_CANDIDATES if c.doc == key]
+        cross = [c for c in own if c.lang != report["language"]]
+        answerable = [c for c in own if c.kind == "answerable"]
+        assert len([c for c in answerable if c not in cross]) > per["answerable"] - per["answerable_cross_language"]
+        assert len([c for c in answerable if c in cross]) >= per["answerable_cross_language"]
+        assert len([c for c in own if c.kind == "absent" and c not in cross]) > 2
+        assert len([c for c in own if c.kind == "absent" and c in cross]) > 1
+        assert all("2025" in c.query for c in own)
+
+
 # --------------------------------------------------------------------------- scoring, failure types, the rule
 
 
@@ -249,6 +286,19 @@ def test_the_adoption_rule_is_the_registered_one(measured, permissions, adopt):
     assert decision["rule"]["min_answerable_gain_over_self_check"] == 2
     assert decision["rule"]["max_wrong_but_confident_increase_over_single"] == 0
     assert set(decision["arms"]) == {"verify", "plan_verify"}
+
+
+@pytest.mark.parametrize(("measured", "confirmed"), [
+    (dict(single=(10, 12), self_check=(10, 12), verify=(8, 5), plan_verify=(13, 4)), True),  # the held-out numbers
+    (dict(single=(10, 12), self_check=(10, 12), verify=(8, 5), plan_verify=(12, 4)), False),  # +2 over single
+    (dict(single=(10, 12), self_check=(12, 12), verify=(8, 5), plan_verify=(13, 4)), False),  # +1 over self-check
+    (dict(single=(10, 12), self_check=(10, 12), verify=(14, 5), plan_verify=(13, 13)), False),  # A would pass, B not
+])
+def test_the_confirmation_asks_whether_plan_verify_meets_the_same_four_conditions_again(measured, confirmed):
+    result = run_arms.confirmation(run_arms.decide(summary(**measured), True))
+    assert result["arm"] == "plan_verify" and result["confirmed"] is confirmed
+    assert result["conclusion"] == ("确认采用 plan_verify" if confirmed else "plan_verify 未能确认")
+    assert run_arms.confirmation(run_arms.decide(summary(**measured), False))["confirmed"] is False  # a leak
 
 
 # --------------------------------------------------------------------------- one call per distinct prompt
@@ -326,6 +376,13 @@ def test_a_real_held_out_run_is_found_again_so_the_set_is_run_once(tmp_path):
         (tmp_path / name / "report.json").write_text(json.dumps({"status": status, "sets": sets}))
     (tmp_path / "arms-d").mkdir()  # interrupted: no report yet
     assert run_arms.earlier_real_heldout_runs(tmp_path) == [str(tmp_path / "arms-c" / "report.json")]
+
+
+def test_a_real_confirmation_run_is_found_again_so_that_set_is_run_once_too(tmp_path):
+    for name, sets in (("arms-a", {"heldout": {}}), ("arms-b", {"confirm": {}})):
+        (tmp_path / name).mkdir()
+        (tmp_path / name / "report.json").write_text(json.dumps({"status": "REAL", "sets": sets}))
+    assert run_arms.earlier_real_runs(tmp_path, "confirm") == [str(tmp_path / "arms-b" / "report.json")]
 
 
 # --------------------------------------------------------------------------- the whole runner, on stand-ins
@@ -831,7 +888,7 @@ def test_the_runner_refuses_a_held_out_set_that_is_missing_or_was_edited_after_t
 
 
 @pytest.mark.parametrize(("change", "message"), [
-    (lambda q: q["review"].update(status="pending"), "not checked by a person"),
+    (lambda q: q["review"].update(status="pending"), "not checked against the printed page"),
     (lambda q: q.update(query="宁德时代2025年经营活动产生的现金流量净额是多少？"), "report tool"),
     (lambda q: q.update(doc="unknown_report"), "not in sources.json"),
 ])
@@ -845,3 +902,55 @@ def test_the_runner_checks_every_held_out_question_even_when_the_hash_matches(co
     registered["sets"]["heldout"] |= {"path": str(target), "freeze": str(record)}
     with pytest.raises(SystemExit, match=message):
         run_arms.load_heldout()
+
+
+# --------------------------------------------------------------------------- the confirmation set (revision 2)
+
+
+@pytest.fixture(scope="module")
+def confirm_frozen(corpus):
+    """A confirmation set made the way the real one is, from the stand-in candidates (no earlier set asks them)."""
+    out = corpus["folder"] / "confirm"
+    assert wh.draft(corpus["reports"], set_name="confirm", candidates=CANDIDATES, sources=corpus["sources"],
+                    per_report=PER_REPORT, out=out, images=False) == 0
+    assert (out / "confirm-draft.json").exists() and not (out / "heldout-draft.json").exists()
+    assert json.loads((out / "confirm-draft.json").read_text())["id"] == "s6-confirm-annual-reports-v1"
+    assert wh.freeze(set_name="confirm", sources=corpus["sources"], out=out, frozen=out / "confirm.json",
+                     freeze_file=out / "confirm-freeze.json", expected=EXPECTED, reviewer="tester", confirm_all=True) == 0
+    return out
+
+
+def register_confirm(patch, confirm_frozen):
+    confirm = copy.deepcopy(run_arms.CONFIRM)
+    confirm["set"] |= {"path": str(confirm_frozen / "confirm.json"), "freeze": str(confirm_frozen / "confirm-freeze.json"),
+                       **{k: v for k, v in EXPECTED.items() if k != "per_report"}}
+    patch.setattr(run_arms, "CONFIRM", confirm)
+    return confirm
+
+
+def test_the_confirmation_set_runs_the_four_arms_and_says_whether_plan_verify_holds(corpus, frozen, confirm_frozen,
+                                                                                    tmp_path, monkeypatch):
+    register(monkeypatch, corpus, frozen)
+    register_confirm(monkeypatch, confirm_frozen)
+    freeze_record = json.loads((confirm_frozen / "confirm-freeze.json").read_text())
+    assert freeze_record["set_id"] == "s6-confirm-annual-reports-v1" and freeze_record["files"]["confirm.json"]
+    folder, report = run(corpus, tmp_path, "--sets", "confirm")
+    part = report["sets"]["confirm"]
+    assert list(report["sets"]) == ["confirm"] and part["questions_run"] == 12
+    assert part["questions_file"]["set_id"] == "s6-confirm-annual-reports-v1"
+    assert set(part["decision"]["arms"]) == {"verify", "plan_verify"}
+    assert part["confirmation"]["arm"] == "plan_verify"
+    assert part["confirmation"]["confirmed"] is part["decision"]["arms"]["plan_verify"]["meets_rule"]
+    assert report["confirm_registered"]["rule"]["arm"] == "plan_verify"
+    assert all(set(o["arms"]) == set(run_arms.ARMS) for o in part["questions"])
+
+
+def test_the_confirmation_set_runs_only_with_the_prompts_of_the_held_out_run(corpus, frozen, confirm_frozen, monkeypatch):
+    register(monkeypatch, corpus, frozen)
+    confirm = register_confirm(monkeypatch, confirm_frozen)
+    questions, meta = run_arms.load_frozen("confirm")
+    assert len(questions) == 12 and meta["verified_by"] == "tester"
+    monkeypatch.setattr(run_arms, "CONFIRM", confirm | {"pins_sha256": "0" * 64})
+    with pytest.raises(SystemExit, match="pins.json differs"):
+        run_arms.load_frozen("confirm")
+

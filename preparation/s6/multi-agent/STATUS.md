@@ -99,6 +99,15 @@
 - 顺手修了一个偶发失败的测试：运行目录按秒命名，同一秒里启动两次运行会撞名。第二步记过“装完 reportlab 后第一次运行有 1 个失败、没能复现”，很可能就是它。现在同一秒撞名时等到下一秒。
 - 测试：`tests/test_multi_agent_eval.py` 和 `tests/test_report_orchestration.py` 连跑 3 次，都是 142 通过、8 跳过（本机没装 grpc）。已冻结的 `heldout.json` 没有变。
 
+### 追加二：确认题（修订 2）
+
+#### 登记 — 2026-11-26，确认题初标之前提交
+
+- [PREREGISTRATION.md 修订 2](PREREGISTRATION.md#修订) + [confirm-registered.json](confirm-registered.json)：另写 40 道确认题，构成同留出题；候选先用留出题没用上的备选（写于任何结果之前，其中 6 条按原页文字改写了匹配规则），不够再用结果出来之后新写的；gold 由模型对照原页核对；提示词必须与留出题运行时相同；只跑一次，四组都跑。
+- 判定写在初标之前：B 在确认题上再次满足四条 → 确认，接进 worker 并改默认；不满足 → 不改默认，B 保持可选。
+- 代码：`write_heldout.py` 和 `run_arms.py` 支持 `--set confirm` / `--sets confirm`，`scripts/mac_multi_agent_eval.sh` 加了 `confirm-draft`、`confirm-freeze`、`confirm`；`preregistered.json` 没改。加了 7 个测试（登记建在原登记之上、提示词与留出题运行时相同、候选不重复已问过的题、确认规则、只跑一次、端到端）。
+- 测试：两个多 Agent 测试文件 151 通过、8 跳过。全套 1346 通过、28 跳过、3 失败；3 个失败都是本机测试环境没装 grpc / protobuf（`ModuleNotFoundError: grpc`、`google`），与这次改动无关。
+
 ## 收件箱
 
 - 2026-11-26：已接入收件箱（mac-bridge `inbox/line5.md`，克隆在 `~/.mac-bridge/work/report-orchestration`）。当时的内容是“目前没有新的决定，照原计划跑完 heldout、按预登记判定并写进 STATUS.md”，与原计划一致，没有新的条目要处理。

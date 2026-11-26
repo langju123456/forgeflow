@@ -8,6 +8,9 @@
 #   bash scripts/mac_multi_agent_eval.sh draft      # no model: draft the held-out questions and the check list
 #   bash scripts/mac_multi_agent_eval.sh draft MH03 # the same, replacing questions a reviewer rejected
 #   bash scripts/mac_multi_agent_eval.sh freeze     # no model: freeze the set from the exported heldout-review.json
+#   bash scripts/mac_multi_agent_eval.sh confirm-draft    # the same three for the confirmation set of revision 2
+#   bash scripts/mac_multi_agent_eval.sh confirm-freeze   #   (confirm-registered.json; files confirm-*)
+#   bash scripts/mac_multi_agent_eval.sh confirm          # confirmation set only, all four arms, run once
 #
 # TIME. One set of 40 questions is about 240 model calls, both sets about 470. The S4 run on this Mac made 105
 # calls in 53 minutes (median 20.8 s, p95 54 s a call), so expect 1-2 hours a set and plan for 3.5. The queue's
@@ -22,8 +25,11 @@ set -euo pipefail
 export NO_PROXY="localhost,127.0.0.1,::1${NO_PROXY:+,$NO_PROXY}" no_proxy="localhost,127.0.0.1,::1"
 cd "$(dirname "$0")/.."
 MODE="${1:-all}"
-case "$MODE" in all|dev|heldout|draft|freeze) ;; *) echo "usage: $0 [dev|heldout|draft [ID...]|freeze]"; exit 64 ;; esac
+case "$MODE" in all|dev|heldout|confirm|draft|freeze|confirm-draft|confirm-freeze) ;;
+  *) echo "usage: $0 [dev|heldout|confirm|[confirm-]draft [ID...]|[confirm-]freeze]"; exit 64 ;; esac
 [ $# -gt 0 ] && shift
+SET=heldout; WHAT=held-out
+case "$MODE" in confirm-*) SET=confirm; WHAT=confirmation; MODE="${MODE#confirm-}" ;; esac
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 git pull -q --ff-only origin "$BRANCH" 2>/dev/null || true
 echo "[arms] code at $(git log --oneline -1) on $BRANCH, mode $MODE"
@@ -54,21 +60,22 @@ push() {  # commit what is staged, if anything, and push the current branch
 }
 
 if [ "$MODE" = freeze ]; then
-  # The check list page downloads heldout-review.json into ~/Downloads; the newest one there is taken.
-  review="$S6/heldout-review.json"
-  newest="$(ls -t "$HOME"/Downloads/heldout-review*.json 2>/dev/null | head -1 || true)"
+  # The check list page downloads <set>-review.json into ~/Downloads; the newest one there is taken.
+  review="$S6/$SET-review.json"
+  newest="$(ls -t "$HOME"/Downloads/$SET-review*.json 2>/dev/null | head -1 || true)"
   if [ -n "$newest" ] && { [ ! -f "$review" ] || [ "$newest" -nt "$review" ]; }; then
     cp "$newest" "$review"; echo "[arms] review file: $newest"
   fi
-  [ -f "$review" ] || { echo "[arms] no heldout-review.json: export it from heldout-checklist.html first"; exit 1; }
+  [ -f "$review" ] || { echo "[arms] no $SET-review.json: export it from $SET-checklist.html first"; exit 1; }
   status=0
-  PYTHONDONTWRITEBYTECODE=1 .venv-mac/bin/python "$S6/write_heldout.py" freeze --review "$review" || status=$?
-  git add "$S6/heldout-draft.json" "$review"
-  if [ -f "$S6/heldout.json" ]; then
-    git add "$S6/heldout.json" "$S6/heldout-freeze.json"
-    push "S6 multi-agent: held-out questions checked against the printed pages and frozen before any run over them"
+  PYTHONDONTWRITEBYTECODE=1 .venv-mac/bin/python "$S6/write_heldout.py" freeze --set "$SET" --review "$review" \
+    || status=$?
+  git add "$S6/$SET-draft.json" "$review"
+  if [ -f "$S6/$SET.json" ]; then
+    git add "$S6/$SET.json" "$S6/$SET-freeze.json"
+    push "S6 multi-agent: $WHAT questions checked against the printed pages and frozen before any run over them"
   else
-    push "S6 multi-agent: review marks on the held-out draft recorded; some questions are still open, not frozen"
+    push "S6 multi-agent: review marks on the $WHAT draft recorded; some questions are still open, not frozen"
   fi
   exit $status
 fi
@@ -78,16 +85,16 @@ bash scripts/fetch_real_reports.sh "$REPORTS"
 
 if [ "$MODE" = draft ]; then
   # Page text only: no retrieval, no embedding, no model. Exit code 2 means too few candidates were found in the
-  # reports; heldout-candidates.json says which, and it is committed either way.
+  # reports; <set>-candidates.json says which, and it is committed either way.
   status=0
   exclude=()
   [ $# -gt 0 ] && exclude=(--exclude "$@")
-  PYTHONDONTWRITEBYTECODE=1 .venv-mac/bin/python "$S6/write_heldout.py" draft --reports "$REPORTS" \
+  PYTHONDONTWRITEBYTECODE=1 .venv-mac/bin/python "$S6/write_heldout.py" draft --set "$SET" --reports "$REPORTS" \
     ${exclude[@]+"${exclude[@]}"} || status=$?
-  git add "$S6/heldout-draft.json" "$S6/heldout-candidates.json" "$S6/heldout-checklist.md" 2>/dev/null || true
-  push "S6 multi-agent: held-out questions drafted from the page text, every one still to be checked by a person"
-  echo "[arms] check list to open on this Mac: $PWD/$S6/heldout-checklist.html"
-  [ "${FORGEFLOW_OPEN_CHECKLIST:-0}" = 1 ] && open "$S6/heldout-checklist.html" || true
+  git add "$S6/$SET-draft.json" "$S6/$SET-candidates.json" "$S6/$SET-checklist.md" 2>/dev/null || true
+  push "S6 multi-agent: $WHAT questions drafted from the page text, every one still to be checked against the printed page"
+  echo "[arms] check list to open on this Mac: $PWD/$S6/$SET-checklist.html"
+  [ "${FORGEFLOW_OPEN_CHECKLIST:-0}" = 1 ] && open "$S6/$SET-checklist.html" || true
   exit $status
 fi
 
@@ -119,6 +126,7 @@ echo "[arms] models:"; ollama list | grep -E "^(bge-m3|qwen3:8b|$SERVED)" || tru
 sets=(dev heldout)
 [ "$MODE" = dev ] && sets=(dev)
 [ "$MODE" = heldout ] && sets=(heldout)
+[ "$MODE" = confirm ] && sets=(confirm)
 resume=()
 latest="$(ls -d "$S6"/runs/arms-* 2>/dev/null | grep -Ev -- '-(fake|plumbing)$' | tail -1 || true)"
 if [ "${FORGEFLOW_NEW_RUN:-0}" != 1 ] && [ -n "$latest" ] && [ -f "$latest/calls.sqlite" ] && [ ! -f "$latest/report.json" ]; then

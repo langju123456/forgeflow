@@ -59,6 +59,10 @@ from forgeflow.retrieval import (  # noqa: E402
 )
 
 PREREG = json.loads((HERE / "preregistered.json").read_text())
+# Revision 2 (PREREGISTRATION.md): a confirmation set, registered in its own file after the held-out result.
+CONFIRM_REGISTERED = HERE / "confirm-registered.json"
+CONFIRM = json.loads(CONFIRM_REGISTERED.read_text()) if CONFIRM_REGISTERED.is_file() else None
+FROZEN_SETS = ("heldout", "confirm")  # frozen after a check, run once, judged
 PINS = HERE / "pins.json"
 ARMS = tuple(arm["id"] for arm in PREREG["arms"])
 ERROR_STATUSES = frozenset(PREREG["statuses"]["errors_count_as_wrong"])
@@ -74,11 +78,18 @@ def pins_now() -> dict:
             "cited_answer": {"version": ca.PROMPT_VERSION, "sha256": ca.prompt_sha256()}}
 
 
+def registered_sets() -> dict[str, dict]:
+    """The sets of preregistered.json, plus the confirmation set once confirm-registered.json exists."""
+    return PREREG["sets"] | ({"confirm": CONFIRM["set"]} if CONFIRM else {})
+
+
 def verify_registration() -> dict:
     """The S4 registration this one builds on, and the prompts of every role, are the recorded ones."""
     base = PREREG["builds_on"]
     if s4.sha256(PROJECT / base["path"]) != base["sha256"]:
         raise SystemExit("the S4 preregistered.json differs from the one this registration builds on")
+    if CONFIRM and s4.sha256(HERE / "preregistered.json") != CONFIRM["builds_on"]["sha256"]:
+        raise SystemExit("preregistered.json differs from the one confirm-registered.json builds on")
     if not PINS.is_file():
         raise SystemExit("pins.json is missing: run with --pin and commit it before a run")
     pinned = json.loads(PINS.read_text())
@@ -93,7 +104,7 @@ def verify_registration() -> dict:
 
 
 def _check_counts(name: str, questions: list[dict], languages: dict[str, str] | None = None) -> None:
-    spec = PREREG["sets"][name]
+    spec = registered_sets()[name]
     kinds = [q["kind"] for q in questions]
     if (len(questions), kinds.count("answerable"), kinds.count("absent")) != (spec["count"], spec["answerable"],
                                                                              spec["absent"]):
@@ -118,40 +129,53 @@ def load_dev() -> tuple[list[dict], dict]:
 
 
 def load_heldout() -> tuple[list[dict], dict]:
-    """The held-out set, only if it was frozen after every question was checked by a person."""
-    spec = PREREG["sets"]["heldout"]
+    return load_frozen("heldout")
+
+
+def load_frozen(name: str) -> tuple[list[dict], dict]:
+    """A frozen set (held-out or confirmation), only if every question was marked checked before the freeze."""
+    if name not in registered_sets():
+        raise SystemExit(f"no registered set {name!r}")
+    spec = registered_sets()[name]
     path, freeze_path = PROJECT / spec["path"], PROJECT / spec["freeze"]
     if not path.is_file() or not freeze_path.is_file():
-        raise SystemExit("the held-out set is not frozen yet: draft it with write_heldout.py, have every question "
+        raise SystemExit(f"the {name} set is not frozen yet: draft it with write_heldout.py, have every question "
                          "checked against the printed page, then freeze and commit it (see README.md)")
+    if name == "confirm" and s4.sha256(PINS) != CONFIRM["pins_sha256"]:
+        raise SystemExit("pins.json differs from the one the held-out run used: the confirmation set runs the same "
+                         "prompts")
     freeze = json.loads(freeze_path.read_text())
     digest = s4.sha256(path)
     if freeze.get("files", {}).get(path.name) != digest:
-        raise SystemExit("heldout.json differs from the hash in heldout-freeze.json")
+        raise SystemExit(f"{path.name} differs from the hash in {freeze_path.name}")
     data = json.loads(path.read_text())
     questions = data["questions"]
     reports = json.loads((PROJECT / s4.PREREG["sources"]["path"]).read_text())["reports"]
     languages = {r["key"]: r["language"] for r in reports}
     for q in questions:
         if (q.get("review") or {}).get("status") != "verified":
-            raise SystemExit(f"held-out {q['id']} was not checked by a person")
+            raise SystemExit(f"{name} {q['id']} was not checked against the printed page")
         if q["doc"] not in languages:
-            raise SystemExit(f"held-out {q['id']} names a report that is not in sources.json")
+            raise SystemExit(f"{name} {q['id']} names a report that is not in sources.json")
         if report_lookup.for_question(q["query"]):
-            raise SystemExit(f"held-out {q['id']} is answered by a report tool, not by the model")
-    _check_counts("heldout", questions, languages)
+            raise SystemExit(f"{name} {q['id']} is answered by a report tool, not by the model")
+    _check_counts(name, questions, languages)
     return questions, {"path": spec["path"], "sha256": digest, "set_id": data.get("id"),
                        "verified_by": freeze.get("verified_by"), "frozen_at": freeze.get("recorded_at")}
 
 
 def earlier_real_heldout_runs(out: Path) -> list[str]:
+    return earlier_real_runs(out, "heldout")
+
+
+def earlier_real_runs(out: Path, name: str) -> list[str]:
     found = []
     for report in sorted(out.glob("*/report.json")):
         try:
             data = json.loads(report.read_text())
         except (OSError, ValueError):
             continue
-        if data.get("status") == "REAL" and "heldout" in data.get("sets", {}):
+        if data.get("status") == "REAL" and name in data.get("sets", {}):
             found.append(str(report))
     return found
 
@@ -366,6 +390,15 @@ def decide(summary: dict, permissions_passed: bool) -> dict:
     # Both meet the rule: more answerable questions correct wins; on a tie the first listed (verify, fewer calls).
     adopt = max(meeting, key=lambda arm: (right(arm), -rule["applies_to"].index(arm))) if meeting else None
     return {"rule": rule, "arms": judged, "adopt": adopt, "conclusion": f"采用 {adopt}" if adopt else "不采用"}
+
+
+def confirmation(decision: dict) -> dict:
+    """Revision 2: the arm adopted on the held-out set meets the same four conditions again on the confirmation set."""
+    arm = CONFIRM["rule"]["arm"]
+    met = decision["arms"][arm]["meets_rule"]
+    return {"arm": arm, "rule": CONFIRM["rule"], "measured": decision["arms"][arm]["measured"],
+            "passed": decision["arms"][arm]["passed"], "confirmed": met,
+            "conclusion": f"确认采用 {arm}" if met else f"{arm} 未能确认"}
 
 
 # --------------------------------------------------------------------------- one question
@@ -629,7 +662,7 @@ def open_chat(args, ollama: dict | None):
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--reports", type=Path, help="folder with <key>.pdf (scripts/fetch_real_reports.sh)")
-    parser.add_argument("--sets", nargs="+", choices=["dev", "heldout"], default=["dev", "heldout"])
+    parser.add_argument("--sets", nargs="+", choices=["dev", "heldout", "confirm"], default=["dev", "heldout"])
     parser.add_argument("--llm", choices=["ollama", "fake"], default="ollama")
     parser.add_argument("--embedder", choices=["ollama", "fake"], default="ollama")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
@@ -656,11 +689,12 @@ def main(argv: list[str] | None = None) -> int:
     registration = verify_registration()
     inputs = s4.verify_inputs(reports)
     sets = list(dict.fromkeys(args.sets))
-    loaded = {name: (load_dev() if name == "dev" else load_heldout()) for name in sets}
-    if real and "heldout" in sets and not args.resume:
-        earlier = earlier_real_heldout_runs(args.out)
-        if earlier:
-            raise SystemExit("the held-out set was already run for real (it is run once): " + ", ".join(earlier))
+    loaded = {name: (load_dev() if name == "dev" else load_frozen(name)) for name in sets}
+    for name in FROZEN_SETS:
+        if real and name in sets and not args.resume:
+            earlier = earlier_real_runs(args.out, name)
+            if earlier:
+                raise SystemExit(f"the {name} set was already run for real (it is run once): " + ", ".join(earlier))
 
     if args.resume:
         output = args.resume.expanduser().resolve()
@@ -730,11 +764,12 @@ def main(argv: list[str] | None = None) -> int:
     report_sets = {}
     for name in sets:
         summary = summarize(results[name], languages)
-        full = len(results[name]) == PREREG["sets"][name]["count"]
+        full = len(results[name]) == registered_sets()[name]["count"]
+        decision = decide(summary, permissions["passed"]) if name in FROZEN_SETS and full else None
         report_sets[name] = {
-            "role": PREREG["sets"][name]["role"], "questions_file": loaded[name][1], "questions_run": len(results[name]),
-            "summary": summary,
-            "decision": decide(summary, permissions["passed"]) if name == "heldout" and full else None,
+            "role": registered_sets()[name]["role"], "questions_file": loaded[name][1],
+            "questions_run": len(results[name]), "summary": summary, "decision": decision,
+            "confirmation": confirmation(decision) if name == "confirm" and decision else None,
             "questions": results[name],
         }
     num_ctx = model_cfg["num_ctx"] if args.llm == "ollama" else None
@@ -744,6 +779,7 @@ def main(argv: list[str] | None = None) -> int:
         "git_head": s4.git_head(), "git_head_at_start": started.get("git_head"), "started_at": started["started_at"],
         "resumed": bool(args.resume),
         "preregistered": PREREG, "registration": registration,
+        "confirm_registered": CONFIRM if "confirm" in sets else None,
         "code_sha256": {name: s4.sha256(PROJECT / name) for name in [
             "src/forgeflow/report_orchestration.py", "src/forgeflow/cited_answer.py", "src/forgeflow/retrieval.py",
             "src/forgeflow/pdf_ingest.py", "preparation/s6/multi-agent/run_arms.py",
@@ -776,6 +812,8 @@ def main(argv: list[str] | None = None) -> int:
             "end_to_end_median_ms": s["arms"][arm]["latency"]["end_to_end"].get("median_ms")} for arm in ARMS}
         if report_sets[name]["decision"]:
             brief[name]["decision"] = report_sets[name]["decision"]["conclusion"]
+        if report_sets[name].get("confirmation"):
+            brief[name]["confirmation"] = report_sets[name]["confirmation"]["conclusion"]
     print(json.dumps(brief, ensure_ascii=False, indent=1))
     return 0
 

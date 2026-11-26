@@ -1,4 +1,6 @@
-"""Draft, check and freeze the held-out questions for the multi-agent comparison (preregistered.json, set "heldout").
+"""Draft, check and freeze the held-out questions for the multi-agent comparison (preregistered.json, set "heldout"),
+and the same way the confirmation questions of revision 2 (confirm-registered.json, set "confirm": ``--set confirm``,
+files named confirm-*).
 
 The candidates below were written without the reports' full text at hand: each names a line item that the
 disclosure rules for that kind of report prescribe, plus the patterns its printed line should match. ``draft``
@@ -31,7 +33,7 @@ import json
 import re
 import sys
 import unicodedata
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
@@ -233,6 +235,119 @@ CANDIDATES: tuple[Candidate, ...] = (
     N("AH42", APPLE, "zh", "苹果 2025 财年 Apple Music 有多少订阅用户？", ["Apple Music", "subscriptions"],
       "提到订阅服务，不给用户数"),
 )
+
+# ---- The confirmation set (revision 2 in PREREGISTRATION.md, confirm-registered.json). In each group: first the
+# candidates above that the held-out draft did not use, written before any result; the six of them the page text did
+# not match keep their question and get a pattern rewritten from the printed line. Then candidates written after the
+# held-out result, with the page text at hand for their patterns. Lines first seen in the S4 excerpts still come last.
+# Nothing the development or held-out set asks is asked again.
+REWRITTEN = "留出题初标时没定位到；题目不变，确认题初标前按原页文字改写了匹配规则"
+LATE = "确认题新写的候选：写于留出题结果出来之后，看着页面文字写的匹配规则"
+TENCENT_FY_TABLE = "YEAR ENDED 31 DECEMBER 2025 COMPARED TO YEAR ENDED 31 DECEMBER 2024"
+_WRITTEN = {c.id: c for c in CANDIDATES}
+
+
+def _kept(*ids: str) -> tuple[Candidate, ...]:
+    return tuple(_WRITTEN[i] for i in ids)
+
+
+def _rewritten(id: str, find: list[str], **kw) -> Candidate:  # noqa: A002
+    return replace(_WRITTEN[id], find=tuple(find), note=REWRITTEN, **kw)
+
+
+def _late(make, *args, **kw) -> Candidate:
+    made = make(*args, **kw)
+    return made if made.kind == "absent" else replace(made, note=LATE)
+
+
+CONFIRM_CANDIDATES: tuple[Candidate, ...] = (
+    # ---- 贵州茅台 (元)
+    *_kept("MH07", "MH08"),
+    _rewritten("MH09", [r"^支付给职工(?:以)?及为职工支付的 ?{amount}"], lines=2),
+    _late(A, "MH51", MOUTAI, "zh", "贵州茅台 2025 年归属于上市公司股东的扣除非经常性损益的净利润是多少？",
+          [r"^归属于上市公司股东的扣除非 ?{amount}"], where=MAIN, unit="元", lines=2),
+    _late(A, "MH52", MOUTAI, "zh", "贵州茅台 2025 年合并利润表里的营业成本是多少？", [r"^(?:其中:)?营业成本 {note}{amount}"],
+          unit="元"),
+    _late(A, "MH53", MOUTAI, "zh", "截至 2025 年末，贵州茅台合并资产负债表里的合同负债是多少？", [r"^合同负债 {note}{amount}"],
+          unit="元"),
+    _late(A, "MH54", MOUTAI, "zh", "贵州茅台 2025 年合并利润表里的管理费用是多少？", [r"^管理费用 {note}{amount}"], unit="元"),
+    *_kept("MH06", "MH23", "MH24", "MH33", "MH34"),
+    _late(N, "MH71", MOUTAI, "zh", "贵州茅台 2025 年在京东平台上的销售额是多少？", ["京东"], "不按电商平台披露销售额"),
+    *_kept("MH42"),
+    _late(N, "MH72", MOUTAI, "en", "What was Kweichow Moutai's revenue from duty-free stores in 2025?", ["免税"],
+          "不按免税渠道披露收入"),
+    # ---- 宁德时代 (千元)
+    *_kept("CH08", "CH09"),
+    _rewritten("CH01", [r"^基本每股收益\(元/ ?{decimal}", r"^\(一\)基本每股收益 {decimal}"], lines=2),
+    _rewritten("CH02", [r"^归属于上市公司股东的扣除非经常性损益 ?{amount}"], where=MAIN, unit="千元", lines=2),
+    _late(A, "CH51", CATL, "zh", "截至 2025 年末，宁德时代合并资产负债表里的存货是多少？", [r"^存货 {note}{amount}"], unit="千元"),
+    _late(A, "CH52", CATL, "zh", "截至 2025 年末，宁德时代合并资产负债表里的货币资金是多少？", [r"^货币资金 {note}{amount}"],
+          unit="千元"),
+    _rewritten("CH21", [r"^归属于上市公司股东 ?{amount} [^的]*的净资产"], where=MAIN, unit="千元", lines=3),
+    _rewritten("CH22", [r"^加权平均净资产收益 ?{decimal}%"], where=MAIN, lines=2),
+    _late(A, "CH61", CATL, "en", "What was CATL's total profit (profit before income tax) in 2025?",
+          [r"^四、利润总额[^0-9]* ?{amount}"], unit="千元", lines=2),
+    *_kept("CH33", "CH34"),
+    _late(N, "CH71", CATL, "zh", "宁德时代 2025 年麒麟电池的出货量是多少 GWh？", ["麒麟"], "不按产品系列披露出货量"),
+    *_kept("CH42"),
+    _late(N, "CH72", CATL, "en", "What was CATL's revenue from Ford in 2025?", ["福特", "Ford"], "前五名客户不具名"),
+    # ---- Tencent (RMB million in tables, RMB billion in the discussion)
+    _rewritten("TH14", [r"^Cost of revenues {note}{amount}"], where=TENCENT_FY_TABLE, unit="RMB million"),
+    _late(A, "TH51", TENCENT, "en", "What was Tencent's operating profit for 2025?", [r"^Operating profit {amount}"],
+          where=TENCENT_FY_TABLE, unit="RMB million"),
+    _late(A, "TH52", TENCENT, "en", "What was Tencent's net cash position at the end of 2025?",
+          [r"the Group had net cash of RMB ?{decimal} billion"], unit="RMB billion", lines=2),
+    _late(A, "TH53", TENCENT, "en", "What was Tencent's profit before income tax for 2025?",
+          [r"^Profit before income tax {note}{amount}"], where=TENCENT_FY_TABLE, unit="RMB million"),
+    _late(A, "TH54", TENCENT, "en", "What were Tencent's finance costs in 2025?", [r"^Finance costs {note}{amount}"],
+          where=TENCENT_FY_TABLE, unit="RMB million"),
+    _late(A, "TH55", TENCENT, "en", "What was Tencent's interest income in 2025?", [r"^Interest income {note}{amount}"],
+          where=TENCENT_FY_TABLE, unit="RMB million"),
+    *_kept("TH03", "TH06", "TH07", "TH23", "TH24", "TH33", "TH34"),
+    _late(N, "TH71", TENCENT, "en", "What were Tencent's revenues from Japan in 2025?", ["Japan"],
+          "no revenue by country"),
+    *_kept("TH42"),
+    _late(N, "TH72", TENCENT, "zh", "腾讯 2025 年在东南亚市场的收入是多少？", ["Southeast Asia"], "不按地区披露收入"),
+    # ---- Apple (USD million)
+    *_kept("AH06", "AH07", "AH08", "AH09"),
+    _late(A, "AH51", APPLE, "en", "What was Apple's operating income in fiscal 2025?", [r"^Operating income {usd}{amount}"],
+          unit="USD million"),
+    _late(A, "AH52", APPLE, "en", "What were Apple's total operating expenses in fiscal 2025?",
+          [r"^Total operating expenses {usd}{amount}"], unit="USD million"),
+    *_kept("AH23", "AH24", "AH33", "AH34"),
+    _late(N, "AH71", APPLE, "en", "What were AppleCare net sales in fiscal 2025?", ["AppleCare"],
+          "AppleCare is described inside Services, no figure of its own"),
+    *_kept("AH42"),
+    _late(N, "AH72", APPLE, "zh", "苹果 2025 财年在沙特阿拉伯的净销售额是多少？", ["Saudi"], "分部只到大洲，不按国家拆分"),
+)
+
+# Every set this script drafts: its id, its candidates and the files it writes (<name>-draft.json and so on).
+SETS = {
+    "heldout": {"id": SET_ID, "candidates": CANDIDATES, "title": "留出题",
+                "author_note": "Candidates were written without the reports' full text, from the line items the "
+                               "disclosure rules prescribe; the script proposed figure and pages; a person checks "
+                               "every question against the printed page before the set is frozen."},
+    "confirm": {"id": "s6-confirm-annual-reports-v1", "candidates": CONFIRM_CANDIDATES, "title": "确认题",
+                "author_note": "Revision 2: the held-out list's unused candidates first (written before any result; "
+                               "six with patterns rewritten from the printed line), then candidates written after "
+                               "the held-out result with the page text at hand; the script proposed figure and pages; "
+                               "every question is checked against the printed page before the set is frozen."},
+}
+CONFIRM_REGISTERED = HERE / "confirm-registered.json"
+
+
+def registered_sets() -> dict[str, dict]:
+    """The sets of preregistered.json, plus the confirmation set of confirm-registered.json once it exists."""
+    sets = dict(PREREG["sets"])
+    if CONFIRM_REGISTERED.is_file():
+        sets["confirm"] = json.loads(CONFIRM_REGISTERED.read_text())["set"]
+    return sets
+
+
+def files(set_name: str) -> dict[str, str]:
+    """What draft and freeze write for a set, by kind."""
+    return {"draft": f"{set_name}-draft.json", "candidates": f"{set_name}-candidates.json",
+            "md": f"{set_name}-checklist.md", "html": f"{set_name}-checklist.html", "review": f"{set_name}-review.json"}
 
 
 # --------------------------------------------------------------------------- page text
@@ -455,11 +570,11 @@ def proposal_hash(q: dict) -> str:
     return hashlib.sha256(json.dumps(material, ensure_ascii=False).encode()).hexdigest()[:16]
 
 
-def checklist_markdown(draft: dict, reports: dict[str, dict]) -> str:
-    out = ["# 留出题核对清单", "",
-           f"草稿 `{DRAFT.name}`，共 {len(draft['questions'])} 题，全部**待人工核对**。对着年报原页逐题看：",
+def checklist_markdown(draft: dict, reports: dict[str, dict], set_name: str = "heldout") -> str:
+    out = [f"# {SETS[set_name]['title']}核对清单", "",
+           f"草稿 `{files(set_name)['draft']}`，共 {len(draft['questions'])} 题，全部**待人工核对**。对着年报原页逐题看：",
            "有答案题看“题目问的是不是这一格、数字和页码对不对”；无答案题看“列出的这些地方是不是都没有写出题目问的那个数”。",
-           "带原页截图、可以直接点选并导出结果的版本是同目录的 `heldout-checklist.html`（不进 git）。", ""]
+           f"带原页截图、可以直接点选并导出结果的版本是同目录的 `{files(set_name)['html']}`（不进 git）。", ""]
     for q in draft["questions"]:
         report = reports[q["doc"]]
         out += [f"## {q['id']}　{'有答案' if q['kind'] == 'answerable' else '无答案'}　{report['company']}"
@@ -493,7 +608,7 @@ def _page_image(pdf: Any, page_number: int, boxes: list[list[float]]) -> str:
     return f"data:image/{kind};base64,{base64.b64encode(data).decode()}"
 
 
-def checklist_html(draft: dict, reports: dict[str, dict]) -> str:
+def checklist_html(draft: dict, reports: dict[str, dict], set_name: str = "heldout") -> str:
     import pdfplumber
 
     cards = []
@@ -550,7 +665,8 @@ def checklist_html(draft: dict, reports: dict[str, dict]) -> str:
         for pdf in opened.values():
             pdf.close()
     return _PAGE.replace("__CARDS__", "\n".join(cards)).replace("__TOTAL__", str(len(draft["questions"]))) \
-        .replace("__SET__", SET_ID)
+        .replace("__SET__", SETS[set_name]["id"]).replace("__REVIEW__", files(set_name)["review"]) \
+        .replace("留出题核对清单", f"{SETS[set_name]['title']}核对清单")
 
 
 _PAGE = """<!doctype html>
@@ -577,7 +693,7 @@ a{color:var(--accent)}.review{display:flex;gap:16px;align-items:center;flex-wrap
 <input id="who" placeholder="核对人姓名"><button id="export" disabled>导出核对结果</button></div>
 <main>
 <p class="dim">每题对着原页截图（或点页码打开原 PDF）看一眼：有答案题确认“题目问的就是这一格，数字和页码对”；无答案题确认“列出的地方都没有写出题目问的那个数”。
-全部选完、填上姓名后点“导出核对结果”，把下载的 heldout-review.json 放到 preparation/s6/multi-agent/ 下。进度存在这台电脑的浏览器里，刷新不丢。</p>
+全部选完、填上姓名后点“导出核对结果”，把下载的 __REVIEW__ 放到 preparation/s6/multi-agent/ 下。进度存在这台电脑的浏览器里，刷新不丢。</p>
 __CARDS__
 </main>
 <script>
@@ -600,7 +716,7 @@ who.oninput=refresh;
 document.getElementById("export").onclick=()=>{const items={};for(const c of cards)items[c.dataset.id]=saved[c.dataset.id];
 const out={set:"__SET__",reviewer:who.value.trim(),exported_at:new Date().toISOString(),items};
 const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,1)],{type:"application/json"}));
-a.download="heldout-review.json";a.click()};refresh();
+a.download="__REVIEW__";a.click()};refresh();
 </script></body></html>
 """
 
@@ -609,7 +725,8 @@ a.download="heldout-review.json";a.click()};refresh();
 
 
 def check_candidates(candidates: tuple[Candidate, ...], reports: dict[str, dict], dev_queries: set[str]) -> None:
-    """What can be checked without the PDFs: ids, reports, patterns, and that no report tool answers a question."""
+    """What can be checked without the PDFs: ids, reports, patterns, that no report tool answers a question and that
+    no earlier set (``dev_queries``: the development set, and for the confirmation set the held-out set too) asks it."""
     from forgeflow import report_lookup
 
     if len({c.id for c in candidates}) != len(candidates):
@@ -624,17 +741,26 @@ def check_candidates(candidates: tuple[Candidate, ...], reports: dict[str, dict]
         if report_lookup.for_question(c.query):
             raise SystemExit(f"{c.id}: this question is answered by a report tool, not by the model")
         if c.query in dev_queries:
-            raise SystemExit(f"{c.id}: the development set already asks this")
+            raise SystemExit(f"{c.id}: the development set or an earlier set already asks this")
 
 
-def draft(reports_dir: Path, *, candidates: tuple[Candidate, ...] = CANDIDATES, sources: Path = SOURCES,
-          per_report: dict[str, int] | None = None, exclude: tuple[str, ...] = (), out: Path = HERE,
-          images: bool = True) -> int:
-    per_report = per_report or PREREG["sets"]["heldout"]["per_report"]
+def asked_before(set_name: str) -> set[str]:
+    """Questions a set may not ask again: the development set's, and for the confirmation set the held-out set's."""
+    asked = {q["query"] for q in json.loads(DEV.read_text())["questions"]}
+    if set_name != "heldout":
+        asked |= {q["query"] for q in json.loads(FROZEN.read_text())["questions"]}
+    return asked
+
+
+def draft(reports_dir: Path, *, set_name: str = "heldout", candidates: tuple[Candidate, ...] | None = None,
+          sources: Path = SOURCES, per_report: dict[str, int] | None = None, exclude: tuple[str, ...] = (),
+          out: Path = HERE, images: bool = True) -> int:
+    per_report = per_report or registered_sets()[set_name]["per_report"]
+    candidates = candidates if candidates is not None else SETS[set_name]["candidates"]
+    names = files(set_name)
     reports = load_reports(reports_dir, sources)
-    dev = {q["query"] for q in json.loads(DEV.read_text())["questions"]}
-    check_candidates(candidates, reports, dev)
-    draft_path = out / DRAFT.name
+    check_candidates(candidates, reports, asked_before(set_name))
+    draft_path = out / names["draft"]
     earlier = json.loads(draft_path.read_text()) if draft_path.exists() else {"questions": [], "excluded": []}
     excluded = set(earlier.get("excluded", [])) | set(exclude)
     pages = {key: page_lines(report["path"]) for key, report in reports.items()}
@@ -649,34 +775,32 @@ def draft(reports_dir: Path, *, candidates: tuple[Candidate, ...] = CANDIDATES, 
             and proposal_hash(kept) == proposal_hash(question) else _review()
         questions.append(question)
     document = {
-        "id": SET_ID, "status": "DRAFT: 每题待人工核对；冻结前不能在这批题上检索或调用模型",
+        "id": SETS[set_name]["id"], "status": "DRAFT: 每题待人工核对；冻结前不能在这批题上检索或调用模型",
         "written": f"{datetime.now(UTC):%Y-%m-%d}, by write_heldout.py from the page text (pdfplumber) of the PDFs in "
                    "sources.json; no retrieval and no model was run over them",
-        "author_note": "Candidates were written without the reports' full text, from the line items the disclosure "
-                       "rules prescribe; the script proposed figure and pages; a person checks every question "
-                       "against the printed page before the set is frozen.",
+        "author_note": SETS[set_name]["author_note"],
         "answer_rule": json.loads(DEV.read_text())["answer_rule"],
         "sources_sha256": sha256(sources), "writer_sha256": sha256(Path(__file__)),
         "excluded": sorted(excluded), "questions": questions,
     }
     out.mkdir(parents=True, exist_ok=True)
     draft_path.write_text(json.dumps(document, ensure_ascii=False, indent=1) + "\n")
-    (out / CANDIDATES_REPORT.name).write_text(json.dumps(
+    (out / names["candidates"]).write_text(json.dumps(
         {"note": "Every candidate and what the script found for it; the draft takes the first located ones per report.",
          "chosen": [q["id"] for q in questions], "excluded": sorted(excluded), "short": short,
          "candidates": located},
         ensure_ascii=False, indent=1) + "\n")
-    (out / CHECKLIST_MD.name).write_text(checklist_markdown(document, reports))
+    (out / names["md"]).write_text(checklist_markdown(document, reports, set_name))
     if images:
-        (out / CHECKLIST_HTML.name).write_text(checklist_html(document, reports))
+        (out / names["html"]).write_text(checklist_html(document, reports, set_name))
     missing = [item["id"] for item in located if not item["located"]]
     print(json.dumps({"draft": str(draft_path), "questions": len(questions),
                       "pending": sum(q["review"]["status"] != VERIFIED for q in questions),
                       "candidates": len(located), "not_located": missing, "short": short,
-                      "checklist": str(out / (CHECKLIST_HTML.name if images else CHECKLIST_MD.name))},
+                      "checklist": str(out / names["html" if images else "md"])},
                      ensure_ascii=False, indent=1))
     if short:
-        print("not enough located candidates: " + "; ".join(short) + " (see heldout-candidates.json, add candidates)",
+        print("not enough located candidates: " + "; ".join(short) + f" (see {names['candidates']}, add candidates)",
               file=sys.stderr)
         return 2
     return 0
@@ -695,12 +819,15 @@ def composition(questions: list[dict], languages: dict[str, str]) -> dict:
             "per_report": per_report}
 
 
-def freeze(*, reviewer: str | None = None, review: Path | None = None, confirm_all: bool = False,
-           sources: Path = SOURCES, out: Path = HERE, frozen: Path = FROZEN, freeze_file: Path = FREEZE,
-           expected: dict | None = None) -> int:
-    """Write heldout.json and its freeze record once every question carries a person's "verified"."""
-    expected = expected or PREREG["sets"]["heldout"]
-    draft_path = out / DRAFT.name
+def freeze(*, set_name: str = "heldout", reviewer: str | None = None, review: Path | None = None,
+           confirm_all: bool = False, sources: Path = SOURCES, out: Path = HERE, frozen: Path | None = None,
+           freeze_file: Path | None = None, expected: dict | None = None) -> int:
+    """Write <set>.json and its freeze record once every question carries a reviewer's "verified"."""
+    spec = registered_sets()[set_name]
+    expected = expected or spec
+    frozen = frozen or PROJECT / spec["path"]
+    freeze_file = freeze_file or PROJECT / spec["freeze"]
+    draft_path = out / files(set_name)["draft"]
     if frozen.exists() or freeze_file.exists():
         raise SystemExit(f"{frozen.name} is already frozen; a revision is a new versioned set and the old results stay")
     marks = json.loads(Path(review).read_text()) if review is not None else {}
@@ -718,7 +845,7 @@ def freeze(*, reviewer: str | None = None, review: Path | None = None, confirm_a
                 "note": mark.get("note", ""), "asked": mark.get("status")}
         # A review file not exported from the check list says how it was made; the freeze record repeats it.
         how = str(marks.get("how") or "").strip()
-        method = f"review file: {how}" if how else "review file exported from heldout-checklist.html"
+        method = f"review file: {how}" if how else f"review file exported from {files(set_name)['html']}"
     elif confirm_all:
         for q in document["questions"]:
             q["review"] = _review(VERIFIED)
@@ -749,7 +876,7 @@ def freeze(*, reviewer: str | None = None, review: Path | None = None, confirm_a
     document.pop("excluded", None)
     frozen.write_text(json.dumps(document, ensure_ascii=False, indent=1) + "\n")
     freeze_file.write_text(json.dumps({
-        "set_id": SET_ID, "recorded_at": now, "verified_by": reviewer, "verified_how": method,
+        "set_id": SETS[set_name]["id"], "recorded_at": now, "verified_by": reviewer, "verified_how": method,
         "files": {frozen.name: sha256(frozen), Path(__file__).name: sha256(Path(__file__))},
         "sources": {"path": str(Path(sources).relative_to(PROJECT)) if Path(sources).is_relative_to(PROJECT) else str(sources),
                     "sha256": sha256(sources)},
@@ -769,16 +896,20 @@ def main(argv: list[str] | None = None) -> int:
     drafting = commands.add_parser("draft", help="resolve the candidates against the PDFs and write the check list")
     drafting.add_argument("--reports", type=Path, required=True, help="folder with <key>.pdf (scripts/fetch_real_reports.sh)")
     drafting.add_argument("--exclude", nargs="*", default=[], help="candidate ids a reviewer rejected")
-    drafting.add_argument("--no-images", action="store_true", help="skip heldout-checklist.html (page images)")
-    freezing = commands.add_parser("freeze", help="write heldout.json once every question is verified")
+    drafting.add_argument("--no-images", action="store_true", help="skip <set>-checklist.html (page images)")
+    freezing = commands.add_parser("freeze", help="write <set>.json once every question is verified")
     freezing.add_argument("--reviewer", help="the person who checked the questions (default: the name in --review)")
-    freezing.add_argument("--review", type=Path, help="heldout-review.json exported from the check list")
+    freezing.add_argument("--review", type=Path, help="<set>-review.json exported from the check list")
     freezing.add_argument("--confirm-all", action="store_true",
                           help="the reviewer said every question is right (no review file)")
+    for command in (drafting, freezing):
+        command.add_argument("--set", dest="set_name", choices=sorted(SETS), default="heldout",
+                             help="heldout (preregistered.json) or confirm (confirm-registered.json, revision 2)")
     args = parser.parse_args(argv)
     if args.command == "draft":
-        return draft(args.reports.expanduser().resolve(), exclude=tuple(args.exclude), images=not args.no_images)
-    return freeze(reviewer=args.reviewer, review=args.review, confirm_all=args.confirm_all)
+        return draft(args.reports.expanduser().resolve(), set_name=args.set_name, exclude=tuple(args.exclude),
+                     images=not args.no_images)
+    return freeze(set_name=args.set_name, reviewer=args.reviewer, review=args.review, confirm_all=args.confirm_all)
 
 
 if __name__ == "__main__":

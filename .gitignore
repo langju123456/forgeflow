@@ -43,3 +43,4 @@ fixtures/financial-pdf/generated/
 
 # Held-out check list with page images of the reports: generated on the machine that has the PDFs, not versioned
 preparation/s6/multi-agent/heldout-checklist.html
+preparation/s6/multi-agent/confirm-checklist.html
