@@ -183,6 +183,21 @@ def test_no_candidates_means_the_reranker_is_never_called():
     assert ranker.scored_texts == []
 
 
+def test_scored_texts_hold_only_what_the_most_recent_call_sent():
+    def base(query, rows):
+        return [(1.0, row) for row in rows]
+
+    reranker = RecordingReranker()
+    ranker = RerankRanker(base, reranker, candidates=2)
+    ranker("first", ROWS)
+    assert ranker.scored_texts == ["alpha", "beta words"]
+    ranker("second", ROWS[1:])
+    assert ranker.scored_texts == ["beta words", "gamma"]  # replaced, not appended to the first call's
+    ranker("third", [])
+    assert ranker.scored_texts == []  # this call sent nothing, so nothing from earlier calls is left
+    assert [passages for _, passages in reranker.calls] == [["alpha", "beta words"], ["beta words", "gamma"]]
+
+
 SEALED_HYBRID = EVAL / "hybrid/runs/20261103T153335-real-hybrid-930f8d99/report.json"
 SEALED_COSINES = EVAL / "hybrid/runs/20261103T153249-real-vector-f75c0fc6/similarities.jsonl"
 

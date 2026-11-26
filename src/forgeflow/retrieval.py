@@ -219,15 +219,18 @@ class RerankRanker:
         self.base = base
         self.reranker = reranker
         self.candidates = candidates
-        self.scored_texts: list[str] = []  # what the reranker was sent, for audits and tests
+        # What the reranker was sent by the most recent call, for audits and tests; empty when that call
+        # sent nothing. Replaced on every call, so a long-lived ranker does not grow with each query.
+        self.scored_texts: list[str] = []
 
     def __call__(self, query: str, rows: list[dict]) -> list[tuple[float, dict]]:
+        self.scored_texts = []
         ranked = self.base(query, rows)
         if self.reranker is None or not ranked:
             return ranked
         head, tail = ranked[: self.candidates], ranked[self.candidates :]
         texts = [str(row["content"]) for _, row in head]
-        self.scored_texts.extend(texts)
+        self.scored_texts = list(texts)
         scores = [float(value) for value in self.reranker.score(query, texts)]
         if len(scores) != len(head):
             raise RuntimeError("Rerank score count does not match candidate count")
