@@ -29,3 +29,11 @@
 - 每题依据的原文片段和结论：[heldout-review.md](heldout-review.md)；给冻结用的标记：`heldout-review.json`（核对人“模型（非人工）”，`how` 写明核对方式）。
 - `write_heldout.py freeze` 原来把核对方式写死为“从 heldout-checklist.html 导出”。改成：核对文件里有 `how` 就照它记，没有才用原来的写法；加了一个测试。
   `tests/test_multi_agent_eval.py` 和 `tests/test_report_orchestration.py`：141 通过，8 跳过（本机没装 grpc）。装完 reportlab 后的第一次运行有 1 个失败，没记下是哪一个；之后连跑 5 次都全部通过，没能复现。
+
+## 第三步：冻结（freeze）— 2026-11-26 完成
+
+- 命令：`bash scripts/mac_multi_agent_eval.sh freeze`（用的是第二步提交的 `heldout-review.json`；`~/Downloads` 里没有别的核对文件）。
+- 提交：`81c314a`（`heldout.json`、`heldout-freeze.json`、`heldout-draft.json`）。冻结时间 2026-11-26T08:43:49Z，早于在这批题上的任何检索或模型调用。
+- `heldout.json` sha256 `ad74e3ef0563a7a0c2547cf96557acd90d397c000f14f21b35f83089b0d251d4`；40 题，有答案 28（跨语言 8），无答案 12。
+- `heldout-freeze.json`：`verified_by` 为“模型（非人工）”，`verified_how` 写明是模型对照 PDF 原页核对，不是人工。
+- 运行脚本的 `load_heldout()` 已接受这批题（哈希、核对标记、构成都对得上）。
