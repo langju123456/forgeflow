@@ -77,11 +77,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 33、34、62、107。依据：p.6「归属于上市公司股东的净利润 82,320,067,101.68 86,228,146,421.62 -4.53 74,734,071,550.75」（主要会计数据，单位：元，2025年列）；p.62 合并利润表「1.归属于母公司股东的净利润 82,320,067,101.68」；p.68 所有者权益变动表综合收益总额的未分配利润列同一数字。补的页都印着这个 2025 年的数（脚本的去重条件把整行是首页那行子串的页漏掉了）",
+    "asked": "verified"
    }
   },
   {
@@ -141,11 +142,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.6「归属于上市公司股东的净资产 244,637,811,032.18 233,105,984,399.47 4.95 215,668,571,607.43」（2025年末列，单位：元）；p.58 合并资产负债表「归属于母公司所有者权益 244,637,811,032.18」；p.68「四、本期期末余额 … 244,637,811,032.18 …」",
+    "asked": "verified"
    }
   },
   {
@@ -223,11 +225,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 16 和写法 2,227,467.87（万元）。依据：p.10「其他系列酒 22,274,678,707.16 5,321,142,314.05 76.11 -9.76 7.11」（单位：元，营业收入列）；p.18、p.107 同一行同一数；p.16 产品情况表（单位：万元）「其他系列酒 … 2,227,467.87 -9.76」是同一事实，草稿把它列成了“同一标签的另一个数”",
+    "asked": "verified"
    }
   },
   {
@@ -293,11 +296,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.61 合并利润表（2025年度列，单位：元）「销售费用 47 7,253,499,600.68 5,639,300,059.49」；p.9 科目变动表「销售费用 7,253,499,600.68 5,639,300,059.49 28.62」；p.108 附注 47「合计 7,253,499,600.68」。p.63 的 1,389,083,642.88 是母公司利润表，不算",
+    "asked": "verified"
    }
   },
   {
@@ -351,11 +355,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.61 合并利润表「税金及附加 46 27,354,227,684.88 26,926,161,474.99」；p.108 附注 46「合计 27,354,227,684.88」。p.63 的 26,122,663,643.16 是母公司利润表，不算",
+    "asked": "verified"
    }
   },
   {
@@ -409,11 +414,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 59。依据：p.6「总资产 303,834,844,021.44 298,944,579,918.70 1.64 272,699,660,092.25」（2025年末列）；p.57「资产总计 303,834,844,021.44」；p.59「负债和所有者权益（或股东权益）总计 303,834,844,021.44」",
+    "asked": "verified"
    }
   },
   {
@@ -452,11 +458,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 143。依据：p.6「加权平均净资产收益率（%） 32.53 36.02 减少3.49个百分点 34.19」（2025年列）；p.143 补充资料「归属于公司普通股股东的净利润 32.53」（加权平均净资产收益率列）",
+    "asked": "verified"
    }
   },
   {
@@ -475,11 +482,12 @@
    "mentions": 0,
    "evidence": [],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。全文查“吨价、吨酒价、均价、平均售价、每吨、单价、元/吨、出厂价、零售价、指导价”：只有 p.22 提到“零售价格动态调整机制”，没有数。p.16 产品情况表只给「茅台酒 58,473.16 3.91 46,750.66 0.73 14,649,990.65 0.39」（产量、销量单位吨，收入单位万元），没有印每吨价格；能用收入除以销量算出，但报告没有写出这个数",
+    "asked": "verified"
    }
   },
   {
@@ -503,11 +511,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。依据：p.11「前五名客户销售额1,704,578.78万元，占年度销售总额10.10%」，同页“前五名销售客户 □适用 √不适用”；没有单个客户的销售额",
+    "asked": "verified"
    }
   },
   {
@@ -575,11 +584,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。产销量按吨披露（p.16 表头“销量（吨）”）；“飞天”只出现在公司名“贵州双龙飞天供应链管理有限公司”里，“瓶”只出现在瓶盖公司名和 p.83 消费税“0.5元/500ml”；没有按瓶的销量",
+    "asked": "verified"
    }
   },
   {
@@ -645,11 +655,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.25「境外 129,641,258 30.60% 110,335,509 30.48% 17.50%」（单位：千元，2025年金额列）；同页「公司境外收入129,641,258千元，占本期营业收入30.60%」",
+    "asked": "verified"
    }
   },
   {
@@ -682,11 +693,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.30「研发投入占营业收入比例 5.23% 5.14% 4.58%」（表头 项目 2025年 2024年 2023年）",
+    "asked": "verified"
    }
   },
   {
@@ -748,11 +760,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.24「动力电池系统 316,506,369 74.70% 253,041,337 69.90% 25.08%」（单位：千元，2025年金额列）；p.25「动力电池系统 316,506,369 241,064,397 23.84% …」；p.195 营业收入分解「动力电池系统 316,506,369 241,064,397 316,506,369 241,064,397」",
+    "asked": "verified"
    }
   },
   {
@@ -802,11 +815,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.24「储能电池系统 62,439,820 14.74% 57,290,460 15.83% 8.99%」（单位：千元，2025年金额列）；p.25「储能电池系统 62,439,820 45,763,689 26.71% …」",
+    "asked": "verified"
    }
   },
   {
@@ -894,11 +908,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.6 2025年度利润分配预案「向全体股东每10股派发现金分红69.57元（含税）」；p.59 同一预案「每10股派发现金分红 69.57元」；p.221「拟分配每10股派息数（元） 69.57」。草稿列出的 12.30、45.53、10.07 是往年方案和 2025 年中期分红，不算",
+    "asked": "verified"
    }
   },
   {
@@ -965,11 +980,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.25「境内 294,060,576 69.40% 251,677,045 69.52% 16.84%」（单位：千元，2025年金额列）；p.195「境内 288,841,747 … 294,060,576 223,497,885」（合计列 294,060,576；288,841,747 是其中电气机械分部，不算）",
+    "asked": "verified"
    }
   },
   {
@@ -1037,11 +1053,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.116 合并利润表（2025年度列，单位：千元）「管理费用 11,666,741 9,689,839」；p.28「管理费用 11,666,741 9,689,839 20.40%」；p.196 附注 52「合计 11,666,741」。p.118 的 4,978,673 是母公司利润表，不算",
+    "asked": "verified"
    }
   },
   {
@@ -1057,11 +1074,12 @@
    "mentions": 0,
    "evidence": [],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。全文没有“比亚迪”或“BYD”；p.28 前五名客户表不具名：「1 第一名 58,159,202 13.73%」",
+    "asked": "verified"
    }
   },
   {
@@ -1078,11 +1096,12 @@
    "mentions": 0,
    "evidence": [],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。全文没有“固态”二字，没有固态电池出货量（候选里“只谈技术进展”的预期不准：报告根本没提）",
+    "asked": "verified"
    }
   },
   {
@@ -1150,11 +1169,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。p.22–23 只有换电站数和服务量：「巧克力换电建站超 1,000 座」「换电服务合计超 115万次，累计换电量约 8,000万度」；分产品收入表没有换电，没有换电业务收入",
+    "asked": "verified"
    }
   },
   {
@@ -1222,11 +1242,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 130、194、196。依据：p.9「Revenues from FinTech and Business Services grew by 8% year-on-year to RMB229.4 billion for the year ended 31 December 2025」和「FinTech and Business Services 229,435 211,956 8% 31% 32%」；p.130 合并利润表、p.194 分部表、p.196 收入分解都印着 229,435（百万元，2025）",
+    "asked": "verified"
    }
   },
   {
@@ -1277,11 +1298,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 8、130 和百万元写法 136,127。依据：p.11「General and administrative expenses rose by 21% year-on-year to RMB136.1 billion for the year ended 31 December 2025」；p.8「General and administrative expenses (136,127) (112,761)」（RMB in millions）；p.130 合并利润表同一数",
+    "asked": "verified"
    }
   },
   {
@@ -1351,11 +1373,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 8、130、204、205、263 和百万元写法 47,448。依据：p.11「Income tax expense increased by 5% year-on-year to RMB47.5 billion for the year ended 31 December 2025」；p.130 合并利润表「Income tax expense 12(a) (47,448) (45,018)」；p.8、p.204、p.205、p.263 同一数",
+    "asked": "verified"
    }
   },
   {
@@ -1405,11 +1428,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 199、209 和百万元写法 130,699。依据：p.81「The total remuneration cost incurred by the Group for the year ended 31 December 2025 was RMB130.7 billion (2024: RMB112.8 billion)」；p.199 附注 7「Employee benefits expenses … 130,699 112,826」、p.209 附注 14 合计「130,699 112,826」，两年都与 130.7 / 112.8 十亿元对得上，是同一项",
+    "asked": "verified"
    }
   },
   {
@@ -1449,11 +1473,12 @@
    ],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.9 全年段落「Social Networks revenues rose by 5% year-on-year to RMB127.7 billion」；p.13 的 30.6 是第四季度，不算；报告没有别处印全年的 Social Networks 收入",
+    "asked": "verified"
    }
   },
   {
@@ -1521,11 +1546,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 130、194、196。依据：p.9「Revenues from VAS increased by 16% year-on-year to RMB369.3 billion for the year ended 31 December 2025」和「VAS 369,281 319,168 16% 49% 49%」；p.130「Value-added Services 369,281 319,168」、p.194 分部表、p.196「– VAS 369,281 319,168」",
+    "asked": "verified"
    }
   },
   {
@@ -1558,11 +1584,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.81「As at 31 December 2025, the Group had 115,849 employees (2024: 110,558)」；全文没有别处印这个数",
+    "asked": "verified"
    }
   },
   {
@@ -1584,11 +1611,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。p.6「Tencent Video maintained its leading position in China's long-form video market with year-on-year growth in video subscribers」；p.152、p.200 是媒体内容的会计政策；没有腾讯视频的收入",
+    "asked": "verified"
    }
   },
   {
@@ -1620,11 +1648,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。p.6「We grew user engagement with Mini Shops, Mini Games and other content-related Mini Programs at rapid year-on-year rates」；p.9、p.17 把小程序列为广告增长来源；DAU 只出现在释义和长青游戏的定义里；没有小程序日活数",
+    "asked": "verified"
    }
   },
   {
@@ -1687,11 +1716,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。p.199「the Group had incurred expenses for the purpose of R&D of approximately RMB85,747 million」是集团合计；p.30 的“Research and development”一行是虎牙增发募集资金用途（美元百万），不是腾讯游戏研发；没有按业务拆分的研发投入",
+    "asked": "verified"
    }
   },
   {
@@ -1741,11 +1771,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.26「Mac 33,708 12 % 29,984 2 % 29,357」（表头 2025 Change 2024 Change 2023，dollars in millions）；p.39 附注「Mac 33,708 29,984 29,357」",
+    "asked": "verified"
    }
   },
   {
@@ -1795,11 +1826,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.26「iPad 28,023 5 % 26,694 (6) % 28,300」；p.39「iPad 28,023 26,694 28,300」",
+    "asked": "verified"
    }
   },
   {
@@ -1849,11 +1881,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.26「Wearables, Home and Accessories 35,686 (4) % 37,005 (7) % 39,845」；p.39 同一行同一数",
+    "asked": "verified"
    }
   },
   {
@@ -1897,11 +1930,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 50。依据：p.25「Americas $ 178,353 7 % $ 167,045 3 % $ 162,560」（2025 列，dollars in millions）；p.50 分部附注 2025 表「Net sales $ 178,353 …」（Americas 列）",
+    "asked": "verified"
    }
   },
   {
@@ -1940,11 +1974,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 39。依据：p.32 利润表「Diluted $ 7.46 $ 6.08 $ 6.13」（Earnings per share，2025 列）；p.39 附注 3「Diluted earnings per share $ 7.46」",
+    "asked": "verified"
    }
   },
   {
@@ -1988,11 +2023,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过，补 gold 页 50。依据：p.25「Europe 111,032 10 % 101,328 7 % 94,294」（2025 列）；p.50 分部附注 2025 表 Europe 列「$ 111,032」",
+    "asked": "verified"
    }
   },
   {
@@ -2078,11 +2114,12 @@
    "other_values": [],
    "note": "",
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过。依据：p.32 利润表「Net income $ 112,010 $ 93,736 $ 96,995」（2025 列，in millions）；p.33、p.35、p.36、p.39 同一行同一数",
+    "asked": "verified"
    }
   },
   {
@@ -2109,11 +2146,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。p.4「The Company's line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products」，归在 Wearables, Home and Accessories；没有 AirPods 单独的销售额",
+    "asked": "verified"
    }
   },
   {
@@ -2146,11 +2184,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。“retail stores”出现在 p.5、p.9、p.50，都不给数量；没有门店数",
+    "asked": "verified"
    }
   },
   {
@@ -2177,11 +2216,12 @@
     }
    ],
    "review": {
-    "status": "pending",
-    "label": "待人工核对",
+    "status": "verified",
+    "label": "已核对",
     "by": null,
     "at": null,
-    "note": ""
+    "note": "核对通过（无答案）。Apple Watch 只在 p.4、p.24 的产品介绍里出现；Wearables, Home and Accessories 只有合计；没有 Apple Watch 单独的销售额",
+    "asked": "verified"
    }
   }
  ]

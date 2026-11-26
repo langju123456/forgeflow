@@ -1,0 +1,19 @@
+{
+ "set_id": "s6-heldout-annual-reports-v1",
+ "recorded_at": "2026-11-26T08:43:49.897099+00:00",
+ "verified_by": "模型（非人工）",
+ "verified_how": "review file: 答案页由模型逐题对照 PDF 原页文字核对，不是人工核对：有答案题打开 gold 页确认答案的数、标签、期间列和单位，并全文查找同一事实印在别处的页；无答案题全文查找相关词，确认没有写出题目问的那个数",
+ "files": {
+  "heldout.json": "ad74e3ef0563a7a0c2547cf96557acd90d397c000f14f21b35f83089b0d251d4",
+  "write_heldout.py": "92b1c67115126d5f5dd3095cd9588b242433fea255b2287906bf653c91d1c367"
+ },
+ "sources": {
+  "path": "preparation/s4/real-reports/sources.json",
+  "sha256": "e69cd9b127a8778c12f71aaf303b4401c9f5ba77be338df9b0cb3a6a545f2942"
+ },
+ "questions": 40,
+ "answerable": 28,
+ "absent": 12,
+ "answerable_cross_language": 8,
+ "instruction": "Frozen before any retrieval or model call over these questions. Do not edit; a revision is a new versioned set and the old results stay."
+}
