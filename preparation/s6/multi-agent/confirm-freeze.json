@@ -1,0 +1,19 @@
+{
+ "set_id": "s6-confirm-annual-reports-v1",
+ "recorded_at": "2026-11-26T14:30:34.341354+00:00",
+ "verified_by": "模型（非人工）",
+ "verified_how": "review file: 答案页由模型逐题对照 PDF 原页文字核对，不是人工核对：有答案题打开 gold 页确认答案的数、标签、期间列和单位，并全文查找同一事实印在别处的页（含换了单位的写法）；无答案题全文查找相关词，确认没有写出题目问的那个数",
+ "files": {
+  "confirm.json": "fb3438f2e77b33d911ce8038fdd23d7e95a1025f373dd715a43c46d40308361a",
+  "write_heldout.py": "546e0090c22255933283118f4e82b72ee97a932eaedbefb82b513befa2890ca2"
+ },
+ "sources": {
+  "path": "preparation/s4/real-reports/sources.json",
+  "sha256": "e69cd9b127a8778c12f71aaf303b4401c9f5ba77be338df9b0cb3a6a545f2942"
+ },
+ "questions": 40,
+ "answerable": 28,
+ "absent": 12,
+ "answerable_cross_language": 8,
+ "instruction": "Frozen before any retrieval or model call over these questions. Do not edit; a revision is a new versioned set and the old results stay."
+}
