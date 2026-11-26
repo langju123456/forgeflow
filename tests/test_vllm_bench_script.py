@@ -159,6 +159,39 @@ def test_tensor_parallel_auto_spreads_a_model_that_does_not_fit_on_one_card_or_s
     assert bench.pick_tensor_parallel("2", qwen3_8b_fp16, [t4], 0.90) == 2  # an explicit value is not second-guessed
 
 
+def test_weight_size_comes_from_the_hub_listing_and_is_unknown_when_the_hub_cannot_be_reached(tmp_path, monkeypatch):
+    import threading
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    listing = {"siblings": [{"rfilename": "model-00001-of-00002.safetensors", "size": 9_000_000_000},
+                            {"rfilename": "model-00002-of-00002.safetensors", "size": 7_400_000_000},
+                            {"rfilename": "pytorch_model.bin", "size": 16_400_000_000},  # a second copy: not added
+                            {"rfilename": "tokenizer.json", "size": 11_000_000}, {"rfilename": "README.md"}]}
+    asked = []
+
+    class Hub(BaseHTTPRequestHandler):
+        def log_message(self, *args):
+            pass
+
+        def do_GET(self):
+            asked.append(self.path)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(listing).encode())
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Hub)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        monkeypatch.setenv("HF_ENDPOINT", f"http://127.0.0.1:{server.server_address[1]}")
+        assert bench.weights_bytes("Qwen/Qwen3-8B") == 16_400_000_000
+        assert asked == ["/api/models/Qwen/Qwen3-8B?blobs=true"]
+    finally:
+        server.shutdown()
+        server.server_close()
+    assert bench.weights_bytes("Qwen/Qwen3-8B") is None  # nothing listens there any more
+    assert bench.weights_bytes(model_folder(tmp_path, "local", 3)) == 3 * bench.GIB
+
+
 def test_nearest_rank_percentiles_and_token_rates():
     values = [float(v) for v in range(1, 41)]
     assert (bench.percentile(values, 50), bench.percentile(values, 95), bench.percentile(values, 99)) == (20.0, 38.0, 40.0)
