@@ -1,4 +1,4 @@
-"""Ranking modes behind the S1 ACL and citation checks: parity, ACL-before-embedding, fusion, floor."""
+"""Ranking modes behind the S1 ACL and citation checks: parity, ACL-before-embedding, fusion, floor, reranking."""
 
 import json
 import sys
@@ -12,6 +12,7 @@ from forgeflow.retrieval import (
     HybridRanker,
     OllamaEmbedder,
     RankedKnowledgeService,
+    RerankRanker,
     VectorRanker,
     lexical_ranker,
 )
@@ -108,3 +109,109 @@ def test_ollama_embedder_refuses_anything_but_a_local_server():
         OllamaEmbedder(base_url="https://embeddings.example.com")
     OllamaEmbedder(base_url="http://127.0.0.1:11434")
     OllamaEmbedder(base_url="http://localhost:11434")
+
+
+class RecordingReranker:
+    """Scores passages from a table (0.0 when absent) and keeps every (query, passages) it was given."""
+
+    model_id = "test/recording"
+
+    def __init__(self, scores=None):
+        self.scores = scores or {}
+        self.calls = []
+
+    def score(self, query, passages):
+        self.calls.append((query, list(passages)))
+        return [self.scores.get(passage, 0.0) for passage in passages]
+
+
+def test_the_reranker_only_ever_sees_content_the_caller_may_read(frozen):
+    data, store, identities = frozen
+    sent_in_total = 0
+    for q in data["questions"]:
+        identity, scope = identities[q["principal"]], Scope.model_validate(data["scopes"][q["scope"]])
+        reranker = RecordingReranker()
+        vector = VectorRanker(FakeEmbedder(), min_similarity=-1.0)  # every authorized row becomes a candidate
+        ranker = RerankRanker(HybridRanker(vector), reranker, candidates=30)
+        outcome(RankedKnowledgeService(store, ranker), data, identities, q)
+        # Readable is worked out from the frozen documents, not from what the Store returned.
+        readable = {
+            doc["content"]
+            for doc in data["documents"]
+            if doc["scope"] == q["scope"] and identity.permits(scope, set(doc["roles"]), doc["classification"])
+        }
+        sent = [passage for _, passages in reranker.calls for passage in passages]
+        assert set(sent) <= readable, q["id"]
+        assert sent == ranker.scored_texts, q["id"]
+        assert all(query == q["query"] for query, _ in reranker.calls), q["id"]
+        sent_in_total += len(sent)
+    assert sent_in_total > len(data["questions"])  # the check above was not vacuous
+
+
+def test_the_reranker_scores_only_the_first_n_candidates():
+    def base(query, rows):
+        return [(3.0, ROWS[0]), (2.0, ROWS[1]), (1.0, ROWS[2])]
+
+    reranker = RecordingReranker({"alpha": 0.1, "beta words": 0.9, "gamma": 5.0})
+    ranked = RerankRanker(base, reranker, candidates=2)("beta", ROWS)
+    assert reranker.calls == [("beta", ["alpha", "beta words"])]
+    # c was never scored: it stays behind the two reranked rows although its score would have been the highest.
+    assert [row["id"] for _, row in ranked] == ["b", "a", "c"]
+    assert [score for score, _ in ranked] == [0.9, 0.1, 1.0]
+
+
+def test_equal_rerank_scores_keep_the_base_order_whatever_order_the_rows_arrive_in():
+    base = HybridRanker(VectorRanker(TableEmbedder(VECTORS), min_similarity=0.0), k=60)
+    assert [row["id"] for _, row in base("beta", ROWS)] == ["b", "a", "c"]
+    for rows in (ROWS, ROWS[::-1]):
+        all_equal = RerankRanker(base, RecordingReranker(), candidates=30)("beta", rows)
+        assert [row["id"] for _, row in all_equal] == ["b", "a", "c"]
+        two_equal = RerankRanker(base, RecordingReranker({"gamma": 1.0}), candidates=30)("beta", rows)
+        assert [row["id"] for _, row in two_equal] == ["c", "b", "a"]
+
+
+def test_no_candidates_means_the_reranker_is_never_called():
+    class Refusing:
+        model_id = "test/refusing"
+
+        def score(self, query, passages):
+            raise AssertionError("the reranker must not be called without candidates")
+
+    ranker = RerankRanker(lexical_ranker, Refusing(), candidates=30)
+    assert ranker("zzz", ROWS) == []  # authorized rows, none of them a candidate
+    assert ranker("beta", []) == []  # nothing authorized to rank
+    assert ranker.scored_texts == []
+
+
+SEALED_HYBRID = EVAL / "hybrid/runs/20261103T153335-real-hybrid-930f8d99/report.json"
+SEALED_COSINES = EVAL / "hybrid/runs/20261103T153249-real-vector-f75c0fc6/similarities.jsonl"
+
+
+class SealedVector:
+    """The vector half of the sealed runs: the bge-m3 cosines recorded per question, floor as in VectorRanker."""
+
+    def __init__(self, cosines, min_similarity):
+        self.cosines = cosines
+        self.min_similarity = min_similarity
+
+    def __call__(self, query, rows):
+        pairs = [(self.cosines[(str(row["id"]), str(row.get("version", "1")))], row) for row in rows]
+        pairs.sort(key=lambda value: (-value[0], str(value[1]["id"]), str(value[1].get("version", "1"))))
+        return [(score, row) for score, row in pairs if score >= self.min_similarity]
+
+
+def test_without_a_reranker_results_match_the_sealed_hybrid_run_question_by_question(frozen):
+    data, store, identities = frozen
+    sealed = {row["id"]: row for row in json.loads(SEALED_HYBRID.read_text())["questions"]}
+    cosines = {
+        row["id"]: {(score["id"], score["version"]): score["cosine"] for score in row["scores"]}
+        for row in map(json.loads, SEALED_COSINES.read_text().splitlines())
+    }
+    assert len(sealed) == len(data["questions"]) == 47
+    for q in data["questions"]:
+        hybrid = HybridRanker(SealedVector(cosines.get(q["id"], {}), min_similarity=0.50), k=60)
+        reader = RankedKnowledgeService(store, RerankRanker(hybrid, None, candidates=30))
+        expected = (sealed[q["id"]]["error"] or {}).get("code") or [
+            (hit["id"], hit["version"], hit["source_hash"], hit["status"]) for hit in sealed[q["id"]]["hits"]
+        ]
+        assert outcome(reader, data, identities, q) == expected, q["id"]

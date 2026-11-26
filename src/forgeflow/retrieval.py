@@ -6,7 +6,9 @@ lexical ranker to the S1 results on the frozen S2 dataset, so only the ranking d
 
 Order of operations, same as S1: the store filters by role, classification and scope BEFORE rows
 exist here; rows are checked again; only then are they ranked. Embeddings are therefore computed only
-for content this principal may read, and an embedding provider never sees anything else.
+for content this principal may read, and an embedding provider never sees anything else. The same
+holds for the optional reranker (RerankRanker): it reorders rows a ranker already returned, so it is
+only ever given content from that authorized set.
 """
 
 from __future__ import annotations
@@ -135,6 +137,106 @@ class HybridRanker:
         return _order([(score, by_key[key]) for key, score in fused.items()])
 
 
+class Reranker(Protocol):
+    model_id: str
+
+    def score(self, query: str, passages: Sequence[str]) -> list[float]: ...
+
+
+class CrossEncoderReranker:
+    """A cross-encoder (default BAAI/bge-reranker-v2-m3) run in this process through sentence-transformers.
+
+    The query and passages never leave the process. The weights are loaded on first use from the local
+    Hugging Face cache and downloaded once if absent; ``local_files_only=True`` refuses to download.
+    ``device=None`` picks ``mps`` on Apple Silicon, otherwise ``cuda`` if present, otherwise ``cpu``. A
+    pair longer than ``max_length`` tokens is truncated by the tokenizer. Scores are raw logits (no
+    sigmoid): only their order is used. Needs the optional extra: ``pip install 'forgeflow[rerank]'``.
+    """
+
+    def __init__(
+        self,
+        model: str = "BAAI/bge-reranker-v2-m3",
+        device: str | None = None,
+        max_length: int = 1024,
+        batch_size: int = 8,
+        revision: str | None = None,
+        local_files_only: bool = False,
+    ):
+        self.model_id = f"sentence-transformers/{model}"
+        self.device = device
+        self.max_length = max_length
+        self.batch_size = batch_size
+        self._model = model
+        self._revision = revision
+        self._local_files_only = local_files_only
+        self._encoder = None
+
+    def load(self):
+        """The loaded CrossEncoder; the first call imports torch and reads (or downloads) the weights."""
+        if self._encoder is None:
+            try:
+                import torch
+                from sentence_transformers import CrossEncoder
+            except ImportError as error:  # pragma: no cover - exercised only without the extra
+                raise RuntimeError("Install the rerank extra: pip install 'forgeflow[rerank]'") from error
+            if self.device is None:
+                if torch.backends.mps.is_available():
+                    self.device = "mps"
+                else:
+                    self.device = "cuda" if torch.cuda.is_available() else "cpu"
+            self._encoder = CrossEncoder(
+                self._model,
+                device=self.device,
+                max_length=self.max_length,
+                activation_fn=torch.nn.Identity(),
+                revision=self._revision,
+                local_files_only=self._local_files_only,
+            )
+        return self._encoder
+
+    def score(self, query: str, passages: Sequence[str]) -> list[float]:
+        if not passages:
+            return []
+        pairs = [[query, passage] for passage in passages]
+        scores = self.load().predict(pairs, batch_size=self.batch_size, show_progress_bar=False)
+        return [float(value) for value in scores]
+
+
+class RerankRanker:
+    """Reorders the first ``candidates`` rows of another ranker by a reranker's score for (query, content).
+
+    The reranker is given the query and the stored content of rows the base ranker returned, nothing
+    else, and only for those first rows. It reorders and never removes: there is no score threshold, and
+    rows past ``candidates`` keep their base order behind the reranked ones. Equal scores keep the base
+    order, so a run is repeatable. With ``reranker=None`` the base ranking is returned unchanged.
+    Returned scores are the reranker's for the first rows and the base ranker's for the rest; the two
+    are not comparable and only the order is meaningful.
+    """
+
+    def __init__(self, base: Ranker, reranker: Reranker | None, candidates: int = 30):
+        if isinstance(candidates, bool) or not isinstance(candidates, int) or candidates < 1:
+            raise ValueError("candidates must be a positive integer")
+        self.base = base
+        self.reranker = reranker
+        self.candidates = candidates
+        self.scored_texts: list[str] = []  # what the reranker was sent, for audits and tests
+
+    def __call__(self, query: str, rows: list[dict]) -> list[tuple[float, dict]]:
+        ranked = self.base(query, rows)
+        if self.reranker is None or not ranked:
+            return ranked
+        head, tail = ranked[: self.candidates], ranked[self.candidates :]
+        texts = [str(row["content"]) for _, row in head]
+        self.scored_texts.extend(texts)
+        scores = [float(value) for value in self.reranker.score(query, texts)]
+        if len(scores) != len(head):
+            raise RuntimeError("Rerank score count does not match candidate count")
+        if not all(math.isfinite(value) for value in scores):
+            raise RuntimeError("Reranker returned a score that is not a finite number")
+        order = sorted(range(len(head)), key=lambda index: (-scores[index], index))
+        return [(scores[index], head[index][1]) for index in order] + tail
+
+
 def _cited_hits(
     store: ContextStore,
     principal: Principal,
@@ -195,7 +297,7 @@ def _cited_hits(
 
 
 class RankedKnowledgeService:
-    """KnowledgeService with the ranking step swappable: lexical (S1), vector, or hybrid."""
+    """KnowledgeService with the ranking step swappable: lexical (S1), vector, hybrid, or one of them reranked."""
 
     def __init__(self, store: ContextStore, ranker: Ranker = lexical_ranker):
         self.store = store

@@ -23,6 +23,9 @@ pdf-fixtures = ["reportlab>=4.2,<6", "pillow>=10.1"]
 # were built with grpcio-tools 1.81.2 / protobuf 6.33.5 and check those runtime versions at import.
 service = ["redis>=5,<7", "aio-pika>=9.4,<10", "grpcio>=1.81.2,<2", "protobuf>=6.33.5,<7"]
 service-dev = ["grpcio-tools>=1.81.2,<2"]
+# Reranking after hybrid retrieval (forgeflow.retrieval.CrossEncoderReranker): a cross-encoder run in-process.
+# Pulls in torch and transformers; the weights (BAAI/bge-reranker-v2-m3, about 2.3 GB) are downloaded on first use.
+rerank = ["sentence-transformers>=6,<7"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/forgeflow"]
