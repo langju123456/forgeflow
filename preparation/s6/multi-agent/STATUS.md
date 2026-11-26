@@ -117,6 +117,16 @@
   - 修好的初标脚本已经把“同一个长数字在别页再印”的页找全了；补的这些都是短数字（7 位以下，脚本不全文找）或换了单位的写法。
 - 每题依据的原文片段和结论：[confirm-review.md](confirm-review.md)；给冻结用的标记：`confirm-review.json`（核对人“模型（非人工）”）。
 
+#### 冻结 — 2026-11-26 完成
+
+- 命令：`bash scripts/mac_multi_agent_eval.sh confirm-freeze`，提交 `142783e`（`confirm.json`、`confirm-freeze.json`）。冻结时间 2026-11-26T14:30:34Z，早于在这批题上的任何检索或模型调用。
+- `confirm.json` sha256 `fb3438f2e77b33d911ce8038fdd23d7e95a1025f373dd715a43c46d40308361a`；`verified_by` 为“模型（非人工）”。运行脚本的 `load_frozen("confirm")` 已接受这批题，`pins.json` 与留出题运行时相同。
+
+#### 运行 — 2026-11-26 已提交
+
+- 开跑前 `ollama ps`：没有加载任何模型，没有别的进程连着 Ollama。
+- 经 mac-bridge 排队，任务 `20261126-143104-s6-arms-confirm`，`timeout_minutes` 240，命令 `bash scripts/mac_multi_agent_eval.sh confirm`（只跑确认题，四组）。
+
 ## 收件箱
 
 - 2026-11-26：已接入收件箱（mac-bridge `inbox/line5.md`，克隆在 `~/.mac-bridge/work/report-orchestration`）。当时的内容是“目前没有新的决定，照原计划跑完 heldout、按预登记判定并写进 STATUS.md”，与原计划一致，没有新的条目要处理。
