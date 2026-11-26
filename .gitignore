@@ -40,3 +40,6 @@ web/dist/
 # Financial PDF fixtures are generated from fixtures/financial-pdf/ground_truth.json, not versioned
 fixtures/financial-pdf/generated/
 .desk-service/
+
+# Held-out check list with page images of the reports: generated on the machine that has the PDFs, not versioned
+preparation/s6/multi-agent/heldout-checklist.html
