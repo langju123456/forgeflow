@@ -11,6 +11,8 @@ import hashlib
 import importlib.util
 import json
 import sys
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import httpx
@@ -432,6 +434,104 @@ def test_plumbing_runs_are_labelled_and_limited_runs_decide_nothing(corpus, regi
     assert report["sets"]["heldout"]["questions_run"] == 2 and report["sets"]["heldout"]["decision"] is None
     with pytest.raises(SystemExit, match="plumbing"):
         run_arms.main(["--reports", str(corpus["reports"]), "--limit", "2"])
+
+
+# --------------------------------------------------------------------------- the real-model path, against a local server
+
+
+class FakeOllama(BaseHTTPRequestHandler):
+    """The part of Ollama's HTTP API the runner uses, answered by the plumbing stand-ins. Not a model."""
+
+    served, context, parameters = "forgeflow-qwen3-8b-ctx16k", 16384, "num_ctx 16384"
+    roles, embedder, chats = run_arms.FakeRoles(), s4.FakeEmbedder(), []
+
+    def _reply(self, body):
+        data = json.dumps(body).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def do_GET(self):  # noqa: N802 - http.server's name
+        details = {"format": "gguf", "family": "qwen3", "parameter_size": "8.2B", "quantization_level": "Q4_K_M"}
+        if self.path == "/api/version":
+            return self._reply({"version": "0.0-test"})
+        if self.path == "/api/tags":
+            return self._reply({"models": [{"name": name, "digest": digest, "size": 1, "details": details}
+                                           for name, digest in ((f"{self.served}:latest", "d-served"),
+                                                                ("qwen3:8b", "d-weights"), ("bge-m3:latest", "d-embed"))]})
+        return self._reply({"models": [{"name": f"{self.served}:latest", "digest": "d-served",
+                                        "context_length": type(self).context, "size_vram": 1}]})
+
+    def do_POST(self):  # noqa: N802
+        body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+        if self.path == "/api/show":
+            served = body["model"] == self.served
+            return self._reply({"modelfile": "FROM /blobs/sha256-a3de86cd", "details": {
+                "format": "gguf", "family": "qwen3", "parameter_size": "8.2B", "quantization_level": "Q4_K_M"},
+                "parameters": type(self).parameters if served else "temperature 0.6"})
+        if self.path == "/api/embed":
+            return self._reply({"embeddings": self.embedder.embed(body["input"])})
+        self.chats.append({k: body[k] for k in ("model", "temperature", "seed", "reasoning_effort", "max_tokens")})
+        text = self.roles.complete(body["messages"], body["response_format"]["json_schema"]["schema"])
+        return self._reply({"choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+                                                                                         "content": text}}],
+                            "usage": {"prompt_tokens": len(body["messages"][-1]["content"]) // 4, "completion_tokens": 9}})
+
+    def log_message(self, *args):
+        pass
+
+
+@pytest.fixture
+def ollama():
+    server = ThreadingHTTPServer(("127.0.0.1", 0), FakeOllama)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    FakeOllama.context, FakeOllama.parameters, FakeOllama.chats = 16384, "num_ctx 16384", []
+    yield f"http://127.0.0.1:{server.server_address[1]}"
+    server.shutdown()
+    server.server_close()
+
+
+def real(corpus, out, url, *extra):
+    return run_arms.main(["--reports", str(corpus["reports"]), "--ollama-url", url, "--out", str(out),
+                          "--cache", str(out / "embeddings.sqlite"), *extra])
+
+
+def test_the_real_path_checks_the_served_model_and_runs_the_held_out_set_once(corpus, registered, ollama, tmp_path):
+    out = tmp_path / "runs"
+    out.mkdir()
+    assert real(corpus, out, ollama) == 0
+    folder = next(p for p in out.iterdir() if p.is_dir())
+    report = json.loads((folder / "report.json").read_text())
+    assert report["status"] == "REAL" and folder.name.startswith("arms-") and not folder.name.endswith(("-fake", "-plumbing"))
+    assert report["llm"] == "ollama/forgeflow-qwen3-8b-ctx16k" and report["llm_settings"] == s4.PREREG["model"]["settings"]
+    assert report["ollama"]["after_warmup"][0]["context_length"] == 16384
+    assert report["sets"]["heldout"]["decision"]["conclusion"] in {"不采用", "采用 verify", "采用 plan_verify"}
+    # Every role ran on the one registered tag with the registered settings; the warm-up call is not counted.
+    assert {(c["model"], c["temperature"], c["seed"], c["reasoning_effort"], c["max_tokens"]) for c in FakeOllama.chats} \
+        == {("forgeflow-qwen3-8b-ctx16k", 0, 0, "none", 512)}
+    sent = report["model_calls"]["sent_this_process"]
+    assert sent["n"] == report["model_calls"]["distinct_prompts"] == len(FakeOllama.chats) - 1
+    assert sent["max_prompt_tokens"] > 0 and sent["calls_over_context"] == 0 and sent["not_stopped"] == 0
+    steps = [s for q in report["sets"]["dev"]["questions"] for s in q["arms"]["verify"]["orchestration"]["steps"]]
+    assert all(s["prompt_tokens"] > 0 for s in steps)
+    # The held-out set is run once: a second real run is refused, the development set can be run again.
+    with pytest.raises(SystemExit, match="already run for real"):
+        real(corpus, out, ollama)
+    assert real(corpus, out, ollama, "--sets", "dev") == 0
+
+
+@pytest.mark.parametrize(("context", "parameters", "message"), [
+    (4096, "num_ctx 16384", "loaded with context 4096"),
+    (16384, "temperature 0.6", "does not declare the registered num_ctx"),
+])
+def test_a_served_model_without_the_long_context_stops_the_run_before_any_question(corpus, registered, ollama, tmp_path,
+                                                                                 context, parameters, message):
+    FakeOllama.context, FakeOllama.parameters = context, parameters
+    with pytest.raises(SystemExit, match=message):
+        real(corpus, tmp_path, ollama)
+    assert len(FakeOllama.chats) <= 1  # at most the warm-up on text unrelated to the reports
 
 
 # --------------------------------------------------------------------------- held-out questions: candidates
