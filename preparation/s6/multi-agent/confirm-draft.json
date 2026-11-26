@@ -2,7 +2,7 @@
  "id": "s6-confirm-annual-reports-v1",
  "status": "DRAFT: 每题待人工核对；冻结前不能在这批题上检索或调用模型",
  "written": "2026-11-26, by write_heldout.py from the page text (pdfplumber) of the PDFs in sources.json; no retrieval and no model was run over them",
- "author_note": "Revision 2: the held-out list's unused candidates first (written before any result; six with patterns rewritten from the printed line), then candidates written after the held-out result with the page text at hand; the script proposed figure and pages; every question is checked against the printed page before the set is frozen.",
+ "author_note": "Revision 2: the held-out list's unused candidates first (written before any result; six with patterns rewritten from the printed line), then candidates written after the held-out result with the page text at hand; the script proposed figure and pages; every question is checked against the printed page before the set is frozen. At the check: every question was checked against the printed page by a model, not by a person (PREREGISTRATION.md, revision 2).",
  "answer_rule": "An answer counts as correct when it contains one of `accept` (digits compared without thousands separators; Chinese and English units both allowed) and cites a row from one of `pages` of `doc`. An absent question counts as correct when the system returns no supported evidence / says the report does not contain it.",
  "sources_sha256": "e69cd9b127a8778c12f71aaf303b4401c9f5ba77be338df9b0cb3a6a545f2942",
  "writer_sha256": "546e0090c22255933283118f4e82b72ee97a932eaedbefb82b513befa2890ca2",
@@ -633,7 +633,8 @@
    "query": "宁德时代 2025 年基本每股收益是多少？",
    "pages": [
     11,
-    118
+    118,
+    232
    ],
    "answer": "16.14（见 p.11：基本每股收益（元/ 16.14 11.58 39.38% 10.06）",
    "accept": [
@@ -662,6 +663,11 @@
       145.1
      ],
      "why": "同一标签、同一数字"
+    },
+    {
+     "page": 232,
+     "line": "归属于公司普通股股东的净利润 24.91 16.14 16.14（补充资料 净资产收益率及每股收益，基本每股收益列）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -867,7 +873,8 @@
    "kind": "answerable",
    "query": "What was CATL's weighted average return on net assets in 2025?",
    "pages": [
-    11
+    11,
+    232
    ],
    "answer": "24.91（见 p.11：加权平均净资产收益 24.91% 24.13% 0.78% 24.04%）",
    "accept": [
@@ -885,6 +892,11 @@
       537.6
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 232,
+     "line": "归属于公司普通股股东的净利润 24.91 16.14 16.14（补充资料，加权平均净资产收益率（%）列）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1074,7 +1086,9 @@
    "kind": "answerable",
    "query": "What was Tencent's operating profit for 2025?",
    "pages": [
+    4,
     8,
+    19,
     22,
     130
    ],
@@ -1121,6 +1135,16 @@
       380.2
      ],
      "why": "同一标签、同一数字"
+    },
+    {
+     "page": 4,
+     "line": "Operating profit 124,656 110,827 160,074 208,099 241,562 (Financial Summary, 2021-2025, 2025 column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 19,
+     "line": "Operating profit 60,338 63,554 51,478 241,562 208,099 (EBITDA reconciliation, year ended 31 December 2025 column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [
@@ -1181,12 +1205,19 @@
    "kind": "answerable",
    "query": "What was Tencent's net cash position at the end of 2025?",
    "pages": [
-    25
+    18,
+    25,
+    264
    ],
    "answer": "107.1（见 p.25：As at 31 December 2025, the Group had net cash of RMB107.1 billion, compared to ）",
    "accept": [
     "107.1",
-    "1071亿"
+    "1071亿",
+    "107,145",
+    "1071.45亿",
+    "1071.5亿",
+    "107.1 billion",
+    "107.15 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1200,6 +1231,16 @@
       388.7
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 18,
+     "line": "Net cash (c) 107,145 102,422 76,798 107,145 76,798 (RMB in millions, 31 December 2025 column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 264,
+     "line": "Net cash as at 31 December 2025 … 107,145 (Note 43 reconciliation of net cash, RMB'Million)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1219,6 +1260,7 @@
    "kind": "answerable",
    "query": "What was Tencent's profit before income tax for 2025?",
    "pages": [
+    4,
     8,
     130,
     205
@@ -1266,6 +1308,11 @@
       288.6
      ],
      "why": "同一标签、同一数字"
+    },
+    {
+     "page": 4,
+     "line": "Profit before income tax 248,062 210,225 161,324 241,485 277,249 (Financial Summary, 2025 column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [
@@ -1302,7 +1349,9 @@
    "query": "What were Tencent's finance costs in 2025?",
    "pages": [
     8,
-    130
+    11,
+    130,
+    202
    ],
    "answer": "15,130（见 p.8：Finance costs (15,130) (11,981)）",
    "accept": [
@@ -1336,6 +1385,16 @@
       429.2
      ],
      "why": "同一标签、同一数字"
+    },
+    {
+     "page": 11,
+     "line": "Finance costs. Finance costs were RMB15.1 billion for the year ended 31 December 2025",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 202,
+     "line": "11 FINANCE COSTS … 15,130 11,981 (Note 11 total, RMB'Million, 2025 2024)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [
@@ -1366,12 +1425,21 @@
    "kind": "answerable",
    "query": "腾讯 2025 年的毛利是多少？",
    "pages": [
-    10
+    4,
+    8,
+    10,
+    130,
+    194
    ],
    "answer": "422.6（见 p.10：Gross profit. Gross profit rose by 21% year-on-year to RMB422.6 billion for the ）",
    "accept": [
     "422.6",
-    "4226亿"
+    "4226亿",
+    "422,593",
+    "4225.93亿",
+    "4225.9亿",
+    "422.6 billion",
+    "422.59 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1385,6 +1453,26 @@
       137.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 4,
+     "line": "Gross profit 245,944 238,746 293,109 349,246 422,593 (Financial Summary, 2025 column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 8,
+     "line": "Gross profit 422,593 349,246 (MD&A table, RMB in millions, 2025 2024)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 130,
+     "line": "Gross profit 422,593 349,246 (Consolidated Income Statement, RMB'Million)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 194,
+     "line": "Gross profit 222,296 83,389 116,616 292 422,593 (Note 5 segment information, 2025, total column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1404,12 +1492,19 @@
    "kind": "answerable",
    "query": "腾讯 2025 年的销售及市场推广开支是多少？",
    "pages": [
-    11
+    8,
+    11,
+    130
    ],
    "answer": "41.7（见 p.11：Selling and marketing expenses. Selling and marketing expenses grew by 15% year-）",
    "accept": [
     "41.7",
-    "417亿"
+    "417亿",
+    "41,727",
+    "417.27亿",
+    "417.3亿",
+    "41.7 billion",
+    "41.73 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1423,6 +1518,16 @@
       153.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 8,
+     "line": "Selling and marketing expenses (41,727) (36,388) (MD&A table, RMB in millions, 2025 2024)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 130,
+     "line": "Selling and marketing expenses 7 (41,727) (36,388) (Consolidated Income Statement)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1635,7 +1740,8 @@
    "kind": "answerable",
    "query": "What were Apple's net sales in the Rest of Asia Pacific segment in fiscal 2025?",
    "pages": [
-    25
+    25,
+    50
    ],
    "answer": "33,696（见 p.25：Rest of Asia Pacific 33,696 10 % 30,658 4 % 29,615）",
    "accept": [
@@ -1657,6 +1763,11 @@
       363.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 50,
+     "line": "Net sales $ 178,353 $ 111,032 $ 64,377 $ 28,703 $ 33,696 $ — $ 416,161 (Note 13 segment table, 2025, Rest of Asia Pacific column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1713,7 +1824,8 @@
    "kind": "answerable",
    "query": "What was Apple's operating income in fiscal 2025?",
    "pages": [
-    32
+    32,
+    50
    ],
    "answer": "133,050（见 p.32：Operating income 133,050 123,216 114,301）",
    "accept": [
@@ -1736,6 +1848,11 @@
       373.8
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 50,
+     "line": "Operating income/(loss) $ 72,480 $ 47,739 $ 26,917 $ 13,955 $ 14,586 $ (42,627) $ 133,050 (Note 13, 2025, Total column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1808,7 +1925,8 @@
    "kind": "answerable",
    "query": "苹果 2025 财年日本分部的净销售额是多少？",
    "pages": [
-    25
+    25,
+    50
    ],
    "answer": "28,703（见 p.25：Japan 28,703 15 % 25,052 3 % 24,257）",
    "accept": [
@@ -1830,6 +1948,11 @@
       349.2
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 50,
+     "line": "Net sales $ 178,353 $ 111,032 $ 64,377 $ 28,703 $ 33,696 $ — $ 416,161 (Note 13 segment table, 2025, Japan column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],

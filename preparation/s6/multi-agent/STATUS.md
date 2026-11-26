@@ -108,6 +108,15 @@
 - 代码：`write_heldout.py` 和 `run_arms.py` 支持 `--set confirm` / `--sets confirm`，`scripts/mac_multi_agent_eval.sh` 加了 `confirm-draft`、`confirm-freeze`、`confirm`；`preregistered.json` 没改。加了 7 个测试（登记建在原登记之上、提示词与留出题运行时相同、候选不重复已问过的题、确认规则、只跑一次、端到端）。
 - 测试：两个多 Agent 测试文件 151 通过、8 跳过。全套 1346 通过、28 跳过、3 失败；3 个失败都是本机测试环境没装 grpc / protobuf（`ModuleNotFoundError: grpc`、`google`），与这次改动无关。
 
+#### 初标和核对 — 2026-11-26 完成（模型核对，不是人工）
+
+- 初标：`bash scripts/mac_multi_agent_eval.sh confirm-draft`，提交 `1d089ca`。58 条候选全部在页面文字里定位到，取够 40 题：28 道有答案（跨语言 8），12 道无答案。其中 29 道来自留出题没用上的备选（6 道按原页改写了匹配规则），11 道是结果出来之后新写的（MH51、MH52、CH51、TH51–TH54、AH51 等）。
+- 核对（方式同修订 1）：40 题全部通过，没有剔除，题目和初标答案都没改。11 题补了 gold 页或写法：
+  - 同一个数在别页又印了一次：CH01、CH22（补充资料 p.232）、TH51（五年摘要 p.4、EBITDA 调节表 p.19）、TH53（p.4）、TH54（讨论段 p.11、附注 p.202）、AH08、AH24、AH51（分部附注 p.50）；
+  - 同一事实换了单位再印：TH23（百万元 422,593，p.4、8、130、194）、TH24（百万元 41,727，p.8、130）、TH52（百万元 107,145，p.18、25、264）。
+  - 修好的初标脚本已经把“同一个长数字在别页再印”的页找全了；补的这些都是短数字（7 位以下，脚本不全文找）或换了单位的写法。
+- 每题依据的原文片段和结论：[confirm-review.md](confirm-review.md)；给冻结用的标记：`confirm-review.json`（核对人“模型（非人工）”）。
+
 ## 收件箱
 
 - 2026-11-26：已接入收件箱（mac-bridge `inbox/line5.md`，克隆在 `~/.mac-bridge/work/report-orchestration`）。当时的内容是“目前没有新的决定，照原计划跑完 heldout、按预登记判定并写进 STATUS.md”，与原计划一致，没有新的条目要处理。
