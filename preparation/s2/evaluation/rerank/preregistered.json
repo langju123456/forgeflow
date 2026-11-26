@@ -1,0 +1,40 @@
+{
+  "version": "s2-rerank-guardrail-v1",
+  "role": "guardrail only: no regression and no unauthorized content; improvement is judged on the real annual reports (preparation/s4/real-reports/rerank)",
+  "frozen": {
+    "path": "preparation/s2/evaluation/freeze.json",
+    "sha256": "4b31cf95cdd0b2fbe5b63f706d7fb5b5db3da0aa913ada875ebc120c5785c8f5"
+  },
+  "base": {
+    "settings": {"model": "bge-m3", "min_similarity": 0.5, "rrf_k": 60, "top_k": 5},
+    "sealed_run": {
+      "path": "preparation/s2/evaluation/hybrid/runs/20261103T153335-real-hybrid-930f8d99/report.json",
+      "sha256": "6e094219313f35ee50497eaedab67a4cb9782b1b951a6896d703d012bc78d337"
+    },
+    "must_reproduce": "hybrid without a reranker returns, for all 47 questions, the sealed run's hits (id, version, source_hash, status) and error code; otherwise the reranker is not called and no rerank number is reported"
+  },
+  "reranker": {
+    "model": "BAAI/bge-reranker-v2-m3",
+    "library": "sentence-transformers CrossEncoder",
+    "device": "mps",
+    "dtype": "float32",
+    "candidates": 30,
+    "max_length": 1024,
+    "batch_size": 8,
+    "query": "the question, unchanged",
+    "passage": "the full stored row content, including the [source] first line",
+    "score": "raw logit, no sigmoid, used for ordering only",
+    "score_threshold": null,
+    "ties": "equal scores keep the hybrid order",
+    "beyond_candidates": "rows after the first 30 keep their hybrid order behind the reranked ones; nothing is dropped",
+    "revision": "not pinned at registration (the model hub was unreachable from where this was written); each run records the snapshot commit it loaded"
+  },
+  "guardrail": {
+    "unauthorized": "all_query_leak 0/47, forbidden candidate rows 0, forbidden citation rows 0, reranker passages outside what the caller may read 0",
+    "recall": "core_content_recall_at_5 and macro_recall_at_5 not below the sealed hybrid run (0.9333 over 30 questions, 0.9459 over 37)",
+    "exact_token": "the exact-token slice not below the sealed hybrid run (1/1)",
+    "unanswerable": "unanswerable questions with a non-empty context not above the sealed hybrid run (1/3)",
+    "reported_without_threshold": ["macro_mrr_at_5", "core_content_mrr_at_5", "stable_query_results", "latency"]
+  },
+  "sets_already_used": "the 47 questions were used by the lexical baseline, the vector / hybrid comparison and the answerability check. No reranker was run on them before this registration."
+}

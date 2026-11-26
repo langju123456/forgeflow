@@ -1,0 +1,49 @@
+{
+  "version": "real-reports-rerank-v1",
+  "base": {
+    "preregistered": {
+      "path": "preparation/s4/real-reports/preregistered.json",
+      "sha256": "1a1f28389087184b7b70c3bfa85b6fa78aa389e85775125cb4bbb0511b03e828"
+    },
+    "sealed_run": {
+      "path": "preparation/s4/real-reports/runs/qa-20261106T045713Z/report.json",
+      "sha256": "434e15dd1b01bb042308e10b1e252cbae80c3363bb77e2baa1b247bea97984f7",
+      "page_recall_at_5": {"all": "18/28", "same_language": "13/20", "cross_language": "5/8"},
+      "page_recall_at_5_three_way": {"zh_on_zh": "3/10", "en_on_en": "10/10", "cross_language": "5/8"},
+      "mrr_at_5_from_sealed_top5": 0.4298
+    },
+    "must_reproduce": "hybrid without a reranker returns, for all 40 questions, the sealed run's top 5 (row id, version, status, in order) and page-level Recall@5 is 18/28; otherwise the reranker is not called and no rerank number is reported"
+  },
+  "reranker": {
+    "model": "BAAI/bge-reranker-v2-m3",
+    "library": "sentence-transformers CrossEncoder",
+    "device": "mps",
+    "dtype": "float32",
+    "candidates": 30,
+    "max_length": 1024,
+    "batch_size": 8,
+    "query": "the question, unchanged",
+    "passage": "the full stored row content, including the [source] first line",
+    "score": "raw logit, no sigmoid, used for ordering only",
+    "score_threshold": null,
+    "ties": "equal scores keep the hybrid order",
+    "beyond_candidates": "rows after the first 30 keep their hybrid order behind the reranked ones; nothing is dropped",
+    "revision": "not pinned at registration (the model hub was unreachable from where this was written); each run records the snapshot commit it loaded"
+  },
+  "retrieval": {"top_k": 5, "repetitions": 1},
+  "metrics": {
+    "page_recall_at_5": "answerable: a top-5 hit whose source line names <doc>.pdf and a page in `pages`; reported for hybrid and for hybrid + rerank, with the questions gained and lost",
+    "mrr_at_5": "answerable: 1 / rank of the first top-5 hit on a gold page, 0 if none; mean over the 28 answerable questions",
+    "candidate_ceiling": "answerable: one of the first 30 hybrid candidates is on a gold page; also the rank at which a gold page first appears",
+    "language_slices": ["same_language", "cross_language", "zh_on_zh", "en_on_en"],
+    "unauthorized": "store rows the caller may not read or from the restricted copies; forbidden citations; top-5 hits from the copies; reranker passages with a restricted marker or outside what the caller may read; embedder texts with a restricted marker; X01 and X02 return nothing and never reach the reranker",
+    "latency": "per question: hybrid search, search with reranking, reranker inference; median / p95 / max; model load and warm-up reported separately"
+  },
+  "decision_rule": {
+    "min_page_recall_gain_questions": 3,
+    "unauthorized": "every unauthorized counter is 0 and both extra questions return nothing",
+    "guardrail": "the 47-question guardrail registered in preparation/s2/evaluation/rerank passes",
+    "otherwise": "not adopted; reported as measured; report_desk._build_service stays as it is"
+  },
+  "sets_already_used": "the 40 questions were used by the 2026-11-06 QA run and its per-question analysis; the 47 synthetic questions were used by the hybrid comparison and the answerability check. No reranker was run on either before this registration."
+}
