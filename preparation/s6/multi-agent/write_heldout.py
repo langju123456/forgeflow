@@ -407,8 +407,9 @@ def locate(candidate: Candidate, pages: list[list[dict]], report_language: str) 
                              "why": "同一标签、同一数字"})
     if long_figure:
         for again in figure_pages(value, pages):
-            if all((again["page"], again["line"]) != (e["page"], e["line"]) and again["line"] not in e["line"]
-                   for e in evidence):
+            # Skip only a line already shown on the same page (one line of a matched sentence); the same text on
+            # another page is another place the figure is printed.
+            if all(again["page"] != e["page"] or again["line"] not in e["line"] for e in evidence):
                 evidence.append({**again, "why": "同一数字在别处又印了一次"})
     for extra in find_matches(candidate.also, [pages[first["page"] - 1]], span=1, joiner=joiner) if candidate.also else []:
         accept += [f for f in accept_forms(extra["value"], candidate.also_unit) if f not in accept]

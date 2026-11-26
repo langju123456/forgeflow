@@ -669,8 +669,13 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"{output} already has a report: nothing to resume")
     else:
         label = "" if real else "-fake" if args.llm == "fake" else "-plumbing"
-        output = args.out / f"arms-{datetime.now(UTC):%Y%m%dT%H%M%SZ}{label}"
-        output.mkdir(parents=True)
+        while True:  # a run started in the same second as another takes the next second's name
+            output = args.out / f"arms-{datetime.now(UTC):%Y%m%dT%H%M%SZ}{label}"
+            try:
+                output.mkdir(parents=True)
+                break
+            except FileExistsError:
+                time.sleep(0.2)
         started = None
     stamp = {"sets": {name: meta for name, (_, meta) in loaded.items()}, "pins_sha256": registration["pins_sha256"],
              "llm": args.llm, "embedder": args.embedder, "limit": args.limit}

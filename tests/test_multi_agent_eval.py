@@ -625,6 +625,22 @@ def test_gold_pages_are_every_place_the_figure_is_printed_and_other_figures_are_
     assert len(ratio["evidence"]) == 1  # a short figure elsewhere on the page is not evidence
 
 
+def test_a_figure_printed_again_on_another_page_counts_even_when_that_line_is_part_of_the_first_one():
+    first = "归属于上市公司股东的净利润 82,320,067,101.68 86,228,146,421.62 -4.53"
+    pages = [
+        lines("主要会计数据", first),
+        lines("经营情况讨论与分析", "82,320,067,101.68"),  # the bare figure: its text is inside the first line
+        lines("合并利润表", "归属于上市公司股东的净利润 82,320,067,101.68"),  # also inside the first line
+    ]
+    profit = wh.locate(A("P", "doc", "zh", "净利润？", [r"^归属于上市公司股东的净利润 {amount}"], where="主要会计数据", unit="元"),
+                       pages, "zh")
+    assert profit["pages"] == [1, 2, 3]
+    wrapped = [lines("报告期内，归属于上市公司股东的净利润为", "82,320,067,101.68 元，同比下降 4.53%。")]
+    sentence = wh.locate(A("W", "doc", "zh", "净利润？", [r"归属于上市公司股东的净利润为 ?{amount} ?元"], lines=2, unit="元"),
+                         wrapped, "zh")
+    assert sentence["pages"] == [1] and len(sentence["evidence"]) == 1  # a line of the matched sentence is not counted again
+
+
 @pytest.mark.parametrize(("value", "unit", "forms"), [
     ("168,838,102,514.79", "元", ["168,838,102,514.79", "1688.38亿", "1688.4亿", "1688亿"]),
     ("72,201,282", "千元", ["72,201,282", "722.01亿", "722亿", "72.2 billion", "72.20 billion"]),
