@@ -4,6 +4,7 @@ Wiring only; each decision lives in the module it calls:
 
     PDF ─ pdf_ingest (rows with file/page/bbox citations) ─ Store (S1 roles, classification, scope)
         ─ RankedKnowledgeService (hybrid if the local Ollama serves bge-m3, otherwise lexical)
+        ─ RerankRanker (optional, off by default: a cross-encoder reorders the first 30 hybrid candidates)
         ─ AnswerabilityGate (optional, off by default: keep only hits that state the answer, with a quoted span)
         ─ cited answer (local model; may only cite hits it was given)
 
@@ -37,6 +38,17 @@ LOADER = Principal(subject_id="desk-loader", kind="user", roles=frozenset({"admi
 ANALYST = Principal(subject_id="desk-analyst", kind="user", roles=frozenset({"finance"}), scopes=(SCOPE,), clearance=1)
 OLLAMA = "http://127.0.0.1:11434"
 EMBED_BATCH = 32
+
+# Reranking after hybrid retrieval, with the settings registered in preparation/s4/real-reports/rerank/
+# preregistered.json and run once on 2026-11-26 (that folder's STATUS.md): off unless the desk is built with
+# rerank=True. RERANK_REVISION is the snapshot that run loaded; the desk reads it from the local Hugging Face cache
+# only and never downloads it (scripts/mac_rerank_eval.sh fetches it).
+RERANK_MODEL = "BAAI/bge-reranker-v2-m3"
+RERANK_REVISION = "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+RERANK_DEVICE = "mps"
+RERANK_MAX_LENGTH = 1024
+RERANK_BATCH_SIZE = 8
+RERANK_CANDIDATES = 30
 
 
 def _sha256(path: Path) -> str:
@@ -76,9 +88,18 @@ def pick_chat_model(listed: set[str]) -> str | None:
     return next((m for m in PREFERRED_MODELS if m in listed or f"{m}:latest" in listed), None)
 
 
+def registered_reranker() -> Any:
+    """The cross-encoder as registered and evaluated: model, snapshot, device, max_length and batch size, local only."""
+    from .retrieval import CrossEncoderReranker
+
+    return CrossEncoderReranker(RERANK_MODEL, device=RERANK_DEVICE, max_length=RERANK_MAX_LENGTH,
+                                batch_size=RERANK_BATCH_SIZE, revision=RERANK_REVISION, local_files_only=True)
+
+
 class ReportDesk:
     def __init__(self, reports_dir: Path, work_dir: Path, *, ollama_url: str = OLLAMA,
-                 answerer: Callable[[str, list[Any]], dict] | None = None, sources: Path = SOURCES):
+                 answerer: Callable[[str, list[Any]], dict] | None = None, sources: Path = SOURCES,
+                 rerank: bool = False):
         self.reports_dir = Path(reports_dir).expanduser()
         self.work_dir = Path(work_dir)
         self.work_dir.mkdir(parents=True, exist_ok=True)
@@ -86,11 +107,14 @@ class ReportDesk:
         self.answerer = answerer
         self.sources = Path(sources)
         self.reports: list[dict] = []
-        self.status = {"state": "starting", "detail": "", "embedded": 0, "rows": 0}
+        self.rerank = bool(rerank)
+        self.status = {"state": "starting", "detail": "", "embedded": 0, "rows": 0,
+                       "rerank": "requested" if self.rerank else "off"}
         self._lock = threading.Lock()
         self.store = None
         self.service = None
         self.gate = None
+        self.reranker = None
         self.mode = "lexical"
         self._row_index: dict[str, dict] = {}
 
@@ -161,16 +185,37 @@ class ReportDesk:
             self.mode = "lexical"
             self.service = RankedKnowledgeService(self.store, lexical_ranker)
             self.status["detail"] = "没有找到本机 Ollama 的 bge-m3，只用词面检索"
+            if self.rerank:  # the reranker was registered and evaluated only after hybrid retrieval
+                self.status["rerank"] = "not used: it only runs after hybrid retrieval, and bge-m3 is not available"
             return
         vector = VectorRanker(OllamaEmbedder("bge-m3", self.ollama_url, timeout=300), min_similarity=0.50)
         self._warm(vector, rows)
         self.mode = "hybrid"
-        self.service = RankedKnowledgeService(self.store, HybridRanker(vector, k=60))
+        ranker: Any = HybridRanker(vector, k=60)
+        if self.rerank:
+            ranker = self._reranked(ranker)
+        self.service = RankedKnowledgeService(self.store, ranker)
         chat = pick_chat_model(listed)
         if chat is not None:
             from .answerability import AnswerabilityGate, OllamaChatModel
 
             self.gate = AnswerabilityGate(OllamaChatModel(chat, base_url=self.ollama_url, timeout=300))
+
+    def _reranked(self, hybrid: Any) -> Any:
+        """Hybrid followed by the registered reranker; hybrid alone, with the reason in status, if it cannot load."""
+        from .retrieval import RerankRanker
+
+        self._set("loading", "加载重排模型")
+        try:
+            reranker = registered_reranker()
+            reranker.load()  # now, in the loading thread, rather than inside the first question
+        except Exception as error:  # missing extra, weights not in the local cache, no MPS: the desk still answers
+            self.status["rerank"] = f"not used: the reranker did not load ({type(error).__name__}: {error})"[:300]
+            return hybrid
+        self.reranker = reranker
+        self.mode = "hybrid+rerank"
+        self.status["rerank"] = f"on: {RERANK_MODEL}@{RERANK_REVISION[:8]}, first {RERANK_CANDIDATES} candidates"
+        return RerankRanker(hybrid, reranker, candidates=RERANK_CANDIDATES)
 
     def _warm(self, vector: Any, rows: list[dict]) -> None:
         """Embed every row once, in batches, and keep the vectors on disk keyed by content hash."""
@@ -274,6 +319,8 @@ class ReportDesk:
         material = {"mode": self.mode, "source_metadata_version": 1, "report_runtime": RUNTIME_VERSION,
                     "annual_lookup": [annual_cash.VERSION, apple_sales.VERSION],
                     "rows": sorted(r["source_hash"] for r in self._row_index.values())}
+        if self.reranker is not None:  # only when on, so the default index version stays what it was
+            material["reranker"] = f"{RERANK_MODEL}@{RERANK_REVISION}"
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
 
     def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:

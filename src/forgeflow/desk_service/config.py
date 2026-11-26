@@ -12,6 +12,15 @@ from dataclasses import asdict, dataclass, fields
 from pathlib import Path
 
 
+def _flag(name: str, raw: str) -> bool:
+    value = raw.strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    if value in {"0", "false", "no", "off", ""}:
+        return False
+    raise ValueError(f"FORGEFLOW_DESK_{name.upper()} must be true or false, not {raw!r}")
+
+
 @dataclass(frozen=True)
 class DeskConfig:
     redis_url: str = "redis://127.0.0.1:6379/0"
@@ -24,6 +33,8 @@ class DeskConfig:
     reports_dir: str = str(Path.home() / "code" / "finreports")
     work_dir: str = str(Path(__file__).resolve().parents[3] / ".desk-service")
     top_k: int = 5
+    # Rerank after hybrid retrieval in the retrieval server; off by default (preparation/s4/real-reports/rerank).
+    rerank: bool = False
     prefetch: int = 2  # jobs one worker runs at once; match the model server's parallel slots
     max_queue: int = 200  # RabbitMQ x-max-length; beyond it a publish is nacked and the gateway answers 429
     max_attempts: int = 3  # tries per job for transient failures (retrieval server or model unreachable)
@@ -40,7 +51,11 @@ class DeskConfig:
         values = {}
         for field in fields(cls):
             raw = os.environ.get(f"FORGEFLOW_DESK_{field.name.upper()}")
-            if raw is not None:
+            if raw is None:
+                continue
+            if isinstance(field.default, bool):  # bool("0") is True, so flags are spelled out
+                values[field.name] = _flag(field.name, raw)
+            else:
                 values[field.name] = type(field.default)(raw) if not isinstance(field.default, str) else raw
         values.update({k: v for k, v in overrides.items() if v is not None})
         return cls(**values)

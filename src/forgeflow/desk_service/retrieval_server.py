@@ -132,13 +132,19 @@ def load_and_publish(desk: Any, redis_url: str | None) -> None:
         client.close()
 
 
-def serve(config: Any, desk: Any | None = None) -> None:
+def desk_from_config(config: Any) -> Any:
+    """The desk this retrieval server answers from, built from the shared configuration (not loaded yet)."""
     from pathlib import Path
 
     from ..report_desk import ReportDesk
 
+    return ReportDesk(Path(config.reports_dir), Path(config.work_dir) / "reports", ollama_url=config.ollama_url,
+                      rerank=config.rerank)
+
+
+def serve(config: Any, desk: Any | None = None) -> None:
     if desk is None:
-        desk = ReportDesk(Path(config.reports_dir), Path(config.work_dir) / "reports", ollama_url=config.ollama_url)
+        desk = desk_from_config(config)
     server, port = build_server(RetrievalServicer(desk), config.grpc_target)
     server.start()
     print(f"retrieval server on {config.grpc_target} (port {port}); loading reports from {config.reports_dir}",

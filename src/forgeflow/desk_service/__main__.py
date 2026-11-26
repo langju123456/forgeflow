@@ -27,7 +27,8 @@ ROOT = Path(__file__).resolve().parents[3]
 
 def _config(args) -> DeskConfig:
     return DeskConfig.from_env(reports_dir=getattr(args, "reports", None), model=getattr(args, "model", None),
-                               prefetch=getattr(args, "prefetch", None))
+                               prefetch=getattr(args, "prefetch", None),
+                               rerank=True if getattr(args, "rerank", False) else None)
 
 
 def main(argv=None) -> None:
@@ -37,6 +38,9 @@ def main(argv=None) -> None:
     parser.add_argument("--model", help="answer model tag in the local Ollama")
     parser.add_argument("--workers", type=int, default=2, help="worker processes for `all`")
     parser.add_argument("--prefetch", type=int, help="jobs one worker runs at once")
+    parser.add_argument("--rerank", action="store_true",
+                        help="rerank hybrid results with the registered cross-encoder (off by default; "
+                             "or FORGEFLOW_DESK_RERANK=true)")
     args = parser.parse_args(argv)
     config = _config(args)
 

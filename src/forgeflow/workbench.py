@@ -184,6 +184,8 @@ def main(argv=None):
     parser.add_argument("--port", type=int, default=8780)
     parser.add_argument("--reports", default=str(Path.home() / "code" / "finreports"),
                         help="folder with the public annual-report PDFs for the 年报问答 page")
+    parser.add_argument("--rerank", action="store_true",
+                        help="年报问答: rerank hybrid results with the registered cross-encoder (off by default)")
     args = parser.parse_args(argv)
     source, run_id = seed(Path(args.db))
     desk = None
@@ -192,7 +194,8 @@ def main(argv=None):
 
         from .report_desk import ReportDesk, default_answerer
 
-        desk = ReportDesk(Path(args.reports), Path(args.db).parent / "reports", answerer=default_answerer())
+        desk = ReportDesk(Path(args.reports), Path(args.db).parent / "reports", answerer=default_answerer(),
+                          rerank=args.rerank)
         threading.Thread(target=desk.load, name="report-desk-load", daemon=True).start()
     except ImportError:
         print("年报问答 is off: install the pdf extra (pip install -e '.[pdf]').")
