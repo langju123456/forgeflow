@@ -57,20 +57,20 @@ class ModelWatch(threading.Thread):
         super().__init__(name="model-watch", daemon=True)
         self.base_url, self.every_s = base_url, every_s
         self.samples: list[dict] = []
-        self._stop = threading.Event()
+        self._halt = threading.Event()
 
     def run(self) -> None:
         began = time.perf_counter()
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             try:
                 models = loaded_models(self.base_url)
             except (httpx.HTTPError, ValueError) as error:
                 models = [f"unavailable: {type(error).__name__}"]
             self.samples.append({"s": round(time.perf_counter() - began, 1), "models": models})
-            self._stop.wait(self.every_s)
+            self._halt.wait(self.every_s)
 
     def stop(self) -> None:
-        self._stop.set()
+        self._halt.set()
         self.join(timeout=30)
 
 
