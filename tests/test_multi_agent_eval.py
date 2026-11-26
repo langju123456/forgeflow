@@ -771,6 +771,17 @@ def test_a_complete_review_file_freezes_the_set_under_the_name_typed_into_the_ch
     assert {q["review"]["by"] for q in json.loads((tmp_path / "heldout.json").read_text())["questions"]} == {"核对人甲"}
 
 
+def test_a_review_file_that_says_how_it_was_made_is_recorded_that_way(corpus, tmp_path):
+    assert make_draft(corpus, tmp_path, images=False) == 0
+    draft = json.loads((tmp_path / "heldout-draft.json").read_text())
+    review = tmp_path / "heldout-review.json"
+    review.write_text(json.dumps(marks(draft) | {"reviewer": "核对人乙", "how": "对照 PDF 原页逐题核对"},
+                                 ensure_ascii=False))
+    assert freeze(corpus, tmp_path, review=review) == 0
+    record = json.loads((tmp_path / "heldout-freeze.json").read_text())
+    assert record["verified_by"] == "核对人乙" and record["verified_how"] == "review file: 对照 PDF 原页逐题核对"
+
+
 def test_the_frozen_set_is_what_the_runner_accepts_and_it_cannot_be_frozen_twice(corpus, frozen, registered):
     data = json.loads((frozen / "heldout.json").read_text())
     record = json.loads((frozen / "heldout-freeze.json").read_text())

@@ -2,7 +2,7 @@
  "id": "s6-heldout-annual-reports-v1",
  "status": "DRAFT: 每题待人工核对；冻结前不能在这批题上检索或调用模型",
  "written": "2026-11-26, by write_heldout.py from the page text (pdfplumber) of the PDFs in sources.json; no retrieval and no model was run over them",
- "author_note": "Candidates were written without the reports' full text, from the line items the disclosure rules prescribe; the script proposed figure and pages; a person checks every question against the printed page before the set is frozen.",
+ "author_note": "Candidates were written without the reports' full text, from the line items the disclosure rules prescribe; the script proposed figure and pages; a person checks every question against the printed page before the set is frozen. Revised at the check: every question was checked against the printed page by a model, not by a person (PREREGISTRATION.md, revision 1).",
  "answer_rule": "An answer counts as correct when it contains one of `accept` (digits compared without thousands separators; Chinese and English units both allowed) and cites a row from one of `pages` of `doc`. An absent question counts as correct when the system returns no supported evidence / says the report does not contain it.",
  "sources_sha256": "e69cd9b127a8778c12f71aaf303b4401c9f5ba77be338df9b0cb3a6a545f2942",
  "writer_sha256": "c2caf8c7aad5227a80af5260b90c99718c4b98289b7c74d93fe30b7ef65bb623",
@@ -16,7 +16,11 @@
    "query": "贵州茅台 2025 年归属于上市公司股东的净利润是多少？",
    "pages": [
     6,
-    68
+    33,
+    34,
+    62,
+    68,
+    107
    ],
    "answer": "82,320,067,101.68（见 p.6：归属于上市公司股东的净利润 82,320,067,101.68 86,228,146,421.62 -4.53 74,734,071,550.75）",
    "accept": [
@@ -48,6 +52,26 @@
       262.5
      ],
      "why": "同一数字在别处又印了一次"
+    },
+    {
+     "page": 33,
+     "line": "合并报表中归属于上市公司普通股股东的净利 / 82,320,067,101.68（利润分配预案表）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 34,
+     "line": "最近一个会计年度合并报表中归属于上市公司普通股 / 82,320,067,101.68（现金分红比例表）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 62,
+     "line": "1.归属于母公司股东的净利润 / 82,320,067,101.68 86,228,146,421.62（合并利润表，2025年度列）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 107,
+     "line": "加：本期归属于母公司所有者的净利 / 82,320,067,101.68 86,228,146,421.62（附注 未分配利润）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -132,6 +156,7 @@
    "query": "2025 年贵州茅台其他系列酒实现营业收入多少？",
    "pages": [
     10,
+    16,
     18,
     107
    ],
@@ -140,7 +165,8 @@
     "22,274,678,707.16",
     "222.75亿",
     "222.7亿",
-    "223亿"
+    "223亿",
+    "2,227,467.87"
    ],
    "unit": "元",
    "evidence": [
@@ -176,6 +202,11 @@
       567.0
      ],
      "why": "同一标签、同一数字"
+    },
+    {
+     "page": 16,
+     "line": "其他系列酒 57,650.57 19.82 38,353.48 3.88 2,227,467.87 -9.76（产品情况表，单位：万元，销售收入列）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [
@@ -335,7 +366,8 @@
    "query": "What were Kweichow Moutai's total assets at the end of 2025?",
    "pages": [
     6,
-    57
+    57,
+    59
    ],
    "answer": "303,834,844,021.44（见 p.6：总资产 303,834,844,021.44 298,944,579,918.70 1.64 272,699,660,092.25）",
    "accept": [
@@ -367,6 +399,11 @@
       692.4
      ],
      "why": "同一数字在别处又印了一次"
+    },
+    {
+     "page": 59,
+     "line": "负债和所有者权益（或股东权益）总计 303,834,844,021.44 298,944,579,918.70（合并资产负债表，与资产总计相等）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -386,7 +423,8 @@
    "kind": "answerable",
    "query": "What was Kweichow Moutai's weighted average return on net assets for 2025?",
    "pages": [
-    6
+    6,
+    143
    ],
    "answer": "32.53（见 p.6：加权平均净资产收益率（%） 32.53 36.02 减少3.49个百分点 34.19）",
    "accept": [
@@ -404,6 +442,11 @@
       579.9
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 143,
+     "line": "归属于公司普通股股东的净利润 32.53 65.66 65.66（补充资料 净资产收益率及每股收益，加权平均净资产收益率（%）列）",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1121,7 +1164,10 @@
    "kind": "answerable",
    "query": "What were Tencent's FinTech and Business Services revenues in 2025?",
    "pages": [
-    9
+    9,
+    130,
+    194,
+    196
    ],
    "answer": "229.4（见 p.9：– Revenues from FinTech and Business Services grew by 8% year-on-year to RMB229.）",
    "accept": [
@@ -1156,6 +1202,21 @@
       323.6
      ],
      "why": "同一页上的另一种写法"
+    },
+    {
+     "page": 130,
+     "line": "FinTech and Business Services 229,435 211,956 (Consolidated Income Statement, RMB'Million, 2025)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 194,
+     "line": "Segment revenues 369,281 144,973 229,435 8,077 751,766 (Year ended 31 December 2025, FinTech and Business Services column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 196,
+     "line": "– FinTech and Business Services 229,435 211,956 (Note 6(b) disaggregation of revenues)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1175,12 +1236,19 @@
    "kind": "answerable",
    "query": "What were Tencent's general and administrative expenses in 2025?",
    "pages": [
-    11
+    8,
+    11,
+    130
    ],
    "answer": "136.1（见 p.11：General and administrative expenses. General and administrative expenses rose by）",
    "accept": [
     "136.1",
-    "1361亿"
+    "1361亿",
+    "136,127",
+    "1361.27亿",
+    "1361.3亿",
+    "136.1 billion",
+    "136.13 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1194,6 +1262,16 @@
       217.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 8,
+     "line": "General and administrative expenses (136,127) (112,761) (MD&A table, RMB in millions, 2025 2024)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 130,
+     "line": "General and administrative expenses 7 (136,127) (112,761) (Consolidated Income Statement)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1213,12 +1291,23 @@
    "kind": "answerable",
    "query": "What was Tencent's income tax expense for 2025?",
    "pages": [
-    11
+    8,
+    11,
+    130,
+    204,
+    205,
+    263
    ],
    "answer": "47.5（见 p.11：Income tax expense. Income tax expense increased by 5% year-on-year to RMB47.5 b）",
    "accept": [
     "47.5",
-    "475亿"
+    "475亿",
+    "47,448",
+    "474.48亿",
+    "474.5亿",
+    "474亿",
+    "47.4 billion",
+    "47.45 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1232,6 +1321,31 @@
       473.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 8,
+     "line": "Income tax expense (47,448) (45,018) (MD&A table, RMB in millions, 2025 2024)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 130,
+     "line": "Income tax expense 12(a) (47,448) (45,018) (Consolidated Income Statement)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 204,
+     "line": "Current income tax 39,535 / Deferred income tax (Note 29) 7,913 / 47,448 45,018 (Note 12(a))",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 205,
+     "line": "Income tax expense 47,448 45,018 (Note 12(a) tax reconciliation)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 263,
+     "line": "Income tax expense 47,448 45,018 (Note 43 reconciliation of net profit to cash)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1251,12 +1365,18 @@
    "kind": "answerable",
    "query": "What was Tencent's total remuneration cost for 2025?",
    "pages": [
-    81
+    81,
+    199,
+    209
    ],
    "answer": "130.7（见 p.81：The total remuneration cost incurred by the Group for the year ended 31 December）",
    "accept": [
     "130.7",
-    "1307亿"
+    "1307亿",
+    "130,699",
+    "1306.99亿",
+    "130.7 billion",
+    "130.70 billion"
    ],
    "unit": "RMB billion",
    "evidence": [
@@ -1270,6 +1390,16 @@
       348.3
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 199,
+     "line": "Employee benefits expenses (Note (b) and Note 14) 130,699 112,826 (Note 7, RMB'Million)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 209,
+     "line": "14 EMPLOYEE BENEFITS EXPENSES ... 130,699 112,826 (total)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1333,7 +1463,10 @@
    "kind": "answerable",
    "query": "腾讯 2025 年增值服务（VAS）业务的收入是多少？",
    "pages": [
-    9
+    9,
+    130,
+    194,
+    196
    ],
    "answer": "369.3（见 p.9：– Revenues from VAS increased by 16% year-on-year to RMB369.3 billion for the ye）",
    "accept": [
@@ -1368,6 +1501,21 @@
       291.6
      ],
      "why": "同一页上的另一种写法"
+    },
+    {
+     "page": 130,
+     "line": "Value-added Services 369,281 319,168 (Consolidated Income Statement, RMB'Million, 2025)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 194,
+     "line": "Segment revenues 369,281 144,973 229,435 8,077 751,766 (Year ended 31 December 2025, VAS column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
+    },
+    {
+     "page": 196,
+     "line": "– VAS 369,281 319,168 (Note 6(b) disaggregation of revenues)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1715,7 +1863,8 @@
    "kind": "answerable",
    "query": "What were Apple's net sales in the Americas segment in fiscal 2025?",
    "pages": [
-    25
+    25,
+    50
    ],
    "answer": "178,353（见 p.25：Americas $ 178,353 7 % $ 167,045 3 % $ 162,560）",
    "accept": [
@@ -1738,6 +1887,11 @@
       306.5
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 50,
+     "line": "Net sales $ 178,353 $ 111,032 $ 64,377 $ 28,703 $ 33,696 $ — $ 416,161 (Note 13 segment table, 2025, Americas column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1757,7 +1911,8 @@
    "kind": "answerable",
    "query": "What was Apple's diluted earnings per share for fiscal 2025?",
    "pages": [
-    32
+    32,
+    39
    ],
    "answer": "7.46（见 p.32：Diluted $ 7.46 $ 6.08 $ 6.13）",
    "accept": [
@@ -1775,6 +1930,11 @@
       487.8
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 39,
+     "line": "Diluted earnings per share $ 7.46 $ 6.08 $ 6.13 (Note 3 Earnings Per Share)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],
@@ -1794,7 +1954,8 @@
    "kind": "answerable",
    "query": "苹果 2025 财年欧洲分部的净销售额是多少？",
    "pages": [
-    25
+    25,
+    50
    ],
    "answer": "111,032（见 p.25：Europe 111,032 10 % 101,328 7 % 94,294）",
    "accept": [
@@ -1817,6 +1978,11 @@
       320.7
      ],
      "why": "标签和数字"
+    },
+    {
+     "page": 50,
+     "line": "Net sales $ 178,353 $ 111,032 $ 64,377 $ 28,703 $ 33,696 $ — $ 416,161 (Note 13 segment table, 2025, Europe column)",
+     "why": "核对时补：同一事实（2025 年）印在这一页"
     }
    ],
    "other_values": [],

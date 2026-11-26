@@ -715,7 +715,9 @@ def freeze(*, reviewer: str | None = None, review: Path | None = None, confirm_a
                 continue  # the mark was given for another proposal of this question (or not at all)
             q["review"] = _review(VERIFIED if mark.get("status") == VERIFIED else PENDING) | {
                 "note": mark.get("note", ""), "asked": mark.get("status")}
-        method = "review file exported from heldout-checklist.html"
+        # A review file not exported from the check list says how it was made; the freeze record repeats it.
+        how = str(marks.get("how") or "").strip()
+        method = f"review file: {how}" if how else "review file exported from heldout-checklist.html"
     elif confirm_all:
         for q in document["questions"]:
             q["review"] = _review(VERIFIED)
