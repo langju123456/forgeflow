@@ -101,7 +101,8 @@ async def test_worker_delivers_checked_grpc_citations_in_final_event(desk, confl
     message.body = json.dumps(job).encode()
     try:
         async with grpc.aio.insecure_channel(f"127.0.0.1:{port}") as channel:
-            worker = Worker(DeskConfig(work_dir=str(desk.work_dir)), redis, desk_pb2_grpc.ReportRetrievalStub(channel),
+            worker = Worker(DeskConfig(work_dir=str(desk.work_dir), orchestration="single"), redis,
+                            desk_pb2_grpc.ReportRetrievalStub(channel),
                             SimpleNamespace(model=job["model"]))
             await worker.handle(message)
         message.ack.assert_awaited_once()

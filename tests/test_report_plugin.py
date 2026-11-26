@@ -153,7 +153,7 @@ async def test_worker_failures_never_finish_or_cache(tmp_path, monkeypatch, fail
     redis.get.return_value = None
     stub.Search.return_value = desk_pb2.SearchReply(
         kept=[desk_pb2.Hit(**hits()[0])], mode="lexical", index_version="test", gate_status="ANNUAL_COLUMN")
-    worker = Worker(DeskConfig(work_dir=str(tmp_path)), redis, stub, None)
+    worker = Worker(DeskConfig(work_dir=str(tmp_path), orchestration="single"), redis, stub, None)
     error = plugin.ReportProcessError if failure == "process" else plugin.ReportProtocolError
     monkeypatch.setattr(plugin.ReportRuntime, "call", AsyncMock(side_effect=error("injected")))
     with pytest.raises(Transient if failure == "process" else Final):

@@ -6,7 +6,8 @@ Wiring only; each decision lives in the module it calls:
         ─ RankedKnowledgeService (hybrid if the local Ollama serves bge-m3, otherwise lexical)
         ─ AnswerabilityGate (optional, off by default: keep only hits that state the answer, with a quoted span)
         ─ cited answer (local model; may only cite hits it was given)
-        ─ report_orchestration (optional, off by default: a self-check, a verifier, or a planner plus verifier)
+        ─ report_orchestration (planner + executor + verifier by default; single answer, self-check or verifier
+          on request)
 
 The desk reads PDFs from a local folder (default ``~/code/finreports``) and checks each against the sha256 in
 ``preparation/s4/real-reports/sources.json``; a file that is missing or differs is listed as unavailable, never
@@ -80,13 +81,17 @@ def pick_chat_model(listed: set[str]) -> str | None:
 class ReportDesk:
     def __init__(self, reports_dir: Path, work_dir: Path, *, ollama_url: str = OLLAMA,
                  answerer: Callable[[str, list[Any]], dict] | None = None, sources: Path = SOURCES,
-                 orchestrator: report_orchestration.Orchestrator | None = None):
+                 orchestrator: report_orchestration.Orchestrator | None = None, orchestration: str | None = None):
         self.reports_dir = Path(reports_dir).expanduser()
         self.work_dir = Path(work_dir)
         self.work_dir.mkdir(parents=True, exist_ok=True)
         self.ollama_url = ollama_url
         self.answerer = answerer
         self.orchestrator = orchestrator  # built on first use from the local Ollama when not given
+        # How ``ask`` answers when the caller does not say: report_orchestration.DEFAULT_MODE unless given here.
+        self.orchestration = report_orchestration.DEFAULT_MODE if orchestration is None else orchestration
+        if self.orchestration not in report_orchestration.MODES:
+            raise ValueError(f"orchestration is one of {', '.join(report_orchestration.MODES)}")
         self.sources = Path(sources)
         self.reports: list[dict] = []
         self.status = {"state": "starting", "detail": "", "embedded": 0, "rows": 0}
@@ -287,16 +292,19 @@ class ReportDesk:
                     "rows": sorted(r["source_hash"] for r in self._row_index.values())}
         return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
 
-    def ask(self, question: str, *, gate: bool = False, top_k: int = 5, orchestration: str = "single") -> dict:
+    def ask(self, question: str, *, gate: bool = False, top_k: int = 5, orchestration: str | None = None) -> dict:
         """Retrieve, optionally run the answerability gate, then answer from what is left.
 
         The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
         but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
         was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
 
-        ``orchestration`` is off (``single``) unless asked for as well; its comparison is registered in
-        preparation/s6/multi-agent/PREREGISTRATION.md. Questions the report tools answer never reach it.
+        ``orchestration`` defaults to the desk's own (``report_orchestration.DEFAULT_MODE``, plan_verify: it met the
+        registered rule on the held-out and the confirmation set, preparation/s6/multi-agent/RESULTS.md); ``single``
+        and the others stay selectable. Without the 16k-context model an orchestration is refused, not downgraded:
+        ask for ``single`` there. Questions the report tools answer never reach it.
         """
+        orchestration = self.orchestration if orchestration is None else orchestration
         if orchestration not in report_orchestration.MODES:
             raise DomainError("INVALID_ORCHESTRATION", f"orchestration is one of {', '.join(report_orchestration.MODES)}",
                               422)
@@ -422,7 +430,7 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
 
     @app.post("/reports/ask")
     async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
-                  orchestration: str = Body("single", embed=True), actor=author_dep):
+                  orchestration: str | None = Body(None, embed=True), actor=author_dep):
         try:
             if report_lookup.for_question(question):
                 found = await asyncio.to_thread(desk.evidence, question, gate=gate)

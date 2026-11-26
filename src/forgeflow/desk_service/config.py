@@ -22,8 +22,10 @@ class DeskConfig:
     ollama_url: str = "http://127.0.0.1:11434"
     model: str = "forgeflow-qwen3-8b-ctx16k"  # the same preference order as cited_answer.PREFERRED_MODELS
     # How model answers are produced (forgeflow.report_orchestration): single | self_check | verify | plan_verify.
-    # plan_verify's planned search is a second Search carrying the planned report and the reworded query.
-    orchestration: str = "single"
+    # plan_verify's planned search is a second Search carrying the planned report and the reworded query. Empty
+    # means the default: report_orchestration.DEFAULT_MODE, or single with a model that truncates long prompts
+    # (the only way that model can answer); asking for an orchestration with that model is refused.
+    orchestration: str = ""
     subject: str = "desk-analyst"  # DEV_ONLY: the one identity the retrieval server knows
     reports_dir: str = str(Path.home() / "code" / "finreports")
     work_dir: str = str(Path(__file__).resolve().parents[3] / ".desk-service")
@@ -40,8 +42,10 @@ class DeskConfig:
     queue: str = "desk.ask"
 
     def __post_init__(self) -> None:
-        from ..report_orchestration import SERVICE_MODES, TRUNCATING_MODELS
+        from ..report_orchestration import DEFAULT_MODE, SERVICE_MODES, TRUNCATING_MODELS
 
+        if not self.orchestration:  # resolved here, so cache keys, job labels and to_env all carry the real mode
+            object.__setattr__(self, "orchestration", "single" if self.model in TRUNCATING_MODELS else DEFAULT_MODE)
         if self.orchestration not in SERVICE_MODES:
             raise ValueError(f"orchestration must be one of {', '.join(SERVICE_MODES)}, not {self.orchestration!r}")
         if self.orchestration != "single" and self.model in TRUNCATING_MODELS:

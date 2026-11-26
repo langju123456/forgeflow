@@ -64,6 +64,9 @@ from .retrieval import _loopback
 
 ORCHESTRATION_VERSION = "report-orchestration-v1"
 MODES = ("single", "self_check", "verify", "plan_verify")
+# The default way model answers are produced. plan_verify met the registered adoption rule on the held-out set and
+# again on a confirmation set written after it (preparation/s6/multi-agent/RESULTS.md); single stays selectable.
+DEFAULT_MODE = "plan_verify"
 SERVICE_MODES = MODES  # the worker runs plan_verify's planned search as a second gRPC Search (doc + search_query)
 REQUIRED_MODEL = "forgeflow-qwen3-8b-ctx16k"
 TRUNCATING_MODELS = frozenset({"qwen3:8b"})

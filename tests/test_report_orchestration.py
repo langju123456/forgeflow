@@ -524,10 +524,15 @@ def quote_cited(messages):
     return verdict("pass", quote=passage.split("\n", 2)[1][:30])
 
 
-def test_the_desk_answers_as_before_unless_an_orchestration_is_asked_for(desk):
+def test_the_desk_answers_with_plan_verify_unless_another_way_is_asked_for(desk):
+    assert desk.orchestration == ro.DEFAULT_MODE == "plan_verify"
+    model = Script(plan(company=EN, metric="total net sales", query="total net sales"), cite_first, quote_cited)
+    desk.orchestrator = ro.Orchestrator(model)
+    default = desk.ask("total net sales")
+    assert default["orchestration"]["mode"] == "plan_verify" and model.role(0) == "planner" and default["found"]
     model = Script()
     desk.answerer, desk.orchestrator = None, ro.Orchestrator(model)
-    plain = desk.ask("total net sales")
+    plain = desk.ask("total net sales", orchestration="single")
     assert "orchestration" not in plain and model.calls == []
     with pytest.raises(DomainError) as error:
         desk.ask("total net sales", orchestration="supervisor")
@@ -589,9 +594,10 @@ def test_questions_the_report_tools_answer_never_reach_a_role(desk):
 
 def test_without_the_long_context_model_an_orchestration_is_refused_not_downgraded(desk):
     desk.orchestrator = None  # and no Ollama on port 9 to build one from
-    with pytest.raises(DomainError) as error:
-        desk.ask("total net sales", orchestration="verify")
-    assert error.value.code == "ORCHESTRATION_UNAVAILABLE" and error.value.status == 503
+    for asked in ("verify", None):  # the default (plan_verify) is refused the same way: never a quiet single answer
+        with pytest.raises(DomainError) as error:
+            desk.ask("total net sales", orchestration=asked)
+        assert error.value.code == "ORCHESTRATION_UNAVAILABLE" and error.value.status == 503
 
 
 def test_orchestrated_answers_do_not_enter_the_research_approval_flow(desk):
@@ -902,11 +908,12 @@ def test_the_service_config_refuses_what_it_cannot_run():
     pytest.importorskip("grpc")
     from forgeflow.desk_service.config import DeskConfig
 
-    assert DeskConfig().orchestration == "single" and DeskConfig().model == ro.REQUIRED_MODEL
+    assert DeskConfig().orchestration == ro.DEFAULT_MODE and DeskConfig().model == ro.REQUIRED_MODEL
     assert DeskConfig(orchestration="plan_verify").orchestration == "plan_verify"  # Search carries the plan
     with pytest.raises(ValueError, match="one of"):
         DeskConfig(orchestration="supervisor")
     with pytest.raises(ValueError, match="truncates"):
         DeskConfig(orchestration="verify", model="qwen3:8b")
     assert DeskConfig(model="qwen3:8b").orchestration == "single"  # the plain answer keeps its documented fallback
+    assert DeskConfig.from_env().to_env()["FORGEFLOW_DESK_ORCHESTRATION"] == ro.DEFAULT_MODE  # resolved, not empty
     assert DeskConfig.from_env(orchestration="self_check").to_env()["FORGEFLOW_DESK_ORCHESTRATION"] == "self_check"

@@ -47,7 +47,8 @@ class FakeAnswerer:
 @pytest.fixture(scope="module")
 def desk(fixtures, tmp_path_factory):
     folder, sources = fixtures
-    desk = ReportDesk(folder, tmp_path_factory.mktemp("work"), ollama_url="http://127.0.0.1:9",
+    # These tests are about the single cited answer (the injected answerer); orchestration has its own tests.
+    desk = ReportDesk(folder, tmp_path_factory.mktemp("work"), ollama_url="http://127.0.0.1:9", orchestration="single",
                       answerer=FakeAnswerer(), sources=sources)
     desk.load()
     return desk

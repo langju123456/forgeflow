@@ -101,7 +101,8 @@ class Harness:
             gateway_port=self.gateway_port, ollama_url=f"http://127.0.0.1:{self.model_port}", model="fake-answerer",
             reports_dir=str(tmp / "reports"), work_dir=str(tmp / "work"), prefetch=prefetch, max_queue=max_queue,
             max_attempts=max_attempts, retry_delay_ms=retry_delay_ms, grpc_deadline_s=10, model_timeout_s=30,
-            token_flush_ms=30, queue=f"desk.ask.test.{suffix}")
+            token_flush_ms=30, queue=f"desk.ask.test.{suffix}",
+            orchestration="single")  # the serving-layer tests measure the single answer from a stand-in model
         self.model = FakeModelState()
         self._uvicorns: list[Uvicorn] = []
         self.grpc_server = None
