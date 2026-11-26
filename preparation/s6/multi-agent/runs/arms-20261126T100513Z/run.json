@@ -1,0 +1,17 @@
+{
+ "sets": {
+  "heldout": {
+   "path": "preparation/s6/multi-agent/heldout.json",
+   "sha256": "ad74e3ef0563a7a0c2547cf96557acd90d397c000f14f21b35f83089b0d251d4",
+   "set_id": "s6-heldout-annual-reports-v1",
+   "verified_by": "模型（非人工）",
+   "frozen_at": "2026-11-26T08:43:49.897099+00:00"
+  }
+ },
+ "pins_sha256": "8b9cd562db247c5cf72760d2852c850dcc0d0f3415e8ebc7debed84801163341",
+ "llm": "ollama",
+ "embedder": "ollama",
+ "limit": null,
+ "started_at": "2026-11-26T10:05:13.059503+00:00",
+ "git_head": "8f31027d9921b8342be52c0c52b8f5b08906b290"
+}
