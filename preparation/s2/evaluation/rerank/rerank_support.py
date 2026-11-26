@@ -25,7 +25,8 @@ WARMUP = ("What colour is the test bench?", "The test bench is painted blue.")  
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    with path.open("rb") as handle:  # streamed: the reranker weights are a 2 GB file
+        return hashlib.file_digest(handle, "sha256").hexdigest()
 
 
 def registered_reranker() -> dict:
