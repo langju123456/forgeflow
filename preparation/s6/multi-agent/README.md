@@ -1,7 +1,7 @@
 # 年报问答多角色编排：四组对照
 
 登记在 [PREREGISTRATION.md](PREREGISTRATION.md)（机器可读版 [preregistered.json](preregistered.json)），先于编排代码提交。
-结果见同目录的 [RESULTS.md](RESULTS.md)（2026-11-26 正式运行：按登记采用 B，plan_verify），逐题记录在 `runs/` 下，过程记录见 [STATUS.md](STATUS.md)。
+结果见同目录的 [RESULTS.md](RESULTS.md)（2026-11-26 正式运行：按登记采用 B，plan_verify；修订 2 的确认题上再次满足，已成为默认做法），逐题记录在 `runs/` 下，过程记录见 [STATUS.md](STATUS.md)。
 
 | 文件 | 作用 |
 |---|---|

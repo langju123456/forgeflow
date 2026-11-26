@@ -147,6 +147,24 @@
   - 两批题都是模型核对的，不是人工。
 - 按修订 2 写在初标之前的后果：把 B 接进服务化 worker，并把默认做法改成 B。见下一节。
 
+### 追加三：服务化 worker 接入 B，默认改成 B — 2026-11-26 完成
+
+确认成立，按修订 2 事先写定的后果做（等确认结果的那段时间里先在另一个本地 worktree 写好、测好，确认成立后才接到本分支；不成立就会丢掉）。
+
+- `b67e5c5`：gRPC `SearchRequest` 加 `search_query`、`doc`（重新生成了 stub，版本与原来相同）；检索服务交给同一个 `evidence()`，在权限过滤之后生效；worker 用 `Info` 的可读报告清单给规划者，规划后的检索是第二次 `Search`，不可达整单重试、被拒或没结果退回第一次检索；用上规划检索时多发一条 `retrieved` 事件（`planned: true`）。`SERVICE_MODES` 包括 plan_verify。
+- `b539bbe`：`report_orchestration.DEFAULT_MODE = "plan_verify"`；`ReportDesk`（构造参数 `orchestration`，默认它）、`POST /reports/ask` 不传时、`DeskConfig` 不设时都按它答。没有 16k 模型照旧拒绝、不降级；`DeskConfig` 的模型是 `qwen3:8b` 时默认解析为 single。原来专测单次回答的几个测试改成显式 `single`。
+- 测试：在装了 grpc 的环境里全套 1511 通过、28 跳过（跳过的都是需要本机 Redis 和 RabbitMQ 的在线测试；Docker 没在运行，这次没跑）。新加 6 个测试（规划检索走第二次 Search 且限定报告、退回、整单重试、报告清单按索引版本缓存、gRPC 上计划只能收窄）。
+- 真实冒烟（不经 Redis / RabbitMQ，直接调用 worker 的处理函数；真实年报、真实 gRPC 检索服务、本机模型）：3 题都用上了规划检索，宁德时代销售费用、茅台所得税费用答对且核对通过，“苹果印度市场净销售额”答没有；第一个草稿字 33–35 秒，比单次回答慢。
+- 结果和限制写进了 [RESULTS.md](RESULTS.md) 的“确认题”和“确认之后做了什么”两节。
+
+### 追加四：合并进 master 或开 PR — 没有做，留给负责人
+
+这是对外发布（公开仓库），属于要停下来等负责人的情况。另外两件事要负责人知道：
+
+- `report-orchestration` 比公开的 `master` 多 42 个提交，里面包括还开着的 PR #1（desk-service，11 月 11 日）的全部提交，以及 11 月 23–24 日的几个提交；合并等于把这些一起带进 `master`。
+- 其中两个 11 月 23–24 日的提交说明正文写着开发工具的名字（不是这次写的）；公开 `master` 上已有 21 个提交用的是个人邮箱而不是 noreply 地址。按之前定的公开仓库规则，合并前可能要先处理；改写已推送的历史也属于要等负责人决定的事。
+
 ## 收件箱
 
 - 2026-11-26：已接入收件箱（mac-bridge `inbox/line5.md`，克隆在 `~/.mac-bridge/work/report-orchestration`）。当时的内容是“目前没有新的决定，照原计划跑完 heldout、按预登记判定并写进 STATUS.md”，与原计划一致，没有新的条目要处理。
+- 2026-11-26 追加工作期间每步之后都看过，内容没变，没有新的条目。
