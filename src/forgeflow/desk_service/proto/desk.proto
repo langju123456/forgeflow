@@ -24,6 +24,11 @@ message SearchRequest {
   string question = 1;
   bool gate = 2;
   uint32 top_k = 3;
+  // A planner's plan (forgeflow.report_orchestration, plan_verify): rank with these words instead of the
+  // question, inside this one report. Empty means no plan. Both act after the ACL filter and only narrow; the
+  // gate, when on, still judges the hits against the question.
+  string search_query = 4;
+  string doc = 5;
 }
 
 // Where a hit sits in its PDF; page = 0 and an empty bbox mean "unknown".
@@ -67,7 +72,8 @@ message InfoReply {
   string index_version = 4;
   bool gate_available = 5;
   uint32 rows = 6;
-  // The report catalogue as JSON (file paths removed); a display list, not part of any decision.
+  // The report catalogue as JSON (file paths removed): a display list, and the report list a plan_verify
+  // worker hands its planner (which may name one of these reports for the planned search, never widen it).
   string reports_json = 7;
 }
 

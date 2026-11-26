@@ -19,6 +19,9 @@ Delivery is at-least-once, so every step is written to be safe to repeat:
 * With an orchestration other than ``single`` (forgeflow.report_orchestration) one job makes several model calls.
   Recovery stays per job: there is no checkpoint between the calls, a redelivered job runs them all again, and the
   cache key carries the orchestration tag, so a verified answer is never served for a single one or the reverse.
+* ``plan_verify`` also makes a second Search: the planner names one report from the retrieval server's catalogue
+  (Info) and rewords the query, and the server narrows to that report after its ACL filter. When that search
+  returns rows, a second ``retrieved`` event (``planned: true``) says the answer that follows rests on them.
 """
 
 from __future__ import annotations
@@ -36,7 +39,7 @@ import grpc
 from .. import report_lookup, report_orchestration
 from ..analysis_provider import ProviderInvalid
 from ..cited_answer import ANSWER_SCHEMA, CitedAnswerer, build_messages, prompt_sha256
-from ..contracts import ContextHit
+from ..contracts import ContextHit, DomainError
 from ..pdf_ingest import parse_source_line
 from . import keys
 from .events import AnswerFieldExtractor, emit
@@ -100,6 +103,13 @@ def _citation(pb: Any) -> dict[str, Any]:
             "page": pb.page or None, "bbox": list(pb.bbox) or None, "snippet": pb.snippet}
 
 
+def _evidence(reply: Any) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """A Search reply's kept hits (citations with row identity) and dropped hits, as events and results carry them."""
+    kept = [{**_citation(h.citation), "row_version": h.version, "source_hash": h.source_hash,
+             "file_prefix": (parse_source_line(h.content) or {}).get("file_sha256_prefix")} for h in reply.kept]
+    return kept, [_citation(c) for c in reply.dropped]
+
+
 class Worker:
     def __init__(self, config: Any, redis: Any, stub: Any, model: StreamingChatModel, *,
                  worker_id: str | None = None, clock=time.time):
@@ -109,6 +119,7 @@ class Worker:
         self.channel: Any = None
         self._tasks: set[asyncio.Task] = set()
         self._report_runtime = None
+        self._reports: tuple[str, list[dict[str, Any]]] | None = None  # (index version, catalogue) for planners
 
     # ------------------------------------------------------------------ one job
     async def process(self, job: dict[str, Any], attempt: int) -> dict[str, Any]:
@@ -117,20 +128,8 @@ class Worker:
         cached = await self.redis.get(keys.cache(job["cache_key"]))
         if cached is not None:
             return json.loads(cached) | {"cached": True}
-        try:
-            # wait_for_ready: while the retrieval server restarts, wait for it (up to the deadline) instead of
-            # failing at once with UNAVAILABLE; an outage longer than the deadline becomes a transient retry.
-            reply = await self.stub.Search(
-                desk_pb2.SearchRequest(question=question, gate=job["gate"], top_k=job["top_k"]),
-                timeout=self.config.grpc_deadline_s, metadata=((SUBJECT_HEADER, job["subject"]),),
-                wait_for_ready=True)
-        except grpc.aio.AioRpcError as error:
-            if error.code() in TRANSIENT_GRPC:
-                raise Transient(f"retrieval {error.code().name}: {error.details()}") from error
-            raise Final(f"RETRIEVAL_{error.code().name}", error.details() or "") from error
-        kept = [{**_citation(h.citation), "row_version": h.version, "source_hash": h.source_hash,
-                 "file_prefix": (parse_source_line(h.content) or {}).get("file_sha256_prefix")} for h in reply.kept]
-        dropped = [_citation(c) for c in reply.dropped]
+        reply = await self._search(job)
+        kept, dropped = _evidence(reply)
         timings = {"retrieval_ms": round(reply.retrieval_ms, 1)}
         if reply.gate_ms:
             timings["gate_ms"] = round(reply.gate_ms, 1)
@@ -156,7 +155,12 @@ class Worker:
             except ReportProtocolError as exc:
                 raise Final("REPORT_TOOL_PROTOCOL", "annual-report tool result rejected") from exc
         else:
-            answered = await self._answer(job_id, question, hits, attempt, timings)
+            planned: dict[str, Any] = {}
+            answered = await self._answer(job_id, question, hits, attempt, timings, job=job, planned=planned)
+            if "reply" in planned:  # plan_verify answered from its planned search: cite those rows
+                reply = planned["reply"]
+                kept, dropped = _evidence(reply)
+                timings["planned_retrieval_ms"] = round(reply.retrieval_ms, 1)
         by_id = {h.id: c for h, c in zip(reply.kept, kept, strict=True)}
         result = {
             "run_id": job_id, "question": question, "mode": reply.mode, "gate": reply.gate_status,
@@ -180,15 +184,51 @@ class Worker:
                 orchestration=job.get("orchestration", "single"))
         return result
 
+    async def _search(self, job: dict[str, Any], *, search_query: str = "", doc: str = "") -> Any:
+        """One Search for this job's caller; ``search_query`` and ``doc`` are a planner's plan (empty: none)."""
+        try:
+            # wait_for_ready: while the retrieval server restarts, wait for it (up to the deadline) instead of
+            # failing at once with UNAVAILABLE; an outage longer than the deadline becomes a transient retry.
+            return await self.stub.Search(
+                desk_pb2.SearchRequest(question=job["question"], gate=job["gate"], top_k=job["top_k"],
+                                       search_query=search_query, doc=doc),
+                timeout=self.config.grpc_deadline_s, metadata=((SUBJECT_HEADER, job["subject"]),),
+                wait_for_ready=True)
+        except grpc.aio.AioRpcError as error:
+            if error.code() in TRANSIENT_GRPC:
+                raise Transient(f"retrieval {error.code().name}: {error.details()}") from error
+            raise Final(f"RETRIEVAL_{error.code().name}", error.details() or "") from error
+
+    async def _catalogue(self, job: dict[str, Any]) -> list[dict[str, Any]]:
+        """The reports a planner may name: the retrieval server's catalogue (Info), readable ones only.
+
+        Kept per index version, so a reloaded index with other reports is asked for again.
+        """
+        if self._reports is None or self._reports[0] != job["index_version"]:
+            try:
+                info = await self.stub.Info(desk_pb2.InfoRequest(), timeout=self.config.grpc_deadline_s,
+                                            metadata=((SUBJECT_HEADER, job["subject"]),), wait_for_ready=True)
+            except grpc.aio.AioRpcError as error:
+                if error.code() in TRANSIENT_GRPC:
+                    raise Transient(f"retrieval {error.code().name}: {error.details()}") from error
+                raise Final(f"RETRIEVAL_{error.code().name}", error.details() or "") from error
+            reports = [r for r in json.loads(info.reports_json or "[]") if r.get("state") == "ok"]
+            self._reports = (job["index_version"], reports)
+        return self._reports[1]
+
     async def _answer(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
-                      timings: dict[str, float]) -> dict[str, Any]:
+                      timings: dict[str, float], *, job: dict[str, Any] | None = None,
+                      planned: dict[str, Any] | None = None) -> dict[str, Any]:
+        """The answer step. ``job`` is needed by plan_verify (its planned search runs as this job's caller);
+        ``planned`` receives the planned Search reply when the answer was produced from it."""
         lookup = report_lookup.for_question(question)
         if lookup:
             return lookup.answer(question, hits)
         if not hits:  # nothing to cite: "not in the reports" without calling the model
             return CitedAnswerer(_Replay(self.model.model_id, None)).answer(question, hits)
         if self.config.orchestration != "single":
-            return await self._orchestrated(job_id, question, hits, attempt, timings)
+            return await self._orchestrated(job_id, question, hits, attempt, timings, job=job,
+                                            planned={} if planned is None else planned)
         extractor = AnswerFieldExtractor()
         pending, last_flush = "", time.perf_counter()
         started = time.perf_counter()
@@ -212,29 +252,58 @@ class Worker:
         return CitedAnswerer(_Replay(self.model.model_id, extractor.raw, error)).answer(question, hits)
 
     async def _orchestrated(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
-                            timings: dict[str, float]) -> dict[str, Any]:
+                            timings: dict[str, float], *, job: dict[str, Any] | None,
+                            planned: dict[str, Any]) -> dict[str, Any]:
         """The generator ReportDesk.ask drives with a blocking model, driven here with the streaming one.
 
         Only the executor's first answer reaches the reader as a draft. A self-check or a veto can still replace
         or withdraw it; the ``final`` event says which. A model that cannot be reached at any step makes the whole
-        job transient, and the redelivered job starts the orchestration again from the top.
+        job transient, and the redelivered job starts the orchestration again from the top. The planned search of
+        plan_verify is a second Search over gRPC: unreachable is transient like the first; a refusal is handed to
+        the flow, which then answers from the first search's hits.
         """
-        steps = report_orchestration.flow(self.config.orchestration, question, hits, model_id=self.model.model_id)
+        mode = self.config.orchestration
+        if mode == "plan_verify" and job is None:
+            raise Final("ORCHESTRATION_UNSUPPORTED", "plan_verify needs the job for its planned search")
+        catalogue = await self._catalogue(job) if mode == "plan_verify" else ()
+        steps = report_orchestration.flow(mode, question, hits, model_id=self.model.model_id, catalogue=catalogue)
         started = time.perf_counter()
         call_ms: list[float] = []
+        search_ms = 0.0
         try:
             request = next(steps)
             while True:
-                if not isinstance(request, report_orchestration.ModelCall):
-                    raise Final("ORCHESTRATION_UNSUPPORTED", "this orchestration needs a planned search")
                 began = time.perf_counter()
-                reply = await self._complete(job_id, request, attempt, timings)
-                call_ms.append(round((time.perf_counter() - began) * 1000, 1))
+                if isinstance(request, report_orchestration.Search):
+                    reply = await self._planned_search(job_id, job, request, attempt, planned)
+                    search_ms += (time.perf_counter() - began) * 1000
+                else:
+                    reply = await self._complete(job_id, request, attempt, timings)
+                    call_ms.append(round((time.perf_counter() - began) * 1000, 1))
                 request = steps.send(reply)
         except StopIteration as stop:
-            outcome = report_orchestration.record_timings(stop.value, call_ms)
+            outcome = report_orchestration.record_timings(stop.value, call_ms, search_ms)
+        if outcome.evidence != "planned":
+            planned.pop("reply", None)
         timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
         return outcome.result
+
+    async def _planned_search(self, job_id: str, job: dict[str, Any], request: Any, attempt: int,
+                              planned: dict[str, Any]) -> Any:
+        """The planner's search: its hits, or the error the flow records before falling back to the first hits."""
+        try:
+            reply = await self._search(job, search_query=request.query, doc=request.doc or "")
+        except Final as refused:
+            return DomainError(refused.code, refused.message, 422)
+        if reply.kept:
+            planned["reply"] = reply
+            kept, dropped = _evidence(reply)
+            await emit(self.redis, job_id, "retrieved",
+                       {"kept": kept, "dropped": dropped, "gate": reply.gate_status, "mode": reply.mode,
+                        "timings": {"retrieval_ms": round(reply.retrieval_ms, 1)}, "planned": True,
+                        "plan": {"doc": request.doc, "search_query": request.query}},
+                       attempt=attempt, ttl_s=self.config.job_ttl_s)
+        return [_hit(h) for h in reply.kept]
 
     async def _complete(self, job_id: str, request: Any, attempt: int, timings: dict[str, float]) -> Any:
         """One model call of an orchestration: the raw text, or the ProviderInvalid that makes the step fail closed."""

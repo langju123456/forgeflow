@@ -9,14 +9,18 @@ from google.protobuf.internal import containers as _containers
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class SearchRequest(_message.Message):
-    __slots__ = ("question", "gate", "top_k")
+    __slots__ = ("question", "gate", "top_k", "search_query", "doc")
     QUESTION_FIELD_NUMBER: _ClassVar[int]
     GATE_FIELD_NUMBER: _ClassVar[int]
     TOP_K_FIELD_NUMBER: _ClassVar[int]
+    SEARCH_QUERY_FIELD_NUMBER: _ClassVar[int]
+    DOC_FIELD_NUMBER: _ClassVar[int]
     question: str
     gate: bool
     top_k: int
-    def __init__(self, question: str | None = ..., gate: bool | None = ..., top_k: int | None = ...) -> None: ...
+    search_query: str
+    doc: str
+    def __init__(self, question: str | None = ..., gate: bool | None = ..., top_k: int | None = ..., search_query: str | None = ..., doc: str | None = ...) -> None: ...
 
 class Citation(_message.Message):
     __slots__ = ("id", "doc", "company", "kind", "page", "bbox", "snippet")

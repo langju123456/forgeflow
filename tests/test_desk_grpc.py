@@ -62,6 +62,18 @@ def test_search_returns_the_same_evidence_as_the_in_process_desk(desk, stub):
     assert reply.index_version == desk.index_version() and reply.mode == "lexical" and reply.gate_status == "OFF"
 
 
+def test_a_planners_plan_narrows_search_to_one_report_and_ranks_with_its_words(desk, stub):
+    question, plan = "How much revenue was there in 2025?", {"search_query": "营业收入", "doc": "cc_annual_report_2025_zh"}
+    reply = stub.Search(desk_pb2.SearchRequest(question=question, top_k=5, **plan), metadata=ME, timeout=10)
+    local = desk.evidence(question, top_k=5, **plan)
+    assert [h.id for h in reply.kept] == [h.id for h in local["kept"]] and reply.kept
+    assert all(h.id.startswith("cc_annual_report_2025_zh#") for h in reply.kept)
+    # A report the caller has no rows in (or that does not exist) narrows to nothing; a plan never widens.
+    nowhere = stub.Search(desk_pb2.SearchRequest(question=question, top_k=5, search_query="营业收入", doc="no_such_report"),
+                          metadata=ME, timeout=10)
+    assert list(nowhere.kept) == []
+
+
 @pytest.mark.parametrize("metadata", [(), ((SUBJECT_HEADER, "intruder"),)])
 def test_identity_comes_from_metadata_and_unknown_callers_are_refused(stub, metadata):
     with pytest.raises(grpc.RpcError) as error:

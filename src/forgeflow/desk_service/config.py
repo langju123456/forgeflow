@@ -21,8 +21,8 @@ class DeskConfig:
     gateway_port: int = 8790
     ollama_url: str = "http://127.0.0.1:11434"
     model: str = "forgeflow-qwen3-8b-ctx16k"  # the same preference order as cited_answer.PREFERRED_MODELS
-    # How model answers are produced (forgeflow.report_orchestration): single | self_check | verify. Off (single)
-    # by default. plan_verify is not offered here: the Search contract carries neither a report nor a reworded query.
+    # How model answers are produced (forgeflow.report_orchestration): single | self_check | verify | plan_verify.
+    # plan_verify's planned search is a second Search carrying the planned report and the reworded query.
     orchestration: str = "single"
     subject: str = "desk-analyst"  # DEV_ONLY: the one identity the retrieval server knows
     reports_dir: str = str(Path.home() / "code" / "finreports")

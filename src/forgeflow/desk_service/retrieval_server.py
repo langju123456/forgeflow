@@ -73,7 +73,9 @@ class RetrievalServicer(desk_pb2_grpc.ReportRetrievalServicer):
         if request.gate and remaining is not None and remaining < 1.0:
             context.abort(grpc.StatusCode.DEADLINE_EXCEEDED, "not enough time left for the gate")
         try:
-            found = self.desk.evidence(request.question, gate=request.gate, top_k=top_k, principal=principal)
+            # A planner's plan (plan_verify) narrows to one report and ranks with its words; empty means none.
+            found = self.desk.evidence(request.question, gate=request.gate, top_k=top_k, principal=principal,
+                                       search_query=request.search_query or None, doc=request.doc or None)
         except DomainError as error:
             self._fail(context, error)
         kept = []

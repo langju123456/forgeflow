@@ -107,7 +107,7 @@ def test_roles_and_precedence_are_declared_data():
     assert ro.ROLES["verifier"].returns == ("verdict", "failed", "quote") and "veto only" in ro.ROLES["verifier"].may
     assert ro.ROLES["planner"].sees == ("question", "report list: key, company, document, language")
     assert set(ro.MODES) == {"single", "self_check", "verify", "plan_verify"}
-    assert set(ro.SERVICE_MODES) == set(ro.MODES) - {"plan_verify"}
+    assert set(ro.SERVICE_MODES) == set(ro.MODES)  # the worker runs the planned search over gRPC too
     with pytest.raises(ValueError):
         run("supervisor", RIGHT)
 
@@ -742,6 +742,108 @@ def test_in_the_worker_cut_off_verifier_output_fails_closed():
     assert result["status"] == "VERIFY_ERROR" and result["found"] is False and result["error"] == "OUTPUT_TRUNCATED"
 
 
+class FakeStub:
+    """The retrieval server as the worker sees it: Search replies in order, and Info's report catalogue."""
+
+    def __init__(self, *replies, reports=CATALOGUE):
+        self.replies, self.searches, self.infos = list(replies), [], 0
+        self.reports = [r | {"state": "ok"} for r in reports] + [
+            {"key": "tesla_2025_10k_en", "company": "Tesla", "document": "10-K", "language": "en", "state": "missing"}]
+
+    async def Search(self, request, timeout=None, metadata=None, wait_for_ready=None):  # noqa: N802
+        assert dict(metadata)["x-forgeflow-subject"] == "desk-analyst"
+        self.searches.append(request)
+        reply = self.replies.pop(0)
+        if isinstance(reply, Exception):
+            raise reply
+        return reply
+
+    async def Info(self, request, timeout=None, metadata=None, wait_for_ready=None):  # noqa: N802
+        from forgeflow.desk_service.proto import desk_pb2
+
+        self.infos += 1
+        return desk_pb2.InfoReply(state="ready", reports_json=json.dumps(self.reports, ensure_ascii=False))
+
+
+def search_reply(*hits, index_version="idx-1"):
+    from forgeflow.desk_service.proto import desk_pb2
+
+    return desk_pb2.SearchReply(
+        kept=[desk_pb2.Hit(id=h.id, version=h.version, content=h.content, source_hash=h.source_hash,
+                           classification=h.classification, status=h.status,
+                           citation=desk_pb2.Citation(id=h.id, doc=h.id.split("#")[0], page=6)) for h in hits],
+        gate_status="OFF", mode="hybrid", index_version=index_version, retrieval_ms=3.0)
+
+
+def rpc_error(code):
+    import grpc
+
+    return grpc.aio.AioRpcError(code, grpc.aio.Metadata(), grpc.aio.Metadata(), details="from the test")
+
+
+def job(job_id="job-p1", index_version="idx-1"):
+    return {"job_id": job_id, "question": QUESTION, "gate": False, "top_k": 5, "subject": "desk-analyst",
+            "index_version": index_version, "cache_key": f"key-{job_id}", "model": "fake-answerer",
+            "prompt_sha256": ca.prompt_sha256(), "orchestration": ro.cache_tag("plan_verify")}
+
+
+def test_the_worker_runs_plan_verify_with_a_second_search_inside_the_planned_report():
+    made = worker("plan_verify", plan(), RIGHT, PASS_RIGHT)
+    made.stub = FakeStub(search_reply(*HITS), search_reply(MOUTAI))
+    result = asyncio.run(made.process(job(), 1))
+    first, planned = made.stub.searches
+    assert (first.search_query, first.doc) == ("", "")
+    assert (planned.question, planned.search_query, planned.doc) == (QUESTION, "2025 利润分配 每股派发现金红利",
+                                                                     "moutai_2025_annual_zh")
+    assert (planned.gate, planned.top_k) == (False, 5)  # the job's own settings, the job's own caller
+    prompt = made.model.script.user(0)  # the planner: the readable reports from Info, never a missing one
+    assert all(r["key"] in prompt for r in CATALOGUE) and "tesla_2025_10k_en" not in prompt
+    assert result["status"] == "ANSWERED" and [c["id"] for c in result["citations"]] == [MOUTAI.id]
+    assert [k["id"] for k in result["kept"]] == [MOUTAI.id] and "planned_retrieval_ms" in result["timings"]
+    assert result["orchestration"]["plan"]["status"] == "USED" and result["orchestration"]["evidence"] == "planned"
+    events = made.redis.events("job-p1")
+    retrieved = [data for kind, data in events if kind == "retrieved"]
+    assert len(retrieved) == 2 and retrieved[1]["planned"] is True and retrieved[1]["plan"]["doc"] == "moutai_2025_annual_zh"
+    kinds = [kind for kind, _ in events]
+    assert kinds.index("token") > [i for i, k in enumerate(kinds) if k == "retrieved"][1]  # the draft rests on it
+
+
+@pytest.mark.parametrize(("planned", "status"), [
+    (search_reply, "FALLBACK_NO_HITS"),
+    (lambda: rpc_error(__import__("grpc").StatusCode.INVALID_ARGUMENT), "FALLBACK_SEARCH_ERROR"),
+])
+def test_in_the_worker_a_planned_search_that_finds_nothing_or_is_refused_falls_back(planned, status):
+    pytest.importorskip("grpc")
+    made = worker("plan_verify", plan(), RIGHT, PASS_RIGHT)
+    made.stub = FakeStub(search_reply(*HITS), planned())
+    result = asyncio.run(made.process(job("job-p2"), 1))
+    assert result["orchestration"]["plan"]["status"] == status and result["orchestration"]["evidence"] == "original"
+    assert [k["id"] for k in result["kept"]] == [h.id for h in HITS] and "planned_retrieval_ms" not in result["timings"]
+    assert [kind for kind, _ in made.redis.events("job-p2")].count("retrieved") == 1
+
+
+def test_in_the_worker_an_unreachable_planned_search_retries_the_whole_job():
+    pytest.importorskip("grpc")
+    import grpc
+
+    from forgeflow.desk_service.worker import Transient
+
+    made = worker("plan_verify", plan())
+    made.stub = FakeStub(search_reply(*HITS), rpc_error(grpc.StatusCode.UNAVAILABLE))
+    with pytest.raises(Transient):
+        asyncio.run(made.process(job("job-p3"), 1))
+
+
+def test_the_worker_asks_for_the_report_list_once_per_index_version():
+    made = worker("plan_verify", plan(), RIGHT, PASS_RIGHT, plan(), RIGHT, PASS_RIGHT, plan(), RIGHT, PASS_RIGHT)
+    made.stub = FakeStub(*(search_reply(*HITS), search_reply(MOUTAI)) * 3)
+    asyncio.run(made.process(job("job-p4"), 1))
+    asyncio.run(made.process(job("job-p5"), 1))
+    assert made.stub.infos == 1
+    asyncio.run(made.process(job("job-p6", index_version="idx-2"), 1))
+    assert made.stub.infos == 2
+
+
 def test_a_job_keyed_for_another_orchestration_is_refused_not_cached_under_a_wrong_key():
     pytest.importorskip("grpc")
     from forgeflow.desk_service import keys
@@ -801,8 +903,9 @@ def test_the_service_config_refuses_what_it_cannot_run():
     from forgeflow.desk_service.config import DeskConfig
 
     assert DeskConfig().orchestration == "single" and DeskConfig().model == ro.REQUIRED_MODEL
-    with pytest.raises(ValueError, match="plan_verify"):
-        DeskConfig(orchestration="plan_verify")  # the Search contract carries no report and no reworded query
+    assert DeskConfig(orchestration="plan_verify").orchestration == "plan_verify"  # Search carries the plan
+    with pytest.raises(ValueError, match="one of"):
+        DeskConfig(orchestration="supervisor")
     with pytest.raises(ValueError, match="truncates"):
         DeskConfig(orchestration="verify", model="qwen3:8b")
     assert DeskConfig(model="qwen3:8b").orchestration == "single"  # the plain answer keeps its documented fallback

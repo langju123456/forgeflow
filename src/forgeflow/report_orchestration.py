@@ -64,7 +64,7 @@ from .retrieval import _loopback
 
 ORCHESTRATION_VERSION = "report-orchestration-v1"
 MODES = ("single", "self_check", "verify", "plan_verify")
-SERVICE_MODES = ("single", "self_check", "verify")  # plan_verify needs a planned search the gRPC contract lacks
+SERVICE_MODES = MODES  # the worker runs plan_verify's planned search as a second gRPC Search (doc + search_query)
 REQUIRED_MODEL = "forgeflow-qwen3-8b-ctx16k"
 TRUNCATING_MODELS = frozenset({"qwen3:8b"})
 PRECEDENCE = ("code", "verifier", "executor")

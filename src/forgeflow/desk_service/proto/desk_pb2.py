@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'forgeflow/desk_service/proto/desk.proto\x12\x11\x66orgeflow.desk.v1\">\n\rSearchRequest\x12\x10\n\x08question\x18\x01 \x01(\t\x12\x0c\n\x04gate\x18\x02 \x01(\x08\x12\r\n\x05top_k\x18\x03 \x01(\r\"o\n\x08\x43itation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03\x64oc\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t\x12\x0c\n\x04kind\x18\x04 \x01(\t\x12\x0c\n\x04page\x18\x05 \x01(\x05\x12\x0c\n\x04\x62\x62ox\x18\x06 \x03(\x01\x12\x0f\n\x07snippet\x18\x07 \x01(\t\"\x9f\x01\n\x03Hit\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\x12\x13\n\x0bsource_hash\x18\x04 \x01(\t\x12\x16\n\x0e\x63lassification\x18\x05 \x01(\x05\x12\x0e\n\x06status\x18\x06 \x01(\t\x12-\n\x08\x63itation\x18\x07 \x01(\x0b\x32\x1b.forgeflow.desk.v1.Citation\"\xc2\x01\n\x0bSearchReply\x12$\n\x04kept\x18\x01 \x03(\x0b\x32\x16.forgeflow.desk.v1.Hit\x12,\n\x07\x64ropped\x18\x02 \x03(\x0b\x32\x1b.forgeflow.desk.v1.Citation\x12\x13\n\x0bgate_status\x18\x03 \x01(\t\x12\x0c\n\x04mode\x18\x04 \x01(\t\x12\x15\n\rindex_version\x18\x05 \x01(\t\x12\x14\n\x0cretrieval_ms\x18\x06 \x01(\x01\x12\x0f\n\x07gate_ms\x18\x07 \x01(\x01\"\r\n\x0bInfoRequest\"\x8b\x01\n\tInfoReply\x12\r\n\x05state\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65tail\x18\x02 \x01(\t\x12\x0c\n\x04mode\x18\x03 \x01(\t\x12\x15\n\rindex_version\x18\x04 \x01(\t\x12\x16\n\x0egate_available\x18\x05 \x01(\x08\x12\x0c\n\x04rows\x18\x06 \x01(\r\x12\x14\n\x0creports_json\x18\x07 \x01(\t\";\n\x10PageImageRequest\x12\x0b\n\x03\x64oc\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x0c\n\x04\x62\x62ox\x18\x03 \x03(\x01\"\x1d\n\x0ePageImageReply\x12\x0b\n\x03png\x18\x01 \x01(\x0c\x32\xf8\x01\n\x0fReportRetrieval\x12J\n\x06Search\x12 .forgeflow.desk.v1.SearchRequest\x1a\x1e.forgeflow.desk.v1.SearchReply\x12\x44\n\x04Info\x12\x1e.forgeflow.desk.v1.InfoRequest\x1a\x1c.forgeflow.desk.v1.InfoReply\x12S\n\tPageImage\x12#.forgeflow.desk.v1.PageImageRequest\x1a!.forgeflow.desk.v1.PageImageReplyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'forgeflow/desk_service/proto/desk.proto\x12\x11\x66orgeflow.desk.v1\"a\n\rSearchRequest\x12\x10\n\x08question\x18\x01 \x01(\t\x12\x0c\n\x04gate\x18\x02 \x01(\x08\x12\r\n\x05top_k\x18\x03 \x01(\r\x12\x14\n\x0csearch_query\x18\x04 \x01(\t\x12\x0b\n\x03\x64oc\x18\x05 \x01(\t\"o\n\x08\x43itation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03\x64oc\x18\x02 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x03 \x01(\t\x12\x0c\n\x04kind\x18\x04 \x01(\t\x12\x0c\n\x04page\x18\x05 \x01(\x05\x12\x0c\n\x04\x62\x62ox\x18\x06 \x03(\x01\x12\x0f\n\x07snippet\x18\x07 \x01(\t\"\x9f\x01\n\x03Hit\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\x12\x13\n\x0bsource_hash\x18\x04 \x01(\t\x12\x16\n\x0e\x63lassification\x18\x05 \x01(\x05\x12\x0e\n\x06status\x18\x06 \x01(\t\x12-\n\x08\x63itation\x18\x07 \x01(\x0b\x32\x1b.forgeflow.desk.v1.Citation\"\xc2\x01\n\x0bSearchReply\x12$\n\x04kept\x18\x01 \x03(\x0b\x32\x16.forgeflow.desk.v1.Hit\x12,\n\x07\x64ropped\x18\x02 \x03(\x0b\x32\x1b.forgeflow.desk.v1.Citation\x12\x13\n\x0bgate_status\x18\x03 \x01(\t\x12\x0c\n\x04mode\x18\x04 \x01(\t\x12\x15\n\rindex_version\x18\x05 \x01(\t\x12\x14\n\x0cretrieval_ms\x18\x06 \x01(\x01\x12\x0f\n\x07gate_ms\x18\x07 \x01(\x01\"\r\n\x0bInfoRequest\"\x8b\x01\n\tInfoReply\x12\r\n\x05state\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65tail\x18\x02 \x01(\t\x12\x0c\n\x04mode\x18\x03 \x01(\t\x12\x15\n\rindex_version\x18\x04 \x01(\t\x12\x16\n\x0egate_available\x18\x05 \x01(\x08\x12\x0c\n\x04rows\x18\x06 \x01(\r\x12\x14\n\x0creports_json\x18\x07 \x01(\t\";\n\x10PageImageRequest\x12\x0b\n\x03\x64oc\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x0c\n\x04\x62\x62ox\x18\x03 \x03(\x01\"\x1d\n\x0ePageImageReply\x12\x0b\n\x03png\x18\x01 \x01(\x0c\x32\xf8\x01\n\x0fReportRetrieval\x12J\n\x06Search\x12 .forgeflow.desk.v1.SearchRequest\x1a\x1e.forgeflow.desk.v1.SearchReply\x12\x44\n\x04Info\x12\x1e.forgeflow.desk.v1.InfoRequest\x1a\x1c.forgeflow.desk.v1.InfoReply\x12S\n\tPageImage\x12#.forgeflow.desk.v1.PageImageRequest\x1a!.forgeflow.desk.v1.PageImageReplyb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,21 +32,21 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'forgeflow.desk_service.prot
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_SEARCHREQUEST']._serialized_start=62
-  _globals['_SEARCHREQUEST']._serialized_end=124
-  _globals['_CITATION']._serialized_start=126
-  _globals['_CITATION']._serialized_end=237
-  _globals['_HIT']._serialized_start=240
-  _globals['_HIT']._serialized_end=399
-  _globals['_SEARCHREPLY']._serialized_start=402
-  _globals['_SEARCHREPLY']._serialized_end=596
-  _globals['_INFOREQUEST']._serialized_start=598
-  _globals['_INFOREQUEST']._serialized_end=611
-  _globals['_INFOREPLY']._serialized_start=614
-  _globals['_INFOREPLY']._serialized_end=753
-  _globals['_PAGEIMAGEREQUEST']._serialized_start=755
-  _globals['_PAGEIMAGEREQUEST']._serialized_end=814
-  _globals['_PAGEIMAGEREPLY']._serialized_start=816
-  _globals['_PAGEIMAGEREPLY']._serialized_end=845
-  _globals['_REPORTRETRIEVAL']._serialized_start=848
-  _globals['_REPORTRETRIEVAL']._serialized_end=1096
+  _globals['_SEARCHREQUEST']._serialized_end=159
+  _globals['_CITATION']._serialized_start=161
+  _globals['_CITATION']._serialized_end=272
+  _globals['_HIT']._serialized_start=275
+  _globals['_HIT']._serialized_end=434
+  _globals['_SEARCHREPLY']._serialized_start=437
+  _globals['_SEARCHREPLY']._serialized_end=631
+  _globals['_INFOREQUEST']._serialized_start=633
+  _globals['_INFOREQUEST']._serialized_end=646
+  _globals['_INFOREPLY']._serialized_start=649
+  _globals['_INFOREPLY']._serialized_end=788
+  _globals['_PAGEIMAGEREQUEST']._serialized_start=790
+  _globals['_PAGEIMAGEREQUEST']._serialized_end=849
+  _globals['_PAGEIMAGEREPLY']._serialized_start=851
+  _globals['_PAGEIMAGEREPLY']._serialized_end=880
+  _globals['_REPORTRETRIEVAL']._serialized_start=883
+  _globals['_REPORTRETRIEVAL']._serialized_end=1131
 # @@protoc_insertion_point(module_scope)
