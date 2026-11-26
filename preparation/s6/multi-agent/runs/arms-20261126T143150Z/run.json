@@ -1,0 +1,17 @@
+{
+ "sets": {
+  "confirm": {
+   "path": "preparation/s6/multi-agent/confirm.json",
+   "sha256": "fb3438f2e77b33d911ce8038fdd23d7e95a1025f373dd715a43c46d40308361a",
+   "set_id": "s6-confirm-annual-reports-v1",
+   "verified_by": "模型（非人工）",
+   "frozen_at": "2026-11-26T14:30:34.341354+00:00"
+  }
+ },
+ "pins_sha256": "8b9cd562db247c5cf72760d2852c850dcc0d0f3415e8ebc7debed84801163341",
+ "llm": "ollama",
+ "embedder": "ollama",
+ "limit": null,
+ "started_at": "2026-11-26T14:31:50.743566+00:00",
+ "git_head": "b38fe3c0fcb07e2c1e6f8fbe67aeef93e1d2db25"
+}
