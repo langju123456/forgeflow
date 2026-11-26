@@ -91,7 +91,7 @@
 - GPU 额度：推送前已用 1.96 h，结束后 2.71 h。这 0.75 h 里还包括同一账号另一个项目在 17:35 开始的 notebook，这次单独用了多少分不出来，最多 0.75 h。
 - 环境：vLLM 0.31.0、torch 2.13.0+cu130、transformers 5.17.0，两张 Tesla T4（compute capability 7.5，FlashAttention 2 不可用，vLLM 换用其它注意力实现）。
 - 候选里第一个就测成了：`Qwen/Qwen3-8B` fp16（权重 15.26 GiB），两张卡 tensor parallel，`--dtype half --max-model-len 16384 --gpu-memory-utilization 0.9`；没有用到 AWQ 和 4B 两个后备。
-- 结果放在 [`preparation/s5/vllm-serving/runs/20261126T095644Z-Qwen-Qwen3-8B/`](../../../s5/vllm-serving/runs/20261126T095644Z-Qwen-Qwen3-8B/)（`report.json`、`summary.md`、`server.log`）。
+- 结果放在 [`preparation/s5/vllm-serving/runs/20261126T095644Z-Qwen-Qwen3-8B/`](../../../s5/vllm-serving/runs/20261126T095644Z-Qwen-Qwen3-8B/)（`report.json`、`summary.md`）。`server.log` 按仓库的 `.gitignore`（`*.log`）没有提交，和显存有关的日志行已经摘进 `report.json`；完整日志在 Kaggle notebook 的输出里。
 
 负载：每个请求约 1536 个输入 token，固定输出 128 个 token（ignore_eos），关闭 thinking；并发 1–8 每档 40 个请求，并发 16 是 80 个。全部请求都完成，没有失败。
 
