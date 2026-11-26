@@ -83,7 +83,7 @@ for runs in preparation/s2/evaluation/rerank/runs preparation/s4/real-reports/re
   if [ -d "$runs" ]; then git add "$runs"; fi
 done
 if ! git diff --cached --quiet; then
-  git -c user.name="Lang Ju" -c user.email="langju123456@gmail.com" commit -q \
+  git commit -q \
     -m "Rerank after hybrid: 47-question guardrail and real annual reports, retrieval only, from the Mac"
   if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
     for attempt in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
