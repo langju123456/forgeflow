@@ -2,7 +2,8 @@
 
 Gateway and workers must agree on the answer model and its settings, because both compute the cache key from
 them; the launcher (``python -m forgeflow.desk_service all``) passes one config to every child. A worker also
-checks the model named in each job against its own and refuses a mismatch instead of caching under a wrong key.
+checks the model and the orchestration named in each job against its own and refuses a mismatch instead of caching
+under a wrong key.
 """
 
 from __future__ import annotations
@@ -20,6 +21,9 @@ class DeskConfig:
     gateway_port: int = 8790
     ollama_url: str = "http://127.0.0.1:11434"
     model: str = "forgeflow-qwen3-8b-ctx16k"  # the same preference order as cited_answer.PREFERRED_MODELS
+    # How model answers are produced (forgeflow.report_orchestration): single | self_check | verify. Off (single)
+    # by default. plan_verify is not offered here: the Search contract carries neither a report nor a reworded query.
+    orchestration: str = "single"
     subject: str = "desk-analyst"  # DEV_ONLY: the one identity the retrieval server knows
     reports_dir: str = str(Path.home() / "code" / "finreports")
     work_dir: str = str(Path(__file__).resolve().parents[3] / ".desk-service")
@@ -34,6 +38,15 @@ class DeskConfig:
     job_ttl_s: int = 3600
     token_flush_ms: int = 80  # coalesce streamed tokens into one Redis event per interval
     queue: str = "desk.ask"
+
+    def __post_init__(self) -> None:
+        from ..report_orchestration import SERVICE_MODES, TRUNCATING_MODELS
+
+        if self.orchestration not in SERVICE_MODES:
+            raise ValueError(f"orchestration must be one of {', '.join(SERVICE_MODES)}, not {self.orchestration!r}")
+        if self.orchestration != "single" and self.model in TRUNCATING_MODELS:
+            raise ValueError(f"{self.model} truncates long prompts without an error; orchestration needs the "
+                             "16k-context tag forgeflow-qwen3-8b-ctx16k")
 
     @classmethod
     def from_env(cls, **overrides) -> DeskConfig:

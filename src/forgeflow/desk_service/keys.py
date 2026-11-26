@@ -6,7 +6,9 @@ So the key covers everything that changes either:
 * who asks (``subject``): retrieval filters by the caller's roles before ranking, so two callers can get
   different hits for the same words; a key without the subject would leak one caller's answer to another;
 * what retrieval can return (``index_version``, from ReportDesk.index_version: every row hash plus the mode);
-* how the answer is produced (answer model, cited_answer's prompt hash, gate on/off, top_k);
+* how the answer is produced (answer model, cited_answer's prompt hash, gate on/off, top_k, and the
+  orchestration tag from report_orchestration.cache_tag: the mode plus the hash of its role prompts, so a single
+  answer, a self-checked one and a verified one never share an entry);
 * the question, with surrounding whitespace and repeated spaces removed and nothing else (no lower-casing:
   "Q1" and "q1" are left to retrieval to treat as it does).
 """
@@ -26,9 +28,10 @@ def normalize_question(question: str) -> str:
 
 
 def cache_key(*, subject: str, index_version: str, model: str, prompt_sha256: str, gate: bool, top_k: int,
-              question: str) -> str:
+              question: str, orchestration: str = "single") -> str:
     material = {"subject": subject, "index": index_version, "model": model, "prompt": prompt_sha256,
-                "gate": bool(gate), "top_k": int(top_k), "question": normalize_question(question)}
+                "gate": bool(gate), "top_k": int(top_k), "orchestration": orchestration,
+                "question": normalize_question(question)}
     digest = hashlib.sha256(json.dumps(material, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
     return digest[:32]
 

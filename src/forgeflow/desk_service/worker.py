@@ -16,6 +16,9 @@ Delivery is at-least-once, so every step is written to be safe to repeat:
   the reason, and the reader gets an ``error`` event.
 * What is final, not transient: bad input, unknown caller, an unusable model output (ANSWER_ERROR — at
   temperature 0 the same input would give the same output, so retrying only burns time).
+* With an orchestration other than ``single`` (forgeflow.report_orchestration) one job makes several model calls.
+  Recovery stays per job: there is no checkpoint between the calls, a redelivered job runs them all again, and the
+  cache key carries the orchestration tag, so a verified answer is never served for a single one or the reverse.
 """
 
 from __future__ import annotations
@@ -30,7 +33,7 @@ from typing import Any
 
 import grpc
 
-from .. import report_lookup
+from .. import report_lookup, report_orchestration
 from ..analysis_provider import ProviderInvalid
 from ..cited_answer import ANSWER_SCHEMA, CitedAnswerer, build_messages, prompt_sha256
 from ..contracts import ContextHit
@@ -43,7 +46,8 @@ from .retrieval_server import CHANNEL_OPTIONS, SUBJECT_HEADER
 
 TRANSIENT_GRPC = {grpc.StatusCode.UNAVAILABLE, grpc.StatusCode.DEADLINE_EXCEEDED,
                   grpc.StatusCode.RESOURCE_EXHAUSTED}
-CACHEABLE = {"ANSWERED", "NOT_FOUND", "NO_HITS", "UNSUPPORTED"}
+# NEEDS_REVIEW (vetoed twice) is a result like "not found"; VERIFY_ERROR, like ANSWER_ERROR, is not cached.
+CACHEABLE = {"ANSWERED", "NOT_FOUND", "NO_HITS", "UNSUPPORTED", "NEEDS_REVIEW"}
 
 # Delete the in-flight marker only if it still names this job (a later job may own the key by now).
 RELEASE = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"
@@ -161,6 +165,7 @@ class Worker:
             "citations": [by_id[c] for c in answered.get("citations", []) if c in by_id],
             "kept": kept, "dropped": dropped, "answerer": answered.get("model") or "none",
             **({"calculation": answered["calculation"]} if "calculation" in answered else {}),
+            **({"orchestration": answered["orchestration"]} if "orchestration" in answered else {}),
             "status": answered["status"], "timings": timings, "index_version": reply.index_version,
             "rejected_citations": answered.get("rejected_citations", []),
         }
@@ -171,7 +176,8 @@ class Worker:
             # The index changed between enqueue and now: cache under the key of the index actually used.
             result["cache_key"] = keys.cache_key(
                 subject=job["subject"], index_version=reply.index_version, model=job["model"],
-                prompt_sha256=job["prompt_sha256"], gate=job["gate"], top_k=job["top_k"], question=question)
+                prompt_sha256=job["prompt_sha256"], gate=job["gate"], top_k=job["top_k"], question=question,
+                orchestration=job.get("orchestration", "single"))
         return result
 
     async def _answer(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
@@ -181,6 +187,8 @@ class Worker:
             return lookup.answer(question, hits)
         if not hits:  # nothing to cite: "not in the reports" without calling the model
             return CitedAnswerer(_Replay(self.model.model_id, None)).answer(question, hits)
+        if self.config.orchestration != "single":
+            return await self._orchestrated(job_id, question, hits, attempt, timings)
         extractor = AnswerFieldExtractor()
         pending, last_flush = "", time.perf_counter()
         started = time.perf_counter()
@@ -203,6 +211,58 @@ class Worker:
             timings["first_token_ms"] = self.model.last_call["first_token_ms"]
         return CitedAnswerer(_Replay(self.model.model_id, extractor.raw, error)).answer(question, hits)
 
+    async def _orchestrated(self, job_id: str, question: str, hits: list[ContextHit], attempt: int,
+                            timings: dict[str, float]) -> dict[str, Any]:
+        """The generator ReportDesk.ask drives with a blocking model, driven here with the streaming one.
+
+        Only the executor's first answer reaches the reader as a draft. A self-check or a veto can still replace
+        or withdraw it; the ``final`` event says which. A model that cannot be reached at any step makes the whole
+        job transient, and the redelivered job starts the orchestration again from the top.
+        """
+        steps = report_orchestration.flow(self.config.orchestration, question, hits, model_id=self.model.model_id)
+        started = time.perf_counter()
+        call_ms: list[float] = []
+        try:
+            request = next(steps)
+            while True:
+                if not isinstance(request, report_orchestration.ModelCall):
+                    raise Final("ORCHESTRATION_UNSUPPORTED", "this orchestration needs a planned search")
+                began = time.perf_counter()
+                reply = await self._complete(job_id, request, attempt, timings)
+                call_ms.append(round((time.perf_counter() - began) * 1000, 1))
+                request = steps.send(reply)
+        except StopIteration as stop:
+            outcome = report_orchestration.record_timings(stop.value, call_ms)
+        timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
+        return outcome.result
+
+    async def _complete(self, job_id: str, request: Any, attempt: int, timings: dict[str, float]) -> Any:
+        """One model call of an orchestration: the raw text, or the ProviderInvalid that makes the step fail closed."""
+        draft = request.step == "answer"
+        extractor = AnswerFieldExtractor()
+        pending, last_flush = "", time.perf_counter()
+        try:
+            async for delta in self.model.stream(request.messages, request.schema):
+                piece = extractor.feed(delta)
+                if not draft:
+                    continue
+                pending += piece
+                if pending and (time.perf_counter() - last_flush) * 1000 >= self.config.token_flush_ms:
+                    await emit(self.redis, job_id, "token", {"text": pending}, attempt=attempt,
+                               ttl_s=self.config.job_ttl_s)
+                    pending, last_flush = "", time.perf_counter()
+        except ModelUnavailable as exc:
+            raise Transient(f"model unavailable: {exc}") from exc
+        except ProviderInvalid as exc:
+            return exc
+        finally:
+            if draft and pending:
+                await emit(self.redis, job_id, "token", {"text": pending}, attempt=attempt,
+                           ttl_s=self.config.job_ttl_s)
+        if draft and self.model.last_call.get("first_token_ms") is not None:
+            timings["first_token_ms"] = self.model.last_call["first_token_ms"]
+        return extractor.raw
+
     # ------------------------------------------------------------------ delivery
     async def handle(self, message: Any) -> None:
         job = json.loads(message.body)
@@ -213,9 +273,10 @@ class Worker:
         if status in {"done", "failed"}:
             await message.ack()  # duplicate delivery of a finished job
             return
-        if job.get("model") != self.model.model or job.get("prompt_sha256") != prompt_sha256():
+        if (job.get("model") != self.model.model or job.get("prompt_sha256") != prompt_sha256()
+                or job.get("orchestration", "single") != report_orchestration.cache_tag(self.config.orchestration)):
             await self._fail(job, 0, "CONFIG_MISMATCH",
-                             "the job was keyed for another model or prompt than this worker runs")
+                             "the job was keyed for another model, prompt or orchestration than this worker runs")
             await message.reject(requeue=False)  # → desk.ask.dead, for a person to look at
             return
         attempt = await self.redis.hincrby(record, "deliveries", 1)

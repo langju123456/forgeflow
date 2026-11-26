@@ -33,6 +33,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from .. import report_lookup
 from ..cited_answer import prompt_sha256
+from ..report_orchestration import cache_tag
 from . import keys
 from .config import DeskConfig
 from .events import TERMINAL, decode_entry, emit, sse_frame
@@ -66,9 +67,10 @@ class Gateway:
         index_version = _text(await self.redis.get(keys.INDEX_VERSION))
         if not index_version:
             return 503, {"code": "DESK_NOT_READY", "message": "The retrieval server is still loading the reports"}
-        prompt = prompt_sha256()
+        prompt, orchestration = prompt_sha256(), cache_tag(self.config.orchestration)
         key = keys.cache_key(subject=self.config.subject, index_version=index_version, model=self.config.model,
-                             prompt_sha256=prompt, gate=gate, top_k=self.config.top_k, question=question)
+                             prompt_sha256=prompt, gate=gate, top_k=self.config.top_k, question=question,
+                             orchestration=orchestration)
         job_id = uuid.uuid4().hex
         now = time.time()
 
@@ -95,7 +97,7 @@ class Gateway:
 
         job = {"job_id": job_id, "question": question, "gate": bool(gate), "top_k": self.config.top_k,
                "subject": self.config.subject, "model": self.config.model, "prompt_sha256": prompt,
-               "index_version": index_version, "cache_key": key, "enqueued_at": now}
+               "orchestration": orchestration, "index_version": index_version, "cache_key": key, "enqueued_at": now}
         await self.redis.hset(keys.job(job_id), mapping={"status": "queued", "question": question,
                                                          "created_at": now, "cache_key": key})
         await self.redis.expire(keys.job(job_id), self.config.job_ttl_s)
