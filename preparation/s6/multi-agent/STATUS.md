@@ -55,3 +55,7 @@
 
 - single 与 S4 的单次回答（13/28、7/12、自信答错 14）完全一致。
 - 提示词和编排没有改（`pins.json` 未动），下一步直接跑留出题。
+
+## 收件箱
+
+- 2026-11-26：已接入收件箱（mac-bridge `inbox/line5.md`，克隆在 `~/.mac-bridge/work/report-orchestration`）。当时的内容是“目前没有新的决定，照原计划跑完 heldout、按预登记判定并写进 STATUS.md”，与原计划一致，没有新的条目要处理。
