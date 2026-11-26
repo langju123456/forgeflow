@@ -1,0 +1,14 @@
+{
+ "sets": {
+  "dev": {
+   "path": "preparation/s4/real-reports/questions.json",
+   "sha256": "68f83bf6ca3979ce2d2e359d2167b0f4e1ddbbbf81bd60d63233c020dafbec2a"
+  }
+ },
+ "pins_sha256": "8b9cd562db247c5cf72760d2852c850dcc0d0f3415e8ebc7debed84801163341",
+ "llm": "ollama",
+ "embedder": "ollama",
+ "limit": null,
+ "started_at": "2026-11-26T09:16:23.653836+00:00",
+ "git_head": "225b0db76c485c229255fe36798a9b763cac09eb"
+}
