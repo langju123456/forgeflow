@@ -111,3 +111,9 @@
 - 服务日志里有一次推理期间的 Triton JIT 编译（`kernel_unified_attention`），在第一档开始前的冒烟请求之后；第一档 TTFT 的 p95 与 p50 只差约 80 ms，看不出被它拉高。
 - 模型的 `generation_config.json` 覆盖了 vLLM 默认的采样参数（temperature 0.6 等）；输出长度固定为 128，不影响按 token 计的时间。
 - 单机、Kaggle 的 T4、随机构造的提示，不代表正式部署的硬件和真实请求的长度分布。
+
+## 收件箱
+
+决定来自 mac-bridge 仓库的 `inbox/line4.md`，等同于项目负责人本人的回复。
+
+- 2026-11-26：已接入收件箱。
