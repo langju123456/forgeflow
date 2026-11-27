@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "case_id": "annual-report-desk-local-perf-dev",
+  "split": "public-dev",
+  "driver": "real ReportDesk + SQLite + hash-checked public PDFs; in-process lexical calls",
+  "boundary": {
+    "included": [
+      "PDF hash check",
+      "cold/warm parsed-row cache",
+      "SQLite",
+      "lexical retrieval",
+      "ask"
+    ],
+    "excluded": [
+      "Ollama embeddings",
+      "chat generation",
+      "Redis",
+      "RabbitMQ",
+      "gRPC",
+      "HTTP network",
+      "production load"
+    ]
+  },
+  "machine": {
+    "system": "macOS-26.3.1-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "model": null,
+  "model_calls": 0,
+  "external_cost": 0,
+  "sources": [
+    {
+      "key": "moutai_2025_annual_zh",
+      "sha256": "474905deeaf0f875fc0a1b097a626c0c7852c427faadc5d7fc7816cbf45ea288",
+      "bytes": 1082847,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225114741.PDF"
+    },
+    {
+      "key": "catl_2025_annual_zh",
+      "sha256": "c15272977147dee7e6935a38ea0e4fd6855370aabb106f54cfe20f7cf6048ec9",
+      "bytes": 2043710,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-10/1225002214.PDF"
+    },
+    {
+      "key": "tencent_2025_annual_en",
+      "sha256": "2a7547168077c3d9994af673125e77612e8656bc0f17ad189371d7e4088f4e98",
+      "bytes": 3999857,
+      "url": "https://static.www.tencent.com/uploads/2026/04/09/62d786fcf3d3c8cb7e54791ee95439ac.pdf"
+    },
+    {
+      "key": "apple_fy2025_10k_en",
+      "sha256": "3eb270b22acb7d8d8e9c32a43dc221dec3345f8e4bca02755fdbc1ee16c823de",
+      "bytes": 1858048,
+      "url": "https://s2.q4cdn.com/470004039/files/doc_earnings/2025/q4/filing/10K-Q4-2025-as-filed.pdf"
+    }
+  ],
+  "cold_load_ms": 55409.0,
+  "warm_load_ms": 6853.1,
+  "cold_rows": 6425,
+  "warm_rows": 6425,
+  "index_version": "4cde145e02754e26",
+  "queries": {
+    "same_question": {
+      "records": [
+        {
+          "question": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+          "wall_ms": 717.9,
+          "status": "ANSWERED",
+          "found": true,
+          "citation_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "kept_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "answer_sha256": "dfe8b997bbdc8e2d51f0b6381251612fef8530a68d4c6daca5093d8138117102"
+        },
+        {
+          "question": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+          "wall_ms": 704.8,
+          "status": "ANSWERED",
+          "found": true,
+          "citation_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "kept_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "answer_sha256": "dfe8b997bbdc8e2d51f0b6381251612fef8530a68d4c6daca5093d8138117102"
+        },
+        {
+          "question": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+          "wall_ms": 697.0,
+          "status": "ANSWERED",
+          "found": true,
+          "citation_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "kept_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "answer_sha256": "dfe8b997bbdc8e2d51f0b6381251612fef8530a68d4c6daca5093d8138117102"
+        }
+      ],
+      "summary": {
+        "requests": 3,
+        "p50_wall_ms": 704.8,
+        "p95_wall_ms": 717.9,
+        "max_wall_ms": 717.9
+      }
+    },
+    "different_questions": {
+      "records": [
+        {
+          "question": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+          "wall_ms": 709.4,
+          "status": "ANSWERED",
+          "found": true,
+          "citation_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "kept_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "answer_sha256": "dfe8b997bbdc8e2d51f0b6381251612fef8530a68d4c6daca5093d8138117102"
+        },
+        {
+          "question": "贵州茅台 2025 年直销渠道的营业收入是多少？",
+          "wall_ms": 680.5,
+          "status": null,
+          "found": false,
+          "citation_ids": [],
+          "kept_ids": [
+            "apple_fy2025_10k_en#p22-c5",
+            "apple_fy2025_10k_en#p29-c2",
+            "apple_fy2025_10k_en#p29-c3",
+            "apple_fy2025_10k_en#p31-t1",
+            "apple_fy2025_10k_en#p46-c5"
+          ],
+          "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "question": "What was Apple's products gross margin percentage in fiscal 2025?",
+          "wall_ms": 785.0,
+          "status": null,
+          "found": false,
+          "citation_ids": [],
+          "kept_ids": [
+            "apple_fy2025_10k_en#p27-t1",
+            "tencent_2025_annual_en#p14-c1",
+            "apple_fy2025_10k_en#p18-c7",
+            "apple_fy2025_10k_en#p25-c2",
+            "apple_fy2025_10k_en#p27-c1"
+          ],
+          "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "question": "腾讯 2025 年的毛利是多少？",
+          "wall_ms": 761.3,
+          "status": null,
+          "found": false,
+          "citation_ids": [],
+          "kept_ids": [
+            "apple_fy2025_10k_en#p22-c5",
+            "apple_fy2025_10k_en#p29-c2",
+            "apple_fy2025_10k_en#p29-c3",
+            "apple_fy2025_10k_en#p31-t1",
+            "apple_fy2025_10k_en#p46-c5"
+          ],
+          "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "summary": {
+        "requests": 4,
+        "p50_wall_ms": 709.4,
+        "p95_wall_ms": 785.0,
+        "max_wall_ms": 785.0
+      }
+    },
+    "concurrent_in_process": {
+      "workers": 3,
+      "records": [
+        {
+          "question": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+          "wall_ms": 2155.3,
+          "status": "ANSWERED",
+          "found": true,
+          "citation_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "kept_ids": [
+            "catl_2025_annual_zh#p11-t1",
+            "catl_2025_annual_zh#p30-t3"
+          ],
+          "answer_sha256": "dfe8b997bbdc8e2d51f0b6381251612fef8530a68d4c6daca5093d8138117102"
+        },
+        {
+          "question": "贵州茅台 2025 年直销渠道的营业收入是多少？",
+          "wall_ms": 2159.7,
+          "status": null,
+          "found": false,
+          "citation_ids": [],
+          "kept_ids": [
+            "apple_fy2025_10k_en#p22-c5",
+            "apple_fy2025_10k_en#p29-c2",
+            "apple_fy2025_10k_en#p29-c3",
+            "apple_fy2025_10k_en#p31-t1",
+            "apple_fy2025_10k_en#p46-c5"
+          ],
+          "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "question": "What was Apple's products gross margin percentage in fiscal 2025?",
+          "wall_ms": 2161.7,
+          "status": null,
+          "found": false,
+          "citation_ids": [],
+          "kept_ids": [
+            "apple_fy2025_10k_en#p27-t1",
+            "tencent_2025_annual_en#p14-c1",
+            "apple_fy2025_10k_en#p18-c7",
+            "apple_fy2025_10k_en#p25-c2",
+            "apple_fy2025_10k_en#p27-c1"
+          ],
+          "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "summary": {
+        "requests": 3,
+        "p50_wall_ms": 2159.7,
+        "p95_wall_ms": 2161.7,
+        "max_wall_ms": 2161.7
+      }
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+ "set": "s6-confirm-annual-reports-v1",
+ "reviewer": "模型（非人工）",
+ "how": "答案页由模型逐题对照 PDF 原页文字核对，不是人工核对：有答案题打开 gold 页确认答案的数、标签、期间列和单位，并全文查找同一事实印在别处的页（含换了单位的写法）；无答案题全文查找相关词，确认没有写出题目问的那个数",
+ "exported_at": "2026-11-26T14:30:17.445564+00:00",
+ "items": {
+  "MH07": {
+   "status": "verified",
+   "note": "核对通过。依据：p.12 研发投入情况表（单位：元）「本期费用化研发投入 674,657,764.92 / 本期资本化研发投入 128,474,467.39 / 研发投入合计 803,132,232.31」；p.118 附注研发支出「合计 803,132,232.31 695,376,735.81」（2025年度列）",
+   "proposal": "349d61f74aa05fc8"
+  },
+  "MH08": {
+   "status": "verified",
+   "note": "核对通过。依据：p.6 主要会计数据「利润总额 114,755,261,605.08 119,638,578,194.46 -4.08 103,662,553,689.81」（2025年列）；p.62 合并利润表利润总额行「114,755,261,605.08 119,638,578,194.46」；p.112 所得税费用附注「利润总额 114,755,261,605.08」",
+   "proposal": "c63643929ce80092"
+  },
+  "MH09": {
+   "status": "verified",
+   "note": "核对通过。依据：p.65 合并现金流量表（2025年度列，单位：元）「支付给职工及为职工支付的 / 15,473,458,699.70 15,352,541,000.17 / 现金」。p.66 的 14,594,804,905.52 是母公司现金流量表，不算。这一条在留出题初标时没定位到，确认题前按原页改写了匹配规则（标签跨两行）",
+   "proposal": "cf358ee88586a8a9"
+  },
+  "MH51": {
+   "status": "verified",
+   "note": "核对通过。依据：p.6 主要会计数据「归属于上市公司股东的扣除非 / 82,293,107,655.25 86,240,905,977.42 -4.58 74,752,564,425.52 / 经常性损益的净利润」（2025年列）。p.7 是分季度数（26,849,883,702.90 等），不算",
+   "proposal": "b92c9cb019740d4f"
+  },
+  "MH52": {
+   "status": "verified",
+   "note": "核对通过。依据：p.61 合并利润表（2025年度列，单位：元）「其中：营业成本 44 14,892,277,570.91 13,789,482,367.98」；p.9 科目变动表「营业成本 14,892,277,570.91 13,789,482,367.98 8.00」；p.107 附注 44「合计 168,838,102,514.79 14,892,277,570.91 …」（营业成本列）",
+   "proposal": "a3439744bf0675e5"
+  },
+  "MH23": {
+   "status": "verified",
+   "note": "核对通过。依据：p.6「经营活动产生的现金流量净额 61,522,204,989.35 92,463,692,168.43 -33.46 66,593,247,721.09」（2025年列）；p.9 科目变动表同一数；p.65 合并现金流量表、p.115 附注同一数",
+   "proposal": "2f62b3a9d91ba295"
+  },
+  "MH24": {
+   "status": "verified",
+   "note": "核对通过。依据：p.62 合并利润表「减：所得税费用 58 29,444,936,771.41 30,303,850,168.56」（2025年度列）；p.111 附注 58「合计 29,444,936,771.41」；p.112「所得税费用 29,444,936,771.41」。p.63 的 12,295,314,327.43 是母公司利润表，不算",
+   "proposal": "9f8bec3918e6979e"
+  },
+  "MH33": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文“1935”只出现 1 次：p.16 产品情况表「其他系列酒 57,650.57 … 2,227,467.87 -9.76」的说明里列了茅台1935酒，收入只有“其他系列酒”合计；没有 1935 单品的收入",
+   "proposal": "4430f6723f1b8ff1"
+  },
+  "MH34": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文没有“日本”；分地区只有国内、国外；没有日本市场的收入",
+   "proposal": "9c79b161d6a113fe"
+  },
+  "MH42": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文查“市场份额、市场占有率、市占率、份额、占有率”：只有会计政策里的“公允价值份额”等用语；没有白酒市场份额的数字",
+   "proposal": "fc5d496bb5341a3b"
+  },
+  "CH08": {
+   "status": "verified",
+   "note": "核对通过。依据：p.11 主要会计数据（单位：千元，2025年末列）「资产总额 974,827,544 786,658,123 23.92% 717,168,041」；p.112 合并资产负债表「资产总计 974,827,544 786,658,123」；p.113「负债和所有者权益总计 974,827,544」",
+   "proposal": "e350ff2d927872b1"
+  },
+  "CH09": {
+   "status": "verified",
+   "note": "核对通过。依据：p.28 费用表（单位：千元）「销售费用 3,735,118 3,562,797 4.84%」（2025年列）；p.116 合并利润表「销售费用 3,735,118 3,562,797」；p.196 附注「合计 3,735,118 3,562,797」。p.118 的 2,861,766 是母公司利润表，不算",
+   "proposal": "50c9f23b0ce0724c"
+  },
+  "CH01": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 232。依据：p.11「基本每股收益（元/ / 16.14 11.58 39.38% 10.06 / 股）」（2025年列）；p.118 合并利润表「（一）基本每股收益 16.14 11.58」；p.232 补充资料「归属于公司普通股股东的净利润 24.91 16.14 16.14」（基本每股收益列）。这一条在留出题初标时没定位到，按原页改写了匹配规则",
+   "proposal": "ecb36b3ed8e4cd54"
+  },
+  "CH02": {
+   "status": "verified",
+   "note": "核对通过。依据：p.11 主要会计数据（单位：千元）「归属于上市公司股东 / 的扣除非经常性损益 64,507,864 44,992,919 43.37% 40,091,674 / 的净利润」（2025年列）。p.12 是分季度数；p.106 债券一节的「扣除非经常性损益后净利润 67,912,207」口径不同（不限于归属于上市公司股东），不算。按原页改写了匹配规则",
+   "proposal": "7547cb3944fd7366"
+  },
+  "CH51": {
+   "status": "verified",
+   "note": "核对通过。依据：p.31 资产构成表（单位：千元，2025年末金额列）「存货 94,526,239 9.70% 59,835,533 7.61% 2.09%」；p.111 合并资产负债表「存货 94,526,239 59,835,533」；p.172 附注「合计 102,242,688 7,716,449 94,526,239 …」（账面价值列）。p.114 的 45,233,246 是母公司资产负债表，不算",
+   "proposal": "165e465949c39312"
+  },
+  "CH21": {
+   "status": "verified",
+   "note": "核对通过。依据：p.11（单位：千元，2025年末列）「归属于上市公司股东 / 337,107,747 246,930,033 36.52% 197,708,052 / 的净资产」；p.113「归属于母公司所有者权益合计 337,107,747」；p.125 所有者权益变动表期末余额同一数。按原页改写了匹配规则（标签跨三行）",
+   "proposal": "07f2af556633e2d2"
+  },
+  "CH22": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 232。依据：p.11「加权平均净资产收益 / 24.91% 24.13% 0.78% 24.04% / 率」（2025年列）；p.232 补充资料「归属于公司普通股股东的净利润 24.91 16.14 16.14」（加权平均净资产收益率（%）列）。p.208 的 24.91% 是一家联营企业的持股比例，不算。按原页改写了匹配规则",
+   "proposal": "14b1e61f0ec7ab36"
+  },
+  "CH33": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文没有“单位成本、每GWh、元/Wh”一类写法；只有营业成本合计和产销量（p.26-27），没有每 GWh 的生产成本",
+   "proposal": "b065aa570fce8e34"
+  },
+  "CH34": {
+   "status": "verified",
+   "note": "核对通过（无答案）。“德国”出现 6 处，都是子公司名称和募投项目“德国图林根项目”（p.103）；p.26 产销表只有电池系统合计「产能 772 … 产量 748」（GWh），不按工厂拆分",
+   "proposal": "3a9d2952adab8ccd"
+  },
+  "CH42": {
+   "status": "verified",
+   "note": "核对通过（无答案）。“美国”只出现在子公司名称里（p.86、p.160）；分地区只有境内、境外（p.25）；没有美国市场的收入",
+   "proposal": "7102a184b8fee4c1"
+  },
+  "TH14": {
+   "status": "verified",
+   "note": "核对通过。依据：p.8 MD&A 年度表（YEAR ENDED 31 DECEMBER 2025 COMPARED TO … 2024，RMB in millions）「Cost of revenues (329,173) (311,011)」；p.130 合并利润表「Cost of revenues 7 (329,173) (311,011)」。p.12、p.16 的 86,082 是第四季度，不算。留出题初标时按讨论段落的句式没定位到，按原页改写为表格行",
+   "proposal": "c00fc07e20431566"
+  },
+  "TH51": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 4、19。依据：p.8「Operating profit 241,562 208,099」（2025 2024）；p.130 合并利润表同一行；p.22 非 IFRS 调节表「Operating profit 241,562 … 280,656」；p.4 五年摘要「Operating profit 124,656 110,827 160,074 208,099 241,562」（2025 列）；p.19 EBITDA 调节表 Year ended 31 December 2025 列 241,562。其余页的 60,338 等是季度数",
+   "proposal": "d8f28d6acc92befe"
+  },
+  "TH52": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 18、264 和写法 107,145（百万元）。依据：p.25「As at 31 December 2025, the Group had net cash of RMB107.1 billion」，同页表「Net cash 107,145 102,422」（RMB in millions）；p.18「Net cash (c) 107,145 …」；p.264 附注「Net cash as at 31 December 2025 … 107,145」",
+   "proposal": "cd27883b2473f34b"
+  },
+  "TH53": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 4。依据：p.8「Profit before income tax 277,249 241,485」；p.130 合并利润表、p.205 附注 12 同一数；p.4 五年摘要 2025 列 277,249。p.12、p.16 的 71,684 是季度数",
+   "proposal": "9c29b1923d2f9506"
+  },
+  "TH54": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 11、202。依据：p.8「Finance costs (15,130) (11,981)」；p.130「Finance costs 11 (15,130) (11,981)」；p.11「Finance costs were RMB15.1 billion for the year ended 31 December 2025」；p.202 附注 11 合计「15,130 11,981」。p.12、p.16 的 3,573 是季度数",
+   "proposal": "be2eb3fde8422b4c"
+  },
+  "TH23": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 4、8、130、194 和写法 422,593（百万元）。依据：p.10「Gross profit rose by 21% year-on-year to RMB422.6 billion for the year ended 31 December 2025」；p.8「Gross profit 422,593 349,246」；p.130 合并利润表同一数；p.4 五年摘要 2025 列；p.194 分部附注合计列 422,593",
+   "proposal": "38eca13319ba0459"
+  },
+  "TH24": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 8、130 和写法 41,727（百万元）。依据：p.11「Selling and marketing expenses grew by 15% year-on-year to RMB41.7 billion for the year ended 31 December 2025」；p.8「Selling and marketing expenses (41,727) (36,388)」；p.130 合并利润表同一数",
+   "proposal": "a799affa533b4e97"
+  },
+  "TH33": {
+   "status": "verified",
+   "note": "核对通过（无答案）。“Video Accounts”出现 9 处（p.6、9、10、13、14、17），都是增长来源的说明（直播收入、广告），没有视频号单独的收入",
+   "proposal": "f6b1429a084d6bde"
+  },
+  "TH34": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文没有“GPU”“chips”；p.25 只有资本开支合计（第四季度 RMB22.4 billion，“primarily to support our AI efforts”），不按项目拆分",
+   "proposal": "09d9ac0976ae047f"
+  },
+  "TH42": {
+   "status": "verified",
+   "note": "核对通过（无答案）。全文没有“Tencent Meeting”或“VooV”（草稿“预期”一栏写的“提到产品”不准确：产品没有出现），也没有它的收入",
+   "proposal": "36ce7a57b3d0d762"
+  },
+  "AH06": {
+   "status": "verified",
+   "note": "核对通过。依据：p.28「Effective tax rate 15.6% 24.1% 14.7%」（2025 2024 2023）；p.44 附注同一行",
+   "proposal": "83a22b7cfebc4ad6"
+  },
+  "AH07": {
+   "status": "verified",
+   "note": "核对通过。依据：p.27「Total gross margin percentage 46.9% 46.2% 44.1%」（2025 2024 2023）",
+   "proposal": "7b3703b6fc7cbfd7"
+  },
+  "AH08": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 50。依据：p.25 分部表（dollars in millions）「Rest of Asia Pacific 33,696 10 % 30,658 4 % 29,615」（2025 列）；p.50 附注 13 分部表 2025「Net sales … $ 33,696 …」（Rest of Asia Pacific 列）",
+   "proposal": "9547c892f2fdfc84"
+  },
+  "AH09": {
+   "status": "verified",
+   "note": "核对通过。依据：p.35 股东权益表「Dividends and dividend equivalents declared per share or RSU $ 1.02 $ 0.98 $ 0.94」（2025 2024 2023）",
+   "proposal": "8eec3cf7c064ed8c"
+  },
+  "AH51": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 50。依据：p.32 合并经营表「Operating income 133,050 123,216 114,301」（2025 2024 2023）；p.50 附注 13「Operating income/(loss) … $ 133,050」（Total 列）",
+   "proposal": "931db76feaa2fa7c"
+  },
+  "AH23": {
+   "status": "verified",
+   "note": "核对通过。依据：p.27「Selling, general and administrative $ 27,601 6 % $ 26,097 …」（2025 列）；p.32 合并经营表「Selling, general and administrative 27,601 26,097 24,932」",
+   "proposal": "45905fad0aceb9b8"
+  },
+  "AH24": {
+   "status": "verified",
+   "note": "核对通过，补 gold 页 50。依据：p.25「Japan 28,703 15 % 25,052 3 % 24,257」（2025 列）；p.50 附注 13 分部表 2025「Net sales … $ 28,703 …」（Japan 列）",
+   "proposal": "8d520df3119716af"
+  },
+  "AH33": {
+   "status": "verified",
+   "note": "核对通过（无答案）。“active devices”只出现在 p.6、p.10 的竞争风险描述里（竞争对手的 installed bases）；没有苹果活跃设备数",
+   "proposal": "d19999769ff0a74d"
+  },
+  "AH34": {
+   "status": "verified",
+   "note": "核对通过（无答案）。“App Store”出现 10 处，p.26「Services net sales increased … primarily due to higher net sales from advertising, the App Store and cloud services」不给数；App Store 收入并在 Services 里",
+   "proposal": "e2e8a4b29729cd6f"
+  },
+  "AH42": {
+   "status": "verified",
+   "note": "核对通过（无答案）。Apple Music 只在 p.5 服务介绍里出现，“subscriptions”在 p.13 是一般描述；没有订阅用户数",
+   "proposal": "6152cf7178b7f81d"
+  }
+ }
+}

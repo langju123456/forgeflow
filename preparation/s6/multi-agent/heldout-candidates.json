@@ -1,0 +1,3052 @@
+{
+ "note": "Every candidate and what the script found for it; the draft takes the first located ones per report.",
+ "chosen": [
+  "MH01",
+  "MH02",
+  "MH03",
+  "MH04",
+  "MH05",
+  "MH21",
+  "MH22",
+  "MH31",
+  "MH32",
+  "MH41",
+  "CH03",
+  "CH04",
+  "CH05",
+  "CH06",
+  "CH07",
+  "CH23",
+  "CH24",
+  "CH31",
+  "CH32",
+  "CH41",
+  "TH02",
+  "TH13",
+  "TH15",
+  "TH09",
+  "TH11",
+  "TH21",
+  "TH22",
+  "TH31",
+  "TH32",
+  "TH41",
+  "AH01",
+  "AH02",
+  "AH03",
+  "AH04",
+  "AH05",
+  "AH21",
+  "AH22",
+  "AH31",
+  "AH32",
+  "AH41"
+ ],
+ "excluded": [],
+ "short": [],
+ "candidates": [
+  {
+   "id": "MH01",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年归属于上市公司股东的净利润是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    6,
+    68
+   ],
+   "answer": "82,320,067,101.68（见 p.6：归属于上市公司股东的净利润 82,320,067,101.68 86,228,146,421.62 -4.53 74,734,071,550.75）",
+   "accept": [
+    "82,320,067,101.68",
+    "823.20亿",
+    "823.2亿",
+    "823亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 6,
+     "line": "归属于上市公司股东的净利润 82,320,067,101.68 86,228,146,421.62 -4.53 74,734,071,550.75",
+     "box": [
+      85.8,
+      292.2,
+      535.4,
+      302.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 68,
+     "line": "（一）综合收益总额 4,137,381.07 82,320,067,101.68 82,324,204,482.75 2,986,046,223.26 85,310,250,706.01",
+     "box": [
+      41.9,
+      257.0,
+      804.1,
+      262.5
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH02",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "截至 2025 年末，贵州茅台归属于上市公司股东的净资产是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    6,
+    58,
+    68
+   ],
+   "answer": "244,637,811,032.18（见 p.6：归属于上市公司股东的净资产 244,637,811,032.18 233,105,984,399.47 4.95 215,668,571,607.43）",
+   "accept": [
+    "244,637,811,032.18",
+    "2446.38亿",
+    "2446.4亿",
+    "2446亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 6,
+     "line": "归属于上市公司股东的净资产 244,637,811,032.18 233,105,984,399.47 4.95 215,668,571,607.43",
+     "box": [
+      85.8,
+      404.4,
+      535.4,
+      414.6
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 58,
+     "line": "归属于母公司所有者权益 244,637,811,032.18 233,105,984,399.47",
+     "box": [
+      100.3,
+      753.8,
+      530.8,
+      764.2
+     ],
+     "why": "同一数字在别处又印了一次"
+    },
+    {
+     "page": 68,
+     "line": "四、本期期末余额 1,252,270,215.00 1,577,095.18 120,112,601.53 -5,778,843.62 50,543,176,610.94 1,061,529,724.00 191,905,148,832.21 244,637,811,032.18 9,321,442,876.89 253,959,253,909.07",
+     "box": [
+      41.9,
+      489.1,
+      804.1,
+      494.6
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH03",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "2025 年贵州茅台其他系列酒实现营业收入多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    10,
+    18,
+    107
+   ],
+   "answer": "22,274,678,707.16（见 p.10：其他系列酒 22,274,678,707.16 5,321,142,314.05 76.11 -9.76 7.11）",
+   "accept": [
+    "22,274,678,707.16",
+    "222.75亿",
+    "222.7亿",
+    "223亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 10,
+     "line": "其他系列酒 22,274,678,707.16 5,321,142,314.05 76.11 -9.76 7.11",
+     "box": [
+      89.9,
+      419.0,
+      469.8,
+      426.5
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 18,
+     "line": "其他系列酒 22,274,678,707.16 -9.76 5,321,142,314.05 7.11 76.11 -3.76",
+     "box": [
+      89.9,
+      161.9,
+      531.4,
+      170.9
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 107,
+     "line": "其他系列酒 22,274,678,707.16 5,321,142,314.05",
+     "box": [
+      110.9,
+      556.5,
+      503.7,
+      567.0
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 16,
+     "value": "57,650.57",
+     "line": "其他系列酒 57,650.57 19.82 38,353.48 3.88 2,227,467.87 -9.76 台1935酒、汉"
+    },
+    {
+     "page": 141,
+     "value": "12,955,598,073.52",
+     "line": "系列酒 12,955,598,073.52 6,005,865,954.37"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "MH04",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年合并利润表里的销售费用是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    9,
+    61,
+    108
+   ],
+   "answer": "7,253,499,600.68（见 p.9：销售费用 7,253,499,600.68 5,639,300,059.49 28.62）",
+   "accept": [
+    "7,253,499,600.68",
+    "72.53亿",
+    "72.5亿",
+    "73亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 9,
+     "line": "销售费用 7,253,499,600.68 5,639,300,059.49 28.62",
+     "box": [
+      89.9,
+      582.1,
+      531.3,
+      592.5
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 61,
+     "line": "销售费用 47 7,253,499,600.68 5,639,300,059.49",
+     "box": [
+      121.3,
+      486.1,
+      531.4,
+      496.5
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 108,
+     "line": "合计 7,253,499,600.68 5,639,300,059.49",
+     "box": [
+      157.2,
+      695.0,
+      531.3,
+      705.4
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 63,
+     "value": "1,389,083,642.88",
+     "line": "销售费用 1,389,083,642.88 1,058,054,238.44"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "MH05",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年合并利润表里的税金及附加是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    61,
+    108
+   ],
+   "answer": "27,354,227,684.88（见 p.61：税金及附加 46 27,354,227,684.88 26,926,161,474.99）",
+   "accept": [
+    "27,354,227,684.88",
+    "273.54亿",
+    "273.5亿",
+    "274亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 61,
+     "line": "税金及附加 46 27,354,227,684.88 26,926,161,474.99",
+     "box": [
+      121.3,
+      471.9,
+      531.3,
+      482.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 108,
+     "line": "合计 27,354,227,684.88 26,926,161,474.99",
+     "box": [
+      146.4,
+      543.7,
+      531.2,
+      554.1
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 63,
+     "value": "26,122,663,643.16",
+     "line": "税金及附加 26,122,663,643.16 25,613,805,416.04"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "MH07",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年研发投入合计是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    12,
+    118
+   ],
+   "answer": "803,132,232.31（见 p.12：研发投入合计 803,132,232.31）",
+   "accept": [
+    "803,132,232.31",
+    "8.03亿",
+    "8亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 12,
+     "line": "研发投入合计 803,132,232.31",
+     "box": [
+      89.9,
+      405.9,
+      531.3,
+      416.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 118,
+     "line": "合计 803,132,232.31 695,376,735.81",
+     "box": [
+      174.0,
+      352.0,
+      531.3,
+      362.5
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH08",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年的利润总额是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    6,
+    112
+   ],
+   "answer": "114,755,261,605.08（见 p.6：利润总额 114,755,261,605.08 119,638,578,194.46 -4.08 103,662,553,689.81）",
+   "accept": [
+    "114,755,261,605.08",
+    "1147.55亿",
+    "1147.6亿",
+    "1148亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 6,
+     "line": "利润总额 114,755,261,605.08 119,638,578,194.46 -4.08 103,662,553,689.81",
+     "box": [
+      85.8,
+      277.4,
+      535.5,
+      287.6
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 112,
+     "line": "利润总额 114,755,261,605.08",
+     "box": [
+      89.9,
+      140.1,
+      531.3,
+      150.6
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH09",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "贵州茅台 2025 年支付给职工及为职工支付的现金是多少？",
+   "cross_language": false,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "MH06",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "2025 年茅台酒基酒的设计产能是多少吨？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    15
+   ],
+   "answer": "46,395.00（见 p.15：说明：（1）2025年茅台酒基酒设计产能为46,395.00吨，同比新增基酒产能1,800.00吨，）",
+   "accept": [
+    "46,395.00"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 15,
+     "line": "说明：（1）2025年茅台酒基酒设计产能为46,395.00吨，同比新增基酒产能1,800.00吨，",
+     "box": [
+      110.9,
+      415.9,
+      533.4,
+      426.3
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 15,
+     "line": "茅台酒制酒车间 46,395.00 58,473.16",
+     "box": [
+      89.9,
+      387.7,
+      531.3,
+      398.1
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": "这一行最早是在 S4 运行报告留下的检索片段里见到的，对检索偏容易；排在本组最后，前面的候选不够时才用"
+  },
+  {
+   "id": "MH21",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Kweichow Moutai's total assets at the end of 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    6,
+    57
+   ],
+   "answer": "303,834,844,021.44（见 p.6：总资产 303,834,844,021.44 298,944,579,918.70 1.64 272,699,660,092.25）",
+   "accept": [
+    "303,834,844,021.44",
+    "3038.35亿",
+    "3038.3亿",
+    "3038亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 6,
+     "line": "总资产 303,834,844,021.44 298,944,579,918.70 1.64 272,699,660,092.25",
+     "box": [
+      85.8,
+      419.1,
+      535.4,
+      428.1
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 57,
+     "line": "资产总计 303,834,844,021.44 298,944,579,918.70",
+     "box": [
+      121.3,
+      681.9,
+      530.8,
+      692.4
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH22",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Kweichow Moutai's weighted average return on net assets for 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    6
+   ],
+   "answer": "32.53（见 p.6：加权平均净资产收益率（%） 32.53 36.02 减少3.49个百分点 34.19）",
+   "accept": [
+    "32.53"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 6,
+     "line": "加权平均净资产收益率（%） 32.53 36.02 减少3.49个百分点 34.19",
+     "box": [
+      89.9,
+      569.5,
+      531.3,
+      579.9
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH23",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Kweichow Moutai's net cash flow from operating activities in 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    6,
+    115
+   ],
+   "answer": "61,522,204,989.35（见 p.6：经营活动产生的现金流量净额 61,522,204,989.35 92,463,692,168.43 -33.46 66,593,247,721.09）",
+   "accept": [
+    "61,522,204,989.35",
+    "615.22亿",
+    "615.2亿",
+    "615亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 6,
+     "line": "经营活动产生的现金流量净额 61,522,204,989.35 92,463,692,168.43 -33.46 66,593,247,721.09",
+     "box": [
+      85.8,
+      331.9,
+      535.4,
+      340.9
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 115,
+     "line": "经营活动产生的现金流量净额 61,522,204,989.35 92,463,692,168.43",
+     "box": [
+      89.9,
+      469.5,
+      531.3,
+      480.0
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "MH24",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Kweichow Moutai's income tax expense for 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    62,
+    111,
+    112
+   ],
+   "answer": "29,444,936,771.41（见 p.62：减：所得税费用 58 29,444,936,771.41 30,303,850,168.56）",
+   "accept": [
+    "29,444,936,771.41",
+    "294.45亿",
+    "294.4亿",
+    "294亿"
+   ],
+   "unit": "元",
+   "evidence": [
+    {
+     "page": 62,
+     "line": "减：所得税费用 58 29,444,936,771.41 30,303,850,168.56",
+     "box": [
+      100.3,
+      218.0,
+      531.3,
+      228.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 112,
+     "line": "所得税费用 29,444,936,771.41",
+     "box": [
+      89.9,
+      282.2,
+      531.3,
+      292.6
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 111,
+     "line": "合计 29,444,936,771.41 30,303,850,168.56",
+     "box": [
+      153.8,
+      755.8,
+      530.9,
+      766.3
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 63,
+     "value": "12,295,314,327.43",
+     "line": "减：所得税费用 12,295,314,327.43 11,778,037,547.21"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "MH31",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "贵州茅台 2025 年茅台酒的平均吨酒价格是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "披露茅台酒的收入和销量，不给每吨价格",
+   "searched": [
+    "吨价",
+    "吨酒价",
+    "均价",
+    "平均售价"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "MH32",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "2025 年贵州茅台第一大客户的销售额是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "只披露前五名客户销售额合计和占比",
+   "searched": [
+    "前五名客户",
+    "第一名",
+    "最大客户"
+   ],
+   "mentions": 1,
+   "evidence": [
+    {
+     "page": 11,
+     "term": "前五名客户",
+     "line": "前五名客户销售额1,704,578.78万元，占年度销售总额10.10%；其中前五名客户销售额中关联方"
+    }
+   ]
+  },
+  {
+   "id": "MH33",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "茅台 1935 这一款产品 2025 年的销售收入是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "系列酒只有合计，不按单品拆分",
+   "searched": [
+    "1935"
+   ],
+   "mentions": 1,
+   "evidence": [
+    {
+     "page": 16,
+     "term": "1935",
+     "line": "其他系列酒 57,650.57 19.82 38,353.48 3.88 2,227,467.87 -9.76 台1935酒、汉"
+    }
+   ]
+  },
+  {
+   "id": "MH34",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "2025 年贵州茅台在日本市场的销售收入是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "只披露“国外”合计，不按国家拆分",
+   "searched": [
+    "日本"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "MH41",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "absent",
+   "query": "How many bottles of Feitian Moutai were sold in 2025?",
+   "cross_language": true,
+   "located": true,
+   "near": "产销量按吨披露，没有按瓶的数量",
+   "searched": [
+    "飞天",
+    "瓶"
+   ],
+   "mentions": 30,
+   "evidence": [
+    {
+     "page": 39,
+     "term": "瓶",
+     "line": "珠海经济特区龙狮瓶盖有限公司 其他 购买商品 购买商品 应商的供货价格相同 358,017,678.79 8.45 现金支付"
+    },
+    {
+     "page": 40,
+     "term": "飞天",
+     "line": "贵州双龙飞天供应链管理有限公司 其他 接受劳务 管理费 协议价 83,650,536.71 6.89 现金支付"
+    },
+    {
+     "page": 42,
+     "term": "瓶",
+     "line": "珠海经济特区龙狮瓶盖有限公司 其他 63,649,938.55 698,356,691.84 656,151,933.56 105,854,696.83"
+    },
+    {
+     "page": 42,
+     "term": "飞天",
+     "line": "贵州双龙飞天供应链管理有限公司 其他 5,044,121.66 84,029,205.70 25,895,601.37 63,177,725.99"
+    },
+    {
+     "page": 42,
+     "term": "瓶",
+     "line": "贵州仁怀龙狮瓶盖有限公司 其他 8,283,575.67 19,058,392.87 19,964,758.73 7,377,209.81"
+    },
+    {
+     "page": 43,
+     "term": "瓶",
+     "line": "珠海经济特区龙狮瓶盖有限公司 613,278.31"
+    },
+    {
+     "page": 43,
+     "term": "飞天",
+     "line": "贵州双龙飞天供应链管理有限公司 129,112.02"
+    },
+    {
+     "page": 43,
+     "term": "瓶",
+     "line": "贵州仁怀龙狮瓶盖有限公司 75,711.12"
+    },
+    {
+     "page": 126,
+     "term": "瓶",
+     "line": "珠海经济特区龙狮瓶盖有限公司 其他"
+    },
+    {
+     "page": 126,
+     "term": "飞天",
+     "line": "贵州双龙飞天供应链管理有限公司 其他"
+    }
+   ]
+  },
+  {
+   "id": "MH42",
+   "doc": "moutai_2025_annual_zh",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What was Kweichow Moutai's share of China's baijiu market in 2025?",
+   "cross_language": true,
+   "located": true,
+   "near": "谈行业地位，不给市场份额数字",
+   "searched": [
+    "市场份额",
+    "市场占有率",
+    "市占率"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "CH01",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年基本每股收益是多少？",
+   "cross_language": false,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "CH02",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年归属于上市公司股东的扣除非经常性损益的净利润是多少？",
+   "cross_language": false,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "CH03",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年境外营业收入是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    25
+   ],
+   "answer": "129,641,258（见 p.25：境外 129,641,258 30.60% 110,335,509 30.48% 17.50%）",
+   "accept": [
+    "129,641,258",
+    "1296.41亿",
+    "1296.4亿",
+    "1296亿",
+    "129.6 billion",
+    "129.64 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "境外 129,641,258 30.60% 110,335,509 30.48% 17.50%",
+     "box": [
+      62.3,
+      145.6,
+      533.3,
+      155.3
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 25,
+     "line": "境外 129,641,258 88,885,412 31.44% 17.50% 14.19% 1.99%",
+     "box": [
+      62.3,
+      635.2,
+      533.2,
+      644.9
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 25,
+     "line": "报告期内，公司销售境外的主要产品为电池系统，较上年同期相比未发生明显变化。公司境外收入129,641,258千元，占本",
+     "box": [
+      56.6,
+      251.9,
+      537.8,
+      261.6
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 179,
+     "value": "10,902,548",
+     "line": "境外 10,902,548 12,081 10,890,467 11,030,017 11,030,017"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "CH04",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年研发投入占营业收入的比例是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    30
+   ],
+   "answer": "5.23（见 p.30：研发投入占营业收入比例 5.23% 5.14% 4.58%）",
+   "accept": [
+    "5.23"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 30,
+     "line": "研发投入占营业收入比例 5.23% 5.14% 4.58%",
+     "box": [
+      62.3,
+      241.6,
+      533.0,
+      251.3
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "CH05",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年动力电池系统实现营业收入多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    24,
+    25,
+    195
+   ],
+   "answer": "316,506,369（见 p.24：动力电池系统 316,506,369 74.70% 253,041,337 69.90% 25.08%）",
+   "accept": [
+    "316,506,369",
+    "3165.06亿",
+    "3165.1亿",
+    "3165亿",
+    "316.5 billion",
+    "316.51 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 24,
+     "line": "动力电池系统 316,506,369 74.70% 253,041,337 69.90% 25.08%",
+     "box": [
+      62.3,
+      707.7,
+      533.3,
+      717.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 25,
+     "line": "动力电池系统 316,506,369 241,064,397 23.84% 25.08% 25.25% -0.10%",
+     "box": [
+      62.3,
+      531.6,
+      533.2,
+      541.3
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 195,
+     "line": "动力电池系统 316,506,369 241,064,397 316,506,369 241,064,397",
+     "box": [
+      62.3,
+      408.7,
+      533.1,
+      418.4
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "CH06",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年储能电池系统实现营业收入多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    24,
+    25
+   ],
+   "answer": "62,439,820（见 p.24：储能电池系统 62,439,820 14.74% 57,290,460 15.83% 8.99%）",
+   "accept": [
+    "62,439,820",
+    "624.40亿",
+    "624.4亿",
+    "624亿",
+    "62.4 billion",
+    "62.44 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 24,
+     "line": "储能电池系统 62,439,820 14.74% 57,290,460 15.83% 8.99%",
+     "box": [
+      62.3,
+      724.8,
+      533.2,
+      734.5
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 25,
+     "line": "储能电池系统 62,439,820 45,763,689 26.71% 8.99% 9.18% -0.13%",
+     "box": [
+      62.3,
+      548.9,
+      533.2,
+      558.6
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "CH07",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年度利润分配预案是每 10 股派发现金分红多少元？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    6,
+    59,
+    221
+   ],
+   "answer": "69.57（见 p.6：东每10股派发现金分红69.57元（含税）。2025年度，公司不实施资本公积金转增股本，不送红股。本次）",
+   "accept": [
+    "69.57"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 6,
+     "line": "东每10股派发现金分红69.57元（含税）。2025年度，公司不实施资本公积金转增股本，不送红股。本次",
+     "box": [
+      56.6,
+      165.2,
+      538.7,
+      176.5
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 59,
+     "line": "股本4,563,868,956股剔除A股回购专用账户中已回购股份31,982,306股）为基数，向全体股东每10股派发现金 分红 69.57元（含税，保留到小数点后两位，最后一位直接截取，不四舍五入，简称“现金分红分配比例”）。本",
+     "box": [
+      77.7,
+      276.2,
+      517.9,
+      297.6
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 221,
+     "line": "股回购专用账户中已回购股份31,982,306股）为基数，向全体股东每10股派发现金分红 69.57元（含税），合计派发31,532,206,318.17元。本次现金分红以人民币计值和宣布，",
+     "box": [
+      189.7,
+      255.8,
+      533.1,
+      277.5
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 41,
+     "value": "12.30",
+     "line": "股东每 10股派发现金分红 12.30元（含税），合计派发现金分红金额达 53.97亿元；（2）2024年度利润分"
+    },
+    {
+     "page": 41,
+     "value": "45.53",
+     "line": "配方案，向全体股东每 10 股派发现金分红 45.53 元（含税），合计派发现金分红金额 199.76 亿元；（3）"
+    },
+    {
+     "page": 41,
+     "value": "10.07",
+     "line": "2025年中期分红方案，向全体股东每10股派发现金分红10.07元（含税），合计派发现金分红金额达45.68"
+    },
+    {
+     "page": 57,
+     "value": "45.53",
+     "line": "基数，向全体股东每10股派发现金分红45.53元（含税）。"
+    },
+    {
+     "page": 58,
+     "value": "10.07",
+     "line": "方案，向全体股东每 10 股派发现金分红人民币 10.07 元（含税）。本次现金分红以人民币计值和宣"
+    },
+    {
+     "page": 58,
+     "value": "10.07",
+     "line": "股后的股本4,536,677,821股为基数，向全体股东每10股派发现金分红人民币10.07元（含税）。"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "CH08",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "截至 2025 年末，宁德时代的总资产是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    11,
+    112,
+    113
+   ],
+   "answer": "974,827,544（见 p.11：资产总额 974,827,544 786,658,123 23.92% 717,168,041）",
+   "accept": [
+    "974,827,544",
+    "9748.28亿",
+    "9748.3亿",
+    "9748亿",
+    "974.8 billion",
+    "974.83 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 11,
+     "line": "资产总额 974,827,544 786,658,123 23.92% 717,168,041",
+     "box": [
+      62.3,
+      568.0,
+      533.0,
+      577.7
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 112,
+     "line": "资产总计 974,827,544 786,658,123",
+     "box": [
+      62.3,
+      352.7,
+      533.0,
+      362.4
+     ],
+     "why": "同一数字在别处又印了一次"
+    },
+    {
+     "page": 113,
+     "line": "负债和所有者权益总计 974,827,544 786,658,123",
+     "box": [
+      62.3,
+      628.7,
+      533.0,
+      638.4
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "CH09",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "宁德时代 2025 年的销售费用是多少？",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    28,
+    116,
+    196
+   ],
+   "answer": "3,735,118（见 p.28：销售费用 3,735,118 3,562,797 4.84%）",
+   "accept": [
+    "3,735,118",
+    "37.35亿",
+    "37.4亿",
+    "37亿",
+    "3.7 billion",
+    "3.74 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 28,
+     "line": "销售费用 3,735,118 3,562,797 4.84%",
+     "box": [
+      62.3,
+      698.6,
+      436.9,
+      708.1
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 116,
+     "line": "销售费用 3,735,118 3,562,797",
+     "box": [
+      98.3,
+      473.8,
+      533.0,
+      483.3
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 196,
+     "line": "合计 3,735,118 3,562,797",
+     "box": [
+      62.3,
+      385.0,
+      533.2,
+      394.6
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 118,
+     "value": "2,861,766",
+     "line": "销售费用 2,861,766 2,807,720"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "CH21",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were CATL's net assets attributable to shareholders of the listed company at the end of 2025?",
+   "cross_language": true,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "CH22",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was CATL's weighted average return on net assets in 2025?",
+   "cross_language": true,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "CH23",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was CATL's revenue from mainland China (domestic) in 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    25,
+    195
+   ],
+   "answer": "294,060,576（见 p.25：境内 294,060,576 69.40% 251,677,045 69.52% 16.84%）",
+   "accept": [
+    "294,060,576",
+    "2940.61亿",
+    "2940.6亿",
+    "2941亿",
+    "294.1 billion",
+    "294.06 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "境内 294,060,576 69.40% 251,677,045 69.52% 16.84%",
+     "box": [
+      62.3,
+      128.4,
+      533.3,
+      138.0
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 25,
+     "line": "境内 294,060,576 223,497,885 24.00% 16.84% 14.22% 1.75%",
+     "box": [
+      62.3,
+      617.9,
+      533.2,
+      627.6
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 195,
+     "line": "境内 288,841,747 218,857,074 5,218,829 4,640,812 294,060,576 223,497,885",
+     "box": [
+      62.3,
+      460.5,
+      533.1,
+      470.1
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 195,
+     "value": "288,841,747",
+     "line": "境内 288,841,747 218,857,074 5,218,829 4,640,812 294,060,576 223,497,885"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "CH24",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were CATL's administrative expenses in 2025?",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    28,
+    116,
+    196
+   ],
+   "answer": "11,666,741（见 p.28：管理费用 11,666,741 9,689,839 20.40%）",
+   "accept": [
+    "11,666,741",
+    "116.67亿",
+    "116.7亿",
+    "117亿",
+    "11.7 billion",
+    "11.67 billion"
+   ],
+   "unit": "千元",
+   "evidence": [
+    {
+     "page": 28,
+     "line": "管理费用 11,666,741 9,689,839 20.40%",
+     "box": [
+      62.3,
+      714.8,
+      437.0,
+      724.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 116,
+     "line": "管理费用 11,666,741 9,689,839",
+     "box": [
+      98.3,
+      490.9,
+      533.0,
+      500.6
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 196,
+     "line": "合计 11,666,741 9,689,839",
+     "box": [
+      62.3,
+      223.2,
+      533.2,
+      232.8
+     ],
+     "why": "同一数字在别处又印了一次"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 118,
+     "value": "4,978,673",
+     "line": "管理费用 4,978,673 4,427,557"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "CH31",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "宁德时代 2025 年对比亚迪的销售额是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "前五名客户不具名",
+   "searched": [
+    "比亚迪"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "CH32",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "宁德时代 2025 年固态电池的出货量是多少 GWh？",
+   "cross_language": false,
+   "located": true,
+   "near": "只谈技术进展，没有出货量",
+   "searched": [
+    "固态电池",
+    "固态"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "CH33",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "宁德时代 2025 年每 GWh 电池的生产成本是多少？",
+   "cross_language": false,
+   "located": true,
+   "near": "有营业成本合计，没有每 GWh 成本",
+   "searched": [
+    "单位成本",
+    "每GWh",
+    "每 GWh",
+    "单GWh"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "CH34",
+   "doc": "catl_2025_annual_zh",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "宁德时代德国工厂 2025 年的产量是多少 GWh？",
+   "cross_language": false,
+   "located": true,
+   "near": "提到德国工厂，不给分工厂产量",
+   "searched": [
+    "德国"
+   ],
+   "mentions": 6,
+   "evidence": [
+    {
+     "page": 65,
+     "term": "德国",
+     "line": "AG 本公司子公司德国时代新能源科技股份有限公"
+    },
+    {
+     "page": 86,
+     "term": "德国",
+     "line": "德国时代新 247,065 2025年 121,946 责任 定 否 否"
+    },
+    {
+     "page": 103,
+     "term": "德国",
+     "line": "德国图林 用于欧洲德国"
+    },
+    {
+     "page": 161,
+     "term": "德国",
+     "line": "（德国时代新能源科技股份有限公司）等注册于德国的公司"
+    },
+    {
+     "page": 206,
+     "term": "德国",
+     "line": "CATG Trust GmbH（德国时代新能源科技信托有限公司） 新设成立"
+    },
+    {
+     "page": 206,
+     "term": "德国",
+     "line": "CATG Operation Service AG & Co. KG（德国时代新能源科技运营服"
+    }
+   ]
+  },
+  {
+   "id": "CH41",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What was the revenue of CATL's battery swap business in 2025?",
+   "cross_language": true,
+   "located": true,
+   "near": "介绍换电业务，不单列收入",
+   "searched": [
+    "换电",
+    "巧克力"
+   ],
+   "mentions": 21,
+   "evidence": [
+    {
+     "page": 2,
+     "term": "换电",
+     "line": "我们持续推动电池从“产品”向“服务”演进，通过车电分离与换电模式提升终端用户体验，与中"
+    },
+    {
+     "page": 3,
+     "term": "换电",
+     "line": "至2025年底累计建成换电站达1,325座，其中巧克力换电突破1,000座，骐骥换电突破300座，并与广"
+    },
+    {
+     "page": 3,
+     "term": "换电",
+     "line": "汽、长安、一汽、上汽、奇瑞、一汽解放、陕重汽等多家企业联合推出换电车型。"
+    },
+    {
+     "page": 14,
+     "term": "换电",
+     "line": "方案，包括助推全面电动化的换电业务、完善产业生态并延伸价值链条的零碳生态建设等，能够全方位"
+    },
+    {
+     "page": 16,
+     "term": "换电",
+     "line": "延伸至低空、船舶、智能应用等更广阔领域，并推进换电网络及零碳生态构建。"
+    },
+    {
+     "page": 17,
+     "term": "换电",
+     "line": "受益于新能源在售车型数量增加、智能化加速、充换电基础设施持续完善等因素，全球新能源车市"
+    },
+    {
+     "page": 20,
+     "term": "换电",
+     "line": "全运营规模持续扩大。同时，巧克力换电、骐骥换电等创新解决方案快速拓展，协同产业链伙伴共同构"
+    },
+    {
+     "page": 22,
+     "term": "换电",
+     "line": "除上述业务外，公司将电动化延伸至低空、船舶、数据中心等更广阔领域，快速拓展换电网络及服"
+    },
+    {
+     "page": 22,
+     "term": "换电",
+     "line": "换电产业生态初具势能"
+    },
+    {
+     "page": 22,
+     "term": "换电",
+     "line": "为提升补能效率，优化用户体验，公司携手产业各方加速构建巧克力换电生态。截至报告期末，公"
+    }
+   ]
+  },
+  {
+   "id": "CH42",
+   "doc": "catl_2025_annual_zh",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What was CATL's revenue in the United States in 2025?",
+   "cross_language": true,
+   "located": true,
+   "near": "分地区只有境内、境外",
+   "searched": [
+    "美国"
+   ],
+   "mentions": 2,
+   "evidence": [
+    {
+     "page": 86,
+     "term": "美国",
+     "line": "美国时代新"
+    },
+    {
+     "page": 160,
+     "term": "美国",
+     "line": "（美国时代新能源科技有限公司）等注册于美国的公司"
+    }
+   ]
+  },
+  {
+   "id": "TH02",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Tencent's FinTech and Business Services revenues in 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    9
+   ],
+   "answer": "229.4（见 p.9：– Revenues from FinTech and Business Services grew by 8% year-on-year to RMB229.）",
+   "accept": [
+    "229.4",
+    "2294亿",
+    "229,435",
+    "2294.35亿",
+    "2294.4亿",
+    "229.4 billion",
+    "229.44 billion"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 9,
+     "line": "– Revenues from FinTech and Business Services grew by 8% year-on-year to RMB229.4 billion for the year ended 31 December 2025. FinTech Services revenues increased at a high single-digit rate year-on-year, due to higher revenues",
+     "box": [
+      56.7,
+      651.4,
+      538.9,
+      676.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 9,
+     "line": "FinTech and Business Services 229,435 211,956 8% 31% 32%",
+     "box": [
+      56.7,
+      314.5,
+      532.9,
+      323.6
+     ],
+     "why": "同一页上的另一种写法"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH13",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Tencent's general and administrative expenses in 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    11
+   ],
+   "answer": "136.1（见 p.11：General and administrative expenses. General and administrative expenses rose by）",
+   "accept": [
+    "136.1",
+    "1361亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 11,
+     "line": "General and administrative expenses. General and administrative expenses rose by 21% year-on-year to RMB136.1 billion for the year ended 31 December 2025. This growth was due to increased R&D expenses, primarily higher staff costs and",
+     "box": [
+      55.3,
+      192.5,
+      538.8,
+      217.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH14",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Tencent's cost of revenues in 2025?",
+   "cross_language": false,
+   "located": false,
+   "reason": "no line matches any pattern"
+  },
+  {
+   "id": "TH15",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Tencent's income tax expense for 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    11
+   ],
+   "answer": "47.5（见 p.11：Income tax expense. Income tax expense increased by 5% year-on-year to RMB47.5 b）",
+   "accept": [
+    "47.5",
+    "475亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 11,
+     "line": "Income tax expense. Income tax expense increased by 5% year-on-year to RMB47.5 billion for the year ended 31 December 2025, mainly reflecting operating profit growth, partially offset by lower withholding tax provision recognised this year.",
+     "box": [
+      55.3,
+      448.5,
+      538.5,
+      473.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH09",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Tencent's total remuneration cost for 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    81
+   ],
+   "answer": "130.7（见 p.81：The total remuneration cost incurred by the Group for the year ended 31 December）",
+   "accept": [
+    "130.7",
+    "1307亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 81,
+     "line": "The total remuneration cost incurred by the Group for the year ended 31 December 2025 was RMB130.7 billion (2024:",
+     "box": [
+      56.7,
+      339.3,
+      538.3,
+      348.3
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH11",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Tencent's Social Networks revenues in 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    9
+   ],
+   "answer": "127.7（见 p.9：MOBILE, as well as incremental revenue contribution from Wuthering Waves. Social）",
+   "accept": [
+    "127.7",
+    "1277亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 9,
+     "line": "MOBILE, as well as incremental revenue contribution from Wuthering Waves. Social Networks revenues rose by 5% year-on-year to RMB127.7 billion, due to growth in Video Accounts live streaming revenue, music subscription revenue",
+     "box": [
+      79.4,
+      475.4,
+      538.6,
+      500.4
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 13,
+     "value": "30.6",
+     "line": "Waves. Social Networks revenues grew by 3% year-on-year to RMB30.6 billion, reflecting growth in Video Accounts live"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "TH03",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Tencent's Domestic Games revenues in 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    9
+   ],
+   "answer": "164.2（见 p.9：Domestic Games revenues were RMB164.2 billion, up 18% year-on-year, underpinned ）",
+   "accept": [
+    "164.2",
+    "1642亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 9,
+     "line": "Domestic Games revenues were RMB164.2 billion, up 18% year-on-year, underpinned by robust performance",
+     "box": [
+      79.4,
+      411.4,
+      538.6,
+      420.4
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [
+    {
+     "page": 13,
+     "value": "38.2",
+     "line": "– Revenues from VAS increased by 14% year-on-year to RMB89.9 billion for the fourth quarter of 2025. Domestic Games revenues were RMB38.2 billion, up 15% year-on-year, driven by Delta Force, increased revenues from VALORANT"
+    },
+    {
+     "page": 17,
+     "value": "38.2",
+     "line": "– Revenues from VAS decreased by 6% quarter-on-quarter to RMB89.9 billion. Domestic Games revenues were RMB38.2 billion, down 11% quarter-on-quarter, primarily due to seasonally lower monetisation and revenues in the"
+    }
+   ],
+   "note": "这一行最早是在 S4 运行报告留下的检索片段里见到的，对检索偏容易；排在本组最后，前面的候选不够时才用"
+  },
+  {
+   "id": "TH06",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Tencent's basic earnings per share for 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    5
+   ],
+   "answer": "24.749（见 p.5：RMB224,842 million, an increase of 16% compared with the results for the previou）",
+   "accept": [
+    "24.749"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 5,
+     "line": "RMB224,842 million, an increase of 16% compared with the results for the previous year. Basic and diluted EPS for the year ended 31 December 2025 were RMB24.749 and RMB24.153, respectively.",
+     "box": [
+      56.7,
+      201.0,
+      538.6,
+      226.0
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": "这一行最早是在 S4 运行报告留下的检索片段里见到的，对检索偏容易；排在本组最后，前面的候选不够时才用"
+  },
+  {
+   "id": "TH07",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What share of Tencent's total revenues came from its five largest customers in 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    80
+   ],
+   "answer": "6.5（见 p.80：For the year ended 31 December 2025, the five largest customers of the Group acc）",
+   "accept": [
+    "6.5"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 80,
+     "line": "For the year ended 31 December 2025, the five largest customers of the Group accounted for approximately 6.5% of the",
+     "box": [
+      56.7,
+      227.3,
+      538.3,
+      236.3
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": "这一行最早是在 S4 运行报告留下的检索片段里见到的，对检索偏容易；排在本组最后，前面的候选不够时才用"
+  },
+  {
+   "id": "TH21",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "腾讯 2025 年增值服务（VAS）业务的收入是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    9
+   ],
+   "answer": "369.3（见 p.9：– Revenues from VAS increased by 16% year-on-year to RMB369.3 billion for the ye）",
+   "accept": [
+    "369.3",
+    "3693亿",
+    "369,281",
+    "3692.81亿",
+    "3692.8亿",
+    "369.3 billion",
+    "369.28 billion"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 9,
+     "line": "– Revenues from VAS increased by 16% year-on-year to RMB369.3 billion for the year ended 31 December 2025.",
+     "box": [
+      56.7,
+      395.4,
+      538.7,
+      404.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 9,
+     "line": "VAS 369,281 319,168 16% 49% 49%",
+     "box": [
+      56.7,
+      282.5,
+      532.9,
+      291.6
+     ],
+     "why": "同一页上的另一种写法"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH22",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "截至 2025 年底，腾讯集团一共有多少名雇员？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    81
+   ],
+   "answer": "115,849（见 p.81：As at 31 December 2025, the Group had 115,849 employees (2024: 110,558). The num）",
+   "accept": [
+    "115,849"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 81,
+     "line": "As at 31 December 2025, the Group had 115,849 employees (2024: 110,558). The number of employees employed by the",
+     "box": [
+      56.7,
+      227.3,
+      538.6,
+      236.3
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH23",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "腾讯 2025 年的毛利是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    10
+   ],
+   "answer": "422.6（见 p.10：Gross profit. Gross profit rose by 21% year-on-year to RMB422.6 billion for the ）",
+   "accept": [
+    "422.6",
+    "4226亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 10,
+     "line": "Gross profit. Gross profit rose by 21% year-on-year to RMB422.6 billion for the year ended 31 December 2025, primarily",
+     "box": [
+      55.3,
+      128.5,
+      538.6,
+      137.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH24",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "腾讯 2025 年的销售及市场推广开支是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    11
+   ],
+   "answer": "41.7（见 p.11：Selling and marketing expenses. Selling and marketing expenses grew by 15% year-）",
+   "accept": [
+    "41.7",
+    "417亿"
+   ],
+   "unit": "RMB billion",
+   "evidence": [
+    {
+     "page": 11,
+     "line": "Selling and marketing expenses. Selling and marketing expenses grew by 15% year-on-year to RMB41.7 billion for the year ended 31 December 2025, reflecting increased promotional efforts to support the growth of our AI-native applications and",
+     "box": [
+      55.3,
+      128.5,
+      538.6,
+      153.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "TH31",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What were the revenues of Tencent Video in 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "mentions the service and subscribers, no revenue of its own",
+   "searched": [
+    "Tencent Video"
+   ],
+   "mentions": 1,
+   "evidence": [
+    {
+     "page": 6,
+     "term": "Tencent Video",
+     "line": "‧ Tencent Video maintained its leading position in China’s long-form video market with year-on-year growth in video"
+    }
+   ]
+  },
+  {
+   "id": "TH32",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "How many daily active users did Weixin Mini Programs have in 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "mentions Mini Programs, no user count",
+   "searched": [
+    "Mini Programs"
+   ],
+   "mentions": 3,
+   "evidence": [
+    {
+     "page": 6,
+     "term": "Mini Programs",
+     "line": "‧ We grew user engagement with Mini Shops, Mini Games and other content-related Mini Programs at rapid year-on-year"
+    },
+    {
+     "page": 9,
+     "term": "Mini Programs",
+     "line": "through to native transactional experiences, such as Mini Programs, Mini Shops, or Mini Games). Impression growth"
+    },
+    {
+     "page": 17,
+     "term": "Mini Programs",
+     "line": "revenues from Video Accounts, Mini Programs and our mobile ad network, benefitting from ongoing improvements to our"
+    }
+   ]
+  },
+  {
+   "id": "TH33",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What was Tencent's revenue from Video Accounts in 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "named as a growth driver inside Marketing Services, no figure of its own",
+   "searched": [
+    "Video Accounts"
+   ],
+   "mentions": 9,
+   "evidence": [
+    {
+     "page": 6,
+     "term": "Video Accounts",
+     "line": "‧ Video Accounts’ total user time spent increased over 20% year-on-year, benefitting from upgraded content"
+    },
+    {
+     "page": 9,
+     "term": "Video Accounts",
+     "line": "year-on-year to RMB127.7 billion, due to growth in Video Accounts live streaming revenue, music subscription revenue"
+    },
+    {
+     "page": 9,
+     "term": "Video Accounts",
+     "line": "benefitted primarily from greater user engagement with products including Video Accounts and Weixin Search, and"
+    },
+    {
+     "page": 10,
+     "term": "Video Accounts",
+     "line": "driven by greater contributions from high-margin revenue streams, including internally developed games, Video Accounts and"
+    },
+    {
+     "page": 10,
+     "term": "Video Accounts",
+     "line": "drove strong growth in high-margin revenue streams, particularly Video Accounts and Weixin Search. Gross margin"
+    },
+    {
+     "page": 13,
+     "term": "Video Accounts",
+     "line": "Waves. Social Networks revenues grew by 3% year-on-year to RMB30.6 billion, reflecting growth in Video Accounts live"
+    },
+    {
+     "page": 14,
+     "term": "Video Accounts",
+     "line": "increased contributions from high-margin revenue streams, including internally developed games, Video Accounts and Weixin"
+    },
+    {
+     "page": 14,
+     "term": "Video Accounts",
+     "line": "strong growth in high-margin revenue streams, particularly Video Accounts and Weixin Search. Gross margin was 60%,"
+    },
+    {
+     "page": 17,
+     "term": "Video Accounts",
+     "line": "revenues from Video Accounts, Mini Programs and our mobile ad network, benefitting from ongoing improvements to our"
+    }
+   ]
+  },
+  {
+   "id": "TH34",
+   "doc": "tencent_2025_annual_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "How much did Tencent spend on GPUs in 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "capital expenditure in total, not by item",
+   "searched": [
+    "GPU",
+    "chips"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "TH41",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "腾讯 2025 年在游戏业务上的研发投入是多少？",
+   "cross_language": true,
+   "located": true,
+   "near": "研发开支只有集团合计，不按业务拆分",
+   "searched": [
+    "R&D",
+    "research and development"
+   ],
+   "mentions": 9,
+   "evidence": [
+    {
+     "page": 11,
+     "term": "R&D",
+     "line": "for the year ended 31 December 2025. This growth was due to increased R&D expenses, primarily higher staff costs and"
+    },
+    {
+     "page": 18,
+     "term": "R&D",
+     "line": "RMB36.3 billion for the fourth quarter of 2025, driven by higher R&D expenses associated with our AI efforts and higher staff"
+    },
+    {
+     "page": 30,
+     "term": "research and development",
+     "line": "Research and development to strengthen 78.5 to 94.1 3.2 up to 68.5 Before the end of 2027"
+    },
+    {
+     "page": 66,
+     "term": "research and development",
+     "line": "the research and development, operations, marketing and sales of gaming products for the Interactive Entertainment Business."
+    },
+    {
+     "page": 66,
+     "term": "R&D",
+     "line": "and had served as the General Manager for the Guangzhou R&D Division and led the QQ Mail team to be the top mail"
+    },
+    {
+     "page": 171,
+     "term": "research and development",
+     "line": "2.26 Research and development expenses"
+    },
+    {
+     "page": 199,
+     "term": "R&D",
+     "line": "(b) During the year ended 31 December 2025, the Group had incurred expenses for the purpose of R&D of approximately"
+    },
+    {
+     "page": 278,
+     "term": "R&D",
+     "line": "“R&D” research and development"
+    },
+    {
+     "page": 278,
+     "term": "research and development",
+     "line": "to provide services in relation to research and development, engineering or"
+    }
+   ]
+  },
+  {
+   "id": "TH42",
+   "doc": "tencent_2025_annual_en",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "腾讯会议 2025 年的收入是多少？",
+   "cross_language": true,
+   "located": true,
+   "near": "提到产品，不单列收入",
+   "searched": [
+    "Tencent Meeting"
+   ],
+   "mentions": 0,
+   "evidence": []
+  },
+  {
+   "id": "AH01",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Apple's Mac net sales in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    26,
+    39
+   ],
+   "answer": "33,708（见 p.26：Mac 33,708 12 % 29,984 2 % 29,357）",
+   "accept": [
+    "33,708",
+    "337.08亿",
+    "337.1亿",
+    "337亿",
+    "33.7 billion",
+    "33.71 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 26,
+     "line": "Mac 33,708 12 % 29,984 2 % 29,357",
+     "box": [
+      52.1,
+      104.1,
+      558.8,
+      113.1
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 39,
+     "line": "Mac 33,708 29,984 29,357",
+     "box": [
+      52.1,
+      98.1,
+      558.8,
+      107.1
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH02",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Apple's iPad net sales in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    26,
+    39
+   ],
+   "answer": "28,023（见 p.26：iPad 28,023 5 % 26,694 (6) % 28,300）",
+   "accept": [
+    "28,023",
+    "280.23亿",
+    "280.2亿",
+    "280亿",
+    "28.0 billion",
+    "28.02 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 26,
+     "line": "iPad 28,023 5 % 26,694 (6) % 28,300",
+     "box": [
+      52.1,
+      118.4,
+      558.8,
+      127.4
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 39,
+     "line": "iPad 28,023 26,694 28,300",
+     "box": [
+      52.1,
+      112.4,
+      558.8,
+      121.4
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH03",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Apple's Wearables, Home and Accessories net sales in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    26,
+    39
+   ],
+   "answer": "35,686（见 p.26：Wearables, Home and Accessories 35,686 (4) % 37,005 (7) % 39,845）",
+   "accept": [
+    "35,686",
+    "356.86亿",
+    "356.9亿",
+    "357亿",
+    "35.7 billion",
+    "35.69 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 26,
+     "line": "Wearables, Home and Accessories 35,686 (4) % 37,005 (7) % 39,845",
+     "box": [
+      52.1,
+      132.6,
+      558.8,
+      141.6
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 39,
+     "line": "Wearables, Home and Accessories 35,686 37,005 39,845",
+     "box": [
+      52.1,
+      126.6,
+      558.8,
+      135.6
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH04",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Apple's net sales in the Americas segment in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    25
+   ],
+   "answer": "178,353（见 p.25：Americas $ 178,353 7 % $ 167,045 3 % $ 162,560）",
+   "accept": [
+    "178,353",
+    "1783.53亿",
+    "1783.5亿",
+    "1784亿",
+    "178.4 billion",
+    "178.35 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "Americas $ 178,353 7 % $ 167,045 3 % $ 162,560",
+     "box": [
+      52.1,
+      297.5,
+      558.8,
+      306.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH05",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Apple's diluted earnings per share for fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    32
+   ],
+   "answer": "7.46（见 p.32：Diluted $ 7.46 $ 6.08 $ 6.13）",
+   "accept": [
+    "7.46"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 32,
+     "line": "Diluted $ 7.46 $ 6.08 $ 6.13",
+     "box": [
+      70.1,
+      478.8,
+      558.8,
+      487.8
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH06",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Apple's effective tax rate for fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    28,
+    44
+   ],
+   "answer": "15.6（见 p.28：Effective tax rate 15.6% 24.1% 14.7%）",
+   "accept": [
+    "15.6"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 28,
+     "line": "Effective tax rate 15.6% 24.1% 14.7%",
+     "box": [
+      52.1,
+      114.9,
+      558.8,
+      123.9
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 44,
+     "line": "Effective tax rate 15.6% 24.1% 14.7%",
+     "box": [
+      70.1,
+      183.6,
+      558.8,
+      192.6
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH07",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What was Apple's total gross margin percentage in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    27
+   ],
+   "answer": "46.9（见 p.27：Total gross margin percentage 46.9% 46.2% 44.1%）",
+   "accept": [
+    "46.9"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 27,
+     "line": "Total gross margin percentage 46.9% 46.2% 44.1%",
+     "box": [
+      88.1,
+      200.6,
+      558.8,
+      209.6
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH08",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "What were Apple's net sales in the Rest of Asia Pacific segment in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    25
+   ],
+   "answer": "33,696（见 p.25：Rest of Asia Pacific 33,696 10 % 30,658 4 % 29,615）",
+   "accept": [
+    "33,696",
+    "336.96亿",
+    "337亿",
+    "33.7 billion",
+    "33.70 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "Rest of Asia Pacific 33,696 10 % 30,658 4 % 29,615",
+     "box": [
+      52.1,
+      354.5,
+      558.8,
+      363.5
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH09",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "answerable",
+   "query": "How much in dividends and dividend equivalents did Apple declare per share in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "pages": [
+    35
+   ],
+   "answer": "1.02（见 p.35：Dividends and dividend equivalents declared per share or RSU $ 1.02 $ 0.98 $ 0.9）",
+   "accept": [
+    "1.02"
+   ],
+   "unit": null,
+   "evidence": [
+    {
+     "page": 35,
+     "line": "Dividends and dividend equivalents declared per share or RSU $ 1.02 $ 0.98 $ 0.94",
+     "box": [
+      52.1,
+      499.8,
+      558.8,
+      508.8
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH21",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "苹果 2025 财年欧洲分部的净销售额是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    25
+   ],
+   "answer": "111,032（见 p.25：Europe 111,032 10 % 101,328 7 % 94,294）",
+   "accept": [
+    "111,032",
+    "1110.32亿",
+    "1110.3亿",
+    "1110亿",
+    "111.0 billion",
+    "111.03 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "Europe 111,032 10 % 101,328 7 % 94,294",
+     "box": [
+      52.1,
+      311.7,
+      558.8,
+      320.7
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH22",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "苹果 2025 财年的净利润是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    32,
+    33,
+    35,
+    36,
+    39
+   ],
+   "answer": "112,010（见 p.32：Net income $ 112,010 $ 93,736 $ 96,995）",
+   "accept": [
+    "112,010",
+    "1120.10亿",
+    "1120.1亿",
+    "1120亿",
+    "112.0 billion",
+    "112.01 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 32,
+     "line": "Net income $ 112,010 $ 93,736 $ 96,995",
+     "box": [
+      52.1,
+      421.8,
+      558.8,
+      430.8
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 33,
+     "line": "Net income $ 112,010 $ 93,736 $ 96,995",
+     "box": [
+      52.1,
+      136.8,
+      558.8,
+      145.8
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 35,
+     "line": "Net income 112,010 93,736 96,995",
+     "box": [
+      88.1,
+      304.1,
+      558.8,
+      313.1
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 36,
+     "line": "Net income 112,010 93,736 96,995",
+     "box": [
+      61.1,
+      180.1,
+      558.9,
+      189.2
+     ],
+     "why": "同一标签、同一数字"
+    },
+    {
+     "page": 39,
+     "line": "Net income $ 112,010 $ 93,736 $ 96,995",
+     "box": [
+      70.1,
+      419.1,
+      558.8,
+      428.2
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH23",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "苹果 2025 财年的销售、一般及行政费用是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    27,
+    32
+   ],
+   "answer": "27,601（见 p.27：Selling, general and administrative $ 27,601 6 % $ 26,097 5 % $ 24,932）",
+   "accept": [
+    "27,601",
+    "276.01亿",
+    "276亿",
+    "27.6 billion",
+    "27.60 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 27,
+     "line": "Selling, general and administrative $ 27,601 6 % $ 26,097 5 % $ 24,932",
+     "box": [
+      52.1,
+      543.9,
+      550.8,
+      552.9
+     ],
+     "why": "标签和数字"
+    },
+    {
+     "page": 32,
+     "line": "Selling, general and administrative 27,601 26,097 24,932",
+     "box": [
+      70.1,
+      322.0,
+      558.8,
+      331.1
+     ],
+     "why": "同一标签、同一数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH24",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "answerable",
+   "query": "苹果 2025 财年日本分部的净销售额是多少？",
+   "cross_language": true,
+   "located": true,
+   "pages": [
+    25
+   ],
+   "answer": "28,703（见 p.25：Japan 28,703 15 % 25,052 3 % 24,257）",
+   "accept": [
+    "28,703",
+    "287.03亿",
+    "287亿",
+    "28.7 billion",
+    "28.70 billion"
+   ],
+   "unit": "USD million",
+   "evidence": [
+    {
+     "page": 25,
+     "line": "Japan 28,703 15 % 25,052 3 % 24,257",
+     "box": [
+      52.1,
+      340.2,
+      558.8,
+      349.2
+     ],
+     "why": "标签和数字"
+    }
+   ],
+   "other_values": [],
+   "note": ""
+  },
+  {
+   "id": "AH31",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What were Apple's AirPods net sales in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "inside Wearables, Home and Accessories, no figure of its own",
+   "searched": [
+    "AirPods"
+   ],
+   "mentions": 2,
+   "evidence": [
+    {
+     "page": 4,
+     "term": "AirPods",
+     "line": "Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision"
+    },
+    {
+     "page": 24,
+     "term": "AirPods",
+     "line": "• AirPods Pro 3"
+    }
+   ]
+  },
+  {
+   "id": "AH32",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "How many Apple retail stores were open at the end of fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "mentions retail stores, not how many",
+   "searched": [
+    "retail stores",
+    "retail store"
+   ],
+   "mentions": 3,
+   "evidence": [
+    {
+     "page": 9,
+     "term": "retail stores",
+     "line": "Many of the Company’s operations, retail stores and facilities, as well as critical business operations of the Company’s suppliers"
+    },
+    {
+     "page": 9,
+     "term": "retail stores",
+     "line": "addition, the Company’s and its suppliers’ operations, retail stores and facilities are subject to the risk of interruption by fire,"
+    },
+    {
+     "page": 50,
+     "term": "retail stores",
+     "line": "segments are generally based on the location of customers and sales through the Company’s retail stores located in those"
+    }
+   ]
+  },
+  {
+   "id": "AH33",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "How many active devices did Apple report for fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "mentions the installed base, no count",
+   "searched": [
+    "active devices",
+    "installed base"
+   ],
+   "mentions": 2,
+   "evidence": [
+    {
+     "page": 6,
+     "term": "active devices",
+     "line": "large installed bases of active devices, and large customer bases. Competition has been particularly intense as competitors have"
+    },
+    {
+     "page": 10,
+     "term": "active devices",
+     "line": "Company’s competitors have broad product lines, low-priced products, large installed bases of active devices, and large"
+    }
+   ]
+  },
+  {
+   "id": "AH34",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "en",
+   "kind": "absent",
+   "query": "What were App Store net sales in fiscal 2025?",
+   "cross_language": false,
+   "located": true,
+   "near": "inside Services",
+   "searched": [
+    "App Store"
+   ],
+   "mentions": 10,
+   "evidence": [
+    {
+     "page": 5,
+     "term": "App Store",
+     "line": "The Company operates various platforms, including the App Store®, that allow customers to discover and download applications"
+    },
+    {
+     "page": 17,
+     "term": "App Store",
+     "line": "on the U.S. storefront of the iOS and iPadOS App Store regarding alternative purchasing mechanisms and is currently subject to"
+    },
+    {
+     "page": 17,
+     "term": "App Store",
+     "line": "Company has implemented changes to iOS, iPadOS, the App Store and Safari® in the EU as it seeks to comply with the Digital"
+    },
+    {
+     "page": 17,
+     "term": "App Store",
+     "line": "investigations in Europe and other jurisdictions relating to App Store terms and conditions. If such investigations or litigation are"
+    },
+    {
+     "page": 21,
+     "term": "App Store",
+     "line": "communicate and promote offers to end users for apps distributed through the App Store, as well as how developers may"
+    },
+    {
+     "page": 21,
+     "term": "App Store",
+     "line": "App Store. The Company has appealed the Commission’s Article 5(4) decision. Also on April 23, 2025, the Commission issued"
+    },
+    {
+     "page": 21,
+     "term": "App Store",
+     "line": "Company’s operation of its App Store. The California District Court found that certain provisions of the Company’s App Review"
+    },
+    {
+     "page": 21,
+     "term": "App Store",
+     "line": "storefronts of the iOS and iPadOS App Stores. On January 16, 2024, the Company implemented a plan to comply with the 2021"
+    },
+    {
+     "page": 26,
+     "term": "App Store",
+     "line": "Services net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store"
+    },
+    {
+     "page": 38,
+     "term": "App Store",
+     "line": "applications sold through the App Store, the Company does not obtain control of the product before transferring it to the"
+    }
+   ]
+  },
+  {
+   "id": "AH41",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "苹果 2025 财年 Apple Watch 的净销售额是多少？",
+   "cross_language": true,
+   "located": true,
+   "near": "并在 Wearables, Home and Accessories 里，没有单独数字",
+   "searched": [
+    "Apple Watch"
+   ],
+   "mentions": 2,
+   "evidence": [
+    {
+     "page": 4,
+     "term": "Apple Watch",
+     "line": "its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The"
+    },
+    {
+     "page": 24,
+     "term": "Apple Watch",
+     "line": "• Apple Watch Series 11, Apple Watch SE 3 and Apple Watch Ultra 3"
+    }
+   ]
+  },
+  {
+   "id": "AH42",
+   "doc": "apple_fy2025_10k_en",
+   "lang": "zh",
+   "kind": "absent",
+   "query": "苹果 2025 财年 Apple Music 有多少订阅用户？",
+   "cross_language": true,
+   "located": true,
+   "near": "提到订阅服务，不给用户数",
+   "searched": [
+    "Apple Music",
+    "subscriptions"
+   ],
+   "mentions": 2,
+   "evidence": [
+    {
+     "page": 5,
+     "term": "Apple Music",
+     "line": "Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio"
+    },
+    {
+     "page": 13,
+     "term": "subscriptions",
+     "line": "offer subscriptions to, third-party content, as well as the right to incorporate specific content into the Company’s own services."
+    }
+   ]
+  }
+ ]
+}

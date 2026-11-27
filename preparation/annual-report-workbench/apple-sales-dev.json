@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "case_id": "apple-services-growth-contribution-dev",
+  "split": "public-dev",
+  "source": {
+    "url": "https://s2.q4cdn.com/470004039/files/doc_earnings/2025/q4/filing/10K-Q4-2025-as-filed.pdf",
+    "sha256": "3eb270b22acb7d8d8e9c32a43dc221dec3345f8e4bca02755fdbc1ee16c823de"
+  },
+  "index_version": "ed9f3722737f0b30",
+  "transport": "FastAPI TestClient",
+  "model": null,
+  "comparison": {
+    "source_id": "apple_fy2025_10k_en#p26-t1",
+    "original_row": "Services (1) | 109,158 | 14 % |  | 96,169 | 13 % |  | 85,200",
+    "model_calls_per_strategy": 0,
+    "disclosed_change_percent": "14",
+    "current_revenue_share_percent": "26.23",
+    "two_period_formulas": {
+      "periods": [
+        2025,
+        2024
+      ],
+      "unit": "百万美元",
+      "services": [
+        109158,
+        96169
+      ],
+      "total_sales": [
+        416161,
+        391035
+      ],
+      "operations": [
+        {
+          "metric": "服务收入增速",
+          "formula": "服务收入增量 / 上期服务收入",
+          "numerator": 12989,
+          "denominator": 96169,
+          "percent": "13.51"
+        },
+        {
+          "metric": "服务对公司收入增量的贡献",
+          "formula": "服务收入增量 / 公司收入增量",
+          "numerator": 12989,
+          "denominator": 25126,
+          "percent": "51.70"
+        }
+      ]
+    }
+  },
+  "runs": [
+    {
+      "run_id": "9581254a-b3dc-4870-b57a-b84673e50fe7",
+      "tool": "apple-services-v1",
+      "input": "Apple FY2025 服务收入增速和增长贡献",
+      "artifact_refs": [
+        {
+          "path": "inline:receipt",
+          "sha256": "a92578e9cf56aa196a711c0c2ac7e16636565bc421d4d71edc71cb669b719ed7"
+        }
+      ],
+      "receipt": {
+        "question": "Apple FY2025 服务收入增速和增长贡献",
+        "answer": "Apple FY2025，服务收入增速为13.51%（12,989 / 96,169）；服务对公司收入增量的贡献为51.70%（12,989 / 25,126）。金额单位为百万美元。",
+        "status": "ANSWERED",
+        "calculation": {
+          "periods": [
+            2025,
+            2024
+          ],
+          "unit": "百万美元",
+          "services": [
+            109158,
+            96169
+          ],
+          "total_sales": [
+            416161,
+            391035
+          ],
+          "operations": [
+            {
+              "metric": "服务收入增速",
+              "formula": "服务收入增量 / 上期服务收入",
+              "numerator": 12989,
+              "denominator": 96169,
+              "percent": "13.51"
+            },
+            {
+              "metric": "服务对公司收入增量的贡献",
+              "formula": "服务收入增量 / 公司收入增量",
+              "numerator": 12989,
+              "denominator": 25126,
+              "percent": "51.70"
+            }
+          ]
+        },
+        "sources": [
+          {
+            "id": "apple_fy2025_10k_en#p26-t1",
+            "page": 26,
+            "bbox": [
+              52.1,
+              76.6,
+              558.8,
+              170.1
+            ]
+          },
+          {
+            "id": "apple_fy2025_10k_en#p39-t1",
+            "page": 39,
+            "bbox": [
+              52.1,
+              70.6,
+              558.8,
+              164.1
+            ]
+          }
+        ]
+      },
+      "latency_ms": 253.3,
+      "model_calls": 0,
+      "external_cost": 0
+    },
+    {
+      "run_id": "2a5dc1c5-998d-4970-ada7-3d711abd5286",
+      "tool": "apple-services-v1",
+      "input": "Apple FY2024 服务收入增速和增长贡献",
+      "artifact_refs": [
+        {
+          "path": "inline:receipt",
+          "sha256": "046f09e02d8262b07dde73ae68e6aa9035920bb152b5bb3f26d0939f47614d92"
+        }
+      ],
+      "receipt": {
+        "question": "Apple FY2024 服务收入增速和增长贡献",
+        "answer": "Apple FY2024，服务收入增速为12.87%（10,969 / 85,200）；服务对公司收入增量的贡献为141.54%（10,969 / 7,750）。金额单位为百万美元。",
+        "status": "ANSWERED",
+        "calculation": {
+          "periods": [
+            2024,
+            2023
+          ],
+          "unit": "百万美元",
+          "services": [
+            96169,
+            85200
+          ],
+          "total_sales": [
+            391035,
+            383285
+          ],
+          "operations": [
+            {
+              "metric": "服务收入增速",
+              "formula": "服务收入增量 / 上期服务收入",
+              "numerator": 10969,
+              "denominator": 85200,
+              "percent": "12.87"
+            },
+            {
+              "metric": "服务对公司收入增量的贡献",
+              "formula": "服务收入增量 / 公司收入增量",
+              "numerator": 10969,
+              "denominator": 7750,
+              "percent": "141.54"
+            }
+          ]
+        },
+        "sources": [
+          {
+            "id": "apple_fy2025_10k_en#p26-t1",
+            "page": 26,
+            "bbox": [
+              52.1,
+              76.6,
+              558.8,
+              170.1
+            ]
+          },
+          {
+            "id": "apple_fy2025_10k_en#p39-t1",
+            "page": 39,
+            "bbox": [
+              52.1,
+              70.6,
+              558.8,
+              164.1
+            ]
+          }
+        ]
+      },
+      "latency_ms": 212.5,
+      "model_calls": 0,
+      "external_cost": 0
+    },
+    {
+      "run_id": "c8c3c6b8-697c-4bc0-83d5-e8ed4f544879",
+      "tool": "apple-services-v1",
+      "input": "Apple FY2023 服务收入增速和增长贡献",
+      "artifact_refs": [
+        {
+          "path": "inline:receipt",
+          "sha256": "2978339e071b2040f3f0d930a33451cf316de897c3aaf531ddf0fd43ef19d8ee"
+        }
+      ],
+      "receipt": {
+        "question": "Apple FY2023 服务收入增速和增长贡献",
+        "answer": "待核对：需要同一披露单位下两年的服务收入和总收入。",
+        "status": "PERIOD_UNVERIFIED",
+        "calculation": null,
+        "sources": []
+      },
+      "latency_ms": 176.7,
+      "model_calls": 0,
+      "external_cost": 0
+    }
+  ]
+}

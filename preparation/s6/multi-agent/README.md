@@ -1,0 +1,77 @@
+# 年报问答多角色编排：四组对照
+
+登记在 [PREREGISTRATION.md](PREREGISTRATION.md)（机器可读版 [preregistered.json](preregistered.json)），先于编排代码提交。
+结果见同目录的 [RESULTS.md](RESULTS.md)（2026-11-26 正式运行：按登记采用 B，plan_verify；修订 2 的确认题上再次满足，已成为默认做法），逐题记录在 `runs/` 下，过程记录见 [STATUS.md](STATUS.md)。
+
+| 文件 | 作用 |
+|---|---|
+| `run_arms.py` | 四组（单次回答、自检、A、B）在同一批题上的运行脚本。入库、检索、评分直接用 S4 的 `run_qa.py`；编排是 `src/forgeflow/report_orchestration.py` |
+| `pins.json` | 各角色提示词和编排版本的哈希。改了提示词要重新生成（`run_arms.py --pin`）并提交，否则脚本不跑 |
+| `write_heldout.py` | 留出题：候选题、从 PDF 页面文字初标 gold、生成核对清单、冻结 |
+| `scripts/mac_multi_agent_eval.sh` | 在有 Ollama 和年报 PDF 的 Mac 上一条命令跑完并提交结果 |
+
+## 怎么跑
+
+年报 PDF 和本机模型都在 Mac 上，下面四步都在 Mac 的仓库目录里执行。模型一律是 `forgeflow-qwen3-8b-ctx16k`；脚本核对它的权重和 16k 上下文，不符就不跑。
+
+```bash
+bash scripts/mac_multi_agent_eval.sh draft      # 1. 初标留出题、生成核对清单并提交草稿。不调用模型，几分钟
+open preparation/s6/multi-agent/heldout-checklist.html   # 2. 人工核对：逐题对原页点选，填姓名，点“导出核对结果”
+bash scripts/mac_multi_agent_eval.sh freeze     # 3. 取 ~/Downloads 里最新的 heldout-review.json，冻结并提交
+bash scripts/mac_multi_agent_eval.sh            # 4. 开发集 + 留出题；也可以分开：dev / heldout
+```
+
+第 2 步有题被选成“要改”或“剔除”时，第 3 步不会冻结，只把核对标记记进草稿并列出没过的题，处理办法见下一节。
+
+第 4 步每个题集约 240 次模型调用，按 S4 实测（105 次调用 53 分钟，单次中位 20.8 秒、p95 54 秒）估 1–2 小时，按 3.5 小时留余量；
+通过 mac-bridge 排队时要显式把超时调大（一个题集 240 分钟，两个一起 480 分钟），默认的 120 分钟不够。
+中途断了重跑同一条命令即可：已经完成的模型调用记在运行目录的 `calls.sqlite` 里，不会重复。
+
+开发集（S4 的 40 题）可以先单独跑，用来查流程、调提示词；留出题只正式跑一次，脚本发现已有一份正式结果就拒绝再跑。
+不带模型的流程检查：`run_arms.py --reports ~/code/finreports --sets dev --llm fake --embedder fake --limit 4 --out /tmp/x`（数字没有意义）。
+
+## 留出题是怎么来的
+
+规模和构成与开发集相同：40 题，每份报告 7 道有答案（其中 2 道跨语言）+ 3 道无答案。
+
+1. **候选题**写在 `write_heldout.py` 的 `CANDIDATES` 里，共 76 条，比需要的多：每条给出题目、所属报告、它问的那一行在页面上应该长什么样（正则）。
+   写的时候手边没有年报全文，题目取自这类报告按披露规则固定会有的栏目（主要会计数据、利润表科目、分产品和分地区收入、10-K 的分部和产品表、港股年报管理层讨论里的固定句式）。
+   不问开发集已经问过的“同一家公司的同一个指标”，不问两个确定性查表工具会接走的问题（脚本逐条检查）。
+2. **初标**（`draft`）：脚本读哈希核对过的 PDF 的页面文字（pdfplumber），按页码顺序找到第一处匹配的行，取上面印的数字作为答案；
+   gold 页 = 这一页 + 同一个数字再次出现的每一页（同一标签下，或者数字不少于 7 位时的任何位置）。同一标签在别处印着别的数（单季度、母公司报表、上一年）会列出来给核对的人看，不算 gold。
+   无答案题列出全文里提到相关词的地方，供人确认“确实没有写出题目问的那个数”。每份报告按书写顺序取前几条定位成功的候选；不够就报错，不会悄悄出一份更小的题集。
+   这一步不检索、不调用任何模型。
+3. **人工核对**：每道题初始都是“待人工核对”。`heldout-checklist.html` 每题一张卡片：题目、初标的答案和页码、依据的原文片段、原页截图（橙色框是依据的那一行），
+   选“通过 / 要改 / 剔除”，全部选完后导出 `heldout-review.json`。同样的内容不带截图的版本是 `heldout-checklist.md`。
+   - 要改：按核对人的意见改 `heldout-draft.json` 里那道题的 `pages` / `accept`，并把它的 `review.status` 写成 `verified`。
+   - 剔除：`bash scripts/mac_multi_agent_eval.sh draft 题号`（即 `write_heldout.py draft --exclude 题号`），脚本换上下一条候选；已经核对过、内容没变的题保留核对标记，只需要再看新换上的那道。
+   - 一个核对标记只对它核对时的那份初标有效：之后题目、页码或可接受的写法变了，这道题回到“待人工核对”。
+4. **冻结**（`freeze`）：全部题都是“已核对”、构成与登记一致，才写出 `heldout.json` 和 `heldout-freeze.json`（哈希、核对人、时间）。两个文件提交之后，运行脚本才接受这批题；
+   改过一个字节、少一道题的核对标记，都不跑。
+
+## 确认题（修订 2）
+
+留出题上的结论刚好踩在门槛上，按 [PREREGISTRATION.md 的修订 2](PREREGISTRATION.md#修订) 另写了一批确认题，登记在 [confirm-registered.json](confirm-registered.json)。
+流程和留出题一样，文件名换成 `confirm-*`，命令加 `confirm-` 前缀：
+
+```bash
+bash scripts/mac_multi_agent_eval.sh confirm-draft    # 初标确认题、生成核对清单并提交草稿
+bash scripts/mac_multi_agent_eval.sh confirm-freeze   # 取 confirm-review.json 冻结并提交
+bash scripts/mac_multi_agent_eval.sh confirm          # 四组只在确认题上跑一次（mac-bridge 超时 240 分钟）
+```
+
+运行脚本要求 `pins.json` 与留出题运行时完全相同，确认题也只正式跑一次；报告里 `sets.confirm.confirmation` 给出 B 是否再次满足四条。
+
+## 这份证据有多强
+
+- 候选题、初标规则和被测代码出自同一作者。人工核对的是“题目问的是不是这一格、数字和页码对不对”，不是题目选得有没有代表性。
+- 写候选题时能看到的年报原文，只有 S4 那次运行报告里留下的检索片段（102 段，每段最多 600 字符，都是开发集问题检索回来的行）。它们被用来核对栏目的叫法和正则能不能匹配真实排版。
+  有 4 条候选（MH06、TH03、TH06、TH07）所问的那一行，是先在这些片段里见到才写进来的；它们对检索偏容易，排在各自那一组的最后，前面的候选定位不够时才会用到，用到的话清单里有标注。
+- 许多有答案题落在“主要会计数据”这类表上，开发集的题也问过同一张表的别的行。四组共用同一次检索，这一点对各组相同，但会让绝对答对数偏高。
+- 可接受的写法除了页面上印的数字，还按表格单位自动加了“亿”和“billion”的换算写法；单位是按报告整体写死的（茅台：元；宁德时代：千元；腾讯：百万元 / 十亿元；苹果：百万美元），核对时请一并看一眼。
+- 其余限制见登记文件的“不能宣称的”一节。
+
+## 不能改
+
+`heldout-freeze.json` 记录了 `heldout.json` 和 `write_heldout.py` 的哈希。冻结之后要改题只能另建新版本题集，旧结果保留。
+开发集是 S4 冻结的 `preparation/s4/real-reports/questions.json`，这里只读不改。

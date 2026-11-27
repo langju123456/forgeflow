@@ -1,5 +1,18 @@
 # ForgeFlow
 
+## 当前年报工作台（2026-11-24）
+
+最新切片：双指标稿件的局部重查、重新审批与导出，以及四份真实年报、6,425段内容的本机性能基准。空解析缓存加载38.9秒，复用解析缓存9.8秒；三请求词面并发未提速。组件结果不含模型/HTTP服务容量，也不是生产SLA。
+
+[工作台与架构](docs/annual-report-workbench.md) · [局部修订](preparation/annual-report-workbench/DECISION-006-multi-metric-scoped-recheck.md) · [性能结果与边界](preparation/annual-report-workbench/DECISION-007-local-performance-boundary.md)
+
+[Manus 模块接入架构与复现](docs/manus-runtime-integration.md)：正常年报查询与服务 worker 调用固定 MCP 工具；调用轨迹绑定审批导出；固定只读 PTY 校验与 EvidenceLoop 原生评测接入。
+
+下方保留企业受控执行与早期合成硬件场景的实现和验收记录。
+
+
+[企业年报研究工作台的实施进度、验收与证据](docs/annual-report-workbench.md)
+
 **English summary.** ForgeFlow is a local, evidence-first prototype of the control plane an enterprise agent needs before it is allowed to act: durable runs with fenced leases, MCP tool calls into a locked-down Docker sandbox, permission filtering before retrieval, deterministic stage-gate rules, bounded local-LLM analysis whose output is data rather than authority, approvals bound to evidence hashes, and crash-safe action receipts. The scenario is a synthetic hardware EVT readiness review. Everything runs on one machine against synthetic data; it is not a production system and is not connected to real hardware, trackers or office tools. The rest of this page is in Chinese.
 
 ## 这是什么
@@ -107,6 +120,23 @@ bash scripts/workbench.sh      # 需要 Python 3.12 和 Node；打开 http://127
 | 端到端时延中位数 | 21.8 s | 35.8 s |
 
 判断步骤只多答对 1 道无答案题，没达到事先定的“至少多 3 题”，所以产品里默认不开。中文问中文报告最弱（页级 3/10，答对 2/10）：词法打分不切中文词，只靠向量。hybrid 的 14 次自信答错里有 7 次来自没拼上的跨页续表——表头留在上一页，下一页只剩数字，模型给它安上了问题里的含义；另有把别家公司的段落当成被问公司的。题集也有问题：有 3 道题回答的数字和引用都对，但页码不在 gold 页表里，按规则算错。细节、逐题回答和限制见 [preparation/s4/real-reports/RESULTS.md](preparation/s4/real-reports/RESULTS.md)，复现用 `bash scripts/mac_real_reports_eval.sh`（需要本机 Ollama 和 `~/code/finreports` 下的 PDF）。
+
+## 年报问答服务化（Redis + RabbitMQ + gRPC + SSE）
+
+上面的年报问答在一个 HTTP 请求里同步做完检索和回答，真实年报上中位数 21.8 秒，期间页面什么都看不到。`forgeflow.desk_service` 把它拆成网关、RabbitMQ 队列、worker 和 gRPC 检索服务，检索和回答的逻辑不变：
+
+- **网关**（FastAPI）：Redis 缓存命中直接返回；同一个问题正在回答时用 `SET NX` 合并到那个任务；其余发到 RabbitMQ（publisher confirms），队列满了返回 429；任务事件通过 SSE 推给页面，断线后按 `Last-Event-ID` 续读。
+- **worker**：prefetch 限定同时跑几个模型调用；gRPC 调检索服务拿证据（带截止时间）；流式调用本机模型，回答文字作为草稿逐段推出，整段完成后用 `cited_answer` 原有的核对决定能不能展示；写缓存、写 `final` 之后才 ack。暂时性失败经 TTL 重试队列再试，用完次数进死信队列。
+- **检索服务**（gRPC）：唯一持有索引、Store 和 ACL 的进程；身份从 metadata 读，worker 不能自报角色。
+
+```bash
+.venv/bin/pip install -e '.[pdf,service]' && (cd web && npm ci && npm run build)
+bash scripts/desk_service.sh        # Docker 起 Redis 和 RabbitMQ，再起检索服务、2 个 worker、网关：http://127.0.0.1:8790/
+```
+
+用替身模型实测的服务层行为（[RESULTS.md](preparation/s5/desk-service/RESULTS.md)）：缓存命中中位数 41.9 ms、不调模型；20 个相同问题同时提交只调 1 次模型；模型同时处理的请求数等于 worker × prefetch；worker 在回答中途被 SIGKILL 后任务由另一个 worker 完成；队列满时多出的请求得到 429。设计取舍、每一层不做会怎么坏、测试清单见 [docs/20](docs/20-desk-service.md)。端到端测试 15 项需要本机 Redis 和 RabbitMQ（`FORGEFLOW_SERVICE_LIVE=1`）；真实模型下的服务化时延还没测。
+
+![流式草稿：证据已经检索到，回答正在生成，还没核对](docs/images/desk-service-streaming.png)
 
 ## 架构
 

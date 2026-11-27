@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "case_id": "catl-operating-cash-period-dev",
+  "split": "public-dev",
+  "source": {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-03-10/1225002214.PDF",
+    "sha256": "c15272977147dee7e6935a38ea0e4fd6855370aabb106f54cfe20f7cf6048ec9"
+  },
+  "tool_version": "annual-cash-v1",
+  "model": null,
+  "model_calls": 0,
+  "external_cost": 0,
+  "transport": "FastAPI TestClient",
+  "index_version": "aab60dee89fcd7fb",
+  "candidate_ids": [
+    "catl_2025_annual_zh#p12-t1",
+    "catl_2025_annual_zh#p11-t1",
+    "catl_2025_annual_zh#p30-t3",
+    "catl_2025_annual_zh#p121-t2"
+  ],
+  "comparison": {
+    "2025": {
+      "row_first": {
+        "raw": "32,868,257",
+        "id": "catl_2025_annual_zh#p12-t1"
+      },
+      "year_and_unit": [
+        {
+          "raw": "133,219,982",
+          "id": "catl_2025_annual_zh#p11-t1"
+        },
+        {
+          "raw": "133,219,982",
+          "id": "catl_2025_annual_zh#p30-t3"
+        }
+      ],
+      "two_disclosures": [
+        {
+          "raw": "133,219,982",
+          "id": "catl_2025_annual_zh#p11-t1"
+        },
+        {
+          "raw": "133,219,982",
+          "id": "catl_2025_annual_zh#p30-t3"
+        }
+      ]
+    },
+    "2024": {
+      "row_first": {
+        "raw": "32,868,257",
+        "id": "catl_2025_annual_zh#p12-t1"
+      },
+      "year_and_unit": [
+        {
+          "raw": "96,990,345",
+          "id": "catl_2025_annual_zh#p11-t1"
+        },
+        {
+          "raw": "96,990,345",
+          "id": "catl_2025_annual_zh#p30-t3"
+        }
+      ],
+      "two_disclosures": [
+        {
+          "raw": "96,990,345",
+          "id": "catl_2025_annual_zh#p11-t1"
+        },
+        {
+          "raw": "96,990,345",
+          "id": "catl_2025_annual_zh#p30-t3"
+        }
+      ]
+    },
+    "2023": {
+      "row_first": {
+        "raw": "32,868,257",
+        "id": "catl_2025_annual_zh#p12-t1"
+      },
+      "year_and_unit": [
+        {
+          "raw": "92,826,124",
+          "id": "catl_2025_annual_zh#p11-t1"
+        }
+      ],
+      "two_disclosures": []
+    },
+    "2022": {
+      "row_first": {
+        "raw": "32,868,257",
+        "id": "catl_2025_annual_zh#p12-t1"
+      },
+      "year_and_unit": [],
+      "two_disclosures": []
+    }
+  },
+  "product_runs": [
+    {
+      "request": "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
+      "status": "ANSWERED",
+      "answer": "宁德时代 2025 年全年经营活动产生的现金流量净额为 133,219,982 千元人民币。取自 2025 年报的“经营活动产生的现金流量净额”行、“2025年”列。",
+      "citations": [
+        {
+          "id": "catl_2025_annual_zh#p11-t1",
+          "page": 11,
+          "bbox": [
+            56.8,
+            330.5,
+            538.4,
+            609.0
+          ]
+        },
+        {
+          "id": "catl_2025_annual_zh#p30-t3",
+          "page": 30,
+          "bbox": [
+            56.8,
+            397.9,
+            538.4,
+            587.4
+          ]
+        }
+      ],
+      "wall_ms": 945.1
+    },
+    {
+      "request": "宁德时代 2024 年经营活动产生的现金流量净额是多少？",
+      "status": "ANSWERED",
+      "answer": "宁德时代 2024 年全年经营活动产生的现金流量净额为 96,990,345 千元人民币。取自 2025 年报的“经营活动产生的现金流量净额”行、“2024年”列。",
+      "citations": [
+        {
+          "id": "catl_2025_annual_zh#p11-t1",
+          "page": 11,
+          "bbox": [
+            56.8,
+            330.5,
+            538.4,
+            609.0
+          ]
+        },
+        {
+          "id": "catl_2025_annual_zh#p30-t3",
+          "page": 30,
+          "bbox": [
+            56.8,
+            397.9,
+            538.4,
+            587.4
+          ]
+        }
+      ],
+      "wall_ms": 426.5
+    },
+    {
+      "request": "宁德时代 2023 年经营活动产生的现金流量净额是多少？",
+      "status": "ANSWERED",
+      "answer": "宁德时代 2023 年全年经营活动产生的现金流量净额为 92,826,124 千元人民币。取自 2025 年报的“经营活动产生的现金流量净额”行、“2023年”列。",
+      "citations": [
+        {
+          "id": "catl_2025_annual_zh#p11-t1",
+          "page": 11,
+          "bbox": [
+            56.8,
+            330.5,
+            538.4,
+            609.0
+          ]
+        }
+      ],
+      "wall_ms": 634.2
+    },
+    {
+      "request": "宁德时代 2022 年经营活动产生的现金流量净额是多少？",
+      "status": "PERIOD_UNVERIFIED",
+      "answer": "待核对：当前可用证据无法确定该年度金额。请核对年度列表头、人民币单位和原表。",
+      "citations": [],
+      "wall_ms": 706.7
+    }
+  ]
+}

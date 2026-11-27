@@ -1,0 +1,9 @@
+{
+ "orchestration_version": "report-orchestration-v1",
+ "orchestration_prompt_sha256": "f303a855d10ff59d6b43ddbcbe395c6b34e0f8b8432398475e9164779008bf40",
+ "cited_answer": {
+  "version": "cited-answer-v1",
+  "sha256": "1575ef9bf525e9659c0a50e144630141aa8713cc11774ce6bad66af6935ee1f5"
+ },
+ "note": "Hashes of the role prompts in forgeflow.report_orchestration and of the cited-answer prompt. They may change on the development set only; every change is committed, and the last commit of this file before the held-out run is the one that counts."
+}

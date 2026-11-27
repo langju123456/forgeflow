@@ -6,6 +6,8 @@ Wiring only; each decision lives in the module it calls:
         ─ RankedKnowledgeService (hybrid if the local Ollama serves bge-m3, otherwise lexical)
         ─ AnswerabilityGate (optional, off by default: keep only hits that state the answer, with a quoted span)
         ─ cited answer (local model; may only cite hits it was given)
+        ─ report_orchestration (planner + executor + verifier by default; single answer, self-check or verifier
+          on request)
 
 The desk reads PDFs from a local folder (default ``~/code/finreports``) and checks each against the sha256 in
 ``preparation/s4/real-reports/sources.json``; a file that is missing or differs is listed as unavailable, never
@@ -20,10 +22,13 @@ import json
 import pickle
 import threading
 import time
+from collections import OrderedDict
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
+from . import annual_cash, apple_sales, report_lookup, report_orchestration
 from .contracts import DomainError, Principal, Scope
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -75,12 +80,18 @@ def pick_chat_model(listed: set[str]) -> str | None:
 
 class ReportDesk:
     def __init__(self, reports_dir: Path, work_dir: Path, *, ollama_url: str = OLLAMA,
-                 answerer: Callable[[str, list[Any]], dict] | None = None, sources: Path = SOURCES):
+                 answerer: Callable[[str, list[Any]], dict] | None = None, sources: Path = SOURCES,
+                 orchestrator: report_orchestration.Orchestrator | None = None, orchestration: str | None = None):
         self.reports_dir = Path(reports_dir).expanduser()
         self.work_dir = Path(work_dir)
         self.work_dir.mkdir(parents=True, exist_ok=True)
         self.ollama_url = ollama_url
         self.answerer = answerer
+        self.orchestrator = orchestrator  # built on first use from the local Ollama when not given
+        # How ``ask`` answers when the caller does not say: report_orchestration.DEFAULT_MODE unless given here.
+        self.orchestration = report_orchestration.DEFAULT_MODE if orchestration is None else orchestration
+        if self.orchestration not in report_orchestration.MODES:
+            raise ValueError(f"orchestration is one of {', '.join(report_orchestration.MODES)}")
         self.sources = Path(sources)
         self.reports: list[dict] = []
         self.status = {"state": "starting", "detail": "", "embedded": 0, "rows": 0}
@@ -100,7 +111,7 @@ class ReportDesk:
             state = "missing"
             if path.exists():
                 state = "ok" if _sha256(path) == source["sha256"] else "changed"
-            out.append({**{k: source[k] for k in ("key", "company", "document", "language", "pages", "url")},
+            out.append({**{k: source[k] for k in ("key", "company", "document", "language", "pages", "url", "sha256")},
                         "state": state, "path": str(path)})
         return out
 
@@ -191,7 +202,7 @@ class ReportDesk:
         self.status["embedded"] = len(rows)
 
     # ------------------------------------------------------------------ asking
-    def citation(self, hit: Any) -> dict:
+    def citation(self, hit: Any, question: str = "") -> dict:
         from .pdf_ingest import parse_source_line
 
         place = parse_source_line(hit.content) or {}
@@ -200,17 +211,34 @@ class ReportDesk:
         report = next((r for r in self.reports if hit.id.startswith(r["key"])), None)
         pages = place.get("pages") or []
         first = pages[0] if pages else {}
+        year = annual_cash.requested_year(question)
+        cell = annual_cash.read_cell(hit.id, hit.content, year) if year else None
+        if cell:
+            body = f"{annual_cash.METRIC} · {year}年年度列 · 人民币千元\n原格 {cell.raw}\n{body}"
+        sales_request = apple_sales.request(question)
+        if sales_request:
+            fiscal_year, _ = sales_request
+            sales = apple_sales.read_sales(hit.id, hit.content, fiscal_year)
+            if sales:
+                body = (f"百万美元 · FY{fiscal_year} / FY{fiscal_year-1}\n"
+                        f"Services | {sales.current_services:,} | {sales.prior_services:,}\n"
+                        f"Total net sales | {sales.current_total:,} | {sales.prior_total:,}\n{body}")
         return {"id": hit.id, "doc": report["key"] if report else None,
                 "company": report["company"] if report else None,
                 "kind": row.get("kind"), "page": first.get("page"), "bbox": first.get("bbox"),
-                "snippet": body[:600]}
+                "snippet": body[:600], "file_prefix": place.get("file_sha256_prefix"),
+                "source_hash": hit.source_hash, "row_version": hit.version}
 
-    def ask(self, question: str, *, gate: bool = False, top_k: int = 5) -> dict:
-        """Retrieve, optionally run the answerability gate, then answer from what is left.
+    def evidence(self, question: str, *, gate: bool = False, top_k: int = 5,
+                 principal: Principal = ANALYST, search_query: str | None = None, doc: str | None = None) -> dict:
+        """Retrieval and the optional gate, without the answer step: what the desk service's gRPC server returns.
 
-        The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
-        but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
-        was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
+        ``ask`` is this plus the cited answer in the same process; the desk service (forgeflow.desk_service) runs
+        the answer step in a separate worker, so both paths share exactly this evidence step.
+
+        ``search_query`` and ``doc`` are a planner's plan (report_orchestration): rank with other words than the
+        question, inside one report. Both act after the Store's ACL filter and can only narrow what is returned;
+        the gate, when on, still judges the hits against the question itself.
         """
         if self.service is None:
             raise DomainError("DESK_NOT_READY", self.status.get("detail") or "Reports are still loading", 503)
@@ -219,10 +247,27 @@ class ReportDesk:
             raise DomainError("QUERY_REQUIRED", "Ask a question", 422)
         timings: dict[str, float] = {}
         started = time.perf_counter()
-        hits = self.service.search(ANALYST, SCOPE, question, top_k)
+        service = self.service
+        lookup = report_lookup.for_question(question)
+        if lookup:
+            from .retrieval import RankedKnowledgeService
+
+            service = RankedKnowledgeService(self.store, lookup.rank)
+        elif doc:
+            from .retrieval import RankedKnowledgeService
+
+            service = RankedKnowledgeService(self.store, report_orchestration.within(doc, self.service.ranker))
+        # A conflicting answer needs two separately authorized links, even for one requested answer.
+        limit = 2 if lookup and type(top_k) is int and top_k == 1 else top_k
+        hits = service.search(principal, SCOPE, question if lookup or not search_query else search_query, limit)
         timings["retrieval_ms"] = round((time.perf_counter() - started) * 1000, 1)
         kept, dropped, gate_status = list(hits), [], "OFF"
-        if gate and self.gate is not None and hits:
+        if lookup:
+            if lookup.conflicting(hits):
+                gate_status, kept, dropped = "ANNUAL_CONFLICT", [], list(hits)
+            else:
+                gate_status, kept = lookup.gate, kept[:top_k]
+        elif gate and self.gate is not None and hits:
             started = time.perf_counter()
             result = self.gate.check(question, hits)
             timings["gate_ms"] = round((time.perf_counter() - started) * 1000, 1)
@@ -231,21 +276,94 @@ class ReportDesk:
             kept = list(result.hits)
             kept_ids = {h.id for h in kept}
             dropped = [h for h in hits if h.id not in kept_ids]
+        return {"question": question, "hits": list(hits), "kept": kept, "dropped": dropped,
+                "gate": gate_status, "timings": timings}
+
+    def index_version(self) -> str:
+        """Fingerprint of what retrieval can return: every loaded row's content hash plus the ranking mode.
+
+        A cached answer is only valid for the index it was computed on; the desk service puts this in its cache
+        key, so re-ingesting a report or switching lexical/hybrid never serves an answer from the old index.
+        """
+        from .report_plugin import RUNTIME_VERSION
+
+        material = {"mode": self.mode, "source_metadata_version": 1, "report_runtime": RUNTIME_VERSION,
+                    "annual_lookup": [annual_cash.VERSION, apple_sales.VERSION],
+                    "rows": sorted(r["source_hash"] for r in self._row_index.values())}
+        return hashlib.sha256(json.dumps(material, sort_keys=True).encode()).hexdigest()[:16]
+
+    def ask(self, question: str, *, gate: bool = False, top_k: int = 5, orchestration: str | None = None) -> dict:
+        """Retrieve, optionally run the answerability gate, then answer from what is left.
+
+        The gate is off unless asked for: on the real annual reports it met the permission and answerable rules
+        but turned only 1 of the 12 absent questions into a correct "not in the reports" (the pre-registered bar
+        was 3), so by that rule it stays off by default (preparation/s4/real-reports/RESULTS.md).
+
+        ``orchestration`` defaults to the desk's own (``report_orchestration.DEFAULT_MODE``, plan_verify: it met the
+        registered rule on the held-out and the confirmation set, preparation/s6/multi-agent/RESULTS.md); ``single``
+        and the others stay selectable. Without the 16k-context model an orchestration is refused, not downgraded:
+        ask for ``single`` there. Questions the report tools answer never reach it.
+        """
+        orchestration = self.orchestration if orchestration is None else orchestration
+        if orchestration not in report_orchestration.MODES:
+            raise DomainError("INVALID_ORCHESTRATION", f"orchestration is one of {', '.join(report_orchestration.MODES)}",
+                              422)
+        found = self.evidence(question, gate=gate, top_k=top_k)
+        question, kept, timings = found["question"], found["kept"], found["timings"]
         answer: dict[str, Any] = {"found": False, "answer": "", "citations": []}
-        if kept and self.answerer is not None:
+        lookup = report_lookup.for_question(question)
+        if lookup:
+            answer = lookup.answer(question, kept)
+        elif orchestration != "single":
+            found, answer = self._orchestrate(orchestration, found, gate=gate, top_k=top_k)
+        elif kept and self.answerer is not None:
             started = time.perf_counter()
             answer = self.answerer(question, kept)
             timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
-        by_id = {h.id: h for h in hits}
-        return {
-            "question": question, "mode": self.mode, "gate": gate_status,
+        return self.assemble(found, answer)
+
+    def _orchestrate(self, mode: str, found: dict, *, gate: bool, top_k: int) -> tuple[dict, dict]:
+        """Answer through report_orchestration; returns the evidence the answer was produced from and the answer."""
+        if self.orchestrator is None:
+            self.orchestrator = report_orchestration.default_orchestrator(self.ollama_url)
+        if self.orchestrator is None:
+            raise DomainError("ORCHESTRATION_UNAVAILABLE",
+                              f"需要本机 Ollama 的 {report_orchestration.REQUIRED_MODEL}（16k 上下文）", 503)
+        question, planned = found["question"], {}
+
+        def search(query: str, doc: str | None) -> list[Any]:
+            planned["found"] = self.evidence(question, gate=gate, top_k=top_k, search_query=query, doc=doc)
+            return planned["found"]["kept"]
+
+        started = time.perf_counter()
+        outcome = self.orchestrator.run(mode, question, found["kept"], search=search,
+                                        catalogue=[r for r in self.reports if r["state"] == "ok"])
+        timings = dict(found["timings"])
+        if outcome.evidence == "planned":
+            timings["planned_retrieval_ms"] = planned["found"]["timings"]["retrieval_ms"]
+            found = planned["found"]
+        timings["answer_ms"] = round((time.perf_counter() - started) * 1000, 1)
+        return {**found, "timings": timings}, outcome.result
+
+    def assemble(self, found: dict, answer: dict, *, run_id=None, index_version=None, tool_trace=None) -> dict:
+        """Map only independently retrieved row IDs back to citation objects."""
+        question, hits = found["question"], found["hits"]
+        by_id = {hit.id: hit for hit in hits}
+        result = {
+            "question": question, "mode": self.mode, "gate": found["gate"], "status": answer.get("status"),
+            **({"calculation": answer["calculation"]} if "calculation" in answer else {}),
+            **({"orchestration": answer["orchestration"]} if "orchestration" in answer else {}),
             "found": bool(answer.get("found")) and bool(answer.get("citations")),
             "answer": answer.get("answer", ""),
-            "citations": [self.citation(by_id[c]) for c in answer.get("citations", []) if c in by_id],
-            "kept": [self.citation(h) for h in kept], "dropped": [self.citation(h) for h in dropped],
-            "answerer": answer.get("model") or ("none" if self.answerer is None else "local"),
-            "timings": timings,
+            "citations": [self.citation(by_id[c], question) for c in answer.get("citations", []) if c in by_id],
+            "kept": [self.citation(h, question) for h in found["kept"]],
+            "dropped": [self.citation(h, question) for h in found["dropped"]],
+            "answerer": answer.get("tool_version") or answer.get("model") or ("none" if self.answerer is None else "local"),
+            "timings": found["timings"],
         }
+        if tool_trace is not None:
+            result.update(run_id=run_id, index_version=index_version, tool_trace=tool_trace)
+        return result
 
     def page_png(self, key: str, page: int, box: list[float] | None, resolution: int = 110) -> bytes:
         import pdfplumber
@@ -276,8 +394,30 @@ def default_answerer() -> Callable[[str, list[Any]], dict] | None:
 
 def mount_report_desk(app: Any, desk: ReportDesk) -> None:
     """Add /reports routes to a FastAPI app. DEV_ONLY: one fixed analyst identity, local files only."""
-    from fastapi import Body, HTTPException
+    import asyncio
+
+    from fastapi import Body, Depends, HTTPException
     from fastapi.responses import Response
+
+    from . import research_api
+    from .report_plugin import ReportProcessError, ReportProtocolError, ReportRuntime
+    from .report_plugin import run as run_report_tool
+
+    recent: OrderedDict[str, dict] = OrderedDict()
+    recent_lock = threading.Lock()
+
+    async def resolve(run_id):
+        with recent_lock:
+            result = recent.get(run_id)
+        if result is None:
+            raise DomainError("RUN_EXPIRED", "请重新运行该查表问题，然后保存。", 409)
+        return research_api.fact_record(result, desk.reports, "sync")
+
+    research_api.mount(app, resolve, "sync")
+    runtime = ReportRuntime()
+    app.state.report_runtime = runtime
+    app.router.on_shutdown.append(runtime.close)
+    author_dep = Depends(research_api.optional_author)
 
     def fail(error: DomainError):
         raise HTTPException(status_code=error.status, detail={"code": error.code, "message": error.message})
@@ -289,9 +429,33 @@ def mount_report_desk(app: Any, desk: ReportDesk) -> None:
                 "answer_available": desk.answerer is not None}
 
     @app.post("/reports/ask")
-    def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True)):
+    async def ask(question: str = Body(..., embed=True), gate: bool = Body(False, embed=True),
+                  orchestration: str | None = Body(None, embed=True), actor=author_dep):
         try:
-            return desk.ask(question, gate=gate)
+            if report_lookup.for_question(question):
+                found = await asyncio.to_thread(desk.evidence, question, gate=gate)
+                run_id, index_version = uuid4().hex, desk.index_version()
+                started = time.perf_counter()
+                answer, trace = await run_report_tool(
+                    found["question"], [h.model_dump() for h in found["kept"]], run_id=run_id,
+                    index_version=index_version, journal_dir=desk.work_dir, runtime=runtime)
+                found["timings"]["tool_ms"] = round((time.perf_counter() - started) * 1000, 1)
+                result = desk.assemble(found, answer, run_id=run_id, index_version=index_version, tool_trace=trace)
+            else:
+                result = await asyncio.to_thread(desk.ask, question, gate=gate, orchestration=orchestration)
+            if actor and result.get("found") and report_lookup.for_question(question):
+                # Revalidate outward/trace agreement before creating a source grant.
+                research_api.fact_record(result, desk.reports, "sync")
+                with recent_lock:
+                    recent[result["run_id"]] = result
+                    if len(recent) > 128:
+                        recent.popitem(last=False)
+                result = {**result, "research_grant": research_api.store.grant_source(actor, result["run_id"], "sync")}
+            return result
+        except ReportProcessError:
+            raise HTTPException(503, detail={"code": "REPORT_TOOL_PROCESS", "message": "查表工具暂时不可用，请稍后重试。"}) from None
+        except ReportProtocolError:
+            raise HTTPException(502, detail={"code": "REPORT_TOOL_PROTOCOL", "message": "工具结果未通过校验，未生成入稿许可。"}) from None
         except DomainError as error:
             fail(error)
 

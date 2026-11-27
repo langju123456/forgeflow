@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { desk, ms, snippetLines, STATE_TEXT } from "../reports";
-import type { AskResult, Citation, DeskInfo } from "../reports";
+import { useEffect, useRef, useState } from "react";
+import { ResearchDesk } from "./ResearchDesk";
+import { desk, ms, snippetLines, STAGES, stageIndex, STATE_TEXT, WITHDRAWN_TEXT } from "../reports";
+import type { AskResult, Citation, DeskInfo, JobProgress } from "../reports";
 
 // Example questions are deliberately not from the evaluation set in preparation/s4/real-reports/questions.json.
 const EXAMPLES = [
   "宁德时代 2025 年经营活动产生的现金流量净额是多少？",
   "茅台 2025 年直销渠道的营业收入是多少？",
+  "Apple FY2025 服务收入增速和增长贡献",
   "What was Apple's products gross margin percentage in fiscal 2025?",
   "腾讯 2025 年的毛利是多少？",
   "茅台 2025 年在日本的销售收入是多少？",
@@ -28,6 +30,22 @@ function CitationCard({ c, active, onOpen }: { c: Citation; active: boolean; onO
   );
 }
 
+/** The job's path through the service: 排队 → 检索 → 生成 → 核对完成, with the attempt number when it was retried. */
+function JobStrip({ progress }: { progress: JobProgress }) {
+  const at = stageIndex(progress.stage);
+  return (
+    <div className="job-strip" aria-label="进度">
+      {STAGES.map((stage, i) => (
+        <span key={stage.key} className={`job-step${i < at ? " done" : ""}${i === at ? " now" : ""}`}>
+          {stage.label}
+        </span>
+      ))}
+      {progress.attempt > 1 && <span className="chip chip-PENDING">第 {progress.attempt} 次尝试</span>}
+      {progress.state === "joined" && <span className="chip chip-APPROVED">同一个问题正在回答，已合并</span>}
+    </div>
+  );
+}
+
 export function ReportDesk() {
   const [info, setInfo] = useState<DeskInfo | null>(null);
   const [offline, setOffline] = useState(false);
@@ -38,6 +56,16 @@ export function ReportDesk() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AskResult | null>(null);
   const [open, setOpen] = useState<Citation | null>(null);
+  const [progress, setProgress] = useState<JobProgress | null>(null);
+  const [lastDraft, setLastDraft] = useState("");
+  const [researchToken, setResearchToken] = useState<string>();
+  const identityEpoch = useRef(0);
+
+  function switchIdentity(token?: string) {
+    identityEpoch.current += 1;
+    setResearchToken(token); setResult(null); setProgress(null); setOpen(null);
+    setQuestion(""); setLastDraft(""); setError(null); setBusy(false);
+  }
 
   useEffect(() => {
     let stop = false;
@@ -62,19 +90,34 @@ export function ReportDesk() {
 
   const ask = async (text: string) => {
     if (!text.trim() || !ready) return;
+    const epoch = identityEpoch.current;
     setQuestion(text);
     setBusy(true);
     setError(null);
     setOpen(null);
+    setResult(null);
+    setProgress(null);
+    setLastDraft("");
     try {
-      const answer = await desk.ask(text, gate);
+      let draft = "";
+      const answer = info?.service
+        ? await desk.askStream(text, gate, (p) => {
+            if (epoch !== identityEpoch.current) return;
+            draft = p.draft;
+            setProgress(p);
+            if (p.kept.length) setOpen((current) => current ?? p.kept[0]);
+          }, researchToken)
+        : await desk.ask(text, gate, researchToken);
+      if (epoch !== identityEpoch.current) return;
       setResult(answer);
-      setOpen(answer.citations[0] ?? answer.kept[0] ?? null);
+      setLastDraft(draft);
+      setOpen(answer.citations[0] ?? answer.kept[0] ?? answer.dropped[0] ?? null);
     } catch (e) {
+      if (epoch !== identityEpoch.current) return;
       setResult(null);
       setError(String((e as Error).message ?? e));
     } finally {
-      setBusy(false);
+      if (epoch === identityEpoch.current) setBusy(false);
     }
   };
 
@@ -125,9 +168,17 @@ export function ReportDesk() {
             </div>
             <div className="kv">
               <dt>回答</dt>
-              <dd>{info.answer_available ? "本机模型生成，只能引用给它的段落" : "只显示证据（本机没有可用的回答模型）"}</dd>
+              <dd>{info.answer_available ? "本机模型生成，只能引用给它的段落" : "年度查数与计算可用；其他问题显示检索证据"}</dd>
             </div>
           </dl>
+          {info.service && info.queue && (
+            <div className="kv">
+              <dt>服务</dt>
+              <dd>
+                队列 {info.queue.waiting}/{info.queue.max} · {info.queue.workers} 个 worker · {info.model}
+              </dd>
+            </div>
+          )}
           <p className="hint">全部在你电脑上运行，年报和问题不会发给外部模型。</p>
         </section>
       </aside>
@@ -162,13 +213,53 @@ export function ReportDesk() {
 
         {error && <div className="notice notice-error"><strong>没有完成</strong><span>{error}</span></div>}
 
+        {busy && progress && (
+          <div className="desk-grid">
+            <section className="card">
+              <JobStrip progress={progress} />
+              {progress.stage === "retrying" && <p className="hint">依赖暂时不可用，稍后自动重试：{progress.retryReason}</p>}
+              {progress.draft ? (
+                <div className="answer draft">
+                  <p className="eyebrow">草稿 · 生成中，还没核对引用</p>
+                  <p className="answer-text">
+                    {progress.draft}
+                    <span className="caret" />
+                  </p>
+                </div>
+              ) : (
+                <p className="hint">{progress.stage === "queued" ? "等待 worker…" : progress.stage === "retrieving" ? "检索中…" : "等待模型输出第一个字…"}</p>
+              )}
+              {progress.kept.length > 0 && <h3 className="section-title">检索到的证据</h3>}
+              <div className="evidence-list">
+                {progress.kept.map((c) => (
+                  <CitationCard key={c.id} c={c} active={open?.id === c.id} onOpen={setOpen} />
+                ))}
+              </div>
+            </section>
+            <section className="card page-view">
+              {pageUrl ? <img src={pageUrl} alt={`${open?.company} 第 ${open?.page} 页`} /> : <p className="empty">证据出来后可以在这里看原页。</p>}
+            </section>
+          </div>
+        )}
+
         {result && (
           <div className="desk-grid">
             <section className="card">
               {result.found ? (
                 <div className="answer">
-                  <p className="eyebrow">回答 · 带页码引用</p>
+                  <p className="eyebrow">{result.gate === "ANNUAL_COLUMN" ? "年度原表核对" : result.calculation ? "两期经营分析" : "回答 · 带页码引用"}</p>
                   <p className="answer-text">{result.answer}</p>
+                  {result.research_grant_error && <p role="status">入稿未就绪：{result.research_grant_error}</p>}
+                  {result.calculation && (
+                    <table className="fact-table" aria-label="计算依据">
+                      <caption>源表金额（{result.calculation.unit}）</caption>
+                      <thead><tr><th>指标</th>{result.calculation.periods.map((y) => <th key={y}>FY{y}</th>)}</tr></thead>
+                      <tbody>
+                        <tr><th scope="row">服务收入</th>{result.calculation.services.map((n, i) => <td key={i}>{n.toLocaleString("en-US")}</td>)}</tr>
+                        <tr><th scope="row">公司总收入</th>{result.calculation.total_sales.map((n, i) => <td key={i}>{n.toLocaleString("en-US")}</td>)}</tr>
+                      </tbody>
+                    </table>
+                  )}
                   <div className="cites">
                     {result.citations.map((c) => (
                       <button key={c.id} className="cite" onClick={() => setOpen(c)}>
@@ -180,16 +271,29 @@ export function ReportDesk() {
               ) : (
                 <div className="answer none">
                   <p className="eyebrow">回答</p>
+                  {lastDraft && result.status && WITHDRAWN_TEXT[result.status] && (
+                    <p className="hint">生成过草稿“{lastDraft.slice(0, 60)}{lastDraft.length > 60 ? "…" : ""}”：{WITHDRAWN_TEXT[result.status]}</p>
+                  )}
                   <p className="answer-text">
-                    {result.kept.length && !info.answer_available
+                    {result.status === "PERIOD_UNVERIFIED" ? result.answer : result.kept.length && !info.answer_available
                       ? "下面是检索到的证据；本机没有回答模型，所以不生成回答。"
-                      : "年报里没有找到能回答这个问题的内容。"}
+                      : result.status === "UNSUPPORTED" || result.status === "ANSWER_ERROR"
+                        ? "没有能展示的回答。"
+                        : "年报里没有找到能回答这个问题的内容。"}
                   </p>
-                  {result.dropped.length > 0 && <p className="hint">检索到 {result.dropped.length} 段相关内容，但核对后都没有写明答案，见下方“相关但不能回答”。</p>}
+                  {result.gate === "ANNUAL_CONFLICT" ? <p className="hint">年度列披露的金额不一致，请打开下方原表逐项核对。</p> : result.dropped.length > 0 && <p className="hint">检索到 {result.dropped.length} 段相关内容，但核对后都没有写明答案，见下方“相关但不能回答”。</p>}
                 </div>
               )}
               <p className="timing mono dim">
-                检索 {ms(result.timings.retrieval_ms)} · 核对 {ms(result.timings.gate_ms)} · 回答 {ms(result.timings.answer_ms)} · {result.mode === "hybrid" ? "混合检索" : "词面检索"}
+                {result.cached
+                  ? "缓存命中，没有调用模型；以下是第一次回答时的耗时 · "
+                  : result.timings.queue_ms !== undefined
+                    ? `排队 ${ms(result.timings.queue_ms)} · `
+                    : ""}
+                检索 {ms(result.timings.retrieval_ms)} · 核对 {ms(result.timings.gate_ms)} ·
+                {result.timings.first_token_ms !== undefined ? ` 首字 ${ms(result.timings.first_token_ms)} ·` : ""} 回答{" "}
+                {ms(result.timings.answer_ms)} · {["ANNUAL_COLUMN", "ANNUAL_CONFLICT", "SALES_CALCULATION"].includes(result.gate) ? "年度表格查数" : result.mode === "hybrid" ? "混合检索" : "词面检索"}
+                {result.attempt && result.attempt > 1 ? ` · 第 ${result.attempt} 次尝试完成` : ""}
               </p>
 
               {evidence.length > 0 && <h3 className="section-title">证据</h3>}
@@ -200,7 +304,7 @@ export function ReportDesk() {
               </div>
               {result.dropped.length > 0 && (
                 <>
-                  <h3 className="section-title">相关但不能回答</h3>
+                  <h3 className="section-title">{result.gate === "ANNUAL_CONFLICT" ? "有冲突的年度原格" : "相关但不能回答"}</h3>
                   <div className="evidence-list muted">
                     {result.dropped.map((c) => (
                       <CitationCard key={c.id} c={c} active={open?.id === c.id} onOpen={setOpen} />
@@ -223,6 +327,7 @@ export function ReportDesk() {
             </section>
           </div>
         )}
+        <ResearchDesk result={result} info={info} onIdentity={switchIdentity} />
       </section>
     </main>
   );

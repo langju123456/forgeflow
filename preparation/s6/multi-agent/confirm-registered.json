@@ -1,0 +1,27 @@
+{
+ "version": "multi-agent-qa-v1-confirm",
+ "revision": "PREREGISTRATION.md, 修订 2",
+ "written": "2026-11-26, after the held-out result (plan_verify adopted, 13 vs 10 answerable correct over single: exactly the threshold of 3) and before any confirmation question was drafted",
+ "builds_on": {
+  "path": "preparation/s6/multi-agent/preregistered.json",
+  "sha256": "e308876ccd0a3c5446395de1c4a65bf2be40419fbfb0f683adc6dbbafddb2c1f",
+  "unchanged": ["arms", "model", "pins", "precedence", "verifier_pass_requires", "statuses", "sharing", "call_order_per_question", "repetitions", "reported", "decision_rule"]
+ },
+ "pins_sha256": "8b9cd562db247c5cf72760d2852c850dcc0d0f3415e8ebc7debed84801163341",
+ "pins_note": "pins.json as it was for the held-out run (runs/arms-20261126T100513Z); the runner refuses the confirmation set with any other",
+ "set": {
+  "path": "preparation/s6/multi-agent/confirm.json",
+  "freeze": "preparation/s6/multi-agent/confirm-freeze.json",
+  "count": 40, "answerable": 28, "absent": 12, "answerable_cross_language": 8,
+  "per_report": {"answerable": 7, "answerable_cross_language": 2, "absent": 3},
+  "role": "confirmation set: questions neither the development nor the held-out set asks; the held-out list's unused candidates first, then candidates written after the held-out result; gold drafted by script from the PDF page text and checked against the printed page by a model, not a person; frozen before any retrieval or model call on it; run once, all four arms"
+ },
+ "rule": {
+  "arm": "plan_verify",
+  "conditions": "the four of decision_rule, on this set: answerable correct at least 3 above single and at least 2 above self_check, wrong-but-confident not above single, every leak counter 0",
+  "confirmed": "plan_verify meets all four",
+  "if_confirmed": "plan_verify is wired into the desk-service worker (the Search request gains the planned report and the reworded query) and becomes the default way model answers are produced in report_desk and desk_service; single stays selectable",
+  "if_not_confirmed": "the held-out adoption stays reported as measured once, not confirmed; the default stays single; plan_verify stays opt-in; nothing is tuned on this set",
+  "verify": "reported, not judged"
+ }
+}

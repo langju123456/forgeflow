@@ -1,0 +1,74 @@
+{
+  "version": "multi-agent-qa-v1",
+  "builds_on": {
+    "path": "preparation/s4/real-reports/preregistered.json",
+    "sha256": "1a1f28389087184b7b70c3bfa85b6fa78aa389e85775125cb4bbb0511b03e828",
+    "used_unchanged": ["sources", "scopes", "corpus", "principals", "admin", "asker", "permission_checks.restricted_copies",
+                       "permission_checks.markers", "retrieval", "model", "prompts.cited_answer", "scoring"]
+  },
+  "sets": {
+    "dev": {
+      "path": "preparation/s4/real-reports/questions.json",
+      "sha256": "68f83bf6ca3979ce2d2e359d2167b0f4e1ddbbbf81bd60d63233c020dafbec2a",
+      "count": 40, "answerable": 28, "absent": 12,
+      "role": "development only: already used in S4; reported as exploratory, never part of the decision"
+    },
+    "heldout": {
+      "path": "preparation/s6/multi-agent/heldout.json",
+      "freeze": "preparation/s6/multi-agent/heldout-freeze.json",
+      "count": 40, "answerable": 28, "absent": 12, "answerable_cross_language": 8,
+      "per_report": {"answerable": 7, "answerable_cross_language": 2, "absent": 3},
+      "role": "decision set: gold drafted by script from the PDF page text, every question checked by a person against the printed page, frozen before any retrieval or model call on it; run once"
+    }
+  },
+  "model": {
+    "served_as": "forgeflow-qwen3-8b-ctx16k",
+    "same_for_every_role": true,
+    "refused": {"qwen3:8b": "loads with a 4096-token context and silently truncates longer prompts"}
+  },
+  "pins": {
+    "path": "preparation/s6/multi-agent/pins.json",
+    "covers": ["orchestration version", "prompt and schema of every role", "check list shared by self_check and verifier"],
+    "may_change": "on the development set only, each change committed; the last commit before the held-out run counts"
+  },
+  "arms": [
+    {"id": "single", "label": "单次回答（重跑）", "steps": ["answer"], "max_model_calls": 1},
+    {"id": "self_check", "label": "单 Agent 自检", "steps": ["answer", "self_check"], "max_model_calls": 2,
+     "note": "same role, same system prompt, sees all hits again plus its own answer; may keep, revise or withdraw"},
+    {"id": "verify", "label": "A：执行者 + 核对者", "steps": ["answer", "verify", "retry", "verify_retry"], "max_model_calls": 4,
+     "note": "verifier sees the question, the answer and the cited passages only; veto only; pass stops; one retry; second veto is NEEDS_REVIEW"},
+    {"id": "plan_verify", "label": "B：规划者 + A", "steps": ["plan", "answer", "verify", "retry", "verify_retry"],
+     "max_model_calls": 5,
+     "note": "planner sees the question and the report list only; retrieval is narrowed to the planned report and uses the rewritten query; an invalid plan or a planned retrieval without hits falls back to the original retrieval"}
+  ],
+  "precedence": ["code", "verifier", "executor"],
+  "verifier_pass_requires": ["verdict = pass", "failed = none", "quote of at least 6 characters found verbatim in a cited passage"],
+  "statuses": {
+    "errors_count_as_wrong": ["ANSWER_ERROR", "VERIFY_ERROR"],
+    "NEEDS_REVIEW": "vetoed twice: no answer shown; answerable = not correct and not wrong-but-confident; absent = correct; counted separately per kind"
+  },
+  "sharing": {
+    "retrieval": "once per question for single, self_check and verify; plan_verify adds its planned retrieval",
+    "model_calls": "a call with identical messages and schema is sent to the model once per run and its output is shared across arms; calls and time are counted per arm as if it ran alone",
+    "resume": "an interrupted run continues from the call records on disk"
+  },
+  "call_order_per_question": ["retrieval", "answer", "self_check", "verify", "retry", "verify_retry", "plan",
+                              "planned retrieval", "answer (planned hits)", "verify", "retry", "verify_retry"],
+  "repetitions": 1,
+  "reported": ["answerable_correct (all / same language / cross language)", "absent_correct", "wrong_but_confident with ids",
+               "model calls per question and per step", "time per question (retrieval + model calls)", "failure types",
+               "verifier verdicts", "plan statuses and page recall after planned retrieval", "needs_review per kind",
+               "diagnostic flags: cites_other_report, figures_not_in_cited", "permission counters"],
+  "decision_rule": {
+    "set": "heldout",
+    "applies_to": ["verify", "plan_verify"],
+    "min_answerable_gain_over_single": 3,
+    "min_answerable_gain_over_self_check": 2,
+    "max_wrong_but_confident_increase_over_single": 0,
+    "permissions": "every leak counter is 0",
+    "both_pass": "adopt the arm with more answerable questions correct; on a tie adopt verify (fewer calls)",
+    "otherwise": "not adopted: single answer stays the default, orchestration stays opt-in; reported as measured"
+  },
+  "out_of_scope": ["orchestrated answers do not enter the research approval flow", "MCP tools unchanged",
+                   "no supervisor routing", "plan_verify is not wired into the desk-service worker in this round"]
+}

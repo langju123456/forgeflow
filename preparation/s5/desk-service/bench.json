@@ -1,0 +1,93 @@
+{
+  "cache_and_join": {
+    "requests": 20,
+    "computed_ms": {
+      "median": 481.3,
+      "p95": 504.5
+    },
+    "cached_ms": {
+      "median": 41.9,
+      "p95": 56.8
+    },
+    "model_calls_for_cached": 0,
+    "identical_concurrent": {
+      "requests": 20,
+      "jobs": 1,
+      "joined": 19,
+      "model_calls": 1
+    }
+  },
+  "concurrency": [
+    {
+      "workers": 1,
+      "prefetch": 1,
+      "questions": 12,
+      "peak_concurrent_model_calls": 1,
+      "wall_ms": 13479.1,
+      "queue_ms": {
+        "median": 6016.9,
+        "max": 12025.7
+      },
+      "all_answered": true
+    },
+    {
+      "workers": 1,
+      "prefetch": 2,
+      "questions": 12,
+      "peak_concurrent_model_calls": 2,
+      "wall_ms": 6925.3,
+      "queue_ms": {
+        "median": 2774.7,
+        "max": 5499.6
+      },
+      "all_answered": true
+    },
+    {
+      "workers": 2,
+      "prefetch": 2,
+      "questions": 12,
+      "peak_concurrent_model_calls": 4,
+      "wall_ms": 3846.4,
+      "queue_ms": {
+        "median": 1263.6,
+        "max": 2404.6
+      },
+      "all_answered": true
+    }
+  ],
+  "crash_recovery": {
+    "killed": "SIGKILL during the answer stream",
+    "final_status": "ANSWERED",
+    "deliveries": 2,
+    "workers_seen": 2,
+    "kill_to_final_ms": 300.5,
+    "model_calls": 2
+  },
+  "backpressure": {
+    "max_queue": 5,
+    "requests": 10,
+    "accepted_202": 5,
+    "refused_429": 5,
+    "waiting_in_queue": 5
+  },
+  "transient_failures": {
+    "recovers": {
+      "model_503_calls": 2,
+      "attempts": 3,
+      "final_status": "ANSWERED"
+    },
+    "stays_down": {
+      "attempts": 3,
+      "final_event": "error",
+      "code": "GAVE_UP",
+      "dead_letter_messages": 1
+    }
+  },
+  "run": {
+    "started_at": "2026-11-11 00:51:59 +0800",
+    "commit": "266e6df",
+    "python": "3.12.3",
+    "machine": "Linux x86_64",
+    "model": "stand-in (forgeflow.desk_service.testing), not a real model"
+  }
+}

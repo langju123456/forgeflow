@@ -1,0 +1,11 @@
+# Redis and RabbitMQ for the desk service (python -m forgeflow.desk_service all), loopback only. DEV_ONLY.
+#   docker compose -f compose.desk-service.yaml up -d
+# RabbitMQ's management UI (queues, unacked messages, the dead-letter queue): http://127.0.0.1:15672 guest/guest
+services:
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports: ["127.0.0.1:6379:6379"]
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    ports: ["127.0.0.1:5672:5672", "127.0.0.1:15672:15672"]

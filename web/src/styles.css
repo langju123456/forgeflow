@@ -183,3 +183,41 @@ dd { margin: 0; overflow-wrap: anywhere; }
   .desk { padding: 12px 16px; }
   .ask { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Desk service: job progress and the streaming draft. */
+.job-strip { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.job-step { font-size: 12.5px; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--rule); color: var(--muted); }
+.job-step.done { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); }
+.job-step.now { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); animation: pulse 1.2s ease-in-out infinite; }
+.answer.draft .answer-text { color: var(--muted); }
+.caret { display: inline-block; width: 7px; height: 1.1em; margin-left: 2px; vertical-align: text-bottom; background: var(--accent); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes pulse { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .job-step.now, .caret { animation: none; } }
+
+.fact-table { border-collapse: collapse; margin: 12px 0; width: 100%; font-variant-numeric: tabular-nums; }
+.fact-table caption { text-align: left; margin-bottom: 4px; }
+.fact-table th, .fact-table td { text-align: right; border-bottom: 1px solid var(--rule); padding: 6px; }
+.fact-table th:first-child { text-align: left; }
+
+.research { margin-top: 1rem; }
+.research fieldset { border: 0; padding: 0; min-width: 0; }
+.research label { display: grid; gap: .3rem; margin: .8rem 0 .4rem; }
+.research :is(input, textarea) { box-sizing: border-box; width: min(100%, 36rem); padding: .5rem; font: inherit; }
+.research button { margin: .2rem .4rem .2rem 0; border: 1px solid var(--rule); border-radius: .4rem;
+  padding: .35rem .65rem; background: var(--paper, white); color: inherit; font: inherit; cursor: pointer; }
+.research button:disabled { opacity: .55; cursor: default; }
+.research button:enabled:hover { border-color: var(--accent); }
+.research summary, .research a { color: var(--accent); }
+.research details { margin: .3rem 0 .6rem; }
+.research article { border-top: 1px solid var(--rule); margin-top: .9rem; }
+.research pre { white-space: pre-wrap; font: inherit; color: var(--muted); }
+.research code, .research pre { overflow-wrap: anywhere; }
+.revision-comparison { margin: .8rem 0; border-block: 1px solid var(--rule); padding: .6rem 0; }
+.revision-comparison h4 { margin: .4rem 0; }
+.revision-scroll { overflow-x: auto; }
+.revision-comparison table { border-collapse: collapse; width: 100%; min-width: 28rem; table-layout: fixed; }
+.revision-comparison :is(td, th) { text-align: left; vertical-align: top; padding: .45rem; border-bottom: 1px solid var(--rule); }
+.revision-comparison th:first-child { width: 23%; }
+.revision-comparison :is(td, th, dd) { white-space: pre-line; overflow-wrap: anywhere; }
+.revision-comparison dd { margin: .15rem 0 .7rem; }
